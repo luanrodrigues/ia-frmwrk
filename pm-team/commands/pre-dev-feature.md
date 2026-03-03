@@ -434,9 +434,10 @@ Even small features benefit from quick research:
 2. Load TRD from `docs/pre-dev/<feature-name>/trd.md`
 3. Note: No Feature Map, API Design, Data Model, or Dependency Map exist (small track)
 4. Run AI-assisted time estimation:
-   - Auto-detect tech stack from repository files (go.mod, package.json, pyproject.toml, etc.)
+   - Auto-detect tech stack from repository files (go.mod, package.json, composer.json, pyproject.toml, etc.)
    - Note: Small Track has no Dependency Map, so inspect repo directly
    - Dispatch specialized agent based on detected stack:
+     - PHP/Laravel (composer.json + laravel) → bee:backend-engineer-php
      - TypeScript/Node (package.json + backend) → bee:backend-engineer-typescript
      - React/Next.js (package.json + frontend) → bee:frontend-engineer
      - Mixed/Unknown → bee:codebase-explorer

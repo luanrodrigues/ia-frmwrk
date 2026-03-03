@@ -74,7 +74,7 @@ topology:
   modules:
     backend:
       path: string          # Relative path (monorepo) or absolute path (multi-repo)
-      language: golang | typescript
+      language: golang | typescript | php
     frontend:
       path: string          # Relative path (monorepo) or absolute path (multi-repo)
       framework: nextjs | react | vue | angular
@@ -144,7 +144,7 @@ docs/pre-dev/{feature}/
 
 **Target:** backend
 **Working Directory:** packages/api
-**Agent:** bee:backend-engineer-typescript
+**Agent:** bee:backend-engineer-php
 
 ...task details...
 ```

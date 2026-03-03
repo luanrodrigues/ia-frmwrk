@@ -160,6 +160,22 @@ provider := libOpentelemetry.NewTracerProvider(/* config */)
 
 ---
 
+## ⛔ HARD GATE: Laravel Conventions (PHP Projects)
+
+For PHP/Laravel projects, code examples in subtasks MUST follow Laravel conventions:
+
+| Pattern | WRONG | CORRECT |
+|---------|-------|---------|
+| Dependencies | `new Service()` | Constructor injection via IoC container |
+| Database | Raw SQL / `DB::select()` | Eloquent ORM / Query Builder |
+| Config | `$_ENV['KEY']` | `config('app.key')` |
+| Validation | Manual `if` checks | Form Request classes |
+| Logging | `error_log()` | `Log::error()` facade |
+| HTTP Client | `curl_*` functions | `Http::get()` facade |
+| Queue | Direct processing | `dispatch(new ProcessJob())` |
+
+---
+
 ## When Custom Code IS Allowed in Examples
 
 | Scenario | Allowed? | Condition |

@@ -102,9 +102,9 @@ Backend-only features do not require design validation. Proceed directly to tech
 
 ### Step 0.1: Auto-Detect or Ask User
 
-**Auto-detection:** `go.mod` exists → Go | `package.json` with react/next → Frontend TS | `package.json` with express/fastify/nestjs → Backend TS
+**Auto-detection:** `composer.json` with laravel → PHP/Laravel | `go.mod` exists → Go | `package.json` with react/next → Frontend TS | `package.json` with express/fastify/nestjs → Backend TS
 
-**If ambiguous, AskUserQuestion:** "What is the primary technology stack?" Options: Go (Backend), TypeScript (Backend), TypeScript (Frontend), Full-Stack TypeScript
+**If ambiguous, AskUserQuestion:** "What is the primary technology stack?" Options: PHP/Laravel (Backend), Go (Backend), TypeScript (Backend), TypeScript (Frontend), Full-Stack TypeScript
 
 ### Step 0.2: Load Bee Standards via WebFetch
 

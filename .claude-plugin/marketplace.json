@@ -1,0 +1,146 @@
+{
+  "name": "bee",
+  "description": "Plugin marketplace: Core software engineering skills (TDD, debugging, code review), specialized developer agents (Backend PHP, DevOps, Frontend, QA, SRE), product planning workflows (10-gate pre-dev system), FinOps/regulatory compliance for Brazilian financial systems (BACEN, RFB), and technical writing specialists for documentation.",
+  "owner": {
+    "name": "Luan Rodrigues",
+    "email": "luan@luanrodrigues.dev"
+  },
+  "plugins": [
+    {
+      "name": "bee-default",
+      "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques. Features parallel 6-reviewer code review system, systematic debugging, and workflow orchestration. 26 essential skills for software engineering excellence.",
+      "version": "2.0.0",
+      "source": "./default",
+      "homepage": "https://github.com/luanrodrigues/ia-frmwrk/tree/master",
+      "repository": "https://github.com/luanrodrigues/ia-frmwrk/tree/master",
+      "license": "MIT",
+      "keywords": [
+        "skills",
+        "tdd",
+        "debugging",
+        "collaboration",
+        "best-practices",
+        "workflows",
+        "orchestration",
+        "validation",
+        "code-review",
+        "parallel-review"
+      ]
+    },
+    {
+      "name": "bee-dev-team",
+      "description": "16 specialized developer agents + 21 development skills + 7 slash commands: Backend 10-gate dev cycle + Frontend 9-gate dev cycle (accessibility, visual, E2E, performance) + Frontend refactoring. PHP/Laravel Backend specialist, TypeScript Backend specialist, DevOps Engineer, Frontend TypeScript specialist, Frontend Designer, Vue.js/Nuxt 3 specialist, React Native/Expo specialist, QA Backend Analyst, QA Frontend Analyst, and SRE. Complete development team coverage with TDD, observability, and security best practices.",
+      "version": "2.0.0",
+      "source": "./dev-team",
+      "homepage": "https://github.com/luanrodrigues/ia-frmwrk/tree/master",
+      "repository": "https://github.com/luanrodrigues/ia-frmwrk/tree/master",
+      "license": "MIT",
+      "keywords": [
+        "agents",
+        "developers",
+        "php",
+        "laravel",
+        "typescript",
+        "backend",
+        "devops",
+        "frontend",
+        "react",
+        "nextjs",
+        "vue",
+        "nuxt",
+        "react-native",
+        "expo",
+        "qa",
+        "testing",
+        "accessibility",
+        "e2e",
+        "playwright",
+        "performance",
+        "sre",
+        "reliability",
+        "infrastructure",
+        "refactoring"
+      ]
+    },
+    {
+      "name": "bee-pm-team",
+      "description": "Product team workflow: 13 skills + 4 research agents + 3 slash commands. Pre-dev planning (10-gate system) with delivery roadmap generation, plus delivery status tracking for evidence-based progress reporting. Includes parallel research agents, specialized code analysis, and Product Designer.",
+      "version": "2.0.0",
+      "source": "./pm-team",
+      "homepage": "https://github.com/luanrodrigues/ia-frmwrk/tree/master",
+      "repository": "https://github.com/luanrodrigues/ia-frmwrk/tree/master",
+      "license": "MIT",
+      "keywords": [
+        "skills",
+        "product",
+        "pre-dev",
+        "planning",
+        "prd",
+        "trd",
+        "api-design",
+        "data-model",
+        "workflow",
+        "feature-planning",
+        "task-breakdown"
+      ]
+    },
+    {
+      "name": "bee-pmo-team",
+      "description": "PMO (Project Management Office) specialists for portfolio-level oversight: 6 agents (portfolio-manager, resource-planner, risk-analyst, governance-specialist, executive-reporter, delivery-reporter), 9 skills for portfolio planning, resource allocation, risk management, executive reporting, and squad delivery reporting. Complements bee-pm-team (single feature) with portfolio-level coordination.",
+      "version": "2.0.0",
+      "source": "./pmo-team",
+      "homepage": "https://github.com/luanrodrigues/ia-frmwrk/tree/master",
+      "repository": "https://github.com/luanrodrigues/ia-frmwrk/tree/master",
+      "license": "MIT",
+      "keywords": [
+        "pmo",
+        "portfolio",
+        "project-management",
+        "resource-planning",
+        "risk-management",
+        "governance",
+        "executive-reporting",
+        "agents"
+      ]
+    },
+    {
+      "name": "bee-finops-team",
+      "version": "2.0.0",
+      "description": "FinOps and Brazilian regulatory compliance skills for financial systems",
+      "source": "./finops-team",
+      "homepage": "https://github.com/luanrodrigues/ia-frmwrk/tree/master",
+      "repository": "https://github.com/luanrodrigues/ia-frmwrk/tree/master",
+      "license": "MIT",
+      "keywords": [
+        "finops",
+        "regulatory",
+        "compliance",
+        "bacen",
+        "rfb",
+        "brazil"
+      ]
+    },
+    {
+      "name": "bee-tw-team",
+      "description": "Technical writing specialists for functional and API documentation. 3 specialized agents (functional-writer, api-writer, docs-reviewer) and 7 documentation skills covering voice/tone, structure, API field descriptions, and quality review. Enforces clear, consistent documentation standards.",
+      "version": "2.0.0",
+      "source": "./tw-team",
+      "homepage": "https://github.com/luanrodrigues/ia-frmwrk/tree/master",
+      "repository": "https://github.com/luanrodrigues/ia-frmwrk/tree/master",
+      "license": "MIT",
+      "keywords": [
+        "technical-writing",
+        "documentation",
+        "api-docs",
+        "guides",
+        "tutorials",
+        "voice-tone",
+        "style-guide",
+        "docs-review",
+        "agents",
+        "content-quality"
+      ]
+    }
+  ],
+  "version": "2.0.0"
+}

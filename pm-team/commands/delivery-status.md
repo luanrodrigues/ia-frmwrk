@@ -39,6 +39,7 @@ This command will ask you for:
 
 ### Specialized Agent Dispatch
 - **Frontend projects** → `bee:frontend-engineer`
+- **PHP/Laravel projects** → `bee:backend-engineer-php`
 - **TypeScript Backend projects** → `bee:backend-engineer-typescript`
 - **Full-stack** → Multiple agents per task type
 - **Unknown** → `bee:codebase-explorer`

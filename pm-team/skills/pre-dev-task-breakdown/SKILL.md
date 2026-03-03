@@ -77,6 +77,7 @@ After defining task scope and success criteria, the system automatically estimat
 ### Estimation Process
 
 1. **Tech Stack Detection:** Identify project type from TRD
+   - PHP/Laravel → dispatch bee:backend-engineer-php
    - TypeScript Backend → dispatch bee:backend-engineer-typescript
    - React/Next.js → dispatch bee:frontend-engineer
    - Mixed/Unknown → dispatch bee:codebase-explorer
@@ -117,7 +118,7 @@ After defining task scope and success criteria, the system automatically estimat
 **Effort Estimate:**
 - **Baseline:** AI Agent via bee:dev-cycle
 - **AI Estimate:** 4.5 AI-agent-hours
-- **Estimation Method:** bee:backend-engineer-typescript analysis
+- **Estimation Method:** bee:backend-engineer-php analysis
 - **Confidence:** High (standard CRUD, lib-commons available)
 
 **Breakdown:**
@@ -219,6 +220,7 @@ Each task MUST have `target:` and `working_directory:` fields when topology is m
 
 | Target | API Pattern | Task Type | Agent |
 |--------|-------------|-----------|-------|
+| `backend` | any | API endpoints, services, data layer, CLI | `bee:backend-engineer-php` |
 | `backend` | any | API endpoints, services, data layer, CLI | `bee:backend-engineer-typescript` |
 | `frontend` | `direct` | UI components, pages, forms, Server Components | `bee:frontend-engineer` |
 | `frontend` | `direct` | Server Actions, data fetching hooks | `bee:frontend-engineer` |
@@ -256,7 +258,7 @@ Is task target: frontend?
 
 **Target:** backend
 **Working Directory:** packages/api
-**Agent:** bee:backend-engineer-typescript
+**Agent:** bee:backend-engineer-php
 
 **Deliverable:** Working login API that validates credentials and returns JWT token.
 

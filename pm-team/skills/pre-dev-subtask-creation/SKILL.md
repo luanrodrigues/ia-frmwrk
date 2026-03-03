@@ -103,6 +103,15 @@ See **[shared-patterns/code-example-standards.md](../shared-patterns/code-exampl
 
 MUST NOT: Create custom logger, config loader, or HTTP helper in subtasks—use lib-commons.
 
+### ⛔ HARD GATE: Laravel Conventions in PHP Code Examples
+
+MUST: For PHP projects, code examples use Laravel conventions and dependency injection.
+
+- Use constructor injection, not `new SomeClass()` directly
+- Use Eloquent ORM, not raw SQL queries
+- Use Laravel's built-in helpers (config(), env(), etc.)
+- Use Form Requests for validation, not manual validation
+
 </cannot_skip>
 
 ## Rationalization Table

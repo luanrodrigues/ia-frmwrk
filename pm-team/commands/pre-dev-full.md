@@ -526,8 +526,9 @@ mkdir -p docs/pre-dev/<feature-name>
 
 1. Load all previous artifacts (PRD, Feature Map, TRD, API Design, Data Model, Dependency Map)
 2. Run AI-assisted time estimation:
-   - Auto-detect tech stack from Dependency Map (if available) OR repository files (go.mod, package.json, etc.)
+   - Auto-detect tech stack from Dependency Map (if available) OR repository files (go.mod, package.json, composer.json, etc.)
    - Dispatch specialized agent based on detected stack:
+     - PHP/Laravel (composer.json + laravel) → bee:backend-engineer-php
      - TypeScript/Node (package.json + backend) → bee:backend-engineer-typescript
      - React/Next.js (package.json + frontend) → bee:frontend-engineer
      - Mixed/Unknown → bee:codebase-explorer

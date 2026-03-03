@@ -246,7 +246,7 @@ topology:
   modules:
     backend:
       path: packages/api        # From Q3
-      language: golang          # Auto-detected or asked
+      language: golang | typescript | php   # Auto-detected or asked
     frontend:
       path: packages/web        # From Q3
       framework: nextjs         # Auto-detected or asked
@@ -280,6 +280,13 @@ topology:
 ### Backend Language Detection
 
 ```bash
+# Check for PHP/Laravel
+if [ -f "composer.json" ] || [ -f "{backend_path}/composer.json" ]; then
+  if grep -q '"laravel/framework"' composer.json 2>/dev/null; then
+    language="php"
+  fi
+fi
+
 # Check for Go
 if [ -f "go.mod" ] || [ -f "{backend_path}/go.mod" ]; then
   language="golang"
@@ -326,7 +333,7 @@ topology:
   modules:
     backend:
       path: packages/api
-      language: golang
+      language: php
     frontend:
       path: packages/web
       framework: nextjs

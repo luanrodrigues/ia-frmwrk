@@ -30,7 +30,7 @@ When creating or modifying any agent in `*/agents/*.md`:
 2. **MUST NOT run reviewers sequentially** - dispatch in parallel
 3. **MUST NOT skip TDD's RED phase** - Test must fail before implementation
 4. **MUST NOT ignore skill when applicable** - "Simple task" is not an excuse
-5. **MUST NOT use panic() in Go** - Error handling required
+5. **MUST NOT use die()/exit() in PHP or panic() in Go** - Error handling required
 6. **MUST NOT commit manually** - use `/bee:commit` command
 7. **MUST NOT assume compliance** - VERIFY with evidence
 
@@ -98,6 +98,7 @@ If any checkbox is no → Fix before committing.
 
 | Standards File  | Agents That Use It                                                                             |
 | --------------- | ---------------------------------------------------------------------------------------------- |
+| `php.md`        | `bee:backend-engineer-php`, `bee:qa-analyst`                                                   |
 | `typescript.md` | `bee:backend-engineer-typescript`, `bee:frontend-bff-engineer-typescript`, `bee:qa-analyst` |
 | `frontend.md`   | `bee:frontend-engineer`, `bee:frontend-designer`                                             |
 | `devops.md`     | `bee:devops-engineer`                                                                         |
@@ -111,6 +112,7 @@ MUST match `dev-team/skills/shared-patterns/standards-coverage-table.md`. See th
 
 | Agent                                   | Standards File             |
 | --------------------------------------- | -------------------------- |
+| `bee:backend-engineer-php`             | php.md                     |
 | `bee:backend-engineer-typescript`      | typescript.md              |
 | `bee:frontend-bff-engineer-typescript` | typescript.md              |
 | `bee:frontend-engineer`                | frontend.md                |
@@ -417,7 +419,7 @@ Bee is a comprehensive skills library and workflow system for AI agents that enf
 **Active Plugins:**
 
 - **bee-default**: 26 core skills, 13 slash commands, 8 specialized agents
-- **bee-dev-team**: 21 development skills, 7 slash commands, 10 developer agents (Backend TypeScript, DevOps, Frontend TypeScript, Frontend Designer, Frontend Engineer, QA Backend, QA Frontend, SRE, UI Engineer, Prompt Quality Reviewer)
+- **bee-dev-team**: 21 development skills, 7 slash commands, 16 developer agents (Backend PHP, Backend TypeScript, DevOps, Frontend Designer, Frontend Engineer, Frontend Engineer Vue.js, Frontend Engineer React Native, Frontend BFF TypeScript, QA Backend, QA Frontend, QA Frontend Vue.js, QA Frontend React Native, SRE, UI Engineer, UI Engineer Vue.js, UI Engineer React Native)
 - **bee-pm-team**: 13 product management skills, 4 research agents, 3 slash commands (includes delivery planning + status tracking + Product Designer)
 - **bee-pmo-team**: 9 PMO skills, 4 slash commands, 6 PMO agents (Portfolio Manager, Resource Planner, Risk Analyst, Governance Specialist, Executive Reporter, Delivery Reporter)
 - **bee-finops-team**: 7 regulatory skills, 3 FinOps agents (Analyzer, Automation, Infrastructure Cost Estimator)
@@ -426,7 +428,7 @@ Bee is a comprehensive skills library and workflow system for AI agents that enf
 **Note:** Plugin versions are managed in `.claude-plugin/marketplace.json` (current marketplace version: `0.256.0`)
 
 **Total: 83 skills (26 + 21 + 13 + 9 + 7 + 7) across 6 plugins**
-**Total: 34 agents (8 + 10 + 4 + 6 + 3 + 3) across 6 plugins**
+**Total: 40 agents (8 + 16 + 4 + 6 + 3 + 3) across 6 plugins**
 **Total: 30 commands (13 + 7 + 3 + 4 + 0 + 3) across 6 plugins**
 
 The architecture uses markdown-based skill definitions with YAML frontmatter, auto-discovered at session start via hooks, and executed through Claude Code's native Skill/Task tools.
@@ -448,7 +450,7 @@ See [README.md](README.md#installation) for detailed installation instructions.
 | Plugin           | Path           | Contents                         |
 | ---------------- | -------------- | -------------------------------- |
 | bee-default     | `default/`     | 26 skills, 8 agents, 13 commands |
-| bee-dev-team    | `dev-team/`    | 21 skills, 10 agents, 7 commands |
+| bee-dev-team    | `dev-team/`    | 21 skills, 16 agents, 7 commands |
 | bee-pm-team     | `pm-team/`     | 13 skills, 4 agents, 3 commands  |
 | bee-pmo-team    | `pmo-team/`    | 9 skills, 6 agents, 4 commands   |
 | bee-finops-team | `finops-team/` | 7 skills, 3 agents               |
@@ -588,7 +590,7 @@ The system loads at SessionStart (from `default/` plugin):
 - Active plugins: 6 (`bee-default`, `bee-dev-team`, `bee-pm-team`, `bee-pmo-team`, `bee-finops-team`, `bee-tw-team`)
 - Plugin versions: See `.claude-plugin/marketplace.json`
 - Core plugin: `default/` (26 skills, 8 agents, 13 commands)
-- Developer agents: `dev-team/` (21 skills, 10 agents, 7 commands)
+- Developer agents: `dev-team/` (21 skills, 16 agents, 7 commands)
 - Product planning: `pm-team/` (13 skills, 4 agents, 3 commands)
 - PMO specialists: `pmo-team/` (9 skills, 6 agents, 4 commands)
 - FinOps regulatory: `finops-team/` (7 skills, 3 agents)
