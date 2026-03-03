@@ -364,7 +364,7 @@ This step requires asking about **BOTH** database types in a SINGLE question:
 **REQUIRED:** Use the multiSelect AskUserQuestion with ALL components listed.
 </critical-warning>
 
-> **Reference:** See [infrastructure-cost-estimation-guide.md](../../docs/infrastructure-cost-estimation-guide.md#component-sharing-model-critical-input) for:
+> **Reference:** See [infrastructure-cost-estimation-guide.md](../../docs/infrastructure-cost-estimation-guide.md#component-shabee-model-critical-input) for:
 > - Sharing model definitions (SHARED vs DEDICATED vs ALWAYS SHARED)
 > - How sharing works in practice per component
 > - NAT Gateway architecture (ALWAYS SHARED)

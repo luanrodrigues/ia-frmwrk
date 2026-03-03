@@ -1,4 +1,4 @@
-# Exploring-Codebase Skill: Stress Test Results
+# Explobee-Codebase Skill: Stress Test Results
 
 **Date:** 2025-12-14
 **Method:** TDD for Skills (RED-GREEN-REFACTOR)

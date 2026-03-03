@@ -1,4 +1,4 @@
-# Ring-default Changelog
+# bee-default Changelog
 
 ## [1.12.2](https://github.com/LerianStudio/bee/releases/tag/bee-default@1.12.2)
 
@@ -7,7 +7,7 @@
 
 Contributors: @fred
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.12.1...ring-default@1.12.2)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.12.1...bee-default@1.12.2)
 
 ---
 
@@ -18,7 +18,7 @@ Contributors: @fred
 
 Contributors: @fred
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.12.0...ring-default@1.12.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.12.0...bee-default@1.12.1)
 
 ---
 
@@ -29,7 +29,7 @@ Contributors: @fred
 
 Contributors: @fred
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.12.0...ring-default@1.12.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.12.0...bee-default@1.12.1)
 
 ---
 
@@ -40,7 +40,7 @@ Contributors: @fred
 
 Contributors: @fred
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.12.0...ring-default@1.12.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.12.0...bee-default@1.12.1)
 
 ---
 
@@ -51,7 +51,7 @@ Contributors: @fred
 
 Contributors: @fred
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.11.1...ring-default@1.12.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.11.1...bee-default@1.12.0)
 
 ---
 
@@ -62,7 +62,7 @@ Contributors: @fred
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.11.0...ring-default@1.11.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.11.0...bee-default@1.11.1)
 
 ---
 
@@ -73,7 +73,7 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.11.0...ring-default@1.11.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.11.0...bee-default@1.11.1)
 
 ---
 
@@ -87,7 +87,7 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.11.0...ring-default@1.11.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.11.0...bee-default@1.11.1)
 
 ---
 
@@ -101,7 +101,7 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.11.0...ring-default@1.11.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.11.0...bee-default@1.11.1)
 
 ---
 
@@ -113,7 +113,7 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.11.0...ring-default@1.11.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.11.0...bee-default@1.11.1)
 
 ---
 
@@ -128,7 +128,7 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.10.0...ring-default@1.11.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.10.0...bee-default@1.11.0)
 
 ---
 
@@ -143,7 +143,7 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.10.0...ring-default@1.11.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.10.0...bee-default@1.11.0)
 
 ---
 
@@ -158,7 +158,7 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.10.0...ring-default@1.11.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.10.0...bee-default@1.11.0)
 
 ---
 
@@ -171,7 +171,7 @@ Contributors: @jeff, @jefferson.comff
   - @jefferson.comff
   - @lucasc.bedatty
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.9.0...ring-default@1.10.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.9.0...bee-default@1.10.0)
 
 ---
 
@@ -184,7 +184,7 @@ Contributors: @jeff, @jefferson.comff
   - @jefferson.comff
   - @lucasc.bedatty
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.9.0...ring-default@1.10.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.9.0...bee-default@1.10.0)
 
 ---
 
@@ -195,7 +195,7 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @fred
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.8.0...ring-default@1.9.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.8.0...bee-default@1.9.0)
 
 ---
 
@@ -206,7 +206,7 @@ Contributors: @fred
 
 Contributors: @fred
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.8.0...ring-default@1.9.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.8.0...bee-default@1.9.0)
 
 ---
 
@@ -217,7 +217,7 @@ Contributors: @fred
 
 Contributors: @fred
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.8.0...ring-default@1.9.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.8.0...bee-default@1.9.0)
 
 ---
 
@@ -227,7 +227,7 @@ Contributors: @fred
 
 Contributors: @fred
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.7.1...ring-default@1.8.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.7.1...bee-default@1.8.0)
 
 ---
 
@@ -237,7 +237,7 @@ Contributors: @fred
 
 Contributors: @fred
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.7.1...ring-default@1.8.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.7.1...bee-default@1.8.0)
 
 ---
 
@@ -249,7 +249,7 @@ Contributors: @fred
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.7.0...ring-default@1.7.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.7.0...bee-default@1.7.1)
 
 ---
 
@@ -261,7 +261,7 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff,
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.7.0...ring-default@1.7.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.7.0...bee-default@1.7.1)
 
 ---
 
@@ -273,7 +273,7 @@ Contributors: @jeff, @jefferson.comff,
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.7.0...ring-default@1.7.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.7.0...bee-default@1.7.1)
 
 ---
 
@@ -284,5 +284,5 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.6.2...ring-default@1.7.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-default@1.6.2...bee-default@1.7.0)
 

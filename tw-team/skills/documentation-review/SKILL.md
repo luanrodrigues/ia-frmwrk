@@ -217,7 +217,7 @@ These requirements are NON-NEGOTIABLE:
 
 Signs that documentation doesn't need review:
 
-- Documentation was written by ring-tw-team specialists
+- Documentation was written by bee-tw-team specialists
 - Previous review found zero issues
 - Documentation hasn't changed since last review
 - All five review dimensions already verified

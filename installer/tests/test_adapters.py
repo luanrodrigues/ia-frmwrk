@@ -342,7 +342,7 @@ Use this agent for review.
         result = adapter.transform_agent(content, {"plugin": "default", "name": "code-reviewer"})
 
         # Factory droid names use hyphens, not colons
-        assert "name: ring-default-code-reviewer" in result
+        assert "name: bee-default-code-reviewer" in result
         assert ":" not in result.split("name:")[1].split("\n")[0]  # No colon in name value
 
     def test_replace_agent_references_respects_protected_regions(self, adapter):
@@ -390,7 +390,7 @@ Use this agent for review.
         result = adapter.transform_skill(content)
 
         # Factory uses hyphens, not colons in droid names
-        assert "ring-code-droid" in result or "droid" in result.lower()
+        assert "bee-code-droid" in result or "droid" in result.lower()
 
     def test_requires_flat_components_for_agents(self, adapter):
         """FactoryAdapter requires flat structure for agents (droids)."""
@@ -500,17 +500,17 @@ Read-only droid.
     def test_get_flat_filename_for_agent(self, adapter):
         """get_flat_filename() should generate prefixed filename (no -droid suffix)."""
         result = adapter.get_flat_filename("code-reviewer.md", "agent", "default")
-        assert result == "ring-default-code-reviewer.md"
+        assert result == "bee-default-code-reviewer.md"
 
     def test_get_flat_filename_strips_agent_suffix(self, adapter):
         """get_flat_filename() should strip -agent suffix."""
         result = adapter.get_flat_filename("code-agent.md", "agent", "default")
-        assert result == "ring-default-code.md"
+        assert result == "bee-default-code.md"
 
     def test_get_flat_filename_for_command(self, adapter):
         """get_flat_filename() should work for non-agent types too."""
         result = adapter.get_flat_filename("test-command.md", "command", "dev-team")
-        assert result == "ring-dev-team-test-command.md"
+        assert result == "bee-dev-team-test-command.md"
 
     def test_requires_hooks_in_settings(self, adapter):
         """FactoryAdapter requires hooks to be merged into settings.json."""
@@ -698,7 +698,7 @@ class TestCursorAdapter:
         assert mapping["skills"]["target_dir"] == "skills"
 
     def test_transform_replaces_ring_terminology(self, adapter):
-        """CursorAdapter should replace Ring-specific terminology (CURSOR_REPLACEMENTS)."""
+        """CursorAdapter should replace bee-specific terminology (CURSOR_REPLACEMENTS)."""
         content = "Use the Skill tool to load a skill."
         result = adapter.transform_skill(content)
 
@@ -828,7 +828,7 @@ class TestClineAdapter:
         assert "@helper-skill" in result or "@" in result
 
     def test_transform_replaces_ring_terminology(self, adapter):
-        """ClineAdapter should replace Ring-specific terminology."""
+        """ClineAdapter should replace bee-specific terminology."""
         content = "Use the Task tool to dispatch subagent."
         result = adapter.transform_skill(content)
 

@@ -310,7 +310,7 @@ class CursorAdapter(PlatformAdapter):
         for old, new in BaseTransformer.CURSOR_REPLACEMENTS:
             result = result.replace(old, new)
 
-        # Remove Ring-specific tool references that don't apply
+        # Remove bee-specific tool references that don't apply
         result = re.sub(r'`ring:[^`]+`', lambda m: self._transform_ring_reference(m.group(0)), result)
 
         # Normalize /bee: command references for all component types

@@ -1090,7 +1090,7 @@ class TestUninstallWithManifest:
             mock_manifest = MagicMock()
             mock_manifest.files = manifest_data["files"]
             mock_manifest_cls.load.return_value = mock_manifest
-            mock_path.return_value = tmp_install_dir / ".ring-manifest.json"
+            mock_path.return_value = tmp_install_dir / ".bee-manifest.json"
 
             result = uninstall_with_manifest([target], InstallOptions(backup=False))
 

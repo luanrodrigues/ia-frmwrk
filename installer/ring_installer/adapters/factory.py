@@ -138,13 +138,13 @@ class FactoryAdapter(PlatformAdapter):
         Factory installs droids into a single flat directory. To avoid name collisions
         across plugins, droids are namespaced as:
 
-            ring-<plugin>-<name>
+            bee-<plugin>-<name>
 
         NOTE: Factory droid names can only contain lowercase letters, digits, `-`, `_`.
         Colons are NOT allowed in droid names (they're used for custom: model syntax).
 
         Example:
-            plugin=default, name=code-reviewer -> ring-default-code-reviewer
+            plugin=default, name=code-reviewer -> bee-default-code-reviewer
         """
         result = dict(frontmatter)
 
@@ -152,7 +152,7 @@ class FactoryAdapter(PlatformAdapter):
         if not isinstance(plugin, str) or not plugin:
             return result
 
-        plugin_id = plugin if plugin.startswith("ring-") else f"ring-{plugin}"
+        plugin_id = plugin if plugin.startswith("bee-") else f"bee-{plugin}"
 
         name = result.get("name")
         if not isinstance(name, str) or not name:
@@ -162,8 +162,8 @@ class FactoryAdapter(PlatformAdapter):
             else:
                 return result
 
-        # Already qualified with hyphen (ring-plugin-name format)
-        if name.startswith("ring-"):
+        # Already qualified with hyphen (bee-plugin-name format)
+        if name.startswith("bee-"):
             return result
 
         # Convert any colons to hyphens (legacy format cleanup)
@@ -709,16 +709,16 @@ class FactoryAdapter(PlatformAdapter):
             placeholders = []
             masked = text
 
-        # Ring-specific context patterns
+        # bee-specific context patterns
         # NOTE: Factory droid names use hyphens, not colons (colons reserved for custom: prefix)
         ring_contexts = [
-            # Task tool subagent_type references: ring-plugin:name -> ring-plugin-name
-            (r'subagent_type["\s]*[:=]["\s]*["\']?ring-([^:]+):([^"\'>\s]+)', r'subagent_type="\1-\2'),
-            (r'"ring-([^:]+):([^"]+)"', r'"ring-\1-\2"'),
-            (r"'ring-([^:]+):([^']+)'", r"'ring-\1-\2'"),
+            # Task tool subagent_type references: bee-plugin:name -> bee-plugin-name
+            (r'subagent_type["\s]*[:=]["\s]*["\']?bee-([^:]+):([^"\'>\s]+)', r'subagent_type="\1-\2'),
+            (r'"bee-([^:]+):([^"]+)"', r'"bee-\1-\2"'),
+            (r"'bee-([^:]+):([^']+)'", r"'bee-\1-\2'"),
             # Tool references with -agent suffix
-            (r'"ring:([^"]*)-agent"', r'"ring-\1-droid"'),
-            (r"'ring:([^']*)-agent'", r"'ring-\1-droid'"),
+            (r'"ring:([^"]*)-agent"', r'"bee-\1-droid"'),
+            (r"'ring:([^']*)-agent'", r"'bee-\1-droid'"),
             # Don't rename subagent_type field name - Factory Task tool uses it
             # Only transform subagent -> subdroid in prose
             (r'\bsubagent\b(?!_type)', 'subdroid'),
@@ -805,7 +805,7 @@ class FactoryAdapter(PlatformAdapter):
 
         Returns:
             Filename with plugin prefix
-            (e.g., "code-reviewer.md" from "default" plugin -> "ring-default-code-reviewer.md")
+            (e.g., "code-reviewer.md" from "default" plugin -> "bee-default-code-reviewer.md")
         """
         from pathlib import Path
 
@@ -817,7 +817,7 @@ class FactoryAdapter(PlatformAdapter):
         if component_type == "agent":
             stem = re.sub(r'-agent$', '', stem)
             stem = re.sub(r'_agent$', '', stem)
-            return f"ring-{plugin_name}-{stem}.md"
+            return f"bee-{plugin_name}-{stem}.md"
 
         # For other component types, just add prefix
-        return f"ring-{plugin_name}-{stem}{source_path.suffix}"
+        return f"bee-{plugin_name}-{stem}{source_path.suffix}"

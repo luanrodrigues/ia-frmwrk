@@ -264,7 +264,7 @@ See [shared-patterns/anti-rationalization.md](../skills/shared-patterns/anti-rat
 | "Date format doesn't matter, both are dates" | BACEN uses Ymd, RFB uses Y-m-d. Authority-specific. | **USE exact date format per authority spec** |
 | "Character encoding will be handled by platform" | Encoding must be explicit in template. | **SPECIFY encoding per regulatory requirement** |
 | "Spec report from last month is current enough" | Specifications can change rapidly. | **VERIFY spec report is for current implementation** |
-| "Ring-finops-team:finops-analyzer validated, must be implementable" | Validated ≠ implementable without verification. | **TEST each transformation with Reporter filters** |
+| "bee-finops-team:finops-analyzer validated, must be implementable" | Validated ≠ implementable without verification. | **TEST each transformation with Reporter filters** |
 
 **Self-Check Questions (Ask before delivering template):**
 

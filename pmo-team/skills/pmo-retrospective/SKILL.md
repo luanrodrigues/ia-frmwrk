@@ -12,7 +12,7 @@ trigger: |
 
 skip_when: |
   - Sprint retrospective → team-level, not PMO
-  - Technical post-mortem → use ring-dev-team
+  - Technical post-mortem → use bee-dev-team
   - Single incident analysis → handle in project scope
 
 related:

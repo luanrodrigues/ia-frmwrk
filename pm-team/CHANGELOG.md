@@ -1,4 +1,4 @@
-# Ring-pm-team Changelog
+# bee-pm-team Changelog
 
 ## [0.19.0](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.19.0)
 
@@ -7,7 +7,7 @@
 
 Contributors: @jeff, @jota
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.1...ring-pm-team@0.19.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.1...bee-pm-team@0.19.0)
 
 ---
 
@@ -19,7 +19,7 @@ Contributors: @jeff, @jota
 
 Contributors: @jeff, @jota
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.1...ring-pm-team@0.19.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.1...bee-pm-team@0.19.0)
 
 ---
 
@@ -31,7 +31,7 @@ Contributors: @jeff, @jota
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...ring-pm-team@0.18.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
 
 ---
 
@@ -43,7 +43,7 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...ring-pm-team@0.18.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
 
 ---
 
@@ -55,7 +55,7 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...ring-pm-team@0.18.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
 
 ---
 
@@ -67,7 +67,7 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...ring-pm-team@0.18.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
 
 ---
 
@@ -79,7 +79,7 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...ring-pm-team@0.18.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
 
 ---
 
@@ -91,7 +91,7 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...ring-pm-team@0.18.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
 
 ---
 
@@ -103,7 +103,7 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...ring-pm-team@0.18.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
 
 ---
 
@@ -115,7 +115,7 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...ring-pm-team@0.18.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
 
 ---
 
@@ -127,7 +127,7 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...ring-pm-team@0.18.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
 
 ---
 
@@ -139,7 +139,7 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...ring-pm-team@0.18.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
 
 ---
 
@@ -151,7 +151,7 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...ring-pm-team@0.18.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
 
 ---
 
@@ -168,7 +168,7 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jota
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.17.0...ring-pm-team@0.18.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.17.0...bee-pm-team@0.18.0)
 
 ---
 
@@ -185,18 +185,18 @@ Contributors: @jota
 
 Contributors: @jota
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.17.0...ring-pm-team@0.18.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.17.0...bee-pm-team@0.18.0)
 
 ---
 
 ## [0.17.0](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.17.0)
 
 - **Features**
-  - Added GPT Changelog workflow and initial CHANGELOG files for ring-pm-team.
+  - Added GPT Changelog workflow and initial CHANGELOG files for bee-pm-team.
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...ring-pm-team@0.17.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
 
 ---
 
@@ -208,19 +208,19 @@ Contributors: @gui.rodrigues
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...ring-pm-team@0.17.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
 
 ---
 
 ## [0.17.0](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.17.0)
 
 - Features:
-  - Added GPT Changelog workflow for ring-pm-team.
+  - Added GPT Changelog workflow for bee-pm-team.
   - Created initial CHANGELOG files for teams header.
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...ring-pm-team@0.17.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
 
 ---
 
@@ -232,19 +232,19 @@ Contributors: @gui.rodrigues
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...ring-pm-team@0.17.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
 
 ---
 
 ## [0.17.0](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.17.0)
 
 - **Features:**
-  - Added GPT Changelog workflow for ring-pm-team.
+  - Added GPT Changelog workflow for bee-pm-team.
   - Introduced initial CHANGELOG files for teams header.
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...ring-pm-team@0.17.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
 
 ---
 
@@ -256,7 +256,7 @@ Contributors: @gui.rodrigues
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...ring-pm-team@0.17.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
 
 ---
 
@@ -268,7 +268,7 @@ Contributors: @gui.rodrigues
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...ring-pm-team@0.17.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
 
 ---
 
@@ -280,7 +280,7 @@ Contributors: @gui.rodrigues
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...ring-pm-team@0.17.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
 
 ---
 
@@ -291,5 +291,5 @@ Contributors: @gui.rodrigues
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...ring-pm-team@0.17.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
 

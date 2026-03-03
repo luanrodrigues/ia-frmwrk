@@ -297,13 +297,13 @@ class PlatformAdapter(ABC):
             plugin_name: Name of the plugin this component belongs to
 
         Returns:
-            Filename with plugin prefix (e.g., "ring-default-code-reviewer.md")
+            Filename with plugin prefix (e.g., "bee-default-code-reviewer.md")
         """
         base_filename = self.get_target_filename(source_filename, component_type)
         source_path = Path(base_filename)
 
         # Add plugin prefix for disambiguation
-        return f"ring-{plugin_name}-{source_path.stem}{source_path.suffix}"
+        return f"bee-{plugin_name}-{source_path.stem}{source_path.suffix}"
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}(platform_id='{self.platform_id}')"

@@ -115,7 +115,7 @@ If the generated plan contains phrases like "implement the logic" or "add approp
 This command is best run in a dedicated worktree created by the ring:brainstorming skill. You can still run it in main, but isolation is recommended.
 
 ### "Agent selection unavailable"
-If `ring-dev-team` plugin is not installed, execution falls back to `general-purpose` agents automatically. Plans remain valid regardless.
+If `bee-dev-team` plugin is not installed, execution falls back to `general-purpose` agents automatically. Plans remain valid regardless.
 
 ### When NOT to use this command
 - Design is not validated - use `/bee:brainstorm` first

@@ -1,1 +1,1 @@
-# Ring-Dev-Team Changelog
+# bee-Dev-Team Changelog

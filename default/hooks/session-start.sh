@@ -219,7 +219,7 @@ if [[ -f "$PENDING_FILE" ]]; then
                 handoff_content=$(cat "$handoff_path")
             fi
             handoff_escaped=$(json_escape "$handoff_content")
-            handoff_section="<ring-handoff-resume>\\nAuto-resumed from: ${handoff_path}\\n\\n${handoff_escaped}\\n\\nMUST present the handoff context to the user using the resume-handoff response template:\\n1. Summarize what was being worked on\\n2. List key decisions already made\\n3. Show current state\\n4. Propose next action from Next Steps\\n5. Ask for confirmation before proceeding\\n</bee-handoff-resume>"
+            handoff_section="<bee-handoff-resume>\\nAuto-resumed from: ${handoff_path}\\n\\n${handoff_escaped}\\n\\nMUST present the handoff context to the user using the resume-handoff response template:\\n1. Summarize what was being worked on\\n2. List key decisions already made\\n3. Show current state\\n4. Propose next action from Next Steps\\n5. Ask for confirmation before proceeding\\n</bee-handoff-resume>"
             user_message="Handoff auto-loaded from \`${handoff_path}\`. Context restored."
         else
             # Stale handoff (>= 1 hour): ask user before loading
@@ -230,7 +230,7 @@ if [[ -f "$PENDING_FILE" ]]; then
             else
                 age_display="$(( age_seconds / 60 ))m ago"
             fi
-            handoff_section="<ring-handoff-pending>\\nA pending handoff was found at: ${handoff_path}\\nCreated: ${age_display}\\nDo NOT auto-load the content. Ask the user if they want to resume from this handoff.\\nIf yes, use the Read tool to load the file and present context per the resume-handoff response template.\\nIf no, proceed normally.\\n</bee-handoff-pending>"
+            handoff_section="<bee-handoff-pending>\\nA pending handoff was found at: ${handoff_path}\\nCreated: ${age_display}\\nDo NOT auto-load the content. Ask the user if they want to resume from this handoff.\\nIf yes, use the Read tool to load the file and present context per the resume-handoff response template.\\nIf no, proceed normally.\\n</bee-handoff-pending>"
             user_message="Found a pending handoff (created ${age_display}): \`${handoff_path}\`. Would you like to resume from it?"
         fi
     fi
@@ -239,7 +239,7 @@ fi
 debug_log "Handoff result: section_length=${#handoff_section} user_message_set=${user_message:+YES}"
 
 # Build additionalContext
-additional_context="<ring-critical-rules>\n${critical_rules_escaped}\n</bee-critical-rules>\n\n<ring-doubt-questions>\n${doubt_questions_escaped}\n</bee-doubt-questions>\n\n<ring-skills-system>\n${overview_escaped}\n</bee-skills-system>"
+additional_context="<bee-critical-rules>\n${critical_rules_escaped}\n</bee-critical-rules>\n\n<bee-doubt-questions>\n${doubt_questions_escaped}\n</bee-doubt-questions>\n\n<bee-skills-system>\n${overview_escaped}\n</bee-skills-system>"
 
 # Append handoff section if present
 if [[ -n "$handoff_section" ]]; then

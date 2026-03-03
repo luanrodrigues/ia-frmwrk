@@ -53,12 +53,12 @@ if ($marketplaceOutput -match "already installed") {
 }
 Write-Host ""
 
-Write-Host "🔧 Installing/updating ring-default (core plugin - required)..."
+Write-Host "🔧 Installing/updating bee-default (core plugin - required)..."
 try {
-    & claude plugin install ring-default 2>&1 | Out-Null
-    Write-Host "✅ ring-default ready"
+    & claude plugin install bee-default 2>&1 | Out-Null
+    Write-Host "✅ bee-default ready"
 } catch {
-    Write-Host "❌ Failed to install ring-default"
+    Write-Host "❌ Failed to install bee-default"
     exit 1
 }
 Write-Host ""
@@ -95,8 +95,8 @@ try {
                 continue
             }
 
-            # Skip ring-default (already installed)
-            if ($pluginName -eq "ring-default") {
+            # Skip bee-default (already installed)
+            if ($pluginName -eq "bee-default") {
                 continue
             }
 
@@ -131,7 +131,7 @@ try {
         Write-Host "================================================"
         Write-Host ""
         Write-Host "Installed plugins:"
-        Write-Host "  ✓ ring-default (core - required)"
+        Write-Host "  ✓ bee-default (core - required)"
 
         # Show installation status for each plugin
         foreach ($pluginName in $installedPlugins.Keys) {
@@ -148,10 +148,10 @@ try {
         Write-Host "⚠️  Could not parse marketplace data, showing static list..."
         Write-Host ""
         Write-Host "Available plugins (manual installation required):"
-        Write-Host "  • ring-dev-team - Developer role agents"
-        Write-Host "  • ring-finops-team - FinOps & regulatory compliance"
-        Write-Host "  • ring-pm-team - Product planning workflows"
-        Write-Host "  • ring-pmo-team - PMO portfolio management specialists"
+        Write-Host "  • bee-dev-team - Developer role agents"
+        Write-Host "  • bee-finops-team - FinOps & regulatory compliance"
+        Write-Host "  • bee-pm-team - Product planning workflows"
+        Write-Host "  • bee-pmo-team - PMO portfolio management specialists"
         Write-Host ""
         Write-Host "To install manually: claude plugin install <plugin-name>"
     }
@@ -160,10 +160,10 @@ try {
     Write-Host "   Error: $($_.Exception.Message)"
     Write-Host ""
     Write-Host "Available plugins (manual installation required):"
-    Write-Host "  • ring-dev-team - Developer role agents"
-    Write-Host "  • ring-finops-team - FinOps & regulatory compliance"
-    Write-Host "  • ring-pm-team - Product planning workflows"
-    Write-Host "  • ring-pmo-team - PMO portfolio management specialists"
+    Write-Host "  • bee-dev-team - Developer role agents"
+    Write-Host "  • bee-finops-team - FinOps & regulatory compliance"
+    Write-Host "  • bee-pm-team - Product planning workflows"
+    Write-Host "  • bee-pmo-team - PMO portfolio management specialists"
     Write-Host ""
     Write-Host "To install: claude plugin install <plugin-name>"
 }
@@ -172,7 +172,7 @@ Write-Host ""
 Write-Host "Next steps:"
 Write-Host "  1. Restart Claude Code or start a new session"
 Write-Host "  2. Skills will auto-load via SessionStart hook"
-Write-Host "  3. Try: /bee-default:brainstorm or Skill tool: 'ring-default:using-ring'"
+Write-Host "  3. Try: /bee-default:brainstorm or Skill tool: 'bee-default:using-ring'"
 Write-Host ""
 Write-Host "Marketplace commands:"
 Write-Host "  claude plugin marketplace list    # View configured marketplaces"

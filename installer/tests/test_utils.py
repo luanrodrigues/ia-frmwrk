@@ -870,7 +870,7 @@ class TestInstallManifest:
             files={"test.md": "abc123"}
         )
 
-        manifest_path = tmp_path / ".ring-manifest.json"
+        manifest_path = tmp_path / ".bee-manifest.json"
         manifest.save(manifest_path)
 
         loaded = InstallManifest.load(manifest_path)
@@ -922,12 +922,12 @@ class TestGetManifestPath:
     """Tests for get_manifest_path() function."""
 
     def test_returns_manifest_path(self, tmp_path):
-        """get_manifest_path() should return .ring-manifest.json path."""
+        """get_manifest_path() should return .bee-manifest.json path."""
         from ring_installer.utils.version import get_manifest_path
 
         path = get_manifest_path(tmp_path)
 
-        assert path == tmp_path / ".ring-manifest.json"
+        assert path == tmp_path / ".bee-manifest.json"
 
 
 class TestCheckForUpdates:

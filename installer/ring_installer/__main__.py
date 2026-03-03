@@ -332,7 +332,7 @@ def cmd_check(args: argparse.Namespace) -> int:
         print()
 
     if any_updates:
-        print("Run 'ring-installer update' to apply updates.")
+        print("Run 'bee-installer update' to apply updates.")
         return 0
     else:
         print("All platforms are up to date.")
@@ -553,7 +553,7 @@ def cmd_platforms(args: argparse.Namespace) -> int:
 def main() -> int:
     """Main entry point for the CLI."""
     parser = argparse.ArgumentParser(
-        prog="ring-installer",
+        prog="bee-installer",
         description="Ring multi-platform AI agent skill installer",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""

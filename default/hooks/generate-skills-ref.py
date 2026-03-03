@@ -24,7 +24,7 @@ from typing import Dict, List, Optional, Any
 CATEGORIES = {
     'Pre-Dev Workflow': [r'^pre-dev-'],
     'Testing & Debugging': [r'^test-', r'-debugging$', r'^condition-', r'^defense-', r'^root-cause'],
-    'Collaboration': [r'-review$', r'^dispatching-', r'^sharing-'],
+    'Collaboration': [r'-review$', r'^dispatching-', r'^shabee-'],
     'Planning & Execution': [r'^brainstorming$', r'^writing-plans$', r'^executing-plans$', r'-worktrees$', r'^subagent-driven'],
     'Meta Skills': [r'^using-', r'^writing-skills$', r'^testing-skills', r'^testing-agents'],
 }

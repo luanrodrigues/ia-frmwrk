@@ -66,7 +66,7 @@ Target: "account creation"
 
 ## Process Details
 
-This command invokes the `ring:exploring-codebase` skill which handles:
+This command invokes the `ring:explobee-codebase` skill which handles:
 
 ### Phase 1: Discovery Pass (3-4 parallel agents)
 
@@ -258,7 +258,7 @@ Recommendations based on your goal (implementation, debugging, or learning)
 | `/bee:brainstorm` | Use ring:explore-codebase in Phase 1 for context |
 | `/bee:write-plan` | Use ring:explore-codebase before planning implementation |
 | `/bee:execute-plan` | Use if plan execution reveals gaps in understanding |
-| `ring:exploring-codebase` | Underlying skill with full logic and prompts |
+| `ring:explobee-codebase` | Underlying skill with full logic and prompts |
 | `ring:dispatching-parallel-agents` | Pattern used twice (discovery + deep dive) |
 | `ring:systematic-debugging` | Use ring:explore-codebase before debugging |
 
@@ -406,7 +406,7 @@ Ready to refine design? Use /bee:brainstorm
 **This command MUST load the skill for complete workflow execution.**
 
 ```
-Use Skill tool: ring:exploring-codebase
+Use Skill tool: ring:explobee-codebase
 ```
 
 The skill contains the complete workflow with:

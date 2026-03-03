@@ -14,7 +14,7 @@ trigger: |
 skip_when: |
   - Portfolio/project status → use executive-reporting
   - Risk/resource analysis → use risk-management/resource-allocation
-  - Technical documentation → use ring-tw-team
+  - Technical documentation → use bee-tw-team
 
 related:
   complementary: [executive-reporting, portfolio-planning]

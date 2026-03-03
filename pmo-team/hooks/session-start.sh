@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2034  # Unused variables OK for exported config
 set -euo pipefail
-# Session start hook for ring-pmo-team plugin
+# Session start hook for bee-pmo-team plugin
 # Dynamically generates quick reference for PMO specialist agents
 
 # Validate CLAUDE_PLUGIN_ROOT is set and reasonable (when used via hooks)
@@ -49,7 +49,7 @@ if [ -f "$SHARED_UTIL" ] && command -v python3 &>/dev/null; then
 
   if [ -n "$agents_table" ]; then
     # Build the context message
-    context="<ring-pmo-team-system>
+    context="<bee-pmo-team-system>
 **PMO Specialists Available**
 
 Use via Task tool with \`subagent_type\` and \`model=\"opus\"\`:
@@ -60,8 +60,8 @@ ${agents_table}
 
 | Team | Focus | Scope |
 |------|-------|-------|
-| \`ring-pm-team\` | Single feature planning | PRD, TRD, task breakdown |
-| \`ring-pmo-team\` | Portfolio governance | Multi-project, resources, executive reporting |
+| \`bee-pm-team\` | Single feature planning | PRD, TRD, task breakdown |
+| \`bee-pmo-team\` | Portfolio governance | Multi-project, resources, executive reporting |
 
 **Commands:**
 - \`/bee-pmo-team:portfolio-review\` - Full portfolio health review
@@ -69,7 +69,7 @@ ${agents_table}
 - \`/bee-pmo-team:delivery-report\` - Squad delivery report from Git analysis (engineering focus)
 - \`/bee-pmo-team:dependency-analysis\` - Cross-project dependencies
 
-For full details: Skill tool with \"ring-pmo-team:using-pmo-team\"
+For full details: Skill tool with \"bee-pmo-team:using-pmo-team\"
 </bee-pmo-team-system>"
 
     # Escape for JSON using shared utility
@@ -99,7 +99,7 @@ else
 {
   "hookSpecificOutput": {
     "hookEventName": "SessionStart",
-    "additionalContext": "<ring-pmo-team-system>\n**PMO Specialists Available**\n\n6 specialists for portfolio-level management:\n- portfolio-manager\n- resource-planner\n- governance-specialist\n- risk-analyst\n- executive-reporter\n- delivery-reporter\n\nFor full list: Skill tool with \"ring-pmo-team:using-pmo-team\"\n</bee-pmo-team-system>"
+    "additionalContext": "<bee-pmo-team-system>\n**PMO Specialists Available**\n\n6 specialists for portfolio-level management:\n- portfolio-manager\n- resource-planner\n- governance-specialist\n- risk-analyst\n- executive-reporter\n- delivery-reporter\n\nFor full list: Skill tool with \"bee-pmo-team:using-pmo-team\"\n</bee-pmo-team-system>"
   }
 }
 EOF

@@ -15,7 +15,7 @@ This module covers frontend performance testing patterns for Vue 3 / Nuxt 3 appl
 | 1 | [Core Web Vitals](#core-web-vitals-mandatory) | LCP, CLS, INP thresholds |
 | 2 | [Lighthouse Score](#lighthouse-score-mandatory) | Performance score requirements |
 | 3 | [Bundle Analysis](#bundle-analysis-mandatory) | Bundle size monitoring |
-| 4 | [Nuxt Rendering Audit](#nuxt-rendering-audit-mandatory) | SSR vs CSR, useLazyFetch, useAsyncData optimization |
+| 4 | [Nuxt Rendering Audit](#nuxt-rendebee-audit-mandatory) | SSR vs CSR, useLazyFetch, useAsyncData optimization |
 | 5 | [Anti-Pattern Detection](#anti-pattern-detection-mandatory) | Performance anti-patterns from frontend-vuejs.md |
 
 **Meta-sections:** [Output Format (Gate 6 - Performance Testing)](#output-format-gate-6---performance-testing), [Anti-Rationalization Table](#anti-rationalization-table-performance-testing)

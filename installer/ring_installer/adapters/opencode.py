@@ -43,7 +43,7 @@ class OpenCodeAdapter(PlatformAdapter):
     Limitations:
     - Hooks are NOT supported (OpenCode uses plugin-based hooks)
     - Command argument-hint field is NOT supported
-    - Some Ring-specific frontmatter fields are stripped
+    - Some bee-specific frontmatter fields are stripped
     """
 
     platform_id = "opencode"

@@ -12,13 +12,13 @@ Quick reference guide for the Ring skills library and workflow system. This mono
 │                     (monorepo: .claude-plugin/marketplace.json)                    │
 │                                                                                    │
 │  ┌───────────────┐  ┌───────────────┐  ┌───────────────┐  ┌───────────────┐      │
-│  │ ring-default  │  │ ring-dev-team │  │ ring-pm-team  │  │ring-finops-   │      │
+│  │ bee-default  │  │ bee-dev-team │  │ bee-pm-team  │  │bee-finops-   │      │
 │  │  Skills(26)   │  │  Skills(21)   │  │  Skills(13)   │  │  team         │      │
 │  │  Agents(8)    │  │  Agents(11)   │  │  Agents(4)    │  │  Skills(7)    │      │
 │  │  Cmds(13)     │  │  Cmds(7)      │  │  Cmds(3)      │  │  Agents(3)    │      │
 │  └───────────────┘  └───────────────┘  └───────────────┘  └───────────────┘      │
 │  ┌───────────────┐  ┌───────────────┐                                            │
-│  │ ring-tw-team  │  │ ring-pmo-team │                                            │
+│  │ bee-tw-team  │  │ bee-pmo-team │                                            │
 │  │  Skills(7)    │  │  Skills(9)    │                                            │
 │  │  Agents(3)    │  │  Agents(6)    │                                            │
 │  │  Cmds(3)      │  │  Cmds(4)      │                                            │
@@ -109,7 +109,7 @@ Commands are invoked directly: `/command-name`.
 | `/bee:create-handoff [name]` | Create handoff document before /clear | `/bee:create-handoff auth-refactor`                   |
 | `/bee:resume-handoff [path]` | Resume from handoff after /clear      | `/bee:resume-handoff docs/handoffs/auth-refactor/...` |
 
-### Development Cycle (ring-dev-team)
+### Development Cycle (bee-dev-team)
 
 | Command                     | Use Case                           | Example                                 |
 | --------------------------- | ---------------------------------- | --------------------------------------- |
@@ -129,7 +129,7 @@ Commands are invoked directly: `/command-name`.
 | `/bee:write-api [endpoint]` | Start writing API documentation  | `/bee:write-api POST /accounts`   |
 | `/bee:review-docs [file]`   | Review documentation for quality | `/bee:review-docs docs/guide.md`  |
 
-### PMO Portfolio (ring-pmo-team)
+### PMO Portfolio (bee-pmo-team)
 
 | Command                             | Use Case                         | Example                                    |
 | ----------------------------------- | -------------------------------- | ------------------------------------------ |
@@ -171,7 +171,7 @@ Each skill has structured frontmatter that helps Claude Code determine which ski
 
 Invoke via `Task tool with subagent_type: "..."`.
 
-### Code Review (ring-default)
+### Code Review (bee-default)
 
 **Always dispatch all 6 in parallel** (single message, 6 Task calls):
 
@@ -186,14 +186,14 @@ Invoke via `Task tool with subagent_type: "..."`.
 
 **Example:** Before merging, run all 6 parallel reviewers via `/bee:codereview src/`
 
-### Planning & Analysis (ring-default)
+### Planning & Analysis (bee-default)
 
 | Agent                    | Purpose                                                  | Model |
 | ------------------------ | -------------------------------------------------------- | ----- |
 | `ring:write-plan`        | Generate implementation plans for zero-context execution | Opus  |
 | `ring:codebase-explorer` | Deep architecture analysis (vs `Explore` for speed)      | Opus  |
 
-### Developer Specialists (ring-dev-team)
+### Developer Specialists (bee-dev-team)
 
 Use when you need expert depth in specific domains:
 
@@ -211,7 +211,7 @@ Use when you need expert depth in specific domains:
 | `ring:sre`                              | Site reliability & ops       | Monitoring, alerting, incident response, SLOs      |
 | `ring:ui-engineer`                      | UI component specialist      | Design systems, accessibility, React               |
 
-**Standards Compliance Output:** All ring-dev-team agents include a `## Standards Compliance` output section with conditional requirement:
+**Standards Compliance Output:** All bee-dev-team agents include a `## Standards Compliance` output section with conditional requirement:
 
 | Invocation Context      | Standards Compliance | Trigger                                   |
 | ----------------------- | -------------------- | ----------------------------------------- |
@@ -238,7 +238,7 @@ Use when you need expert depth in specific domains:
 
 **Cross-references:** CLAUDE.md (Standards Compliance section), `dev-team/skills/dev-refactor/SKILL.md`
 
-### Product Planning Research (ring-pm-team)
+### Product Planning Research (bee-pm-team)
 
 For best practices research and repository analysis:
 
@@ -249,7 +249,7 @@ For best practices research and repository analysis:
 | `ring:repo-research-analyst`     | Repository analysis              | Codebase patterns, structure analysis   |
 | `ring:product-designer`          | Product design and UX research   | UX specifications, user validation, design review |
 
-### Technical Writing (ring-tw-team)
+### Technical Writing (bee-tw-team)
 
 For documentation creation and review:
 
@@ -259,7 +259,7 @@ For documentation creation and review:
 | `ring:api-writer`        | API reference documentation  | Endpoints, schemas, examples         |
 | `ring:docs-reviewer`     | Documentation quality review | Voice, tone, structure, completeness |
 
-### Regulatory & FinOps (ring-finops-team)
+### Regulatory & FinOps (bee-finops-team)
 
 For Brazilian financial compliance workflows and cost analysis:
 
@@ -269,7 +269,7 @@ For Brazilian financial compliance workflows and cost analysis:
 | `ring:finops-automation`             | Template generation            | Create .tpl files (Gate 3)                      |
 | `ring:infrastructure-cost-estimator` | Cost estimation and analysis   | Infrastructure cost planning and optimization   |
 
-### PMO Specialists (ring-pmo-team)
+### PMO Specialists (bee-pmo-team)
 
 For portfolio-level project management and oversight:
 

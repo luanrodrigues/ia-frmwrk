@@ -114,7 +114,7 @@ categorize_skill() {
     case "$dir" in
         pre-dev-*) echo "Pre-Dev Workflow" ;;
         test-*|*-debugging|condition-*|defense-*|root-cause*) echo "Testing & Debugging" ;;
-        *-review|dispatching-*|sharing-*) echo "Collaboration" ;;
+        *-review|dispatching-*|shabee-*) echo "Collaboration" ;;
         brainstorming|writing-plans|executing-plans|*-worktrees|subagent-driven*) echo "Planning & Execution" ;;
         using-*|writing-skills|testing-skills*|testing-agents*) echo "Meta Skills" ;;
         *) echo "Other" ;;

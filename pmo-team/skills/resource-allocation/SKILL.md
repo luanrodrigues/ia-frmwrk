@@ -11,8 +11,8 @@ trigger: |
   - Skills gap analysis
 
 skip_when: |
-  - Single project staffing → use ring-pm-team
-  - Cost analysis → use ring-finops-team
+  - Single project staffing → use bee-pm-team
+  - Cost analysis → use bee-finops-team
   - Project status → use project-health-check
 
 related:

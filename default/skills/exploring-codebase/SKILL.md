@@ -1,5 +1,5 @@
 ---
-name: ring:exploring-codebase
+name: ring:explobee-codebase
 description: |
   Autonomous two-phase codebase exploration - first discovers natural perspectives
   (layers, components, boundaries), then dispatches adaptive deep-dive explorers
@@ -39,7 +39,7 @@ Traditional exploration assumes structure upfront or explores sequentially. This
 
 **MANDATORY ANNOUNCEMENT at start:**
 
-"I'm using the ring:exploring-codebase skill to autonomously discover and explore the codebase structure.
+"I'm using the ring:explobee-codebase skill to autonomously discover and explore the codebase structure.
 
 Before proceeding, I've checked the Red Flags table and confirmed:
 - [X] Production pressure makes me WANT to skip discovery → Using skill anyway
@@ -1093,10 +1093,10 @@ Based on autonomous exploration:
 
 | Skill | When to use together |
 |-------|----------------------|
-| **ring:brainstorming** | Use ring:exploring-codebase in Phase 1 (Understanding) to gather context |
-| **ring:writing-plans** | Use ring:exploring-codebase before creating implementation plans |
-| **ring:executing-plans** | Use ring:exploring-codebase if plan execution reveals gaps |
-| **ring:systematic-debugging** | Use ring:exploring-codebase to understand system before debugging |
+| **ring:brainstorming** | Use ring:explobee-codebase in Phase 1 (Understanding) to gather context |
+| **ring:writing-plans** | Use ring:explobee-codebase before creating implementation plans |
+| **ring:executing-plans** | Use ring:explobee-codebase if plan execution reveals gaps |
+| **ring:systematic-debugging** | Use ring:explobee-codebase to understand system before debugging |
 | **ring:dispatching-parallel-agents** | This skill is built on that pattern (twice!) |
 
 ## Output Format

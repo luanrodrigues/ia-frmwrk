@@ -1,57 +1,57 @@
-# Ring-finops-team Changelog
+# bee-finops-team Changelog
 
 ## [0.10.1](https://github.com/LerianStudio/bee/releases/tag/bee-finops-team@0.10.1)
 
 - Improvements:
-  - Updated CHANGELOG for ring-finops-team to version v0.10.0.
+  - Updated CHANGELOG for bee-finops-team to version v0.10.0.
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...ring-finops-team@0.10.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...bee-finops-team@0.10.1)
 
 ---
 
 ## [0.10.1](https://github.com/LerianStudio/bee/releases/tag/bee-finops-team@0.10.1)
 
 - Improvements:
-  - Updated CHANGELOG for ring-finops-team to version v0.10.0.
+  - Updated CHANGELOG for bee-finops-team to version v0.10.0.
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...ring-finops-team@0.10.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...bee-finops-team@0.10.1)
 
 ---
 
 ## [0.10.1](https://github.com/LerianStudio/bee/releases/tag/bee-finops-team@0.10.1)
 
 - Improvements:
-  - Updated CHANGELOG for ring-finops-team to version v0.10.0.
+  - Updated CHANGELOG for bee-finops-team to version v0.10.0.
   
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...ring-finops-team@0.10.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...bee-finops-team@0.10.1)
 
 ---
 
 ## [0.10.1](https://github.com/LerianStudio/bee/releases/tag/bee-finops-team@0.10.1)
 
 - Improvements:
-  - Updated CHANGELOG for ring-finops-team to version v0.10.0.
+  - Updated CHANGELOG for bee-finops-team to version v0.10.0.
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...ring-finops-team@0.10.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...bee-finops-team@0.10.1)
 
 ---
 
 ## [0.10.1](https://github.com/LerianStudio/bee/releases/tag/bee-finops-team@0.10.1)
 
 - Improvements:
-  - Updated CHANGELOG for ring-finops-team to version v0.10.0.
+  - Updated CHANGELOG for bee-finops-team to version v0.10.0.
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...ring-finops-team@0.10.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...bee-finops-team@0.10.1)
 
 ---
 
@@ -63,7 +63,7 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...ring-finops-team@0.10.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...bee-finops-team@0.10.1)
 
 ---
 
@@ -75,85 +75,85 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...ring-finops-team@0.10.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...bee-finops-team@0.10.1)
 
 ---
 
 ## [0.10.1](https://github.com/LerianStudio/bee/releases/tag/bee-finops-team@0.10.1)
 
 - Improvements:
-  - Updated CHANGELOG for ring-finops-team to v0.10.0.
+  - Updated CHANGELOG for bee-finops-team to v0.10.0.
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...ring-finops-team@0.10.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...bee-finops-team@0.10.1)
 
 ---
 
 ## [0.10.1](https://github.com/LerianStudio/bee/releases/tag/bee-finops-team@0.10.1)
 
 - Improvements:
-  - Updated CHANGELOG for ring-finops-team to version v0.10.0.
+  - Updated CHANGELOG for bee-finops-team to version v0.10.0.
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...ring-finops-team@0.10.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...bee-finops-team@0.10.1)
 
 ---
 
 ## [0.10.1](https://github.com/LerianStudio/bee/releases/tag/bee-finops-team@0.10.1)
 
 - Improvements:
-  - Updated CHANGELOG for ring-finops-team to version v0.10.0.
+  - Updated CHANGELOG for bee-finops-team to version v0.10.0.
   
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...ring-finops-team@0.10.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...bee-finops-team@0.10.1)
 
 ---
 
 ## [0.10.1](https://github.com/LerianStudio/bee/releases/tag/bee-finops-team@0.10.1)
 
 - Improvements:
-  - Updated CHANGELOG for ring-finops-team to version v0.10.0.
+  - Updated CHANGELOG for bee-finops-team to version v0.10.0.
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...ring-finops-team@0.10.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...bee-finops-team@0.10.1)
 
 ---
 
 ## [0.10.1](https://github.com/LerianStudio/bee/releases/tag/bee-finops-team@0.10.1)
 
 - Improvements:
-  - Updated CHANGELOG for ring-finops-team to version v0.10.0.
+  - Updated CHANGELOG for bee-finops-team to version v0.10.0.
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...ring-finops-team@0.10.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...bee-finops-team@0.10.1)
 
 ---
 
 ## [0.10.1](https://github.com/LerianStudio/bee/releases/tag/bee-finops-team@0.10.1)
 
 - Improvements:
-  - Updated CHANGELOG for ring-finops-team to version v0.10.0.
+  - Updated CHANGELOG for bee-finops-team to version v0.10.0.
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...ring-finops-team@0.10.1)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.10.0...bee-finops-team@0.10.1)
 
 ---
 
 ## [0.10.0](https://github.com/LerianStudio/bee/releases/tag/bee-finops-team@0.10.0)
 
 - Features:
-  - Added GPT Changelog workflow for ring-finops-team.
+  - Added GPT Changelog workflow for bee-finops-team.
   - Created initial CHANGELOG files for teams header.
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.9.4...ring-finops-team@0.10.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.9.4...bee-finops-team@0.10.0)
 
 ---
 
@@ -164,110 +164,110 @@ Contributors: @gui.rodrigues
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.9.4...ring-finops-team@0.10.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.9.4...bee-finops-team@0.10.0)
 
 ---
 
 ## [0.10.0](https://github.com/LerianStudio/bee/releases/tag/bee-finops-team@0.10.0)
 
 - Features:
-  - Added GPT Changelog workflow for ring-finops-team.
-  - Created initial CHANGELOG files for ring-finops-team.
+  - Added GPT Changelog workflow for bee-finops-team.
+  - Created initial CHANGELOG files for bee-finops-team.
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.9.4...ring-finops-team@0.10.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.9.4...bee-finops-team@0.10.0)
 
 ---
 
 ## [0.10.0](https://github.com/LerianStudio/bee/releases/tag/bee-finops-team@0.10.0)
 
 - Features:
-  - Added GPT Changelog workflow for ring-finops-team.
-  - Created initial CHANGELOG files for ring-finops-team.
+  - Added GPT Changelog workflow for bee-finops-team.
+  - Created initial CHANGELOG files for bee-finops-team.
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.9.4...ring-finops-team@0.10.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.9.4...bee-finops-team@0.10.0)
 
 ---
 
 ## [0.10.0](https://github.com/LerianStudio/bee/releases/tag/bee-finops-team@0.10.0)
 
 - Features:
-  - Added GPT Changelog workflow for ring-finops-team.
+  - Added GPT Changelog workflow for bee-finops-team.
   - Created initial CHANGELOG files for teams header.
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.9.4...ring-finops-team@0.10.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.9.4...bee-finops-team@0.10.0)
 
 ---
 
 ## [0.10.0](https://github.com/LerianStudio/bee/releases/tag/bee-finops-team@0.10.0)
 
 - Features:
-  - Added GPT Changelog workflow for ring-finops-team.
+  - Added GPT Changelog workflow for bee-finops-team.
   - Introduced initial CHANGELOG files for teams header.
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.9.4...ring-finops-team@0.10.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.9.4...bee-finops-team@0.10.0)
 
 ---
 
 ## [0.10.0](https://github.com/LerianStudio/bee/releases/tag/bee-finops-team@0.10.0)
 
 - Features:
-  - Added GPT Changelog workflow for ring-finops-team.
+  - Added GPT Changelog workflow for bee-finops-team.
   - Introduced initial CHANGELOG files for teams header.
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.9.4...ring-finops-team@0.10.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.9.4...bee-finops-team@0.10.0)
 
 ---
 
 ## [0.10.0](https://github.com/LerianStudio/bee/releases/tag/bee-finops-team@0.10.0)
 
 - Features:
-  - Added GPT Changelog workflow and initial CHANGELOG files for the ring-finops-team.
+  - Added GPT Changelog workflow and initial CHANGELOG files for the bee-finops-team.
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.9.4...ring-finops-team@0.10.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.9.4...bee-finops-team@0.10.0)
 
 ---
 
 ## [0.10.0](https://github.com/LerianStudio/bee/releases/tag/bee-finops-team@0.10.0)
 
 - **Features**
-  - Added GPT Changelog workflow and initial CHANGELOG files for the ring-finops-team.
+  - Added GPT Changelog workflow and initial CHANGELOG files for the bee-finops-team.
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.9.4...ring-finops-team@0.10.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.9.4...bee-finops-team@0.10.0)
 
 ---
 
 ## [0.10.0](https://github.com/LerianStudio/bee/releases/tag/bee-finops-team@0.10.0)
 
 - Features:
-  - Added GPT Changelog workflow for ring-finops-team.
-  - Created initial CHANGELOG files for ring-finops-team.
+  - Added GPT Changelog workflow for bee-finops-team.
+  - Created initial CHANGELOG files for bee-finops-team.
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.9.4...ring-finops-team@0.10.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.9.4...bee-finops-team@0.10.0)
 
 ---
 
 ## [0.10.0](https://github.com/LerianStudio/bee/releases/tag/bee-finops-team@0.10.0)
 
 - Features:
-  - Added GPT Changelog workflow and initial CHANGELOG files for ring-finops-team.
+  - Added GPT Changelog workflow and initial CHANGELOG files for bee-finops-team.
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.9.4...ring-finops-team@0.10.0)
+[Compare changes](https://github.com/LerianStudio/bee/compare/bee-finops-team@0.9.4...bee-finops-team@0.10.0)
 

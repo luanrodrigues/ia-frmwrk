@@ -366,7 +366,7 @@ class ClineAdapter(PlatformAdapter):
         """
         result = body
 
-        # Replace Ring-specific terminology with Cline equivalents
+        # Replace bee-specific terminology with Cline equivalents
         replacements = [
             # Tool references
             ("Task tool", "sub-prompt"),

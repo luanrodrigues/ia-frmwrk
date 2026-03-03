@@ -41,7 +41,7 @@ All Ring components use the unified `ring:` prefix. Plugin differentiation is ha
 - ✅ `ring:code-reviewer`
 - ✅ `ring:backend-engineer-golang`
 - ❌ `<missing ring prefix>` (FORBIDDEN: omitting the `ring:` prefix)
-- ❌ `ring-default:ring:code-reviewer` (deprecated plugin-specific prefix)
+- ❌ `bee-default:ring:code-reviewer` (deprecated plugin-specific prefix)
 
 ### 5. Standards-Agent Synchronization (MUST CHECK)
 
@@ -418,12 +418,12 @@ Ring is a comprehensive skills library and workflow system for AI agents that en
 
 **Active Plugins:**
 
-- **ring-default**: 26 core skills, 13 slash commands, 8 specialized agents
-- **ring-dev-team**: 21 development skills, 7 slash commands, 11 developer agents (Backend Go, Backend TypeScript, DevOps, Frontend TypeScript, Frontend Designer, Frontend Engineer, QA Backend, QA Frontend, SRE, UI Engineer, Prompt Quality Reviewer)
-- **ring-pm-team**: 13 product management skills, 4 research agents, 3 slash commands (includes delivery planning + status tracking + Product Designer)
-- **ring-pmo-team**: 9 PMO skills, 4 slash commands, 6 PMO agents (Portfolio Manager, Resource Planner, Risk Analyst, Governance Specialist, Executive Reporter, Delivery Reporter)
-- **ring-finops-team**: 7 regulatory skills, 3 FinOps agents (Analyzer, Automation, Infrastructure Cost Estimator)
-- **ring-tw-team**: 7 technical writing skills, 3 slash commands, 3 documentation agents (Functional Writer, API Writer, Docs Reviewer)
+- **bee-default**: 26 core skills, 13 slash commands, 8 specialized agents
+- **bee-dev-team**: 21 development skills, 7 slash commands, 11 developer agents (Backend Go, Backend TypeScript, DevOps, Frontend TypeScript, Frontend Designer, Frontend Engineer, QA Backend, QA Frontend, SRE, UI Engineer, Prompt Quality Reviewer)
+- **bee-pm-team**: 13 product management skills, 4 research agents, 3 slash commands (includes delivery planning + status tracking + Product Designer)
+- **bee-pmo-team**: 9 PMO skills, 4 slash commands, 6 PMO agents (Portfolio Manager, Resource Planner, Risk Analyst, Governance Specialist, Executive Reporter, Delivery Reporter)
+- **bee-finops-team**: 7 regulatory skills, 3 FinOps agents (Analyzer, Automation, Infrastructure Cost Estimator)
+- **bee-tw-team**: 7 technical writing skills, 3 slash commands, 3 documentation agents (Functional Writer, API Writer, Docs Reviewer)
 
 **Note:** Plugin versions are managed in `.claude-plugin/marketplace.json` (current marketplace version: `0.256.0`)
 
@@ -449,12 +449,12 @@ See [README.md](README.md#installation) for detailed installation instructions.
 
 | Plugin           | Path           | Contents                         |
 | ---------------- | -------------- | -------------------------------- |
-| ring-default     | `default/`     | 26 skills, 8 agents, 13 commands |
-| ring-dev-team    | `dev-team/`    | 21 skills, 11 agents, 7 commands |
-| ring-pm-team     | `pm-team/`     | 13 skills, 4 agents, 3 commands  |
-| ring-pmo-team    | `pmo-team/`    | 9 skills, 6 agents, 4 commands   |
-| ring-finops-team | `finops-team/` | 7 skills, 3 agents               |
-| ring-tw-team     | `tw-team/`     | 7 skills, 3 agents, 3 commands   |
+| bee-default     | `default/`     | 26 skills, 8 agents, 13 commands |
+| bee-dev-team    | `dev-team/`    | 21 skills, 11 agents, 7 commands |
+| bee-pm-team     | `pm-team/`     | 13 skills, 4 agents, 3 commands  |
+| bee-pmo-team    | `pmo-team/`    | 9 skills, 6 agents, 4 commands   |
+| bee-finops-team | `finops-team/` | 7 skills, 3 agents               |
+| bee-tw-team     | `tw-team/`     | 7 skills, 3 agents, 3 commands   |
 
 Each plugin contains: `skills/`, `agents/`, `commands/`, `hooks/`
 
@@ -529,7 +529,7 @@ See [docs/WORKFLOWS.md](docs/WORKFLOWS.md) for detailed instructions.
 
 #### Agent/Skill/Command Invocation
 
-See [Unified Ring Namespace](#4-unified-ring-namespace-mandatory) above for invocation format. MUST use `ring:{component}` (e.g., `ring:code-reviewer`, `ring:backend-engineer-golang`).
+See [Unified Ring Namespace](#4-unified-bee-namespace-mandatory) above for invocation format. MUST use `ring:{component}` (e.g., `ring:code-reviewer`, `ring:backend-engineer-golang`).
 
 ---
 
@@ -587,7 +587,7 @@ The system loads at SessionStart (from `default/` plugin):
 **Monorepo Context:**
 
 - Repository: Monorepo marketplace with multiple plugin collections
-- Active plugins: 6 (`ring-default`, `ring-dev-team`, `ring-pm-team`, `ring-pmo-team`, `ring-finops-team`, `ring-tw-team`)
+- Active plugins: 6 (`bee-default`, `bee-dev-team`, `bee-pm-team`, `bee-pmo-team`, `bee-finops-team`, `bee-tw-team`)
 - Plugin versions: See `.claude-plugin/marketplace.json`
 - Core plugin: `default/` (26 skills, 8 agents, 13 commands)
 - Developer agents: `dev-team/` (21 skills, 11 agents, 7 commands)
@@ -649,6 +649,6 @@ Using-* Skills (plugin introductions):
 - [ ] All skill invocations use `ring:skill-name` format
 - [ ] All command invocations use `/{command-name}` format
 - [ ] No bare agent/skill names in invocation contexts (must have ring: prefix)
-- [ ] No deprecated `ring-{plugin}:` format used
+- [ ] No deprecated `bee-{plugin}:` format used
 
 **MUST use unified namespace:** `ring:{component}` (e.g., `ring:code-reviewer`)

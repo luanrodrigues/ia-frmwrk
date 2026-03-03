@@ -20,7 +20,7 @@ skip_when: |
 
 # Using Ring FinOps & Regulatory Agents
 
-The ring-finops-team plugin provides 3 specialized FinOps agents: 2 for Brazilian financial compliance and 1 for infrastructure cost estimation. Use them via `Task tool with subagent_type:`.
+The bee-finops-team plugin provides 3 specialized FinOps agents: 2 for Brazilian financial compliance and 1 for infrastructure cost estimation. Use them via `Task tool with subagent_type:`.
 
 **Remember:** Follow the **ORCHESTRATOR principle** from `ring:using-ring`. Dispatch agents to handle regulatory complexity; don't implement compliance manually.
 
@@ -354,7 +354,7 @@ Generated .tpl files integrate directly with Reporter platform:
 - regulatory-templates-gate2 (Gate 2: Field mapping & validation)
 - regulatory-templates-gate3 (Gate 3: Template generation)
 
-**Note:** If agents are unavailable, check if ring-finops-team is enabled in `.claude-plugin/marketplace.json`.
+**Note:** If agents are unavailable, check if bee-finops-team is enabled in `.claude-plugin/marketplace.json`.
 
 ---
 
@@ -465,6 +465,6 @@ Generated .tpl files integrate directly with Reporter platform:
 
 Dispatch based on your need:
 - General code review → default plugin agents
-- Regulatory compliance → ring-finops-team agents
-- Developer expertise → ring-dev-team agents
-- Feature planning → ring-pm-team agents
+- Regulatory compliance → bee-finops-team agents
+- Developer expertise → bee-dev-team agents
+- Feature planning → bee-pm-team agents

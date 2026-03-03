@@ -12,10 +12,10 @@ trigger: |
   - Executive reporting and dashboards
 
 skip_when: |
-  - Single feature planning → use ring-pm-team
-  - Code implementation → use ring-dev-team
-  - Code review → use ring-default reviewers
-  - Technical writing → use ring-tw-team
+  - Single feature planning → use bee-pm-team
+  - Code implementation → use bee-dev-team
+  - Code review → use bee-default reviewers
+  - Technical writing → use bee-tw-team
 
 related:
   similar: [ring:using-ring, ring:using-pm-team]
@@ -23,7 +23,7 @@ related:
 
 # Using Ring PMO Team
 
-The ring-pmo-team plugin provides 6 specialized PMO agents for portfolio-level management. Use them via `Task tool with subagent_type: "ring:agent-name"`.
+The bee-pmo-team plugin provides 6 specialized PMO agents for portfolio-level management. Use them via `Task tool with subagent_type: "ring:agent-name"`.
 
 See [CLAUDE.md](https://raw.githubusercontent.com/LerianStudio/bee/main/CLAUDE.md) and [ring:using-ring](https://raw.githubusercontent.com/LerianStudio/bee/main/default/skills/using-ring/SKILL.md) for canonical workflow requirements and ORCHESTRATOR principle. This skill introduces pmo-team-specific agents.
 
@@ -35,8 +35,8 @@ See [CLAUDE.md](https://raw.githubusercontent.com/LerianStudio/bee/main/CLAUDE.m
 
 | Team | Focus | Scope |
 |------|-------|-------|
-| **ring-pm-team** | Single feature planning | PRD, TRD, task breakdown for ONE feature |
-| **ring-pmo-team** | Portfolio governance | Multi-project coordination, resources, executive reporting |
+| **bee-pm-team** | Single feature planning | PRD, TRD, task breakdown for ONE feature |
+| **bee-pmo-team** | Portfolio governance | Multi-project coordination, resources, executive reporting |
 
 **Use PMO when:**
 - Managing multiple projects simultaneously
@@ -197,13 +197,13 @@ Task tool:
 - Executive and board reporting
 - Portfolio risk management
 
-### Use PM Team (ring-pm-team) for:
+### Use PM Team (bee-pm-team) for:
 - Single feature planning
 - PRD/TRD creation
 - Task breakdown for one feature
 - Feature-level research
 
-### Use Dev Team (ring-dev-team) for:
+### Use Dev Team (bee-dev-team) for:
 - Code implementation
 - Technical architecture
 - DevOps and infrastructure
@@ -268,7 +268,7 @@ Remember:
 - `/delivery-report` - Generate visual delivery report from Git repositories (squad deliveries)
 - `/dependency-analysis` - Analyze cross-project dependencies
 
-**Note:** Missing agents? Check `.claude-plugin/marketplace.json` for ring-pmo-team plugin.
+**Note:** Missing agents? Check `.claude-plugin/marketplace.json` for bee-pmo-team plugin.
 
 ---
 
@@ -311,13 +311,13 @@ Remember:
 
 ## Integration with Other Plugins
 
-- **ring-default** - ORCHESTRATOR principle for ALL agents
-- **ring-pm-team** - Single feature planning (PMO → PM handoff)
-- **ring-dev-team** - Development execution (PM → Dev handoff)
-- **ring-finops-team** - Financial/regulatory compliance
+- **bee-default** - ORCHESTRATOR principle for ALL agents
+- **bee-pm-team** - Single feature planning (PMO → PM handoff)
+- **bee-dev-team** - Development execution (PM → Dev handoff)
+- **bee-finops-team** - Financial/regulatory compliance
 
 Dispatch based on your need:
-- Portfolio oversight → ring-pmo-team
-- Feature planning → ring-pm-team
-- Code development → ring-dev-team
-- Financial compliance → ring-finops-team
+- Portfolio oversight → bee-pmo-team
+- Feature planning → bee-pm-team
+- Code development → bee-dev-team
+- Financial compliance → bee-finops-team

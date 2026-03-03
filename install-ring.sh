@@ -45,11 +45,11 @@ else
 fi
 echo ""
 
-echo "🔧 Installing/updating ring-default (core plugin - required)..."
-if claude plugin install ring-default 2>&1; then
-    echo "✅ ring-default ready"
+echo "🔧 Installing/updating bee-default (core plugin - required)..."
+if claude plugin install bee-default 2>&1; then
+    echo "✅ bee-default ready"
 else
-    echo "❌ Failed to install ring-default"
+    echo "❌ Failed to install bee-default"
     exit 1
 fi
 echo ""
@@ -65,10 +65,10 @@ if ! command -v curl >/dev/null 2>&1; then
     echo "⚠️  curl not found - showing static plugin list"
     echo ""
     echo "Available plugins (manual installation required):"
-    echo "  • ring-dev-team - Developer role agents"
-    echo "  • ring-finops-team - FinOps & regulatory compliance"
-    echo "  • ring-pm-team - Product planning workflows"
-    echo "  • ring-pmo-team - PMO portfolio management specialists"
+    echo "  • bee-dev-team - Developer role agents"
+    echo "  • bee-finops-team - FinOps & regulatory compliance"
+    echo "  • bee-pm-team - Product planning workflows"
+    echo "  • bee-pmo-team - PMO portfolio management specialists"
     echo ""
     echo "To install: claude plugin install <plugin-name>"
 elif ! command -v jq >/dev/null 2>&1; then
@@ -79,10 +79,10 @@ elif ! command -v jq >/dev/null 2>&1; then
     echo "   • RHEL/Fedora: sudo dnf install jq"
     echo ""
     echo "Available plugins (manual installation required):"
-    echo "  • ring-dev-team - Developer role agents"
-    echo "  • ring-finops-team - FinOps & regulatory compliance"
-    echo "  • ring-pm-team - Product planning workflows"
-    echo "  • ring-pmo-team - PMO portfolio management specialists"
+    echo "  • bee-dev-team - Developer role agents"
+    echo "  • bee-finops-team - FinOps & regulatory compliance"
+    echo "  • bee-pm-team - Product planning workflows"
+    echo "  • bee-pmo-team - PMO portfolio management specialists"
     echo ""
     echo "To install: claude plugin install <plugin-name>"
 else
@@ -97,7 +97,7 @@ else
     fi
 
     if [ -n "$MARKETPLACE_DATA" ]; then
-        # Get list of plugins (excluding ring-default which is already installed)
+        # Get list of plugins (excluding bee-default which is already installed)
         PLUGIN_COUNT=$(echo "$MARKETPLACE_DATA" | jq '.plugins | length')
 
         # Validate PLUGIN_COUNT is numeric
@@ -124,8 +124,8 @@ else
                 continue
             fi
 
-            # Skip ring-default (already installed)
-            if [ "$PLUGIN_NAME" = "ring-default" ]; then
+            # Skip bee-default (already installed)
+            if [ "$PLUGIN_NAME" = "bee-default" ]; then
                 continue
             fi
 
@@ -159,7 +159,7 @@ else
         echo "================================================"
         echo ""
         echo "Installed plugins:"
-        echo "  ✓ ring-default (core - required)"
+        echo "  ✓ bee-default (core - required)"
 
         # Show installation status for each plugin (Bash 3.2 compatible)
         for ((j=0; j<${#PLUGIN_NAMES[@]}; j++)); do
@@ -178,10 +178,10 @@ else
         echo "⚠️  Could not fetch marketplace data, showing static list..."
         echo ""
         echo "Available plugins (manual installation required):"
-        echo "  • ring-dev-team - Developer role agents"
-        echo "  • ring-finops-team - FinOps & regulatory compliance"
-        echo "  • ring-pm-team - Product planning workflows"
-        echo "  • ring-pmo-team - PMO portfolio management specialists"
+        echo "  • bee-dev-team - Developer role agents"
+        echo "  • bee-finops-team - FinOps & regulatory compliance"
+        echo "  • bee-pm-team - Product planning workflows"
+        echo "  • bee-pmo-team - PMO portfolio management specialists"
         echo ""
         echo "To install manually: claude plugin install <plugin-name>"
     fi
@@ -191,7 +191,7 @@ echo ""
 echo "Next steps:"
 echo "  1. Restart Claude Code or start a new session"
 echo "  2. Skills will auto-load via SessionStart hook"
-echo "  3. Try: /bee-default:brainstorm or Skill tool: 'ring-default:using-ring'"
+echo "  3. Try: /bee-default:brainstorm or Skill tool: 'bee-default:using-ring'"
 echo ""
 echo "Marketplace commands:"
 echo "  claude plugin marketplace list    # View configured marketplaces"

@@ -13,7 +13,7 @@ This document is the **single source of truth** for infrastructure cost estimati
 1. [Architecture Overview](#architecture-overview)
 2. [Inputs](#inputs)
    - [Environment Selection](#environment-selection)
-   - [Component Sharing Model](#component-sharing-model-critical-input)
+   - [Component Sharing Model](#component-shabee-model-critical-input)
    - [Dynamic Helm Chart Data](#dynamic-helm-chart-data-from-lerianhelmstudio)
    - [Networking Architecture](#networking-architecture)
 3. [Outputs](#outputs)

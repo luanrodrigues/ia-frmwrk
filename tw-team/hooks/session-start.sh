@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2034  # Unused variables OK for exported config
 set -euo pipefail
-# Session start hook for ring-tw-team plugin
+# Session start hook for bee-tw-team plugin
 # Dynamically generates quick reference for technical writing agents
 
 # Validate CLAUDE_PLUGIN_ROOT is set and reasonable (when used via hooks)
@@ -49,7 +49,7 @@ if [ -f "$SHARED_UTIL" ] && command -v python3 &>/dev/null; then
 
   if [ -n "$agents_table" ]; then
     # Build the context message
-    context="<ring-tw-team-system>
+    context="<bee-tw-team-system>
 **Technical Writing Specialists Available**
 
 Use via Task tool with \`subagent_type\`:
@@ -61,7 +61,7 @@ ${agents_table}
 - Capitalization: Sentence case for headings (only first letter + proper nouns)
 - Structure: Lead with value, short paragraphs, scannable content
 
-For full details: Skill tool with \"ring-tw-team:using-tw-team\"
+For full details: Skill tool with \"bee-tw-team:using-tw-team\"
 </bee-tw-team-system>"
 
     # Escape for JSON using shared utility
@@ -81,7 +81,7 @@ EOF
 {
   "hookSpecificOutput": {
     "hookEventName": "SessionStart",
-    "additionalContext": "<ring-tw-team-system>\n**Technical Writing Specialists Available**\n\nUse via Task tool with `subagent_type`:\n\n| Agent | Expertise |\n|-------|----------|\n| `ring-tw-team:functional-writer` | Guides, tutorials, conceptual docs |\n| `ring-tw-team:api-writer` | API reference, endpoints, schemas |\n| `ring-tw-team:docs-reviewer` | Quality review, voice/tone compliance |\n\n**Documentation Standards:**\n- Voice: Assertive but not arrogant, encouraging, tech-savvy but human\n- Capitalization: Sentence case for headings\n- Structure: Lead with value, short paragraphs, scannable content\n\nFor full details: Skill tool with \"ring-tw-team:using-tw-team\"\n</bee-tw-team-system>"
+    "additionalContext": "<bee-tw-team-system>\n**Technical Writing Specialists Available**\n\nUse via Task tool with `subagent_type`:\n\n| Agent | Expertise |\n|-------|----------|\n| `bee-tw-team:functional-writer` | Guides, tutorials, conceptual docs |\n| `bee-tw-team:api-writer` | API reference, endpoints, schemas |\n| `bee-tw-team:docs-reviewer` | Quality review, voice/tone compliance |\n\n**Documentation Standards:**\n- Voice: Assertive but not arrogant, encouraging, tech-savvy but human\n- Capitalization: Sentence case for headings\n- Structure: Lead with value, short paragraphs, scannable content\n\nFor full details: Skill tool with \"bee-tw-team:using-tw-team\"\n</bee-tw-team-system>"
   }
 }
 EOF
@@ -92,7 +92,7 @@ else
 {
   "hookSpecificOutput": {
     "hookEventName": "SessionStart",
-    "additionalContext": "<ring-tw-team-system>\n**Technical Writing Specialists**\n\n| Agent | Expertise |\n|-------|----------|\n| `ring-tw-team:functional-writer` | Guides, tutorials, conceptual docs |\n| `ring-tw-team:api-writer` | API reference, endpoints, schemas |\n| `ring-tw-team:docs-reviewer` | Quality review, voice/tone compliance |\n\nFor full list: Skill tool with \"ring-tw-team:using-tw-team\"\n</bee-tw-team-system>"
+    "additionalContext": "<bee-tw-team-system>\n**Technical Writing Specialists**\n\n| Agent | Expertise |\n|-------|----------|\n| `bee-tw-team:functional-writer` | Guides, tutorials, conceptual docs |\n| `bee-tw-team:api-writer` | API reference, endpoints, schemas |\n| `bee-tw-team:docs-reviewer` | Quality review, voice/tone compliance |\n\nFor full list: Skill tool with \"bee-tw-team:using-tw-team\"\n</bee-tw-team-system>"
   }
 }
 EOF

@@ -159,11 +159,11 @@ output_schema:
 
 ## Standards Compliance (Conditional Output Section)
 
-The `ring-dev-team` agents include a **Standards Compliance** output section that is conditionally required based on invocation context.
+The `bee-dev-team` agents include a **Standards Compliance** output section that is conditionally required based on invocation context.
 
 ### Schema Definition
 
-All ring-dev-team agents include this in their `output_schema`:
+All bee-dev-team agents include this in their `output_schema`:
 
 ```yaml
 - name: "Standards Compliance"
@@ -200,7 +200,7 @@ If prompt does NOT contain "**MODE: ANALYSIS ONLY**":
 
 ### Affected Agents
 
-All ring-dev-team agents support Standards Compliance:
+All bee-dev-team agents support Standards Compliance:
 
 | Agent | Standards Source | Categories Checked |
 |-------|------------------|-------------------|

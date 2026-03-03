@@ -48,7 +48,7 @@ This document contains detailed workflow instructions for adding skills, agents,
 
 4. Skill auto-loads next SessionStart via `default/hooks/generate-skills-ref.py`
 
-### Production Readiness Audit (ring-default)
+### Production Readiness Audit (bee-default)
 
 The **production-readiness-audit** skill (`ring:production-readiness-audit`) evaluates codebase production readiness across **27 dimensions** in 5 categories. **Invocation:** use the Skill tool or the `/bee:production-readiness-audit` command when preparing for production, conducting security/quality reviews, or assessing technical debt. **Batch behavior:** runs 10 explorer agents per batch and appends results incrementally to a single report file (`docs/audits/production-readiness-{date}-{time}.md`) to avoid context bloat. **Output:** 27-dimension scored report (0–270) with severity ratings and standards cross-reference. Implementation details: [default/skills/production-readiness-audit/SKILL.md](../default/skills/production-readiness-audit/SKILL.md).
 
@@ -64,7 +64,7 @@ The **production-readiness-audit** skill (`ring:production-readiness-audit`) eva
 
    ```json
    {
-     "name": "ring-product-xyz",
+     "name": "bee-product-xyz",
      "description": "Product XYZ specific skills",
      "version": "0.1.0",
      "source": "./product-xyz"
@@ -114,7 +114,7 @@ Each plugin auto-loads a `using-{plugin}` skill via SessionStart hook to introdu
 ### Ring Dev Team Plugin
 
 - `ring:using-dev-team` → 10 specialist developer agents
-- Auto-loads when ring-dev-team plugin is enabled
+- Auto-loads when bee-dev-team plugin is enabled
 - Located: `dev-team/skills/using-dev-team/SKILL.md`
 - Agents (invoke as `ring:{agent-name}`):
   - ring:backend-engineer-golang
@@ -131,14 +131,14 @@ Each plugin auto-loads a `using-{plugin}` skill via SessionStart hook to introdu
 ### Ring PM Team Plugin
 
 - `ring:using-pm-team` → Pre-dev workflow skills (8 gates)
-- Auto-loads when ring-pm-team plugin is enabled
+- Auto-loads when bee-pm-team plugin is enabled
 - Located: `pm-team/skills/using-pm-team/SKILL.md`
 - Skills: 8 pre-dev gates for feature planning
 
 ### Ring TW Team Plugin
 
 - `using-tw-team` → 3 technical writing agents for documentation
-- Auto-loads when ring-tw-team plugin is enabled
+- Auto-loads when bee-tw-team plugin is enabled
 - Located: `tw-team/skills/using-tw-team/SKILL.md`
 - Agents (invoke as `ring:{agent-name}`):
   - ring:functional-writer (guides)
@@ -149,7 +149,7 @@ Each plugin auto-loads a `using-{plugin}` skill via SessionStart hook to introdu
 ### Ring FinOps Team Plugin
 
 - `using-finops-team` → 3 FinOps agents for Brazilian compliance and cost estimation
-- Auto-loads when ring-finops-team plugin is enabled
+- Auto-loads when bee-finops-team plugin is enabled
 - Located: `finops-team/skills/using-finops-team/SKILL.md`
 - Agents (invoke as `{agent-name}`):
   - finops-analyzer (compliance analysis)

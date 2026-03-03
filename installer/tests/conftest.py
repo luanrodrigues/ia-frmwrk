@@ -78,13 +78,13 @@ def tmp_ring_root(tmp_path: Path, fixtures_path: Path) -> Path:
         "version": "1.2.3",
         "plugins": [
             {
-                "name": "ring-default",
+                "name": "bee-default",
                 "description": "Core Ring plugin",
                 "version": "1.0.0",
                 "source": "./default"
             },
             {
-                "name": "ring-test",
+                "name": "bee-test",
                 "description": "Test plugin",
                 "version": "0.1.0",
                 "source": "./test-plugin"
@@ -558,7 +558,7 @@ def create_manifest_file(tmp_path: Path):
     Returns:
         Function to create manifest files in tmp_path.
     """
-    def _create(manifest_data: Dict[str, Any], filename: str = ".ring-manifest.json") -> Path:
+    def _create(manifest_data: Dict[str, Any], filename: str = ".bee-manifest.json") -> Path:
         manifest_path = tmp_path / filename
         with open(manifest_path, "w") as f:
             json.dump(manifest_data, f, indent=2)

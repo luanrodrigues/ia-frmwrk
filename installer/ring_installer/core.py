@@ -435,8 +435,8 @@ def discover_ring_components(ring_path: Path, plugin_names: Optional[List[str]] 
         # Process each plugin in marketplace
         for plugin in marketplace.get("plugins", []):
             name = plugin.get("name", "")
-            # Only strip "ring-" prefix, not from anywhere in the string
-            plugin_name = name[5:] if name.startswith("ring-") else name
+            # Only strip "bee-" prefix, not from anywhere in the string
+            plugin_name = name[5:] if name.startswith("bee-") else name
             source = plugin.get("source", "")
 
             # Check filters

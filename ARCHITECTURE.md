@@ -32,17 +32,17 @@ Ring operates on three core principles:
 │  ┌───────────────────────────────────────────────────────────────────────────┐  │
 │  │                          Ring Marketplace                                  │  │
 │  │  ┌──────────────────────┐  ┌──────────────────────┐                       │  │
-│  │  │ ring-default         │  │ ring-dev-team        │                       │  │
+│  │  │ bee-default         │  │ bee-dev-team        │                       │  │
 │  │  │ Skills(26) Agents(8) │  │ Skills(21) Agents(11)│                       │  │
 │  │  │ Cmds(13) Hooks/Lib   │  │ Cmds(7)              │                       │  │
 │  │  └──────────────────────┘  └──────────────────────┘                       │  │
 │  │  ┌──────────────────────┐  ┌──────────────────────┐                       │  │
-│  │  │ ring-pm-team         │  │ ring-tw-team         │                       │  │
+│  │  │ bee-pm-team         │  │ bee-tw-team         │                       │  │
 │  │  │ Skills(13) Agents(4) │  │ Skills(7) Agents(3)  │                       │  │
 │  │  │ Cmds(3)              │  │ Cmds(3)              │                       │  │
 │  │  └──────────────────────┘  └──────────────────────┘                       │  │
 │  │  ┌──────────────────────┐  ┌──────────────────────┐                       │  │
-│  │  │ ring-finops-team     │  │ ring-pmo-team        │                       │  │
+│  │  │ bee-finops-team     │  │ bee-pmo-team        │                       │  │
 │  │  │ Skills(7) Agents(3)  │  │ Skills(9) Agents(6)  │                       │  │
 │  │  └──────────────────────┘  │ Cmds(4)              │                       │  │
 │  │                            └──────────────────────┘                       │  │
@@ -60,12 +60,12 @@ Ring is organized as a monorepo marketplace with multiple plugin collections:
 ring/                                  # Monorepo root
 ├── .claude-plugin/
 │   └── marketplace.json              # Multi-plugin registry (6 active plugins)
-├── default/                          # Core plugin: ring-default
-├── dev-team/                         # Developer agents: ring-dev-team
-├── finops-team/                      # FinOps & regulatory: ring-finops-team
-├── pm-team/                          # Product planning: ring-pm-team
-├── pmo-team/                         # PMO specialists: ring-pmo-team
-└── tw-team/                          # Technical writing: ring-tw-team
+├── default/                          # Core plugin: bee-default
+├── dev-team/                         # Developer agents: bee-dev-team
+├── finops-team/                      # FinOps & regulatory: bee-finops-team
+├── pm-team/                          # Product planning: bee-pm-team
+├── pmo-team/                         # PMO specialists: bee-pmo-team
+└── tw-team/                          # Technical writing: bee-tw-team
 ```
 
 ### Active Plugins
@@ -74,12 +74,12 @@ _Versions managed in `.claude-plugin/marketplace.json`_
 
 | Plugin               | Description                          | Components                       |
 | -------------------- | ------------------------------------ | -------------------------------- |
-| **ring-default**     | Core skills library                  | 26 skills, 8 agents, 13 commands |
-| **ring-dev-team**    | Developer agents                     | 21 skills, 11 agents, 7 commands |
-| **ring-finops-team** | FinOps regulatory compliance         | 7 skills, 3 agents               |
-| **ring-pm-team**     | Product planning workflows           | 13 skills, 4 agents, 3 commands  |
-| **ring-pmo-team**    | PMO portfolio management specialists | 9 skills, 6 agents, 4 commands   |
-| **ring-tw-team**     | Technical writing specialists        | 7 skills, 3 agents, 3 commands   |
+| **bee-default**     | Core skills library                  | 26 skills, 8 agents, 13 commands |
+| **bee-dev-team**    | Developer agents                     | 21 skills, 11 agents, 7 commands |
+| **bee-finops-team** | FinOps regulatory compliance         | 7 skills, 3 agents               |
+| **bee-pm-team**     | Product planning workflows           | 13 skills, 4 agents, 3 commands  |
+| **bee-pmo-team**    | PMO portfolio management specialists | 9 skills, 6 agents, 4 commands   |
+| **bee-tw-team**     | Technical writing specialists        | 7 skills, 3 agents, 3 commands   |
 
 ## Component Hierarchy
 
@@ -111,7 +111,7 @@ skills/
 
 **Purpose:** Specialized agents that analyze code/designs or provide domain expertise using AI models
 
-**Structure (ring-default plugin):**
+**Structure (bee-default plugin):**
 
 ```
 default/agents/
@@ -125,7 +125,7 @@ default/agents/
 └── codebase-explorer.md       # Deep architecture analysis (`ring:codebase-explorer`)
 ```
 
-**Structure (ring-dev-team plugin):**
+**Structure (bee-dev-team plugin):**
 
 ```
 dev-team/agents/
@@ -142,7 +142,7 @@ dev-team/agents/
 └── ui-engineer.md                     # UI component specialist (`ring:ui-engineer`)
 ```
 
-**Structure (ring-pmo-team plugin):**
+**Structure (bee-pmo-team plugin):**
 
 ```
 pmo-team/agents/
@@ -164,9 +164,9 @@ pmo-team/agents/
 
 **Note:** Parallel review orchestration is handled by the `/bee:codereview` command
 
-**Standards Compliance Output (ring-dev-team agents):**
+**Standards Compliance Output (bee-dev-team agents):**
 
-All ring-dev-team agents include a `## Standards Compliance` section in their output schema:
+All bee-dev-team agents include a `## Standards Compliance` section in their output schema:
 
 ```yaml
 - name: "Standards Compliance"
@@ -326,12 +326,12 @@ default/hooks/
 ```
 .claude-plugin/
 └── marketplace.json    # Multi-plugin registry
-    ├── ring-default     # Core skills library
-    ├── ring-dev-team    # Developer agents
-    ├── ring-finops-team # FinOps regulatory
-    ├── ring-pm-team     # Product planning
-    ├── ring-pmo-team    # PMO specialists
-    └── ring-tw-team     # Technical writing
+    ├── bee-default     # Core skills library
+    ├── bee-dev-team    # Developer agents
+    ├── bee-finops-team # FinOps regulatory
+    ├── bee-pm-team     # Product planning
+    ├── bee-pmo-team    # PMO specialists
+    └── bee-tw-team     # Technical writing
 ```
 
 **marketplace.json Schema:**
@@ -343,37 +343,37 @@ default/hooks/
   "owner": { "name": "...", "email": "..." },
   "plugins": [
     {
-      "name": "ring-default",
+      "name": "bee-default",
       "version": "...",
       "source": "./default",
       "keywords": ["skills", "tdd", "debugging", ...]
     },
     {
-      "name": "ring-dev-team",
+      "name": "bee-dev-team",
       "version": "...",
       "source": "./dev-team",
       "keywords": ["developer", "agents"]
     },
     {
-      "name": "ring-finops-team",
+      "name": "bee-finops-team",
       "version": "...",
       "source": "./finops-team",
       "keywords": ["finops", "regulatory", "compliance"]
     },
     {
-      "name": "ring-pm-team",
+      "name": "bee-pm-team",
       "version": "...",
       "source": "./pm-team",
       "keywords": ["product", "planning"]
     },
     {
-      "name": "ring-pmo-team",
+      "name": "bee-pmo-team",
       "version": "...",
       "source": "./pmo-team",
       "keywords": ["pmo", "portfolio", "governance"]
     },
     {
-      "name": "ring-tw-team",
+      "name": "bee-tw-team",
       "version": "...",
       "source": "./tw-team",
       "keywords": ["technical-writing", "documentation"]
@@ -703,7 +703,7 @@ SKILL.md frontmatter → generate-skills-ref.py → formatted overview → sessi
 2. Register in `.claude-plugin/marketplace.json`:
    ```json
    {
-     "name": "ring-{plugin-name}",
+     "name": "bee-{plugin-name}",
      "version": "0.1.0",
      "source": "./{plugin-name}",
      "keywords": [...]
@@ -796,25 +796,25 @@ _Component counts reflect current state; plugin versions managed in `.claude-plu
 | Component                 | Count      | Location               |
 | ------------------------- | ---------- | ---------------------- |
 | Active Plugins            | 6          | All plugin directories |
-| Skills (ring-default)     | 26         | `default/skills/`      |
-| Skills (ring-dev-team)    | 21         | `dev-team/skills/`     |
-| Skills (ring-finops-team) | 7          | `finops-team/skills/`  |
-| Skills (ring-pm-team)     | 13         | `pm-team/skills/`      |
-| Skills (ring-pmo-team)    | 9          | `pmo-team/skills/`     |
-| Skills (ring-tw-team)     | 7          | `tw-team/skills/`      |
+| Skills (bee-default)     | 26         | `default/skills/`      |
+| Skills (bee-dev-team)    | 21         | `dev-team/skills/`     |
+| Skills (bee-finops-team) | 7          | `finops-team/skills/`  |
+| Skills (bee-pm-team)     | 13         | `pm-team/skills/`      |
+| Skills (bee-pmo-team)    | 9          | `pmo-team/skills/`     |
+| Skills (bee-tw-team)     | 7          | `tw-team/skills/`      |
 | **Total Skills**          | **83**     | **All plugins**        |
-| Agents (ring-default)     | 8          | `default/agents/`      |
-| Agents (ring-dev-team)    | 11         | `dev-team/agents/`     |
-| Agents (ring-finops-team) | 3          | `finops-team/agents/`  |
-| Agents (ring-pm-team)     | 4          | `pm-team/agents/`      |
-| Agents (ring-pmo-team)    | 6          | `pmo-team/agents/`     |
-| Agents (ring-tw-team)     | 3          | `tw-team/agents/`      |
+| Agents (bee-default)     | 8          | `default/agents/`      |
+| Agents (bee-dev-team)    | 11         | `dev-team/agents/`     |
+| Agents (bee-finops-team) | 3          | `finops-team/agents/`  |
+| Agents (bee-pm-team)     | 4          | `pm-team/agents/`      |
+| Agents (bee-pmo-team)    | 6          | `pmo-team/agents/`     |
+| Agents (bee-tw-team)     | 3          | `tw-team/agents/`      |
 | **Total Agents**          | **35**     | **All plugins**        |
-| Commands (ring-default)   | 13         | `default/commands/`    |
-| Commands (ring-dev-team)  | 7          | `dev-team/commands/`   |
-| Commands (ring-pm-team)   | 3          | `pm-team/commands/`    |
-| Commands (ring-pmo-team)  | 4          | `pmo-team/commands/`   |
-| Commands (ring-tw-team)   | 3          | `tw-team/commands/`    |
+| Commands (bee-default)   | 13         | `default/commands/`    |
+| Commands (bee-dev-team)  | 7          | `dev-team/commands/`   |
+| Commands (bee-pm-team)   | 3          | `pm-team/commands/`    |
+| Commands (bee-pmo-team)  | 4          | `pmo-team/commands/`   |
+| Commands (bee-tw-team)   | 3          | `tw-team/commands/`    |
 | **Total Commands**        | **30**     | **All plugins**        |
 | Hooks                     | Per plugin | `{plugin}/hooks/`      |
 

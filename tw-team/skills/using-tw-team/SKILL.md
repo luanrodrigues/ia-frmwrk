@@ -22,7 +22,7 @@ related:
 
 # Using Ring Technical Writing Specialists
 
-The ring-tw-team plugin provides specialized agents for technical documentation. Use them via `Task tool with subagent_type:`.
+The bee-tw-team plugin provides specialized agents for technical documentation. Use them via `Task tool with subagent_type:`.
 
 **Remember:** Follow the **ORCHESTRATOR principle** from `ring:using-ring`. Dispatch agents to handle documentation tasks; don't write complex documentation directly.
 

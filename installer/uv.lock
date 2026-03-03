@@ -799,7 +799,7 @@ wheels = [
 ]
 
 [[package]]
-name = "ring-installer"
+name = "bee-installer"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

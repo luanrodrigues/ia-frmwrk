@@ -333,7 +333,7 @@ def get_installed_version(install_path: Path, platform: str) -> Optional[str]:
         Installed version or None
     """
     install_path = Path(install_path).expanduser()
-    manifest_path = install_path / ".ring-manifest.json"
+    manifest_path = install_path / ".bee-manifest.json"
 
     manifest = InstallManifest.load(manifest_path)
     if manifest:
@@ -344,7 +344,7 @@ def get_installed_version(install_path: Path, platform: str) -> Optional[str]:
 
 def get_manifest_path(install_path: Path) -> Path:
     """Get the path to the install manifest."""
-    return Path(install_path).expanduser() / ".ring-manifest.json"
+    return Path(install_path).expanduser() / ".bee-manifest.json"
 
 
 @dataclass
