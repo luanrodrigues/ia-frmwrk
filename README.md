@@ -108,7 +108,7 @@ bee-dev-team/
 
 1. Clone into your Claude plugins directory:
    ```bash
-   git clone https://github.com/luanrodrigues/ia-frmwrk.git -b dev-team
+   git clone https://github.com/luanrodrigues/ia-frmwrk.git
    ```
 
 2. The plugin auto-initializes on session start via `hooks/session-start.sh`.
@@ -117,6 +117,118 @@ bee-dev-team/
    ```
    /bee:dev-cycle "Implement user authentication with Laravel Sanctum"
    ```
+
+## Usage Guide
+
+### Prerequisites
+
+Before using refactoring commands, your project must have a `docs/PROJECT_RULES.md` file defining your architecture patterns, code conventions, testing requirements, and DevOps standards. This file is **mandatory** — the plugin will block execution without it.
+
+### Starting a Backend Development Cycle
+
+Use `/bee:dev-cycle` to run a full 10-gate backend cycle. You can pass a tasks file or a direct prompt:
+
+```bash
+# Direct prompt — the plugin generates tasks internally
+/bee:dev-cycle Implement user authentication with Laravel Sanctum
+
+# From a tasks file
+/bee:dev-cycle docs/tasks/sprint-001.md
+
+# Execute a specific task only
+/bee:dev-cycle docs/tasks/sprint-001.md --task AUTH-003
+
+# Skip specific gates (e.g., devops and review)
+/bee:dev-cycle docs/tasks/sprint-001.md --skip-gates devops,review
+
+# Dry run — validate tasks without executing
+/bee:dev-cycle docs/tasks/sprint-001.md --dry-run
+
+# Resume an interrupted cycle
+/bee:dev-cycle --resume
+```
+
+### Starting a Frontend Development Cycle
+
+Use `/bee:dev-cycle-frontend` for the 9-gate frontend cycle. Same syntax:
+
+```bash
+# Direct prompt
+/bee:dev-cycle-frontend Implement dashboard with transaction list, charts, and filters
+
+# From a tasks file
+/bee:dev-cycle-frontend docs/tasks/sprint-001-frontend.md
+
+# Resume
+/bee:dev-cycle-frontend --resume
+```
+
+### Refactoring Existing Code
+
+Use `/bee:dev-refactor` to analyze your codebase against standards and generate a refactoring plan:
+
+```bash
+# Analyze entire project
+/bee:dev-refactor
+
+# Analyze a specific directory
+/bee:dev-refactor src/domain
+
+# Focus on a specific area
+/bee:dev-refactor Focus on multi-tenant patterns and ensure all repositories use TenantManager
+
+# Analysis only — generate report without executing fixes
+/bee:dev-refactor --analyze-only
+
+# Fix only critical/high severity issues
+/bee:dev-refactor --critical-only
+
+# Use custom standards file
+/bee:dev-refactor --standards docs/team-standards.md
+```
+
+For frontend refactoring, use `/bee:dev-refactor-frontend` with the same options.
+
+### Monitoring and Control
+
+```bash
+# Check current cycle status (tasks completed, current gate, metrics)
+/bee:dev-status
+
+# Cancel a running cycle (state is preserved for resume)
+/bee:dev-cancel
+
+# View the execution report from the last cycle
+/bee:dev-report
+
+# View report from a specific date
+/bee:dev-report 2024-01-15
+```
+
+### Tasks File Format
+
+Tasks files are markdown files with structured task definitions:
+
+```markdown
+## AUTH-001 — Implement login endpoint
+
+Create POST /api/auth/login with email/password validation,
+JWT token generation, and rate limiting.
+
+## AUTH-002 — Implement refresh token
+
+Create POST /api/auth/refresh with token rotation
+and revocation support.
+```
+
+### Typical Workflow
+
+1. **Plan** — Define tasks in a markdown file or describe them in a prompt
+2. **Execute** — Run `/bee:dev-cycle` or `/bee:dev-cycle-frontend`
+3. **Monitor** — Check progress with `/bee:dev-status`
+4. **Review** — The cycle includes automated code review (Gate 8 backend / Gate 6 frontend)
+5. **Report** — View results with `/bee:dev-report`
+6. **Iterate** — Use `/bee:dev-refactor` to find and fix remaining gaps against standards
 
 ## Standards
 
