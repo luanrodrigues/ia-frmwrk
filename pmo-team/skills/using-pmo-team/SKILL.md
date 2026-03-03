@@ -1,5 +1,5 @@
 ---
-name: ring:using-pmo-team
+name: bee:using-pmo-team
 description: |
   6 specialist PMO agents for portfolio management, resource planning, governance,
   risk analysis, executive reporting, and delivery reporting. Dispatch when you need portfolio-level oversight.
@@ -18,16 +18,16 @@ skip_when: |
   - Technical writing → use bee-tw-team
 
 related:
-  similar: [ring:using-ring, ring:using-pm-team]
+  similar: [bee:using-bee, bee:using-pm-team]
 ---
 
-# Using Ring PMO Team
+# Using Bee PMO Team
 
-The bee-pmo-team plugin provides 6 specialized PMO agents for portfolio-level management. Use them via `Task tool with subagent_type: "ring:agent-name"`.
+The bee-pmo-team plugin provides 6 specialized PMO agents for portfolio-level management. Use them via `Task tool with subagent_type: "bee:agent-name"`.
 
-See [CLAUDE.md](https://raw.githubusercontent.com/LerianStudio/bee/main/CLAUDE.md) and [ring:using-ring](https://raw.githubusercontent.com/LerianStudio/bee/main/default/skills/using-ring/SKILL.md) for canonical workflow requirements and ORCHESTRATOR principle. This skill introduces pmo-team-specific agents.
+See [CLAUDE.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/CLAUDE.md) and [bee:using-bee](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/default/skills/using-bee/SKILL.md) for canonical workflow requirements and ORCHESTRATOR principle. This skill introduces pmo-team-specific agents.
 
-**Remember:** Follow the **ORCHESTRATOR principle** from `ring:using-ring`. Dispatch agents to handle complexity; don't operate tools directly.
+**Remember:** Follow the **ORCHESTRATOR principle** from `bee:using-bee`. Dispatch agents to handle complexity; don't operate tools directly.
 
 ---
 
@@ -154,7 +154,7 @@ See [shared-patterns/pressure-resistance.md](../shared-patterns/pressure-resista
 **Emergency Dispatch Template:**
 ```
 Task tool:
-  subagent_type: "ring:portfolio-manager"
+  subagent_type: "bee:portfolio-manager"
   model: "opus"
   prompt: "URGENT: [context]. [specific request]"
 ```
@@ -181,7 +181,7 @@ Task tool:
 **Dispatch template:**
 ```
 Task tool:
-  subagent_type: "ring:{agent-name}"
+  subagent_type: "bee:{agent-name}"
   model: "opus"
   prompt: "{Your specific request with context}"
 ```
@@ -219,14 +219,14 @@ If you need multiple specialists (e.g., portfolio-manager + risk-analyst), dispa
 
 ```
 CORRECT:
-Task #1: ring:portfolio-manager
-Task #2: ring:risk-analyst
+Task #1: bee:portfolio-manager
+Task #2: bee:risk-analyst
 (Both run in parallel)
 
 WRONG:
-Task #1: ring:portfolio-manager
+Task #1: bee:portfolio-manager
 (Wait for response)
-Task #2: ring:risk-analyst
+Task #2: bee:risk-analyst
 (Sequential = 2x slower)
 ```
 
@@ -240,7 +240,7 @@ Remember:
 - **Combine with other plugins** - PMO + PM + Dev = complete delivery lifecycle
 
 ### Good Example (ORCHESTRATOR):
-> "I need portfolio status. Let me dispatch `ring:portfolio-manager` to analyze."
+> "I need portfolio status. Let me dispatch `bee:portfolio-manager` to analyze."
 
 ### Bad Example (OPERATOR):
 > "I'll manually review each project and create a summary myself."
@@ -293,7 +293,7 @@ Remember:
 | **Metrics** | Projects on track, budget, resources | Releases, PRs, commits, velocity |
 | **Audience** | Portfolio executives, board | Engineering/product executives |
 | **Update** | "How is the portfolio doing?" | "What did the squad deliver?" |
-| **Agent** | `ring:executive-reporter` | `ring:delivery-reporter` |
+| **Agent** | `bee:executive-reporter` | `bee:delivery-reporter` |
 
 **Use `/executive-summary` for:**
 - Portfolio health dashboards

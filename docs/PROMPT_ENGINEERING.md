@@ -83,7 +83,7 @@ Examples:
 - STOP and report if PROJECT_RULES.md is missing
 - HARD GATE: All 5 reviewers must pass before Gate 5
 - FORBIDDEN: Reading source code directly as orchestrator
-- REQUIRED: WebFetch Ring standards before implementation
+- REQUIRED: WebFetch Bee standards before implementation
 - MANDATORY: Save state after every gate transition
 ```
 
@@ -308,7 +308,7 @@ When documenting refactoring issues, agents MUST provide a Code Transformation C
 For EACH issue, output MUST include:
 
 - [ ] **Before (Current Code)** - Actual code extracted from the project with `file:line` reference
-- [ ] **After (Ring Standards)** - Transformed code following Ring/Lerian standards
+- [ ] **After (Bee Standards)** - Transformed code following Bee/Lerian standards
 - [ ] **Standard References table** - Pattern, Source file, Section name, Line range
 - [ ] **Why This Transformation Matters** - Problem, Standard violated, Impact
 
@@ -323,10 +323,10 @@ For EACH issue, output MUST include:
 {actual code from project}
 ```
 
-### After (Ring Standards)
+### After (Bee Standards)
 ```{language}
 // file: {path}:{start_line}-{new_end_line}
-// ✅ Ring Standard: {Pattern Name} ({standards_file}:{section})
+// ✅ Bee Standard: {Pattern Name} ({standards_file}:{section})
 {transformed code using lib-commons patterns}
 ```
 
@@ -337,7 +337,7 @@ For EACH issue, output MUST include:
 
 ### Why This Transformation Matters
 - **Problem:** {current issue}
-- **Ring Standard:** {which standard violated}
+- **Bee Standard:** {which standard violated}
 - **Impact:** {business/technical impact}
 ```
 
@@ -395,8 +395,8 @@ The more assertive and explicit the language, the less room for AI to rationaliz
 ## Required Resources
 
 <fetch_required>
-https://raw.githubusercontent.com/LerianStudio/bee/main/dev-team/docs/standards/golang.md
-https://raw.githubusercontent.com/LerianStudio/bee/main/CLAUDE.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/golang.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/CLAUDE.md
 </fetch_required>
 
 MUST fetch all URLs above before starting the task.
@@ -423,7 +423,7 @@ Any occurrence = IMMEDIATE REJECTION.
 
 ---
 
-<dispatch_required agent="ring:backend-engineer-golang">
+<dispatch_required agent="bee:backend-engineer-golang">
 Implement user authentication endpoint with JWT validation.
 </dispatch_required>
 
@@ -431,8 +431,8 @@ MUST use Task tool with specified agent and model.
 
 ---
 
-<parallel_dispatch agents="ring:backend-engineer-golang, ring:qa-analyst, ring:devops-engineer, ring:sre">
-Analyze codebase against Ring standards. All agents receive same context:
+<parallel_dispatch agents="bee:backend-engineer-golang, bee:qa-analyst, bee:devops-engineer, bee:sre">
+Analyze codebase against Bee standards. All agents receive same context:
 - Codebase Report: docs/bee:dev-refactor/{timestamp}/codebase-report.md
 - Project Rules: docs/PROJECT_RULES.md
 </parallel_dispatch>

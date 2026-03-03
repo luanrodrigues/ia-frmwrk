@@ -8,7 +8,7 @@ transformer pipeline composition, and factory functions.
 
 import pytest
 
-from ring_installer.transformers import (
+from bee_installer.transformers import (
     AgentTransformer,
     AgentTransformerFactory,
     BaseTransformer,

@@ -1,5 +1,5 @@
 ---
-name: ring:pre-dev-delivery-planning
+name: bee:pre-dev-delivery-planning
 description: |
   Gate 9 (Full Track) / Gate 4 (Small Track): Delivery roadmap and timeline planning.
   Transforms tasks into realistic delivery schedule with critical path analysis,
@@ -17,8 +17,8 @@ skip_when: |
   - Research/exploration work without delivery deadline
 
 sequence:
-  after: [ring:pre-dev-task-breakdown, ring:pre-dev-subtask-creation]
-  before: [ring:executing-plans, ring:dev-cycle]
+  after: [bee:pre-dev-task-breakdown, bee:pre-dev-subtask-creation]
+  before: [bee:executing-plans, bee:dev-cycle]
 ---
 
 # Delivery Planning - Realistic Roadmap with Critical Path
@@ -144,7 +144,7 @@ If you catch yourself doing any of these, **STOP and ask the user**:
 ### Question 5: Human Validation Overhead
 
 **Context:**
-- Baseline: AI Agent implements via ring:dev-cycle
+- Baseline: AI Agent implements via bee:dev-cycle
 - AI handles: coding, TDD, automated review, SRE validation, DevOps
 - AI Estimate: X AI-agent-hours (from tasks.md)
 
@@ -226,7 +226,7 @@ After completing tasks, track actual multipliers:
 
 **See [shared-patterns/ai-agent-baseline.md](../shared-patterns/ai-agent-baseline.md) for baseline definition.**
 
-**Baseline:** AI Agent via ring:dev-cycle
+**Baseline:** AI Agent via bee:dev-cycle
 **Capacity:** 90% (hardcoded)
 **Multiplier:** User-defined (human validation overhead)
 
@@ -265,9 +265,9 @@ Where:
 **Does NOT account for (already done by AI):**
 - ❌ Initial code implementation
 - ❌ Unit/integration test writing (TDD)
-- ❌ Automated code review (ring:code-reviewer)
-- ❌ SRE validation (ring:sre)
-- ❌ DevOps setup (ring:devops-engineer)
+- ❌ Automated code review (bee:code-reviewer)
+- ❌ SRE validation (bee:sre)
+- ❌ DevOps setup (bee:devops-engineer)
 
 ### Example Calculation
 
@@ -409,7 +409,7 @@ With 1 dev:  Fully sequential (slowest)
 | **Critical Path** | T-001 → T-003 → T-007 (Y weeks) |
 | **Parallel Streams** | N streams identified |
 | **Team Composition** | N developers (roles) |
-| **Development Mode** | AI Agent via ring:dev-cycle |
+| **Development Mode** | AI Agent via bee:dev-cycle |
 | **Human Validation Multiplier** | Xx (e.g., 1.5x = 50% overhead for validation) |
 | **Multiplier Source** | Default (1.5x) / Custom (user-validated) |
 | **Capacity Utilization** | 90% (AI Agent standard) |
@@ -606,16 +606,16 @@ Legend:
 2. **Dependency Resolution:** All external dependencies (APIs, credentials) available on time
 3. **Scope Stability:** No scope changes during execution (new requirements = new planning)
 4. **Infrastructure Ready:** Development/staging environments available Day 1
-5. **Capacity Utilization:** 90% (AI Agent via ring:dev-cycle, 10% overhead for API/technical)
+5. **Capacity Utilization:** 90% (AI Agent via bee:dev-cycle, 10% overhead for API/technical)
 6. **Multiplier Accuracy:** Custom multiplier ({X}x) validated against historical validation overhead OR using default multiplier (1.5x)
 7. **Period Boundaries:** Sprint/Cycle boundaries do not shift (dates fixed)
-8. **Baseline Execution:** All implementation via ring:dev-cycle (AI Agent with automated gates)
+8. **Baseline Execution:** All implementation via bee:dev-cycle (AI Agent with automated gates)
 
 ## Constraints
 
 1. **Team Size:** N developers (cannot increase mid-project without re-planning)
 2. **Fixed Scope:** All tasks from tasks.md must be completed (no cutting features)
-3. **Quality Gates:** All ring:dev-cycle gates must pass (cannot skip review/testing)
+3. **Quality Gates:** All bee:dev-cycle gates must pass (cannot skip review/testing)
 4. **Critical Path:** Cannot compress critical path without adding resources or cutting scope
 5. **Delivery Cadence:** {Sprint/Cycle/Continuous} rhythm cannot change mid-project
 6. **Spill Over Management:** Tasks crossing period boundaries must be tracked explicitly
@@ -742,7 +742,7 @@ If any question is unanswered, **STOP and ask the user.**
 
 This skill is a delivery planning skill and does NOT require WebFetch of language-specific standards.
 
-**Purpose:** Delivery Planning transforms tasks into realistic schedules. Technical standards are irrelevant at this stage—they apply during implementation via `ring:dev-cycle`.
+**Purpose:** Delivery Planning transforms tasks into realistic schedules. Technical standards are irrelevant at this stage—they apply during implementation via `bee:dev-cycle`.
 
 **However**, MUST load tasks.md (Gate 7) to access AI estimates, dependencies, and scope definitions.
 

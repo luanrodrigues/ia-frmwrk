@@ -1,5 +1,5 @@
 ---
-name: ring:brainstorm
+name: bee:brainstorm
 description: Interactive design refinement using Socratic method
 argument-hint: "[topic]"
 ---
@@ -73,7 +73,7 @@ The brainstorming session follows these phases:
 - Prepares clean workspace for implementation
 
 ### 7. Planning Handoff (Phase 6, if implementing)
-- Creates detailed implementation plan using `ring:writing-plans` skill
+- Creates detailed implementation plan using `bee:writing-plans` skill
 - Breaks design into bite-sized executable tasks
 
 ## Related Commands/Skills
@@ -82,7 +82,7 @@ The brainstorming session follows these phases:
 |---------------|--------------|
 | `/bee:write-plan` | Use after brainstorming when design is complete |
 | `/bee:execute-plan` | Use after planning to implement the design |
-| `ring:writing-plans` | Underlying skill for creating implementation plans |
+| `bee:writing-plans` | Underlying skill for creating implementation plans |
 
 ## Troubleshooting
 
@@ -107,7 +107,7 @@ The process is phase-locked. You cannot skip ahead until the current phase is co
 **This command MUST load the skill for complete workflow execution.**
 
 ```
-Use Skill tool: ring:brainstorming
+Use Skill tool: bee:brainstorming
 ```
 
 The skill contains the complete workflow with:

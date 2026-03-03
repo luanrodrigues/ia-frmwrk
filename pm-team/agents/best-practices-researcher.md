@@ -1,5 +1,5 @@
 ---
-name: ring:best-practices-researcher
+name: bee:best-practices-researcher
 description: |
   External research specialist for pre-dev planning. Searches web and documentation
   for industry best practices, open source examples, and authoritative guidance.
@@ -234,7 +234,7 @@ Queries to try:
 
 **N/A for research agents.**
 
-**Rationale:** The ring:best-practices-researcher agent produces research findings, not implementation output. Standards compliance verification is performed by engineer agents that consume research output.
+**Rationale:** The bee:best-practices-researcher agent produces research findings, not implementation output. Standards compliance verification is performed by engineer agents that consume research output.
 
 ---
 

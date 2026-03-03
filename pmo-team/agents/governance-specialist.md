@@ -1,5 +1,5 @@
 ---
-name: ring:governance-specialist
+name: bee:governance-specialist
 version: 1.2.0
 description: Project Governance Specialist for gate reviews, process compliance, audit readiness, and governance framework implementation across portfolio projects.
 type: specialist
@@ -320,7 +320,7 @@ Conducted Gate 2 (Planning Complete) review for Project Phoenix. Recommendation:
 
 **N/A for PMO specialist agents.**
 
-**Rationale:** The ring:governance-specialist agent produces governance analysis, not code implementation. Standards loading is performed by engineer agents that implement the governed projects.
+**Rationale:** The bee:governance-specialist agent produces governance analysis, not code implementation. Standards loading is performed by engineer agents that implement the governed projects.
 
 ---
 
@@ -328,13 +328,13 @@ Conducted Gate 2 (Planning Complete) review for Project Phoenix. Recommendation:
 
 **N/A for PMO specialist agents.**
 
-**Rationale:** The ring:governance-specialist agent produces governance analysis, not code implementation output. Standards compliance verification is performed by engineer agents.
+**Rationale:** The bee:governance-specialist agent produces governance analysis, not code implementation output. Standards compliance verification is performed by engineer agents.
 
 ---
 
 ## What This Agent Does NOT Handle
 
-- Project planning (use `ring:pre-dev-feature`)
+- Project planning (use `bee:pre-dev-feature`)
 - Portfolio prioritization (use `portfolio-manager`)
 - Resource allocation (use `resource-planner`)
 - Risk analysis detail (use `risk-analyst`)

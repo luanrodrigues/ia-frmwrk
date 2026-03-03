@@ -1,5 +1,5 @@
 ---
-name: ring:pre-dev-design-validation
+name: bee:pre-dev-design-validation
 description: |
   Gate 1.5/2.5: Design Validation - verifies UX specifications are complete
   before proceeding to technical architecture. Checklist-based validation
@@ -17,8 +17,8 @@ skip_when: |
   - Bug fix with no UX changes
 
 sequence:
-  after: [ring:pre-dev-prd-creation, ring:pre-dev-feature-map]
-  before: [ring:pre-dev-trd-creation]
+  after: [bee:pre-dev-prd-creation, bee:pre-dev-feature-map]
+  before: [bee:pre-dev-trd-creation]
 ---
 
 # Design Validation Gate

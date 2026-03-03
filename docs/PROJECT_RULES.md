@@ -1,4 +1,4 @@
-# Ring Project Rules
+# Bee Project Rules
 
 This is a markdown/documentation project for AI agent skills.
 

@@ -1,5 +1,5 @@
 ---
-name: ring:writing-api-docs
+name: bee:writing-api-docs
 description: |
   Patterns and structure for writing API reference documentation including
   endpoint descriptions, request/response schemas, and error documentation.
@@ -160,9 +160,9 @@ For deprecated: `> **Deprecated:** This endpoint will be removed in v4. Use [/v3
 
 Before writing any API documentation, MUST load relevant standards:
 
-1. **Voice and Tone Guidelines** - Load `ring:voice-and-tone` skill
-2. **Field Description Patterns** - Load `ring:api-field-descriptions` skill
-3. **Documentation Structure** - Load `ring:documentation-structure` skill
+1. **Voice and Tone Guidelines** - Load `bee:voice-and-tone` skill
+2. **Field Description Patterns** - Load `bee:api-field-descriptions` skill
+3. **Documentation Structure** - Load `bee:documentation-structure` skill
 
 **HARD GATE:** CANNOT proceed with API documentation without loading these standards.
 

@@ -1,5 +1,5 @@
 ---
-name: ring:resource-planner
+name: bee:resource-planner
 version: 1.1.0
 description: Resource Planning Specialist for capacity planning, allocation optimization, skills management, and conflict resolution across portfolio projects.
 type: specialist
@@ -300,7 +300,7 @@ Analyzed 24 resources across 4 teams for Q1 2025 allocation. Current aggregate u
 
 **N/A for PMO specialist agents.**
 
-**Rationale:** The ring:resource-planner agent produces resource analysis, not code implementation output. Standards compliance verification is performed by engineer agents.
+**Rationale:** The bee:resource-planner agent produces resource analysis, not code implementation output. Standards compliance verification is performed by engineer agents.
 
 ---
 
@@ -308,14 +308,14 @@ Analyzed 24 resources across 4 teams for Q1 2025 allocation. Current aggregate u
 
 **N/A for PMO specialist agents.**
 
-**Rationale:** The ring:resource-planner agent produces resource analysis, not code implementation. Standards loading is performed by engineer agents that implement the planned projects.
+**Rationale:** The bee:resource-planner agent produces resource analysis, not code implementation. Standards loading is performed by engineer agents that implement the planned projects.
 
 ---
 
 ## What This Agent Does NOT Handle
 
 - Portfolio-level prioritization (use `portfolio-manager`)
-- Individual project planning (use `ring:pre-dev-feature-map`)
+- Individual project planning (use `bee:pre-dev-feature-map`)
 - HR policies and compensation (organizational HR)
 - Team performance management (people managers)
 - Project scheduling (project managers)

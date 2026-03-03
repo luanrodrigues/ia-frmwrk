@@ -1,6 +1,6 @@
-# Ring Marketplace Manual
+# Bee Marketplace Manual
 
-Quick reference guide for the Ring skills library and workflow system. This monorepo provides 6 plugins with 83 skills, 35 agents, and 30 slash commands for enforcing proven software engineering practices across the entire software delivery value chain.
+Quick reference guide for the Bee skills library and workflow system. This monorepo provides 6 plugins with 83 skills, 35 agents, and 30 slash commands for enforcing proven software engineering practices across the entire software delivery value chain.
 
 ---
 
@@ -66,11 +66,11 @@ Quick reference guide for the Ring skills library and workflow system. This mono
 
 ## 🎯 Quick Start
 
-Ring is auto-loaded at session start. Three ways to invoke Ring capabilities:
+Bee is auto-loaded at session start. Three ways to invoke Bee capabilities:
 
 1. **Slash Commands** – `/command-name`
-2. **Skills** – `Skill tool: "ring:skill-name"`
-3. **Agents** – `Task tool with subagent_type: "ring:agent-name"`
+2. **Skills** – `Skill tool: "bee:skill-name"`
+3. **Agents** – `Task tool with subagent_type: "bee:agent-name"`
 
 ---
 
@@ -144,7 +144,7 @@ Commands are invoked directly: `/command-name`.
 
 Skills (83) are workflows that Claude Code invokes automatically when it detects they're applicable. They handle testing, debugging, verification, planning, and code review enforcement. You don't call them directly - Claude Code uses them internally to enforce best practices.
 
-Examples: ring:test-driven-development, ring:systematic-debugging, ring:requesting-code-review, ring:verification-before-completion, ring:production-readiness-audit (44-dimension audit, up to 10 explorers per batch, incremental report 0-430, max 440 with multi-tenant; see [default/skills/production-readiness-audit/SKILL.md](default/skills/production-readiness-audit/SKILL.md)), etc.
+Examples: bee:test-driven-development, bee:systematic-debugging, bee:requesting-code-review, bee:verification-before-completion, bee:production-readiness-audit (44-dimension audit, up to 10 explorers per batch, incremental report 0-430, max 440 with multi-tenant; see [default/skills/production-readiness-audit/SKILL.md](default/skills/production-readiness-audit/SKILL.md)), etc.
 
 ### Skill Selection Criteria
 
@@ -177,12 +177,12 @@ Invoke via `Task tool with subagent_type: "..."`.
 
 | Agent                          | Purpose                                      | Model |
 | ------------------------------ | -------------------------------------------- | ----- |
-| `ring:code-reviewer`           | Architecture, patterns, maintainability      | Opus  |
-| `ring:business-logic-reviewer` | Domain correctness, edge cases, requirements | Opus  |
-| `ring:security-reviewer`       | Vulnerabilities, OWASP, auth, validation     | Opus  |
-| `ring:test-reviewer`           | Test coverage, quality, and completeness     | Opus  |
-| `ring:nil-safety-reviewer`     | Nil/null pointer safety analysis             | Opus  |
-| `ring:consequences-reviewer`   | Ripple effect, caller impact, downstream consequences | Opus  |
+| `bee:code-reviewer`           | Architecture, patterns, maintainability      | Opus  |
+| `bee:business-logic-reviewer` | Domain correctness, edge cases, requirements | Opus  |
+| `bee:security-reviewer`       | Vulnerabilities, OWASP, auth, validation     | Opus  |
+| `bee:test-reviewer`           | Test coverage, quality, and completeness     | Opus  |
+| `bee:nil-safety-reviewer`     | Nil/null pointer safety analysis             | Opus  |
+| `bee:consequences-reviewer`   | Ripple effect, caller impact, downstream consequences | Opus  |
 
 **Example:** Before merging, run all 6 parallel reviewers via `/bee:codereview src/`
 
@@ -190,8 +190,8 @@ Invoke via `Task tool with subagent_type: "..."`.
 
 | Agent                    | Purpose                                                  | Model |
 | ------------------------ | -------------------------------------------------------- | ----- |
-| `ring:write-plan`        | Generate implementation plans for zero-context execution | Opus  |
-| `ring:codebase-explorer` | Deep architecture analysis (vs `Explore` for speed)      | Opus  |
+| `bee:write-plan`        | Generate implementation plans for zero-context execution | Opus  |
+| `bee:codebase-explorer` | Deep architecture analysis (vs `Explore` for speed)      | Opus  |
 
 ### Developer Specialists (bee-dev-team)
 
@@ -199,30 +199,30 @@ Use when you need expert depth in specific domains:
 
 | Agent                                   | Specialization               | Technologies                                       |
 | --------------------------------------- | ---------------------------- | -------------------------------------------------- |
-| `ring:backend-engineer-golang`          | Go microservices & APIs      | Fiber, gRPC, PostgreSQL, MongoDB, Kafka, OAuth2    |
-| `ring:backend-engineer-typescript`      | TypeScript/Node.js backend   | Express, NestJS, Prisma, TypeORM, GraphQL          |
-| `ring:devops-engineer`                  | Infrastructure & CI/CD       | Docker, Kubernetes, Terraform, GitHub Actions      |
-| `ring:frontend-bff-engineer-typescript` | BFF & React/Next.js frontend | Next.js API Routes, Clean Architecture, DDD, React |
-| `ring:frontend-designer`                | Visual design & aesthetics   | Typography, motion, CSS, distinctive UI            |
-| `ring:frontend-engineer`                | General frontend development | React, TypeScript, CSS, component architecture     |
-| `ring:prompt-quality-reviewer`          | AI prompt quality review     | Prompt engineering, clarity, effectiveness         |
-| `ring:qa-analyst`                       | Quality assurance            | Test strategy, automation, coverage                |
-| `ring:qa-analyst-frontend`              | Frontend QA specialist       | Accessibility, visual regression, E2E, performance |
-| `ring:sre`                              | Site reliability & ops       | Monitoring, alerting, incident response, SLOs      |
-| `ring:ui-engineer`                      | UI component specialist      | Design systems, accessibility, React               |
+| `bee:backend-engineer-golang`          | Go microservices & APIs      | Fiber, gRPC, PostgreSQL, MongoDB, Kafka, OAuth2    |
+| `bee:backend-engineer-typescript`      | TypeScript/Node.js backend   | Express, NestJS, Prisma, TypeORM, GraphQL          |
+| `bee:devops-engineer`                  | Infrastructure & CI/CD       | Docker, Kubernetes, Terraform, GitHub Actions      |
+| `bee:frontend-bff-engineer-typescript` | BFF & React/Next.js frontend | Next.js API Routes, Clean Architecture, DDD, React |
+| `bee:frontend-designer`                | Visual design & aesthetics   | Typography, motion, CSS, distinctive UI            |
+| `bee:frontend-engineer`                | General frontend development | React, TypeScript, CSS, component architecture     |
+| `bee:prompt-quality-reviewer`          | AI prompt quality review     | Prompt engineering, clarity, effectiveness         |
+| `bee:qa-analyst`                       | Quality assurance            | Test strategy, automation, coverage                |
+| `bee:qa-analyst-frontend`              | Frontend QA specialist       | Accessibility, visual regression, E2E, performance |
+| `bee:sre`                              | Site reliability & ops       | Monitoring, alerting, incident response, SLOs      |
+| `bee:ui-engineer`                      | UI component specialist      | Design systems, accessibility, React               |
 
 **Standards Compliance Output:** All bee-dev-team agents include a `## Standards Compliance` output section with conditional requirement:
 
 | Invocation Context      | Standards Compliance | Trigger                                   |
 | ----------------------- | -------------------- | ----------------------------------------- |
 | Direct agent call       | Optional             | N/A                                       |
-| Via `ring:dev-cycle`    | Optional             | N/A                                       |
-| Via `ring:dev-refactor` | **MANDATORY**        | Prompt contains `**MODE: ANALYSIS ONLY**` |
+| Via `bee:dev-cycle`    | Optional             | N/A                                       |
+| Via `bee:dev-refactor` | **MANDATORY**        | Prompt contains `**MODE: ANALYSIS ONLY**` |
 
 **How it works:**
 
-1. `ring:dev-refactor` dispatches agents with `**MODE: ANALYSIS ONLY**` in prompt
-2. Agents detect this pattern and load Ring standards via WebFetch
+1. `bee:dev-refactor` dispatches agents with `**MODE: ANALYSIS ONLY**` in prompt
+2. Agents detect this pattern and load Bee standards via WebFetch
 3. Agents produce comparison tables: Current Pattern vs Expected Pattern
 4. Output includes severity, location, and migration recommendations
 
@@ -244,10 +244,10 @@ For best practices research and repository analysis:
 
 | Agent                            | Purpose                          | Use For                                 |
 | -------------------------------- | -------------------------------- | --------------------------------------- |
-| `ring:best-practices-researcher` | Best practices research          | Industry patterns, framework standards  |
-| `ring:framework-docs-researcher` | Framework documentation research | Official docs, API references, examples |
-| `ring:repo-research-analyst`     | Repository analysis              | Codebase patterns, structure analysis   |
-| `ring:product-designer`          | Product design and UX research   | UX specifications, user validation, design review |
+| `bee:best-practices-researcher` | Best practices research          | Industry patterns, framework standards  |
+| `bee:framework-docs-researcher` | Framework documentation research | Official docs, API references, examples |
+| `bee:repo-research-analyst`     | Repository analysis              | Codebase patterns, structure analysis   |
+| `bee:product-designer`          | Product design and UX research   | UX specifications, user validation, design review |
 
 ### Technical Writing (bee-tw-team)
 
@@ -255,9 +255,9 @@ For documentation creation and review:
 
 | Agent                    | Purpose                      | Use For                              |
 | ------------------------ | ---------------------------- | ------------------------------------ |
-| `ring:functional-writer` | Functional documentation     | Guides, tutorials, conceptual docs   |
-| `ring:api-writer`        | API reference documentation  | Endpoints, schemas, examples         |
-| `ring:docs-reviewer`     | Documentation quality review | Voice, tone, structure, completeness |
+| `bee:functional-writer` | Functional documentation     | Guides, tutorials, conceptual docs   |
+| `bee:api-writer`        | API reference documentation  | Endpoints, schemas, examples         |
+| `bee:docs-reviewer`     | Documentation quality review | Voice, tone, structure, completeness |
 
 ### Regulatory & FinOps (bee-finops-team)
 
@@ -265,9 +265,9 @@ For Brazilian financial compliance workflows and cost analysis:
 
 | Agent                                | Purpose                        | Use For                                         |
 | ------------------------------------ | ------------------------------ | ----------------------------------------------- |
-| `ring:finops-analyzer`               | Regulatory compliance analysis | Field mapping, BACEN/RFB validation (Gates 1-2) |
-| `ring:finops-automation`             | Template generation            | Create .tpl files (Gate 3)                      |
-| `ring:infrastructure-cost-estimator` | Cost estimation and analysis   | Infrastructure cost planning and optimization   |
+| `bee:finops-analyzer`               | Regulatory compliance analysis | Field mapping, BACEN/RFB validation (Gates 1-2) |
+| `bee:finops-automation`             | Template generation            | Create .tpl files (Gate 3)                      |
+| `bee:infrastructure-cost-estimator` | Cost estimation and analysis   | Infrastructure cost planning and optimization   |
 
 ### PMO Specialists (bee-pmo-team)
 
@@ -275,12 +275,12 @@ For portfolio-level project management and oversight:
 
 | Agent                        | Purpose                   | Use For                                         |
 | ---------------------------- | ------------------------- | ----------------------------------------------- |
-| `ring:portfolio-manager`     | Portfolio-level planning  | Multi-project coordination, strategic alignment |
-| `ring:resource-planner`      | Capacity planning         | Resource allocation, conflict resolution        |
-| `ring:risk-analyst`          | Portfolio risk management | Risk identification, mitigation planning        |
-| `ring:governance-specialist` | Process compliance        | Gate reviews, audit readiness                   |
-| `ring:executive-reporter`    | Executive communications  | Dashboards, board packages, status summaries    |
-| `ring:delivery-reporter`     | Delivery reporting        | Delivery status reports and tracking            |
+| `bee:portfolio-manager`     | Portfolio-level planning  | Multi-project coordination, strategic alignment |
+| `bee:resource-planner`      | Capacity planning         | Resource allocation, conflict resolution        |
+| `bee:risk-analyst`          | Portfolio risk management | Risk identification, mitigation planning        |
+| `bee:governance-specialist` | Process compliance        | Gate reviews, audit readiness                   |
+| `bee:executive-reporter`    | Executive communications  | Dashboards, board packages, status summaries    |
+| `bee:delivery-reporter`     | Delivery reporting        | Delivery status reports and tracking            |
 
 ---
 
@@ -289,18 +289,18 @@ For portfolio-level project management and oversight:
 ### New Feature Development
 
 1. **Design** → `/bee:brainstorm feature-name`
-2. **Plan** → `/bee:pre-dev-feature feature-name` (or `ring:pre-dev-full` if complex)
+2. **Plan** → `/bee:pre-dev-feature feature-name` (or `bee:pre-dev-full` if complex)
 3. **Isolate** → `/bee:worktree feature-branch`
-4. **Implement** → Use `ring:test-driven-development` skill
+4. **Implement** → Use `bee:test-driven-development` skill
 5. **Review** → `/bee:codereview src/` (dispatches 6 reviewers)
 6. **Commit** → `/bee:commit "message"`
 
 ### Bug Investigation
 
-1. **Investigate** → Use `ring:systematic-debugging` skill
-2. **Trace** → Use `ring:root-cause-tracing` if needed
-3. **Implement** → Use `ring:test-driven-development` skill
-4. **Verify** → Use `ring:verification-before-completion` skill
+1. **Investigate** → Use `bee:systematic-debugging` skill
+2. **Trace** → Use `bee:root-cause-tracing` if needed
+3. **Implement** → Use `bee:test-driven-development` skill
+4. **Verify** → Use `bee:verification-before-completion` skill
 5. **Review & Merge** → `/bee:codereview` + `/bee:commit`
 
 ### Code Review
@@ -309,12 +309,12 @@ For portfolio-level project management and oversight:
 /bee:codereview [files-or-paths]
     ↓
 Runs in parallel:
-  • ring:code-reviewer (Opus)
-  • ring:business-logic-reviewer (Opus)
-  • ring:security-reviewer (Opus)
-  • ring:test-reviewer (Opus)
-  • ring:nil-safety-reviewer (Opus)
-  • ring:consequences-reviewer (Opus)
+  • bee:code-reviewer (Opus)
+  • bee:business-logic-reviewer (Opus)
+  • bee:security-reviewer (Opus)
+  • bee:test-reviewer (Opus)
+  • bee:nil-safety-reviewer (Opus)
+  • bee:consequences-reviewer (Opus)
     ↓
 Consolidated report with recommendations
 ```
@@ -326,7 +326,7 @@ Consolidated report with recommendations
 These enforce quality standards:
 
 1. **TDD is enforced** – Test must fail (RED) before implementation
-2. **Skill check is mandatory** – Use `ring:using-ring` before any task
+2. **Skill check is mandatory** – Use `bee:using-bee` before any task
 3. **Reviewers run parallel** – Never sequential review (use `/bee:codereview`)
 4. **Verification required** – Don't claim complete without evidence
 5. **No incomplete code** – No "TODO" or placeholder comments
@@ -351,51 +351,51 @@ These enforce quality standards:
 | Need                              | Agent to Use                                |
 | --------------------------------- | ------------------------------------------- |
 | General code quality review       | 6 parallel reviewers via `/bee:codereview` |
-| Implementation planning           | `ring:write-plan`                           |
-| Deep codebase analysis            | `ring:codebase-explorer`                    |
-| Go backend expertise              | `ring:backend-engineer-golang`              |
-| TypeScript/Node.js backend        | `ring:backend-engineer-typescript`          |
-| Infrastructure/DevOps             | `ring:devops-engineer`                      |
-| React/Next.js frontend & BFF      | `ring:frontend-bff-engineer-typescript`     |
-| General frontend development      | `ring:frontend-engineer`                    |
-| Visual design & aesthetics        | `ring:frontend-designer`                    |
-| UI component development          | `ring:ui-engineer`                          |
-| AI prompt quality review          | `ring:prompt-quality-reviewer`              |
-| Backend quality assurance          | `ring:qa-analyst`                           |
-| Frontend quality assurance         | `ring:qa-analyst-frontend`                  |
-| Site reliability & operations     | `ring:sre`                                  |
-| Best practices research           | `ring:best-practices-researcher`            |
-| Framework documentation research  | `ring:framework-docs-researcher`            |
-| Repository analysis               | `ring:repo-research-analyst`                |
-| Product design & UX research      | `ring:product-designer`                     |
-| Functional documentation (guides) | `ring:functional-writer`                    |
-| API reference documentation       | `ring:api-writer`                           |
-| Documentation quality review      | `ring:docs-reviewer`                        |
-| Regulatory compliance analysis    | `ring:finops-analyzer`                      |
-| Regulatory template generation    | `ring:finops-automation`                    |
-| Infrastructure cost estimation    | `ring:infrastructure-cost-estimator`        |
-| Portfolio-level planning          | `ring:portfolio-manager`                    |
-| Resource capacity planning        | `ring:resource-planner`                     |
-| Portfolio risk assessment         | `ring:risk-analyst`                         |
-| Governance and compliance         | `ring:governance-specialist`                |
-| Executive reporting               | `ring:executive-reporter`                   |
-| Delivery status reporting         | `ring:delivery-reporter`                    |
+| Implementation planning           | `bee:write-plan`                           |
+| Deep codebase analysis            | `bee:codebase-explorer`                    |
+| Go backend expertise              | `bee:backend-engineer-golang`              |
+| TypeScript/Node.js backend        | `bee:backend-engineer-typescript`          |
+| Infrastructure/DevOps             | `bee:devops-engineer`                      |
+| React/Next.js frontend & BFF      | `bee:frontend-bff-engineer-typescript`     |
+| General frontend development      | `bee:frontend-engineer`                    |
+| Visual design & aesthetics        | `bee:frontend-designer`                    |
+| UI component development          | `bee:ui-engineer`                          |
+| AI prompt quality review          | `bee:prompt-quality-reviewer`              |
+| Backend quality assurance          | `bee:qa-analyst`                           |
+| Frontend quality assurance         | `bee:qa-analyst-frontend`                  |
+| Site reliability & operations     | `bee:sre`                                  |
+| Best practices research           | `bee:best-practices-researcher`            |
+| Framework documentation research  | `bee:framework-docs-researcher`            |
+| Repository analysis               | `bee:repo-research-analyst`                |
+| Product design & UX research      | `bee:product-designer`                     |
+| Functional documentation (guides) | `bee:functional-writer`                    |
+| API reference documentation       | `bee:api-writer`                           |
+| Documentation quality review      | `bee:docs-reviewer`                        |
+| Regulatory compliance analysis    | `bee:finops-analyzer`                      |
+| Regulatory template generation    | `bee:finops-automation`                    |
+| Infrastructure cost estimation    | `bee:infrastructure-cost-estimator`        |
+| Portfolio-level planning          | `bee:portfolio-manager`                    |
+| Resource capacity planning        | `bee:resource-planner`                     |
+| Portfolio risk assessment         | `bee:risk-analyst`                         |
+| Governance and compliance         | `bee:governance-specialist`                |
+| Executive reporting               | `bee:executive-reporter`                   |
+| Delivery status reporting         | `bee:delivery-reporter`                    |
 
 ---
 
-## 🔧 How Ring Works
+## 🔧 How Bee Works
 
 ### Session Startup
 
 1. SessionStart hook runs automatically
 2. All 83 skills are auto-discovered and available
-3. `ring:using-ring` workflow is activated (skill checking is now mandatory)
+3. `bee:using-bee` workflow is activated (skill checking is now mandatory)
 
 ### Agent Dispatching
 
 ```
 Task tool:
-  subagent_type: "ring:code-reviewer"
+  subagent_type: "bee:code-reviewer"
   model: "opus"
   prompt: [context]
     ↓
@@ -409,12 +409,12 @@ Returns structured output per agent's output_schema
 ```
 Single message with 6 Task calls (not sequential):
 
-Task #1: ring:code-reviewer
-Task #2: ring:business-logic-reviewer
-Task #3: ring:security-reviewer
-Task #4: ring:test-reviewer
-Task #5: ring:nil-safety-reviewer
-Task #6: ring:consequences-reviewer
+Task #1: bee:code-reviewer
+Task #2: bee:business-logic-reviewer
+Task #3: bee:security-reviewer
+Task #4: bee:test-reviewer
+Task #5: bee:nil-safety-reviewer
+Task #6: bee:consequences-reviewer
     ↓
 All run in parallel (saves ~15 minutes vs sequential)
     ↓
@@ -442,5 +442,5 @@ Consolidated report
 ## ❓ Need Help?
 
 - **How to use Claude Code?** → Ask about Claude Code features, MCP servers, slash commands
-- **How to use Ring?** → Check skill names in this manual or in `ring:using-ring` skill
-- **Feature/bug tracking?** → https://github.com/luanrodrigues/bee/issues
+- **How to use Bee?** → Check skill names in this manual or in `bee:using-bee` skill
+- **Feature/bug tracking?** → https://github.com/luanrodrigues/ia-frmwrk/issues

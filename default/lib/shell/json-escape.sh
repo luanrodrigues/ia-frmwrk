@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2034  # Unused variables OK for exported config
-# RFC 8259 compliant JSON string escaping for Ring hooks
+# RFC 8259 compliant JSON string escaping for Bee hooks
 #
 # Usage:
 #   source /path/to/json-escape.sh

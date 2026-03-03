@@ -1,5 +1,5 @@
 ---
-name: ring:api-field-descriptions
+name: bee:api-field-descriptions
 description: |
   Patterns for writing clear, consistent API field descriptions including
   types, constraints, examples, and edge cases.
@@ -111,8 +111,8 @@ For nested objects: `status.code`, `status.description`
 
 Before writing field descriptions:
 
-1. **Load API documentation skill** - `ring:writing-api-docs` for endpoint context
-2. **Load voice and tone** - `ring:voice-and-tone` for consistent style
+1. **Load API documentation skill** - `bee:writing-api-docs` for endpoint context
+2. **Load voice and tone** - `bee:voice-and-tone` for consistent style
 3. **Verify data types** - Confirm actual types from API schema
 
 **HARD GATE:** CANNOT document fields without verified type information.

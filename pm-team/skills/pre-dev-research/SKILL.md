@@ -1,5 +1,5 @@
 ---
-name: ring:pre-dev-research
+name: bee:pre-dev-research
 description: |
   Gate 0 research phase for pre-dev workflow. Dispatches 4 parallel research agents
   to gather codebase patterns, external best practices, framework documentation,
@@ -16,27 +16,27 @@ skip_when: |
   - Research already completed (research.md exists and is recent)
 
 sequence:
-  before: [ring:pre-dev-prd-creation, ring:pre-dev-feature-map]
+  before: [bee:pre-dev-prd-creation, bee:pre-dev-feature-map]
 
 related:
-  complementary: [ring:pre-dev-prd-creation, ring:pre-dev-trd-creation]
+  complementary: [bee:pre-dev-prd-creation, bee:pre-dev-trd-creation]
 
 research_modes:
   greenfield:
     description: "New feature with no existing patterns to follow"
-    primary_agents: [ring:best-practices-researcher, ring:framework-docs-researcher, ring:product-designer]
+    primary_agents: [bee:best-practices-researcher, bee:framework-docs-researcher, bee:product-designer]
     focus: "External best practices, framework patterns, and user problem validation"
 
   modification:
     description: "Changing or extending existing functionality"
-    primary_agents: [ring:repo-research-analyst]
-    secondary_agents: [ring:product-designer]
+    primary_agents: [bee:repo-research-analyst]
+    secondary_agents: [bee:product-designer]
     focus: "Existing codebase patterns and conventions, UX impact assessment"
 
   integration:
     description: "Connecting systems or adding external dependencies"
-    primary_agents: [ring:framework-docs-researcher, ring:best-practices-researcher, ring:repo-research-analyst]
-    secondary_agents: [ring:product-designer]
+    primary_agents: [bee:framework-docs-researcher, bee:best-practices-researcher, bee:repo-research-analyst]
+    secondary_agents: [bee:product-designer]
     focus: "API documentation, integration patterns, and user experience considerations"
 ---
 
@@ -77,15 +77,15 @@ Research prevents: Reinventing existing patterns, ignoring conventions, missing 
 
 | Agent | Prompt Focus | Mode |
 |-------|--------------|------|
-| `ring:repo-research-analyst` | Codebase patterns for [feature]. Search docs/solutions/ knowledge base. Return file:line references. | PRIMARY in modification |
-| `ring:best-practices-researcher` | External best practices for [feature]. Use Context7 + WebSearch. Return URLs. | PRIMARY in greenfield |
-| `ring:framework-docs-researcher` | Tech stack docs for [feature]. Detect versions from manifests. Use Context7. Return version constraints. | PRIMARY in integration |
-| `ring:product-designer` | User problem validation, personas, competitive UX analysis, design constraints for [feature]. Mode: `ux-research`. | PRIMARY in greenfield, SECONDARY in others |
+| `bee:repo-research-analyst` | Codebase patterns for [feature]. Search docs/solutions/ knowledge base. Return file:line references. | PRIMARY in modification |
+| `bee:best-practices-researcher` | External best practices for [feature]. Use Context7 + WebSearch. Return URLs. | PRIMARY in greenfield |
+| `bee:framework-docs-researcher` | Tech stack docs for [feature]. Detect versions from manifests. Use Context7. Return version constraints. | PRIMARY in integration |
+| `bee:product-designer` | User problem validation, personas, competitive UX analysis, design constraints for [feature]. Mode: `ux-research`. | PRIMARY in greenfield, SECONDARY in others |
 
 **Task invocation for product-designer:**
 ```
 Task(
-  subagent_type="ring:product-designer",
+  subagent_type="bee:product-designer",
   model="opus",
   prompt="Analyze user needs for [feature]. Mode: ux-research. Return: problem validation, preliminary personas, competitive analysis, design constraints."
 )
@@ -144,7 +144,7 @@ mkdir -p "{frontend.path}/docs/pre-dev/{feature-name}"
 2. **Adjust agent dispatch for multi-module projects:**
 
 If `topology.structure` is `monorepo` or `multi-repo`:
-- **ring:repo-research-analyst:** Run ONCE per module path
+- **bee:repo-research-analyst:** Run ONCE per module path
   - Backend: Search `{topology.modules.backend.path}` for patterns
   - Frontend: Search `{topology.modules.frontend.path}` for patterns
 - **Combine findings** in single research.md with module sections:
@@ -207,9 +207,9 @@ If `topology.structure` is `monorepo` or `multi-repo`:
 
 ## Integration with Pre-Dev Workflow
 
-**ring:pre-dev-full (10-gate):** Gate 0 Research → Gate 1 PRD (reads research.md) → ... → Gate 3 TRD (reads research.md)
+**bee:pre-dev-full (10-gate):** Gate 0 Research → Gate 1 PRD (reads research.md) → ... → Gate 3 TRD (reads research.md)
 
-**ring:pre-dev-feature (5-gate):** Gate 0 Research → Gate 1 PRD → Gate 2 TRD → Gate 3 Tasks
+**bee:pre-dev-feature (5-gate):** Gate 0 Research → Gate 1 PRD → Gate 2 TRD → Gate 3 Tasks
 
 ## Research Document Usage
 
@@ -232,7 +232,7 @@ This skill is a research/analysis skill and does NOT require WebFetch of languag
 
 **Purpose:** This skill gathers research BEFORE technical decisions are made. Standards are loaded in TRD (Gate 3) after research establishes context.
 
-**However**, research agents dispatched by this skill (e.g., `ring:framework-docs-researcher`) MUST use WebSearch and Context7 to gather current best practices.
+**However**, research agents dispatched by this skill (e.g., `bee:framework-docs-researcher`) MUST use WebSearch and Context7 to gather current best practices.
 
 ---
 
@@ -254,7 +254,7 @@ These requirements are NON-NEGOTIABLE:
 
 - MUST dispatch all 4 research agents in parallel
 - MUST determine research mode BEFORE dispatching agents
-- MUST include product/UX research via `ring:product-designer`
+- MUST include product/UX research via `bee:product-designer`
 - MUST aggregate findings into research.md with file:line references
 - MUST search docs/solutions/ for prior solutions
 - MUST document tech stack versions from manifests
@@ -290,10 +290,10 @@ These requirements are NON-NEGOTIABLE:
 | Rationalization | Why It's WRONG | Required Action |
 |-----------------|----------------|-----------------|
 | "Feature is simple, research is overkill" | Simple features have conventions too. Research validates simplicity | **Run all 4 agents regardless of perceived simplicity** |
-| "I know the codebase, skip repo research" | Personal knowledge isn't documented or shared | **Run ring:repo-research-analyst anyway** |
-| "External best practices don't apply to us" | Best practices exist for reasons. Evaluate, don't dismiss | **Run ring:best-practices-researcher** |
-| "Framework docs are the same as last time" | Versions change. Patterns evolve. Check current state | **Run ring:framework-docs-researcher** |
-| "User research slows us down" | Building wrong features slows down 100x more | **Run ring:product-designer in ux-research mode** |
+| "I know the codebase, skip repo research" | Personal knowledge isn't documented or shared | **Run bee:repo-research-analyst anyway** |
+| "External best practices don't apply to us" | Best practices exist for reasons. Evaluate, don't dismiss | **Run bee:best-practices-researcher** |
+| "Framework docs are the same as last time" | Versions change. Patterns evolve. Check current state | **Run bee:framework-docs-researcher** |
+| "User research slows us down" | Building wrong features slows down 100x more | **Run bee:product-designer in ux-research mode** |
 | "Synthesis is just summary, I can skip it" | Synthesis extracts actionable insights. Summary isn't enough | **Complete synthesis section with patterns/constraints** |
 
 ---

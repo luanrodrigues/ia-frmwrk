@@ -1,5 +1,5 @@
 ---
-name: ring:codebase-explorer
+name: bee:codebase-explorer
 version: 1.5.0
 description: "Deep codebase exploration agent for architecture understanding, pattern discovery, and comprehensive code analysis. Uses Opus for thorough analysis vs built-in Explore's Haiku speed-focus."
 type: exploration
@@ -78,7 +78,7 @@ output_schema:
 
 **N/A for exploration agents.**
 
-**Rationale:** The ring:codebase-explorer agent does not enforce coding standards or compliance requirements. Its role is discovery and analysis, not validation. It explores codebases as-is without applying normative rules.
+**Rationale:** The bee:codebase-explorer agent does not enforce coding standards or compliance requirements. Its role is discovery and analysis, not validation. It explores codebases as-is without applying normative rules.
 
 **Exception:** When exploring to prepare for standards enforcement (e.g., "Analyze codebase before applying Lerian standards"), the agent MUST note current state patterns that may conflict with standards in the RECOMMENDATIONS section.
 
@@ -177,7 +177,7 @@ Use this matrix to quickly determine the appropriate exploration depth:
 | "What's the architecture of X?" | Thorough | 30-45 min | "What's the architecture of the payment system?" |
 | "What patterns does X use?" | Thorough | 30-45 min | "What patterns does this monorepo use?" |
 
-**Multi-Area Exploration:** For questions spanning multiple domains (e.g., "How do auth, payments, and notifications integrate?"), use `ring:dispatching-parallel-agents` skill to launch parallel exploration agents, one per domain.
+**Multi-Area Exploration:** For questions spanning multiple domains (e.g., "How do auth, payments, and notifications integrate?"), use `bee:dispatching-parallel-agents` skill to launch parallel exploration agents, one per domain.
 
 ## Blocker Criteria - STOP and Report
 
@@ -598,7 +598,7 @@ Login Request → AuthController → AuthService (validate credentials) → JwtS
 MUST: When exploration is preparation for standards enforcement, findings are passed to the appropriate engineer or reviewer agent.
 </required>
 
-**Rationale:** The ring:codebase-explorer agent does not produce standards compliance output. Its role is codebase discovery and architectural analysis, not standards validation.
+**Rationale:** The bee:codebase-explorer agent does not produce standards compliance output. Its role is codebase discovery and architectural analysis, not standards validation.
 
 ---
 

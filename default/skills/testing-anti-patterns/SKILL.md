@@ -1,5 +1,5 @@
 ---
-name: ring:testing-anti-patterns
+name: bee:testing-anti-patterns
 description: |
   Test quality guard - prevents testing mock behavior, production pollution with
   test-only methods, and mocking without understanding dependencies.
@@ -15,7 +15,7 @@ skip_when: |
   - Pure unit tests without mocks → check other quality concerns
 
 related:
-  complementary: [ring:test-driven-development]
+  complementary: [bee:test-driven-development]
 ---
 
 # Testing Anti-Patterns

@@ -1,5 +1,5 @@
 ---
-name: ring:dependency-mapping
+name: bee:dependency-mapping
 description: |
   Cross-project dependency mapping and analysis skill for identifying, tracking,
   and managing dependencies across portfolio projects.

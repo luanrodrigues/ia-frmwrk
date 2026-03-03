@@ -1,5 +1,5 @@
 ---
-name: ring:portfolio-review
+name: bee:portfolio-review
 description: Conduct a comprehensive portfolio review across multiple projects
 argument-hint: "[scope] [options]"
 ---
@@ -73,7 +73,7 @@ Conduct a comprehensive portfolio review across multiple projects.
 **This command MUST load the portfolio-planning skill for complete workflow execution.**
 
 ```
-Use Skill tool: ring:portfolio-planning
+Use Skill tool: bee:portfolio-planning
 ```
 
 The skill contains the complete portfolio review gates with:
@@ -89,7 +89,7 @@ The skill contains the complete portfolio review gates with:
 
 ```
 Task tool:
-  subagent_type: "ring:portfolio-manager"
+  subagent_type: "bee:portfolio-manager"
   model: "opus"
   prompt: "Conduct portfolio health assessment. Scope: [scope]. Focus: [focus]."
 ```
@@ -98,7 +98,7 @@ Task tool:
 
 ```
 Task tool:
-  subagent_type: "ring:resource-planner"
+  subagent_type: "bee:resource-planner"
   model: "opus"
   prompt: "Analyze resource utilization across portfolio."
 ```
@@ -107,7 +107,7 @@ Task tool:
 
 ```
 Task tool:
-  subagent_type: "ring:risk-analyst"
+  subagent_type: "bee:risk-analyst"
   model: "opus"
   prompt: "Assess portfolio risk posture and correlations."
 ```

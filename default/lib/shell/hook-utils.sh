@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2034  # Unused variables OK for exported config
-# Common hook utilities for Ring hooks
+# Common hook utilities for Bee hooks
 #
 # Usage:
 #   source /path/to/hook-utils.sh

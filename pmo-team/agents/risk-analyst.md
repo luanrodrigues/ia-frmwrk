@@ -1,5 +1,5 @@
 ---
-name: ring:risk-analyst
+name: bee:risk-analyst
 version: 1.1.0
 description: Portfolio Risk Analyst specialized in risk identification, assessment, correlation analysis, and mitigation planning across portfolio projects. Manages RAID logs and portfolio risk exposure.
 type: specialist
@@ -309,7 +309,7 @@ Analyzed 18 risks across portfolio. Portfolio risk exposure: MEDIUM-HIGH. 2 crit
 
 **N/A for PMO specialist agents.**
 
-**Rationale:** The ring:risk-analyst agent produces risk analysis, not code implementation output. Standards compliance verification is performed by engineer agents.
+**Rationale:** The bee:risk-analyst agent produces risk analysis, not code implementation output. Standards compliance verification is performed by engineer agents.
 
 ---
 
@@ -317,7 +317,7 @@ Analyzed 18 risks across portfolio. Portfolio risk exposure: MEDIUM-HIGH. 2 crit
 
 **N/A for PMO specialist agents.**
 
-**Rationale:** The ring:risk-analyst agent produces risk analysis, not code implementation. Standards loading is performed by engineer agents that implement the managed projects.
+**Rationale:** The bee:risk-analyst agent produces risk analysis, not code implementation. Standards loading is performed by engineer agents that implement the managed projects.
 
 ---
 

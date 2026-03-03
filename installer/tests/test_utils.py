@@ -20,7 +20,7 @@ class TestEnsureDirectory:
 
     def test_creates_new_directory(self, tmp_path):
         """ensure_directory() should create a new directory."""
-        from ring_installer.utils.fs import ensure_directory
+        from bee_installer.utils.fs import ensure_directory
 
         new_dir = tmp_path / "new_directory"
         assert not new_dir.exists()
@@ -33,7 +33,7 @@ class TestEnsureDirectory:
 
     def test_creates_nested_directories(self, tmp_path):
         """ensure_directory() should create nested directories."""
-        from ring_installer.utils.fs import ensure_directory
+        from bee_installer.utils.fs import ensure_directory
 
         nested_dir = tmp_path / "level1" / "level2" / "level3"
 
@@ -44,7 +44,7 @@ class TestEnsureDirectory:
 
     def test_existing_directory_unchanged(self, tmp_path):
         """ensure_directory() should not fail on existing directory."""
-        from ring_installer.utils.fs import ensure_directory
+        from bee_installer.utils.fs import ensure_directory
 
         existing = tmp_path / "existing"
         existing.mkdir()
@@ -56,7 +56,7 @@ class TestEnsureDirectory:
 
     def test_raises_if_file_exists(self, tmp_path):
         """ensure_directory() should raise NotADirectoryError if path is a file."""
-        from ring_installer.utils.fs import ensure_directory
+        from bee_installer.utils.fs import ensure_directory
 
         file_path = tmp_path / "a_file"
         file_path.write_text("content")
@@ -67,7 +67,7 @@ class TestEnsureDirectory:
     def test_expands_user_path(self, tmp_path):
         """ensure_directory() should expand ~ in paths."""
 
-        from ring_installer.utils.fs import ensure_directory
+        from bee_installer.utils.fs import ensure_directory
 
         # Create a mock expanduser that returns a safe temporary path
         with patch.object(Path, "expanduser", return_value=tmp_path / "expanded") as mock_expand:
@@ -80,7 +80,7 @@ class TestBackupExisting:
 
     def test_creates_backup_of_file(self, tmp_path):
         """backup_existing() should create backup of existing file."""
-        from ring_installer.utils.fs import backup_existing
+        from bee_installer.utils.fs import backup_existing
 
         original = tmp_path / "original.txt"
         original.write_text("original content")
@@ -94,7 +94,7 @@ class TestBackupExisting:
 
     def test_creates_backup_of_directory(self, tmp_path):
         """backup_existing() should create backup of existing directory."""
-        from ring_installer.utils.fs import backup_existing
+        from bee_installer.utils.fs import backup_existing
 
         original_dir = tmp_path / "original_dir"
         original_dir.mkdir()
@@ -108,7 +108,7 @@ class TestBackupExisting:
 
     def test_returns_none_if_not_exists(self, tmp_path):
         """backup_existing() should return None if path doesn't exist."""
-        from ring_installer.utils.fs import backup_existing
+        from bee_installer.utils.fs import backup_existing
 
         nonexistent = tmp_path / "nonexistent"
 
@@ -118,7 +118,7 @@ class TestBackupExisting:
 
     def test_uses_custom_backup_dir(self, tmp_path):
         """backup_existing() should use custom backup directory."""
-        from ring_installer.utils.fs import backup_existing
+        from bee_installer.utils.fs import backup_existing
 
         original = tmp_path / "original.txt"
         original.write_text("content")
@@ -130,7 +130,7 @@ class TestBackupExisting:
 
     def test_backup_name_includes_timestamp(self, tmp_path):
         """backup_existing() should include timestamp in backup name."""
-        from ring_installer.utils.fs import backup_existing
+        from bee_installer.utils.fs import backup_existing
 
         original = tmp_path / "original.txt"
         original.write_text("content")
@@ -149,7 +149,7 @@ class TestCopyWithTransform:
 
     def test_copies_file_without_transform(self, tmp_path):
         """copy_with_transform() should copy file without transformation."""
-        from ring_installer.utils.fs import copy_with_transform
+        from bee_installer.utils.fs import copy_with_transform
 
         source = tmp_path / "source.txt"
         source.write_text("source content")
@@ -163,7 +163,7 @@ class TestCopyWithTransform:
 
     def test_applies_transformation(self, tmp_path):
         """copy_with_transform() should apply transformation function."""
-        from ring_installer.utils.fs import copy_with_transform
+        from bee_installer.utils.fs import copy_with_transform
 
         source = tmp_path / "source.txt"
         source.write_text("hello world")
@@ -179,7 +179,7 @@ class TestCopyWithTransform:
 
     def test_creates_target_directory(self, tmp_path):
         """copy_with_transform() should create target directory if needed."""
-        from ring_installer.utils.fs import copy_with_transform
+        from bee_installer.utils.fs import copy_with_transform
 
         source = tmp_path / "source.txt"
         source.write_text("content")
@@ -191,7 +191,7 @@ class TestCopyWithTransform:
 
     def test_raises_if_source_missing(self, tmp_path):
         """copy_with_transform() should raise FileNotFoundError if source missing."""
-        from ring_installer.utils.fs import copy_with_transform
+        from bee_installer.utils.fs import copy_with_transform
 
         source = tmp_path / "nonexistent.txt"
         target = tmp_path / "target.txt"
@@ -205,7 +205,7 @@ class TestSafeRemove:
 
     def test_removes_file(self, tmp_path):
         """safe_remove() should remove a file."""
-        from ring_installer.utils.fs import safe_remove
+        from bee_installer.utils.fs import safe_remove
 
         file_path = tmp_path / "to_remove.txt"
         file_path.write_text("content")
@@ -217,7 +217,7 @@ class TestSafeRemove:
 
     def test_removes_directory(self, tmp_path):
         """safe_remove() should remove a directory and its contents."""
-        from ring_installer.utils.fs import safe_remove
+        from bee_installer.utils.fs import safe_remove
 
         dir_path = tmp_path / "to_remove"
         dir_path.mkdir()
@@ -230,7 +230,7 @@ class TestSafeRemove:
 
     def test_missing_ok_true(self, tmp_path):
         """safe_remove() should not raise if path missing and missing_ok=True."""
-        from ring_installer.utils.fs import safe_remove
+        from bee_installer.utils.fs import safe_remove
 
         nonexistent = tmp_path / "nonexistent"
 
@@ -240,7 +240,7 @@ class TestSafeRemove:
 
     def test_missing_ok_false_raises(self, tmp_path):
         """safe_remove() should raise if path missing and missing_ok=False."""
-        from ring_installer.utils.fs import safe_remove
+        from bee_installer.utils.fs import safe_remove
 
         nonexistent = tmp_path / "nonexistent"
 
@@ -253,7 +253,7 @@ class TestGetFileHash:
 
     def test_returns_sha256_hash(self, tmp_path):
         """get_file_hash() should return SHA256 hash by default."""
-        from ring_installer.utils.fs import get_file_hash
+        from bee_installer.utils.fs import get_file_hash
 
         file_path = tmp_path / "test.txt"
         file_path.write_text("test content")
@@ -265,7 +265,7 @@ class TestGetFileHash:
 
     def test_same_content_same_hash(self, tmp_path):
         """get_file_hash() should return same hash for same content."""
-        from ring_installer.utils.fs import get_file_hash
+        from bee_installer.utils.fs import get_file_hash
 
         file1 = tmp_path / "file1.txt"
         file2 = tmp_path / "file2.txt"
@@ -276,7 +276,7 @@ class TestGetFileHash:
 
     def test_different_content_different_hash(self, tmp_path):
         """get_file_hash() should return different hash for different content."""
-        from ring_installer.utils.fs import get_file_hash
+        from bee_installer.utils.fs import get_file_hash
 
         file1 = tmp_path / "file1.txt"
         file2 = tmp_path / "file2.txt"
@@ -287,7 +287,7 @@ class TestGetFileHash:
 
     def test_rejects_md5_algorithm(self, tmp_path):
         """get_file_hash() should reject weak algorithms like MD5."""
-        from ring_installer.utils.fs import get_file_hash
+        from bee_installer.utils.fs import get_file_hash
 
         file_path = tmp_path / "test.txt"
         file_path.write_text("test")
@@ -297,7 +297,7 @@ class TestGetFileHash:
 
     def test_raises_if_file_missing(self, tmp_path):
         """get_file_hash() should raise FileNotFoundError if file missing."""
-        from ring_installer.utils.fs import get_file_hash
+        from bee_installer.utils.fs import get_file_hash
 
         with pytest.raises(FileNotFoundError):
             get_file_hash(tmp_path / "nonexistent.txt")
@@ -307,7 +307,7 @@ class TestAreFilesIdentical:
     """Tests for are_files_identical() function."""
 
     def test_identical_files_returns_true(self, tmp_path):
-        from ring_installer.utils.fs import are_files_identical
+        from bee_installer.utils.fs import are_files_identical
 
         file1 = tmp_path / "file1.txt"
         file2 = tmp_path / "file2.txt"
@@ -317,7 +317,7 @@ class TestAreFilesIdentical:
         assert are_files_identical(file1, file2) is True
 
     def test_different_files_returns_false(self, tmp_path):
-        from ring_installer.utils.fs import are_files_identical
+        from bee_installer.utils.fs import are_files_identical
 
         file1 = tmp_path / "file1.txt"
         file2 = tmp_path / "file2.txt"
@@ -327,7 +327,7 @@ class TestAreFilesIdentical:
         assert are_files_identical(file1, file2) is False
 
     def test_missing_file_returns_false(self, tmp_path):
-        from ring_installer.utils.fs import are_files_identical
+        from bee_installer.utils.fs import are_files_identical
 
         file1 = tmp_path / "exists.txt"
         file1.write_text("content")
@@ -341,7 +341,7 @@ class TestSymlinkGuards:
     """Symlink safety tests for file operations."""
 
     def test_copy_with_transform_rejects_symlink(self, tmp_path):
-        from ring_installer.utils.fs import copy_with_transform
+        from bee_installer.utils.fs import copy_with_transform
 
         source = tmp_path / "source.txt"
         source.write_text("content")
@@ -354,7 +354,7 @@ class TestSymlinkGuards:
             copy_with_transform(source, link)
 
     def test_atomic_write_rejects_symlink(self, tmp_path):
-        from ring_installer.utils.fs import atomic_write
+        from bee_installer.utils.fs import atomic_write
 
         real_target = tmp_path / "real.txt"
         real_target.write_text("original")
@@ -370,7 +370,7 @@ class TestListFilesRecursive:
 
     def test_lists_all_files(self, tmp_path):
         """list_files_recursive() should list all files in directory."""
-        from ring_installer.utils.fs import list_files_recursive
+        from bee_installer.utils.fs import list_files_recursive
 
         (tmp_path / "file1.txt").write_text("1")
         (tmp_path / "file2.md").write_text("2")
@@ -384,7 +384,7 @@ class TestListFilesRecursive:
 
     def test_filters_by_extension(self, tmp_path):
         """list_files_recursive() should filter by extension."""
-        from ring_installer.utils.fs import list_files_recursive
+        from bee_installer.utils.fs import list_files_recursive
 
         (tmp_path / "file1.txt").write_text("1")
         (tmp_path / "file2.md").write_text("2")
@@ -397,7 +397,7 @@ class TestListFilesRecursive:
 
     def test_excludes_patterns(self, tmp_path):
         """list_files_recursive() should exclude patterns."""
-        from ring_installer.utils.fs import list_files_recursive
+        from bee_installer.utils.fs import list_files_recursive
 
         (tmp_path / "file.txt").write_text("1")
         cache_dir = tmp_path / "__pycache__"
@@ -415,7 +415,7 @@ class TestAtomicWrite:
 
     def test_writes_string_content(self, tmp_path):
         """atomic_write() should write string content."""
-        from ring_installer.utils.fs import atomic_write
+        from bee_installer.utils.fs import atomic_write
 
         file_path = tmp_path / "output.txt"
 
@@ -425,7 +425,7 @@ class TestAtomicWrite:
 
     def test_writes_bytes_content(self, tmp_path):
         """atomic_write() should write bytes content."""
-        from ring_installer.utils.fs import atomic_write
+        from bee_installer.utils.fs import atomic_write
 
         file_path = tmp_path / "output.bin"
 
@@ -435,7 +435,7 @@ class TestAtomicWrite:
 
     def test_no_partial_writes(self, tmp_path):
         """atomic_write() should not leave partial files on failure."""
-        from ring_installer.utils.fs import atomic_write
+        from bee_installer.utils.fs import atomic_write
 
         file_path = tmp_path / "output.txt"
 
@@ -455,7 +455,7 @@ class TestPlatformInfo:
 
     def test_create_platform_info(self):
         """PlatformInfo should be creatable with basic attributes."""
-        from ring_installer.utils.platform_detect import PlatformInfo
+        from bee_installer.utils.platform_detect import PlatformInfo
 
         info = PlatformInfo(
             platform_id="test",
@@ -471,7 +471,7 @@ class TestPlatformInfo:
 
     def test_platform_info_with_all_fields(self):
         """PlatformInfo should accept all optional fields."""
-        from ring_installer.utils.platform_detect import PlatformInfo
+        from bee_installer.utils.platform_detect import PlatformInfo
 
         info = PlatformInfo(
             platform_id="test",
@@ -494,7 +494,7 @@ class TestDetectInstalledPlatforms:
 
     def test_returns_list(self, mock_platform_detection):
         """detect_installed_platforms() should return a list."""
-        from ring_installer.utils.platform_detect import detect_installed_platforms
+        from bee_installer.utils.platform_detect import detect_installed_platforms
 
         result = detect_installed_platforms()
 
@@ -502,7 +502,7 @@ class TestDetectInstalledPlatforms:
 
     def test_returns_only_installed(self, mock_platform_detection):
         """detect_installed_platforms() should return only installed platforms."""
-        from ring_installer.utils.platform_detect import PlatformInfo, detect_installed_platforms
+        from bee_installer.utils.platform_detect import PlatformInfo, detect_installed_platforms
 
         # Set Claude as installed
         mock_platform_detection["claude"].return_value = PlatformInfo(
@@ -523,7 +523,7 @@ class TestIsPlatformInstalled:
 
     def test_returns_true_if_installed(self, mock_platform_detection):
         """is_platform_installed() should return True for installed platform."""
-        from ring_installer.utils.platform_detect import PlatformInfo, is_platform_installed
+        from bee_installer.utils.platform_detect import PlatformInfo, is_platform_installed
 
         mock_platform_detection["claude"].return_value = PlatformInfo(
             platform_id="claude",
@@ -535,7 +535,7 @@ class TestIsPlatformInstalled:
 
     def test_returns_false_if_not_installed(self, mock_platform_detection):
         """is_platform_installed() should return False for uninstalled platform."""
-        from ring_installer.utils.platform_detect import is_platform_installed
+        from bee_installer.utils.platform_detect import is_platform_installed
 
         assert is_platform_installed("claude") is False
 
@@ -545,7 +545,7 @@ class TestGetPlatformVersion:
 
     def test_returns_version_if_installed(self, mock_platform_detection):
         """get_platform_version() should return version for installed platform."""
-        from ring_installer.utils.platform_detect import PlatformInfo, get_platform_version
+        from bee_installer.utils.platform_detect import PlatformInfo, get_platform_version
 
         mock_platform_detection["cursor"].return_value = PlatformInfo(
             platform_id="cursor",
@@ -558,7 +558,7 @@ class TestGetPlatformVersion:
 
     def test_returns_none_if_not_installed(self, mock_platform_detection):
         """get_platform_version() should return None for uninstalled platform."""
-        from ring_installer.utils.platform_detect import get_platform_version
+        from bee_installer.utils.platform_detect import get_platform_version
 
         assert get_platform_version("cursor") is None
 
@@ -568,7 +568,7 @@ class TestGetSystemInfo:
 
     def test_returns_system_info(self):
         """get_system_info() should return system information dict."""
-        from ring_installer.utils.platform_detect import get_system_info
+        from bee_installer.utils.platform_detect import get_system_info
 
         info = get_system_info()
 
@@ -588,7 +588,7 @@ class TestVersionParsing:
 
     def test_parse_basic_version(self):
         """Version.parse() should parse basic version string."""
-        from ring_installer.utils.version import Version
+        from bee_installer.utils.version import Version
 
         v = Version.parse("1.2.3")
 
@@ -600,7 +600,7 @@ class TestVersionParsing:
 
     def test_parse_with_v_prefix(self):
         """Version.parse() should handle 'v' prefix."""
-        from ring_installer.utils.version import Version
+        from bee_installer.utils.version import Version
 
         v = Version.parse("v2.0.0")
 
@@ -610,7 +610,7 @@ class TestVersionParsing:
 
     def test_parse_with_prerelease(self):
         """Version.parse() should parse prerelease identifier."""
-        from ring_installer.utils.version import Version
+        from bee_installer.utils.version import Version
 
         v = Version.parse("1.0.0-alpha.1")
 
@@ -619,7 +619,7 @@ class TestVersionParsing:
 
     def test_parse_with_build(self):
         """Version.parse() should parse build metadata."""
-        from ring_installer.utils.version import Version
+        from bee_installer.utils.version import Version
 
         v = Version.parse("1.0.0+build.123")
 
@@ -627,7 +627,7 @@ class TestVersionParsing:
 
     def test_parse_full_version(self):
         """Version.parse() should parse version with prerelease and build."""
-        from ring_installer.utils.version import Version
+        from bee_installer.utils.version import Version
 
         v = Version.parse("1.0.0-beta.2+build.456")
 
@@ -636,7 +636,7 @@ class TestVersionParsing:
 
     def test_parse_invalid_raises(self):
         """Version.parse() should raise ValueError for invalid version."""
-        from ring_installer.utils.version import Version
+        from bee_installer.utils.version import Version
 
         with pytest.raises(ValueError):
             Version.parse("invalid")
@@ -653,7 +653,7 @@ class TestVersionComparison:
 
     def test_equal_versions(self):
         """Equal versions should compare as equal."""
-        from ring_installer.utils.version import Version
+        from bee_installer.utils.version import Version
 
         v1 = Version.parse("1.0.0")
         v2 = Version.parse("1.0.0")
@@ -662,42 +662,42 @@ class TestVersionComparison:
 
     def test_major_comparison(self):
         """Major version should be compared first."""
-        from ring_installer.utils.version import Version
+        from bee_installer.utils.version import Version
 
         assert Version.parse("2.0.0") > Version.parse("1.9.9")
         assert Version.parse("1.0.0") < Version.parse("2.0.0")
 
     def test_minor_comparison(self):
         """Minor version should be compared when major is equal."""
-        from ring_installer.utils.version import Version
+        from bee_installer.utils.version import Version
 
         assert Version.parse("1.2.0") > Version.parse("1.1.9")
         assert Version.parse("1.1.0") < Version.parse("1.2.0")
 
     def test_patch_comparison(self):
         """Patch version should be compared when major and minor are equal."""
-        from ring_installer.utils.version import Version
+        from bee_installer.utils.version import Version
 
         assert Version.parse("1.0.2") > Version.parse("1.0.1")
         assert Version.parse("1.0.0") < Version.parse("1.0.1")
 
     def test_prerelease_lower_than_release(self):
         """Prerelease versions should be lower than release versions."""
-        from ring_installer.utils.version import Version
+        from bee_installer.utils.version import Version
 
         assert Version.parse("1.0.0-alpha") < Version.parse("1.0.0")
         assert Version.parse("1.0.0") > Version.parse("1.0.0-rc.1")
 
     def test_prerelease_comparison(self):
         """Prerelease identifiers should be compared alphabetically."""
-        from ring_installer.utils.version import Version
+        from bee_installer.utils.version import Version
 
         assert Version.parse("1.0.0-alpha") < Version.parse("1.0.0-beta")
         assert Version.parse("1.0.0-alpha.1") < Version.parse("1.0.0-alpha.2")
 
     def test_comparison_operators(self):
         """All comparison operators should work."""
-        from ring_installer.utils.version import Version
+        from bee_installer.utils.version import Version
 
         v1 = Version.parse("1.0.0")
         v2 = Version.parse("1.0.1")
@@ -710,26 +710,26 @@ class TestVersionComparison:
         assert v1 >= v1
 
 
-class TestVersionString:
+class TestVersionStbee:
     """Tests for Version string representation."""
 
     def test_str_basic(self):
         """Version should convert to basic version string."""
-        from ring_installer.utils.version import Version
+        from bee_installer.utils.version import Version
 
         v = Version(1, 2, 3)
         assert str(v) == "1.2.3"
 
     def test_str_with_prerelease(self):
         """Version should include prerelease in string."""
-        from ring_installer.utils.version import Version
+        from bee_installer.utils.version import Version
 
         v = Version(1, 0, 0, prerelease="alpha")
         assert str(v) == "1.0.0-alpha"
 
     def test_str_with_build(self):
         """Version should include build metadata in string."""
-        from ring_installer.utils.version import Version
+        from bee_installer.utils.version import Version
 
         v = Version(1, 0, 0, build="123")
         assert str(v) == "1.0.0+123"
@@ -740,14 +740,14 @@ class TestVersionMethods:
 
     def test_is_prerelease(self):
         """is_prerelease() should correctly identify prerelease versions."""
-        from ring_installer.utils.version import Version
+        from bee_installer.utils.version import Version
 
         assert Version.parse("1.0.0-alpha").is_prerelease() is True
         assert Version.parse("1.0.0").is_prerelease() is False
 
     def test_bump_major(self):
         """bump_major() should increment major version."""
-        from ring_installer.utils.version import Version
+        from bee_installer.utils.version import Version
 
         v = Version.parse("1.2.3")
         bumped = v.bump_major()
@@ -756,7 +756,7 @@ class TestVersionMethods:
 
     def test_bump_minor(self):
         """bump_minor() should increment minor version."""
-        from ring_installer.utils.version import Version
+        from bee_installer.utils.version import Version
 
         v = Version.parse("1.2.3")
         bumped = v.bump_minor()
@@ -765,7 +765,7 @@ class TestVersionMethods:
 
     def test_bump_patch(self):
         """bump_patch() should increment patch version."""
-        from ring_installer.utils.version import Version
+        from bee_installer.utils.version import Version
 
         v = Version.parse("1.2.3")
         bumped = v.bump_patch()
@@ -778,7 +778,7 @@ class TestCompareVersions:
 
     def test_compare_versions(self, version_test_cases):
         """compare_versions() should correctly compare versions."""
-        from ring_installer.utils.version import compare_versions
+        from bee_installer.utils.version import compare_versions
 
         for v1, v2, expected in version_test_cases:
             result = compare_versions(v1, v2)
@@ -790,14 +790,14 @@ class TestIsUpdateAvailable:
 
     def test_update_available(self):
         """is_update_available() should return True when update available."""
-        from ring_installer.utils.version import is_update_available
+        from bee_installer.utils.version import is_update_available
 
         assert is_update_available("1.0.0", "1.0.1") is True
         assert is_update_available("1.0.0", "2.0.0") is True
 
     def test_no_update_available(self):
         """is_update_available() should return False when up to date."""
-        from ring_installer.utils.version import is_update_available
+        from bee_installer.utils.version import is_update_available
 
         assert is_update_available("1.0.0", "1.0.0") is False
         assert is_update_available("2.0.0", "1.0.0") is False
@@ -808,7 +808,7 @@ class TestInstallManifest:
 
     def test_create_manifest(self):
         """InstallManifest.create() should create manifest with defaults."""
-        from ring_installer.utils.version import InstallManifest
+        from bee_installer.utils.version import InstallManifest
 
         manifest = InstallManifest.create(
             version="1.0.0",
@@ -823,7 +823,7 @@ class TestInstallManifest:
 
     def test_to_dict(self):
         """InstallManifest.to_dict() should convert to dictionary."""
-        from ring_installer.utils.version import InstallManifest
+        from bee_installer.utils.version import InstallManifest
 
         manifest = InstallManifest.create(
             version="1.0.0",
@@ -841,7 +841,7 @@ class TestInstallManifest:
 
     def test_from_dict(self):
         """InstallManifest.from_dict() should create from dictionary."""
-        from ring_installer.utils.version import InstallManifest
+        from bee_installer.utils.version import InstallManifest
 
         data = {
             "version": "2.0.0",
@@ -860,7 +860,7 @@ class TestInstallManifest:
 
     def test_save_and_load(self, tmp_path):
         """InstallManifest should save and load from file."""
-        from ring_installer.utils.version import InstallManifest
+        from bee_installer.utils.version import InstallManifest
 
         manifest = InstallManifest.create(
             version="1.0.0",
@@ -881,7 +881,7 @@ class TestInstallManifest:
 
     def test_load_nonexistent_returns_none(self, tmp_path):
         """InstallManifest.load() should return None for missing file."""
-        from ring_installer.utils.version import InstallManifest
+        from bee_installer.utils.version import InstallManifest
 
         result = InstallManifest.load(tmp_path / "nonexistent.json")
 
@@ -889,31 +889,31 @@ class TestInstallManifest:
 
 
 class TestGetRingVersion:
-    """Tests for get_ring_version() function."""
+    """Tests for get_bee_version() function."""
 
-    def test_from_marketplace_json(self, tmp_ring_root):
-        """get_ring_version() should read from marketplace.json."""
-        from ring_installer.utils.version import get_ring_version
+    def test_from_marketplace_json(self, tmp_bee_root):
+        """get_bee_version() should read from marketplace.json."""
+        from bee_installer.utils.version import get_bee_version
 
-        version = get_ring_version(tmp_ring_root)
+        version = get_bee_version(tmp_bee_root)
 
         assert version == "1.2.3"
 
     def test_from_version_file(self, tmp_path):
-        """get_ring_version() should read from VERSION file."""
-        from ring_installer.utils.version import get_ring_version
+        """get_bee_version() should read from VERSION file."""
+        from bee_installer.utils.version import get_bee_version
 
         (tmp_path / "VERSION").write_text("2.0.0")
 
-        version = get_ring_version(tmp_path)
+        version = get_bee_version(tmp_path)
 
         assert version == "2.0.0"
 
     def test_returns_none_if_not_found(self, tmp_path):
-        """get_ring_version() should return None if no version found."""
-        from ring_installer.utils.version import get_ring_version
+        """get_bee_version() should return None if no version found."""
+        from bee_installer.utils.version import get_bee_version
 
-        version = get_ring_version(tmp_path)
+        version = get_bee_version(tmp_path)
 
         assert version is None
 
@@ -923,7 +923,7 @@ class TestGetManifestPath:
 
     def test_returns_manifest_path(self, tmp_path):
         """get_manifest_path() should return .bee-manifest.json path."""
-        from ring_installer.utils.version import get_manifest_path
+        from bee_installer.utils.version import get_manifest_path
 
         path = get_manifest_path(tmp_path)
 
@@ -933,9 +933,9 @@ class TestGetManifestPath:
 class TestCheckForUpdates:
     """Tests for check_for_updates() function."""
 
-    def test_detects_update_available(self, tmp_ring_root, tmp_install_dir):
+    def test_detects_update_available(self, tmp_bee_root, tmp_install_dir):
         """check_for_updates() should detect when update is available."""
-        from ring_installer.utils.version import (
+        from bee_installer.utils.version import (
             InstallManifest,
             check_for_updates,
             get_manifest_path,
@@ -943,22 +943,22 @@ class TestCheckForUpdates:
 
         # Create old manifest in install dir
         old_manifest = InstallManifest.create(
-            version="1.0.0",  # Older than tmp_ring_root's 1.2.3
-            source_path=str(tmp_ring_root),
+            version="1.0.0",  # Older than tmp_bee_root's 1.2.3
+            source_path=str(tmp_bee_root),
             platform="claude"
         )
         old_manifest.save(get_manifest_path(tmp_install_dir))
 
-        result = check_for_updates(tmp_ring_root, tmp_install_dir, "claude")
+        result = check_for_updates(tmp_bee_root, tmp_install_dir, "claude")
 
         assert result.update_available is True
         assert result.is_newer is True
         assert result.installed_version == "1.0.0"
         assert result.available_version == "1.2.3"
 
-    def test_no_update_when_same_version(self, tmp_ring_root, tmp_install_dir):
+    def test_no_update_when_same_version(self, tmp_bee_root, tmp_install_dir):
         """check_for_updates() should detect no update when versions match."""
-        from ring_installer.utils.version import (
+        from bee_installer.utils.version import (
             InstallManifest,
             check_for_updates,
             get_manifest_path,
@@ -967,12 +967,12 @@ class TestCheckForUpdates:
         # Create manifest with same version
         manifest = InstallManifest.create(
             version="1.2.3",
-            source_path=str(tmp_ring_root),
+            source_path=str(tmp_bee_root),
             platform="claude"
         )
         manifest.save(get_manifest_path(tmp_install_dir))
 
-        result = check_for_updates(tmp_ring_root, tmp_install_dir, "claude")
+        result = check_for_updates(tmp_bee_root, tmp_install_dir, "claude")
 
         assert result.update_available is False
         assert result.is_newer is False
@@ -983,7 +983,7 @@ class TestSaveInstallManifest:
 
     def test_saves_manifest(self, tmp_path):
         """save_install_manifest() should create manifest file."""
-        from ring_installer.utils.version import (
+        from bee_installer.utils.version import (
             InstallManifest,
             get_manifest_path,
             save_install_manifest,

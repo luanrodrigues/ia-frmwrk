@@ -32,7 +32,7 @@ related:
 
 The bee-dev-team plugin provides 9 specialized developer agents. Use them via `Task tool with subagent_type:`.
 
-See [CLAUDE.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/CLAUDE.md) and [bee:using-bee](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/default/skills/using-bee/SKILL.md) for canonical workflow requirements and ORCHESTRATOR principle. This skill introduces dev-team-specific agents.
+See [CLAUDE.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/CLAUDE.md) and [bee:using-bee](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/default/skills/using-bee/SKILL.md) for canonical workflow requirements and ORCHESTRATOR principle. This skill introduces dev-team-specific agents.
 
 **Remember:** Follow the **ORCHESTRATOR principle** from `bee:using-bee`. Dispatch agents to handle complexity; don't operate tools directly.
 

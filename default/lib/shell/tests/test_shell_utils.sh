@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Comprehensive tests for Ring shell utilities
+# Comprehensive tests for Bee shell utilities
 #
 # Usage:
 #   ./test_shell_utils.sh
@@ -214,19 +214,19 @@ test_json_string_wraps_in_quotes() {
 
     local result
     result=$(json_string "hello")
-    assert_equals '"hello"' "$result" "json_string: wraps basic string in quotes"
+    assert_equals '"hello"' "$result" "json_stbee: wraps basic string in quotes"
 }
 
 test_json_string_empty() {
     local result
     result=$(json_string "")
-    assert_equals '""' "$result" "json_string: empty string becomes empty JSON string"
+    assert_equals '""' "$result" "json_stbee: empty string becomes empty JSON string"
 }
 
 test_json_string_with_escapes() {
     local result
     result=$(json_string 'say "hi"')
-    assert_equals '"say \"hi\""' "$result" "json_string: escapes and wraps"
+    assert_equals '"say \"hi\""' "$result" "json_stbee: escapes and wraps"
 }
 
 # =============================================================================
@@ -411,7 +411,7 @@ test_output_hook_empty_with_event() {
 
 main() {
     echo -e "${YELLOW}========================================${NC}"
-    echo -e "${YELLOW}Ring Shell Utilities Test Suite${NC}"
+    echo -e "${YELLOW}Bee Shell Utilities Test Suite${NC}"
     echo -e "${YELLOW}========================================${NC}"
 
     # json_escape tests

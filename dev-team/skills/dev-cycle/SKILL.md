@@ -80,7 +80,7 @@ examples:
 **Before any gate execution, you MUST load Bee standards:**
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/CLAUDE.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/CLAUDE.md
 </fetch_required>
 
 Fetch URL above and extract: Agent Modification Verification requirements, Anti-Rationalization Tables requirements, and Critical Rules.
@@ -1460,8 +1460,8 @@ Create tool:
     > Generated from PM documents (PRD/TRD/Feature Map).
     >
     > Bee Standards URLs:
-    > - PHP: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php.md
-    > - TypeScript: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/typescript.md
+    > - PHP: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/php.md
+    > - TypeScript: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/typescript.md
 
     ## What Bee Standards Cover (DO not DUPLICATE HERE)
 

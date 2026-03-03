@@ -1,5 +1,5 @@
 ---
-name: ring:voice-and-tone
+name: bee:voice-and-tone
 description: |
   Voice and tone guidelines for technical documentation. Ensures consistent,
   clear, and human writing across all documentation.
@@ -151,7 +151,7 @@ Use naturally to make writing conversational:
 Voice and tone guidelines are foundational. When applying this skill:
 
 1. **Load this skill first** before any documentation writing
-2. **Cross-reference** with `ring:writing-functional-docs` or `ring:writing-api-docs`
+2. **Cross-reference** with `bee:writing-functional-docs` or `bee:writing-api-docs`
 3. **Use with documentation-review** for quality verification
 
 **HARD GATE:** CANNOT write documentation without understanding voice and tone principles.

@@ -1,5 +1,5 @@
 ---
-name: ring:testing-skills-with-subagents
+name: bee:testing-skills-with-subagents
 description: |
   Skill testing methodology - run scenarios without skill (RED), observe failures,
   write skill (GREEN), close loopholes (REFACTOR).
@@ -14,7 +14,7 @@ skip_when: |
   - No rules that agents have incentive to bypass
 
 related:
-  complementary: [ring:writing-skills, ring:test-driven-development]
+  complementary: [bee:writing-skills, bee:test-driven-development]
 ---
 
 # Testing Skills With Subagents
@@ -27,7 +27,7 @@ You run scenarios without the skill (RED - watch agent fail), write skill addres
 
 **Core principle:** If you didn't watch an agent fail without the skill, you don't know if the skill prevents the right failures.
 
-**REQUIRED BACKGROUND:** You MUST understand ring:test-driven-development before using this skill. That skill defines the fundamental RED-GREEN-REFACTOR cycle. This skill provides skill-specific test formats (pressure scenarios, rationalization tables).
+**REQUIRED BACKGROUND:** You MUST understand bee:test-driven-development before using this skill. That skill defines the fundamental RED-GREEN-REFACTOR cycle. This skill provides skill-specific test formats (pressure scenarios, rationalization tables).
 
 **Complete worked example:** See examples/CLAUDE_MD_TESTING.md for a full test campaign testing CLAUDE.md documentation variants.
 
@@ -113,7 +113,7 @@ If agent still fails: skill is unclear or incomplete. Revise and re-test.
 
 **Best tests combine 3+ pressures.**
 
-**Why this works:** See persuasion-principles.md (in ring:writing-skills directory) for research on how authority, scarcity, and commitment principles increase compliance pressure.
+**Why this works:** See persuasion-principles.md (in bee:writing-skills directory) for research on how authority, scarcity, and commitment principles increase compliance pressure.
 
 ### Key Elements
 

@@ -1,5 +1,5 @@
 ---
-name: ring:commit
+name: bee:commit
 description: Organize and create atomic git commits with intelligent change grouping
 argument-hint: "[message]"
 ---

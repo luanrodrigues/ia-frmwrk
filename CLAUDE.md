@@ -26,7 +26,7 @@ When creating or modifying any agent in `*/agents/*.md`:
 
 ### 3. Anti-Patterns (MUST NOT do these)
 
-1. **MUST NOT skip ring:using-ring** - It's mandatory, not optional
+1. **MUST NOT skip bee:using-bee** - It's mandatory, not optional
 2. **MUST NOT run reviewers sequentially** - dispatch in parallel
 3. **MUST NOT skip TDD's RED phase** - Test must fail before implementation
 4. **MUST NOT ignore skill when applicable** - "Simple task" is not an excuse
@@ -34,14 +34,14 @@ When creating or modifying any agent in `*/agents/*.md`:
 6. **MUST NOT commit manually** - use `/bee:commit` command
 7. **MUST NOT assume compliance** - VERIFY with evidence
 
-### 4. Unified Ring Namespace (MANDATORY)
+### 4. Unified Bee Namespace (MANDATORY)
 
-All Ring components use the unified `ring:` prefix. Plugin differentiation is handled internally.
+All Bee components use the unified `bee:` prefix. Plugin differentiation is handled internally.
 
-- ✅ `ring:code-reviewer`
-- ✅ `ring:backend-engineer-golang`
-- ❌ `<missing ring prefix>` (FORBIDDEN: omitting the `ring:` prefix)
-- ❌ `bee-default:ring:code-reviewer` (deprecated plugin-specific prefix)
+- ✅ `bee:code-reviewer`
+- ✅ `bee:backend-engineer-golang`
+- ❌ `<missing bee prefix>` (FORBIDDEN: omitting the `bee:` prefix)
+- ❌ `bee-default:bee:code-reviewer` (deprecated plugin-specific prefix)
 
 ### 5. Standards-Agent Synchronization (MUST CHECK)
 
@@ -74,7 +74,7 @@ Before committing changes to dev-team/docs/standards/*.md:
     - Add/remove row: `| N | [Section Name](#anchor) | Description |`
     - Update numbering if needed
 [ ] 3. Did you update `dev-team/skills/shared-patterns/standards-coverage-table.md`?
-    - Find the agent's section index (e.g., "ring:backend-engineer-golang → golang.md")
+    - Find the agent's section index (e.g., "bee:backend-engineer-golang → golang.md")
     - Add/remove the section row
 [ ] 4. Do the section counts match?
     - Count `## ` headers in standards file (excluding meta-sections)
@@ -98,11 +98,11 @@ If any checkbox is no → Fix before committing.
 
 | Standards File  | Agents That Use It                                                                             |
 | --------------- | ---------------------------------------------------------------------------------------------- |
-| `golang.md`     | `ring:backend-engineer-golang`, `ring:qa-analyst`                                              |
-| `typescript.md` | `ring:backend-engineer-typescript`, `ring:frontend-bff-engineer-typescript`, `ring:qa-analyst` |
-| `frontend.md`   | `ring:frontend-engineer`, `ring:frontend-designer`                                             |
-| `devops.md`     | `ring:devops-engineer`                                                                         |
-| `sre.md`        | `ring:sre`                                                                                     |
+| `golang.md`     | `bee:backend-engineer-golang`, `bee:qa-analyst`                                              |
+| `typescript.md` | `bee:backend-engineer-typescript`, `bee:frontend-bff-engineer-typescript`, `bee:qa-analyst` |
+| `frontend.md`   | `bee:frontend-engineer`, `bee:frontend-designer`                                             |
+| `devops.md`     | `bee:devops-engineer`                                                                         |
+| `sre.md`        | `bee:sre`                                                                                     |
 
 **Section Index Location:** `dev-team/skills/shared-patterns/standards-coverage-table.md` → "Agent → Standards Section Index"
 
@@ -112,14 +112,14 @@ MUST match `dev-team/skills/shared-patterns/standards-coverage-table.md`. See th
 
 | Agent                                   | Standards File             |
 | --------------------------------------- | -------------------------- |
-| `ring:backend-engineer-golang`          | golang.md                  |
-| `ring:backend-engineer-typescript`      | typescript.md              |
-| `ring:frontend-bff-engineer-typescript` | typescript.md              |
-| `ring:frontend-engineer`                | frontend.md                |
-| `ring:frontend-designer`                | frontend.md                |
-| `ring:devops-engineer`                  | devops.md                  |
-| `ring:sre`                              | sre.md                     |
-| `ring:qa-analyst`                       | golang.md or typescript.md |
+| `bee:backend-engineer-golang`          | golang.md                  |
+| `bee:backend-engineer-typescript`      | typescript.md              |
+| `bee:frontend-bff-engineer-typescript` | typescript.md              |
+| `bee:frontend-engineer`                | frontend.md                |
+| `bee:frontend-designer`                | frontend.md                |
+| `bee:devops-engineer`                  | devops.md                  |
+| `bee:sre`                              | sre.md                     |
+| `bee:qa-analyst`                       | golang.md or typescript.md |
 
 **⛔ If section counts in skills don't match the coverage table → Update the skill.**
 
@@ -195,7 +195,7 @@ When content is reused across multiple skills within a plugin:
 | [Anti-Rationalization Tables](#anti-rationalization-tables-mandatory-for-all-agents)      | Prevent AI from assuming/skipping                  |
 | [Lexical Salience Guidelines](#lexical-salience-guidelines-mandatory)                     | Selective emphasis for effective prompts           |
 | [Agent Modification Verification](#agent-modification-verification-mandatory)             | Checklist for agent changes                        |
-| [Repository Overview](#repository-overview)                                               | What Ring is                                       |
+| [Repository Overview](#repository-overview)                                               | What Bee is                                       |
 | [Architecture](#architecture)                                                             | Plugin summary                                     |
 | [Key Workflows](#key-workflows)                                                           | Quick reference + [full docs](docs/WORKFLOWS.md)   |
 | [Agent Output Schemas](#agent-output-schema-archetypes)                                   | Schema summary + [full docs](docs/AGENT_DESIGN.md) |
@@ -222,7 +222,7 @@ AI models naturally attempt to be "helpful" by making autonomous decisions. This
 | "[Common excuse AI might generate]" | [Why this thinking is incorrect] | **[MANDATORY action in bold]** |
 ```
 
-**Example from ring:backend-engineer-golang.md:**
+**Example from bee:backend-engineer-golang.md:**
 
 ```markdown
 | Rationalization                          | Why It's WRONG                                     | Required Action           |
@@ -414,7 +414,7 @@ If any checkbox is no → Agent is INCOMPLETE. Add missing sections.
 
 ## Repository Overview
 
-Ring is a comprehensive skills library and workflow system for AI agents that enforces proven software engineering practices through mandatory workflows, parallel code review, and systematic pre-development planning. Currently implemented as a Claude Code plugin marketplace with **6 active plugins**, the skills are agent-agnostic and reusable across different AI systems.
+Bee is a comprehensive skills library and workflow system for AI agents that enforces proven software engineering practices through mandatory workflows, parallel code review, and systematic pre-development planning. Currently implemented as a Claude Code plugin marketplace with **6 active plugins**, the skills are agent-agnostic and reusable across different AI systems.
 
 **Active Plugins:**
 
@@ -439,7 +439,7 @@ The architecture uses markdown-based skill definitions with YAML frontmatter, au
 
 See [README.md](README.md#installation) for detailed installation instructions.
 
-**Quick install:** `curl -fsSL https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/install-ring.sh | bash`
+**Quick install:** `curl -fsSL https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/install-bee.sh | bash`
 
 ---
 
@@ -471,9 +471,9 @@ git log --oneline -20              # Recent commits show hook development
 git worktree list                  # Check isolated development branches
 
 # Skill invocation (via Claude Code)
-Skill tool: "ring:test-driven-development"  # Enforce TDD workflow
-Skill tool: "ring:systematic-debugging"     # Debug with 4-phase analysis
-Skill tool: "ring:using-ring"               # Load mandatory workflows
+Skill tool: "bee:test-driven-development"  # Enforce TDD workflow
+Skill tool: "bee:systematic-debugging"     # Debug with 4-phase analysis
+Skill tool: "bee:using-bee"               # Load mandatory workflows
 
 # Slash commands
 /bee:codereview          # Dispatch 6 parallel reviewers
@@ -523,13 +523,13 @@ See [docs/WORKFLOWS.md](docs/WORKFLOWS.md) for detailed instructions.
 ### Naming Conventions
 
 - Skills: `kebab-case` matching directory name
-- Agents: `ring:{domain}.md` or `ring:{domain}-reviewer.md` format
+- Agents: `bee:{domain}.md` or `bee:{domain}-reviewer.md` format
 - Commands: `/{action}` format (e.g., `/bee:brainstorm`, `/bee:pre-dev-feature`)
 - Hooks: `{event}-{purpose}.sh` format
 
 #### Agent/Skill/Command Invocation
 
-See [Unified Ring Namespace](#4-unified-bee-namespace-mandatory) above for invocation format. MUST use `ring:{component}` (e.g., `ring:code-reviewer`, `ring:backend-engineer-golang`).
+See [Unified Bee Namespace](#4-unified-bee-namespace-mandatory) above for invocation format. MUST use `bee:{component}` (e.g., `bee:code-reviewer`, `bee:backend-engineer-golang`).
 
 ---
 
@@ -538,10 +538,10 @@ See [Unified Ring Namespace](#4-unified-bee-namespace-mandatory) above for invoc
 | Schema Type    | Used By                | Key Sections                                    |
 | -------------- | ---------------------- | ----------------------------------------------- |
 | Implementation | \* engineers           | Summary, Implementation, Files Changed, Testing |
-| Analysis       | ring:frontend-designer | Analysis, Findings, Recommendations             |
+| Analysis       | bee:frontend-designer | Analysis, Findings, Recommendations             |
 | Reviewer       | \*-reviewer            | VERDICT, Issues Found, What Was Done Well       |
-| Exploration    | ring:codebase-explorer | Exploration Summary, Key Findings, Architecture |
-| Planning       | ring:write-plan        | Goal, Architecture, Tech Stack, Tasks           |
+| Exploration    | bee:codebase-explorer | Exploration Summary, Key Findings, Architecture |
+| Planning       | bee:write-plan        | Goal, Architecture, Tech Stack, Tasks           |
 
 See [docs/AGENT_DESIGN.md](docs/AGENT_DESIGN.md) for complete schema definitions and Standards Compliance requirements.
 
@@ -560,7 +560,7 @@ See [docs/AGENT_DESIGN.md](docs/AGENT_DESIGN.md) for complete schema definitions
 - Critical findings = immediate fix required
 - Re-run all 6 reviewers after fixes
 
-# Skill compliance (default/skills/using-ring/SKILL.md)
+# Skill compliance (default/skills/using-bee/SKILL.md)
 - Check for applicable skills before any task
 - If skill exists for task → MUST use it
 - Announce non-obvious skill usage
@@ -581,7 +581,7 @@ See [docs/AGENT_DESIGN.md](docs/AGENT_DESIGN.md) for complete schema definitions
 The system loads at SessionStart (from `default/` plugin):
 
 1. `default/hooks/session-start.sh` - Loads skill quick reference via `generate-skills-ref.py`
-2. `ring:using-ring` skill - Injected as mandatory workflow
+2. `bee:using-bee` skill - Injected as mandatory workflow
 3. `default/hooks/claude-md-reminder.sh` - Reminds about CLAUDE.md on prompt submit
 
 **Monorepo Context:**
@@ -596,7 +596,7 @@ The system loads at SessionStart (from `default/` plugin):
 - FinOps regulatory: `finops-team/` (7 skills, 3 agents)
 - Technical writing: `tw-team/` (7 skills, 3 agents, 3 commands)
 - Current git branch: `main`
-- Remote: `github.com/LerianStudio/bee`
+- Remote: `github.com/luanrodrigues/ia-frmwrk`
 
 ---
 
@@ -625,7 +625,7 @@ Plugin Hooks (inject context at session start):
 └── tw-team/hooks/session-start.sh        # Technical writing agents
 
 Using-* Skills (plugin introductions):
-├── default/skills/using-ring/SKILL.md             # Core workflow + agent list
+├── default/skills/using-bee/SKILL.md             # Core workflow + agent list
 ├── dev-team/skills/using-dev-team/SKILL.md        # Developer agents guide
 ├── pm-team/skills/using-pm-team/SKILL.md          # Pre-dev workflow
 ├── pmo-team/skills/using-pmo-team/SKILL.md        # PMO portfolio guide
@@ -645,10 +645,10 @@ Using-* Skills (plugin introductions):
 
 **Naming Convention Enforcement:**
 
-- [ ] All agent invocations use `ring:agent-name` format
-- [ ] All skill invocations use `ring:skill-name` format
+- [ ] All agent invocations use `bee:agent-name` format
+- [ ] All skill invocations use `bee:skill-name` format
 - [ ] All command invocations use `/{command-name}` format
-- [ ] No bare agent/skill names in invocation contexts (must have ring: prefix)
+- [ ] No bare agent/skill names in invocation contexts (must have bee: prefix)
 - [ ] No deprecated `bee-{plugin}:` format used
 
-**MUST use unified namespace:** `ring:{component}` (e.g., `ring:code-reviewer`)
+**MUST use unified namespace:** `bee:{component}` (e.g., `bee:code-reviewer`)

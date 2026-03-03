@@ -1,5 +1,5 @@
 ---
-name: ring:pre-dev-task-breakdown
+name: bee:pre-dev-task-breakdown
 description: |
   Gate 7: Implementation tasks - value-driven decomposition into working increments
   that deliver measurable user value.
@@ -16,8 +16,8 @@ skip_when: |
   - Trivial change → direct implementation
 
 sequence:
-  after: [ring:pre-dev-trd-creation, ring:pre-dev-dependency-map]
-  before: [ring:pre-dev-subtask-creation, ring:executing-plans]
+  after: [bee:pre-dev-trd-creation, bee:pre-dev-dependency-map]
+  before: [bee:pre-dev-subtask-creation, bee:executing-plans]
 ---
 
 # Task Breakdown - Value-Driven Decomposition
@@ -77,10 +77,10 @@ After defining task scope and success criteria, the system automatically estimat
 ### Estimation Process
 
 1. **Tech Stack Detection:** Identify project type from TRD
-   - Go project → dispatch ring:backend-engineer-golang
-   - TypeScript Backend → dispatch ring:backend-engineer-typescript
-   - React/Next.js → dispatch ring:frontend-engineer
-   - Mixed/Unknown → dispatch ring:codebase-explorer
+   - Go project → dispatch bee:backend-engineer-golang
+   - TypeScript Backend → dispatch bee:backend-engineer-typescript
+   - React/Next.js → dispatch bee:frontend-engineer
+   - Mixed/Unknown → dispatch bee:codebase-explorer
 
 2. **Scope Analysis:** Specialized agent analyzes:
    - Technical components (endpoints, schemas, services)
@@ -116,9 +116,9 @@ After defining task scope and success criteria, the system automatically estimat
 
 ```markdown
 **Effort Estimate:**
-- **Baseline:** AI Agent via ring:dev-cycle
+- **Baseline:** AI Agent via bee:dev-cycle
 - **AI Estimate:** 4.5 AI-agent-hours
-- **Estimation Method:** ring:backend-engineer-golang analysis
+- **Estimation Method:** bee:backend-engineer-golang analysis
 - **Confidence:** High (standard CRUD, lib-commons available)
 
 **Breakdown:**
@@ -137,7 +137,7 @@ After defining task scope and success criteria, the system automatically estimat
 - lib-commons/http, lib-commons/postgres, lib-commons/validator available
 - Standard CRUD patterns (no complex algorithms)
 - PostgreSQL database configured
-- ring:dev-cycle will execute implementation
+- bee:dev-cycle will execute implementation
 
 **Team Type:** Backend Engineer (Go)
 ```
@@ -220,11 +220,11 @@ Each task MUST have `target:` and `working_directory:` fields when topology is m
 
 | Target | API Pattern | Task Type | Agent |
 |--------|-------------|-----------|-------|
-| `backend` | any | API endpoints, services, data layer, CLI | `ring:backend-engineer-golang` or `ring:backend-engineer-typescript` |
-| `frontend` | `direct` | UI components, pages, forms, Server Components | `ring:frontend-engineer` |
-| `frontend` | `direct` | Server Actions, data fetching hooks | `ring:frontend-engineer` |
-| `frontend` | `bff` | API routes, data aggregation, transformation | `ring:frontend-bff-engineer-typescript` |
-| `frontend` | `bff` | UI components, pages, forms | `ring:frontend-engineer` |
+| `backend` | any | API endpoints, services, data layer, CLI | `bee:backend-engineer-golang` or `bee:backend-engineer-typescript` |
+| `frontend` | `direct` | UI components, pages, forms, Server Components | `bee:frontend-engineer` |
+| `frontend` | `direct` | Server Actions, data fetching hooks | `bee:frontend-engineer` |
+| `frontend` | `bff` | API routes, data aggregation, transformation | `bee:frontend-bff-engineer-typescript` |
+| `frontend` | `bff` | UI components, pages, forms | `bee:frontend-engineer` |
 | `shared` | any | CI/CD, configs, docs, cross-module utilities | DevOps or general |
 
 ### How to Determine Agent for Frontend Tasks
@@ -257,7 +257,7 @@ Is task target: frontend?
 
 **Target:** backend
 **Working Directory:** packages/api
-**Agent:** ring:backend-engineer-golang
+**Agent:** bee:backend-engineer-golang
 
 **Deliverable:** Working login API that validates credentials and returns JWT token.
 
@@ -269,7 +269,7 @@ Is task target: frontend?
 
 **Target:** frontend
 **Working Directory:** packages/web
-**Agent:** ring:frontend-bff-engineer-typescript  # Because api_pattern: bff
+**Agent:** bee:frontend-bff-engineer-typescript  # Because api_pattern: bff
 
 **Deliverable:** BFF endpoint that aggregates user profile, recent activity, and notifications.
 
@@ -281,7 +281,7 @@ Is task target: frontend?
 
 **Target:** frontend
 **Working Directory:** packages/web
-**Agent:** ring:frontend-engineer  # UI task, even with BFF pattern
+**Agent:** bee:frontend-engineer  # UI task, even with BFF pattern
 
 **Deliverable:** Dashboard page component consuming aggregated data from BFF.
 
@@ -433,7 +433,7 @@ MUST open with two summary tables before the individual task details.
 
 #### Summary Table 1 — Technical Overview
 
-A quick-reference table for the engineering team. The `Status` column is initialized by `ring:pre-dev-task-breakdown` and updated by `ring:dev-cycle` during execution.
+A quick-reference table for the engineering team. The `Status` column is initialized by `bee:pre-dev-task-breakdown` and updated by `bee:dev-cycle` during execution.
 
 - CANNOT set any value other than `⏸️ Pending` at task creation time
 
@@ -449,14 +449,14 @@ A quick-reference table for the engineering team. The `Status` column is initial
 
 MUST leave the Status cell of the TOTAL row empty. CANNOT apply `⏸️ Pending` or any status value to the TOTAL row.
 
-**Status lifecycle (managed by `ring:dev-cycle`):**
+**Status lifecycle (managed by `bee:dev-cycle`):**
 
 | Value | Meaning | Set by |
 |-------|---------|--------|
-| `⏸️ Pending` | Not started | `ring:pre-dev-task-breakdown` at task creation |
-| `🔄 Doing` | Execution started (Gate 0 began) | `ring:dev-cycle` |
-| `✅ Done` | Gate 9 approved | `ring:dev-cycle` |
-| `❌ Failed` | Execution terminated with unresolved blocker | `ring:dev-cycle` |
+| `⏸️ Pending` | Not started | `bee:pre-dev-task-breakdown` at task creation |
+| `🔄 Doing` | Execution started (Gate 0 began) | `bee:dev-cycle` |
+| `✅ Done` | Gate 9 approved | `bee:dev-cycle` |
+| `❌ Failed` | Execution terminated with unresolved blocker | `bee:dev-cycle` |
 
 #### Summary Table 2 — Business Deliverables View
 
@@ -517,7 +517,7 @@ Each task includes:
 | **Header** | T-[XXX]: [Task Title - What It Delivers] |
 | **Target** | backend \| frontend \| shared (if multi-module) |
 | **Working Directory** | Path from topology config (if multi-module) |
-| **Agent** | Recommended agent: ring:backend-engineer-*, ring:frontend-*-engineer-*, etc. |
+| **Agent** | Recommended agent: bee:backend-engineer-*, bee:frontend-*-engineer-*, etc. |
 | **Deliverable** | One sentence: what working software ships |
 | **Scope** | Includes (specific capabilities), Excludes (future tasks with IDs) |
 | **Success Criteria** | Testable items: Functional, Technical, Operational, Quality |
@@ -629,7 +629,7 @@ Optimize task order by sprint/phase with goals, critical path identification, an
 | multi-repo | `{backend.path}/docs/pre-dev/{feature}/tasks.md` + `{frontend.path}/docs/pre-dev/{feature}/tasks.md` |
 
 1. ✅ Tasks become sprint backlog
-2. 🎯 Use as input for subtasks (`ring:pre-dev-subtask-creation`)
+2. 🎯 Use as input for subtasks (`bee:pre-dev-subtask-creation`)
 3. 📊 Track progress per task (not per subtask)
 4. 🚫 No implementation yet - that's in subtasks
 

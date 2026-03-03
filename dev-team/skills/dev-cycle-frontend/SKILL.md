@@ -56,8 +56,8 @@ examples:
 **Before any gate execution, you MUST load Bee standards:**
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/CLAUDE.md
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/CLAUDE.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md
 </fetch_required>
 
 Fetch URLs above and extract: Agent Modification Verification requirements, Anti-Rationalization Tables requirements, Critical Rules, and Frontend Standards.

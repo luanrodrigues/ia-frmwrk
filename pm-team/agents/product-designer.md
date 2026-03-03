@@ -1,5 +1,5 @@
 ---
-name: ring:product-designer
+name: bee:product-designer
 description: |
   Product Designer agent for UX research, user validation, and design specifications.
   Accepts feature context and research findings. Returns UX research, personas,
@@ -68,7 +68,7 @@ Action: Cannot proceed. Orchestrator must reinvoke with model="opus"
 
 **Orchestrator Requirement:**
 ```
-Task(subagent_type="ring:product-designer", model="opus", ...)  # REQUIRED
+Task(subagent_type="bee:product-designer", model="opus", ...)  # REQUIRED
 ```
 
 **Rationale:**

@@ -1,5 +1,5 @@
 ---
-name: ring:finops-automation
+name: bee:finops-automation
 version: 1.2.0
 description: Senior Template Implementation Engineer specializing in .tpl template creation for Brazilian regulatory compliance (Gate 3). Expert in Reporter platform with XML, HTML and TXT template formats.
 type: specialist
@@ -425,7 +425,7 @@ Checklist:
 
 **N/A for FinOps specialist agents.**
 
-**Rationale:** The ring:finops-automation agent produces template generation output, not code implementation. Standards compliance verification is performed by engineer agents.
+**Rationale:** The bee:finops-automation agent produces template generation output, not code implementation. Standards compliance verification is performed by engineer agents.
 
 ---
 

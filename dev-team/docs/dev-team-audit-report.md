@@ -1,4 +1,4 @@
-# Ring Dev-Team Plugin Audit Report
+# Bee Dev-Team Plugin Audit Report
 
 **Generated:** 2026-02-27
 **Auditor:** Claude (Factory AI)
@@ -63,42 +63,42 @@
 
 | Agent | Version | Score | Missing Sections | Critical Gaps |
 |-------|---------|-------|------------------|---------------|
-| ring:backend-engineer-golang | v1.7.0 | 95% | None | None |
-| ring:backend-engineer-typescript | v1.5.0 | 95% | None | None |
-| ring:devops-engineer | v1.4.0 | 92% | None | None |
-| ring:frontend-bff-engineer-typescript | v2.5.0 | 95% | None | None |
-| ring:frontend-designer | v1.6.0 | 90% | When Not Needed (implicit) | None |
-| ring:frontend-engineer | v3.5.0 | 95% | None | None |
-| ring:prompt-quality-reviewer | v2.0.1 | 88% | When Not Needed (implicit) | None |
-| ring:qa-analyst | v1.6.0 | 95% | None | None |
-| ring:qa-analyst-frontend | v1.0.0 | 95% | None | None |
-| ring:sre | v1.5.0 | 92% | None | None |
-| ring:ui-engineer | v1.1.0 | 90% | Severity Calibration (inline) | None |
+| bee:backend-engineer-golang | v1.7.0 | 95% | None | None |
+| bee:backend-engineer-typescript | v1.5.0 | 95% | None | None |
+| bee:devops-engineer | v1.4.0 | 92% | None | None |
+| bee:frontend-bff-engineer-typescript | v2.5.0 | 95% | None | None |
+| bee:frontend-designer | v1.6.0 | 90% | When Not Needed (implicit) | None |
+| bee:frontend-engineer | v3.5.0 | 95% | None | None |
+| bee:prompt-quality-reviewer | v2.0.1 | 88% | When Not Needed (implicit) | None |
+| bee:qa-analyst | v1.6.0 | 95% | None | None |
+| bee:qa-analyst-frontend | v1.0.0 | 95% | None | None |
+| bee:sre | v1.5.0 | 92% | None | None |
+| bee:ui-engineer | v1.1.0 | 90% | Severity Calibration (inline) | None |
 
 ### Skills (19 files)
 
 | Skill | Category | Score | Missing/Weak Areas |
 |-------|----------|-------|-------------------|
-| ring:dev-chaos-testing | development-cycle | 90% | None |
-| ring:dev-cycle | orchestrator | 95% | None |
-| ring:dev-cycle-frontend | orchestrator | 95% | None |
-| ring:dev-devops | gate-1 | 92% | None |
-| ring:dev-feedback-loop | post-cycle | 88% | Severity Calibration implicit |
-| ring:dev-frontend-accessibility | gate-2-frontend | 92% | None |
-| ring:dev-frontend-e2e | gate-5-frontend | 92% | None |
-| ring:dev-frontend-performance | gate-6-frontend | 92% | None |
-| ring:dev-frontend-visual | gate-4-frontend | 90% | None |
-| ring:dev-fuzz-testing | gate-4 | 90% | None |
-| ring:dev-implementation | gate-0 | 95% | None |
-| ring:dev-integration-testing | gate-6 | 92% | None |
-| ring:dev-multi-tenant | specialized | 95% | None |
-| ring:dev-property-testing | gate-5 | 88% | Shorter than other gates |
-| ring:dev-refactor | analysis | 95% | None |
-| ring:dev-refactor-frontend | analysis | 95% | None |
-| ring:dev-sre | gate-2 | 95% | None |
-| ring:dev-unit-testing | gate-3 | 92% | None |
-| ring:dev-validation | gate-9/5 | 90% | None |
-| ring:using-dev-team | introduction | 85% | References shared-patterns |
+| bee:dev-chaos-testing | development-cycle | 90% | None |
+| bee:dev-cycle | orchestrator | 95% | None |
+| bee:dev-cycle-frontend | orchestrator | 95% | None |
+| bee:dev-devops | gate-1 | 92% | None |
+| bee:dev-feedback-loop | post-cycle | 88% | Severity Calibration implicit |
+| bee:dev-frontend-accessibility | gate-2-frontend | 92% | None |
+| bee:dev-frontend-e2e | gate-5-frontend | 92% | None |
+| bee:dev-frontend-performance | gate-6-frontend | 92% | None |
+| bee:dev-frontend-visual | gate-4-frontend | 90% | None |
+| bee:dev-fuzz-testing | gate-4 | 90% | None |
+| bee:dev-implementation | gate-0 | 95% | None |
+| bee:dev-integration-testing | gate-6 | 92% | None |
+| bee:dev-multi-tenant | specialized | 95% | None |
+| bee:dev-property-testing | gate-5 | 88% | Shorter than other gates |
+| bee:dev-refactor | analysis | 95% | None |
+| bee:dev-refactor-frontend | analysis | 95% | None |
+| bee:dev-sre | gate-2 | 95% | None |
+| bee:dev-unit-testing | gate-3 | 92% | None |
+| bee:dev-validation | gate-9/5 | 90% | None |
+| bee:using-dev-team | introduction | 85% | References shared-patterns |
 
 ---
 
@@ -106,19 +106,19 @@
 
 ### HIGH Severity Gaps (3)
 
-#### GAP-H001: ring:frontend-designer - Missing Explicit "When Not Needed" Section
+#### GAP-H001: bee:frontend-designer - Missing Explicit "When Not Needed" Section
 - **File:** `dev-team/agents/frontend-designer.md`
 - **Issue:** The agent lacks an explicit "## When Implementation is Not Needed" section
 - **Impact:** May not clearly communicate when the agent should NOT be dispatched
 - **Fix:** Add section with bullet points like "When implementing existing design specs" or "When using sindarian-ui components without customization"
 
-#### GAP-H002: ring:prompt-quality-reviewer - Missing Explicit "When Not Needed" Section
+#### GAP-H002: bee:prompt-quality-reviewer - Missing Explicit "When Not Needed" Section
 - **File:** `dev-team/agents/prompt-quality-reviewer.md`
 - **Issue:** Missing "## When This Agent is Not Needed" section
 - **Impact:** Unclear when to skip this analyst agent
 - **Fix:** Add section specifying "When prompt is simple one-liner" or "When no anti-rationalization needed"
 
-#### GAP-H003: ring:using-dev-team - Relies Heavily on Shared-Patterns References
+#### GAP-H003: bee:using-dev-team - Relies Heavily on Shared-Patterns References
 - **File:** `dev-team/skills/using-dev-team/SKILL.md`
 - **Issue:** Multiple critical sections reference shared-patterns instead of inline definitions
 - **Impact:** Requires loading additional files to understand full requirements
@@ -126,37 +126,37 @@
 
 ### MEDIUM Severity Gaps (8)
 
-#### GAP-M001: ring:ui-engineer - Severity Calibration Inline
+#### GAP-M001: bee:ui-engineer - Severity Calibration Inline
 - **File:** `dev-team/agents/ui-engineer.md`
 - **Issue:** Severity calibration is embedded in other sections, not a dedicated table
 - **Fix:** Add explicit `## Severity Calibration` section with CRITICAL/HIGH/MEDIUM/LOW table
 
-#### GAP-M002: ring:dev-property-testing - Shorter Content Than Peers
+#### GAP-M002: bee:dev-property-testing - Shorter Content Than Peers
 - **File:** `dev-team/skills/dev-property-testing/SKILL.md`
 - **Issue:** Significantly shorter than other gate skills (~150 lines vs ~300+ lines)
 - **Fix:** Expand with more detailed examples, edge cases, and verification steps
 
-#### GAP-M003: ring:dev-feedback-loop - Missing Explicit Severity Calibration
+#### GAP-M003: bee:dev-feedback-loop - Missing Explicit Severity Calibration
 - **File:** `dev-team/skills/dev-feedback-loop/SKILL.md`
 - **Issue:** No severity calibration table for findings
 - **Fix:** Add severity levels for different types of feedback findings
 
-#### GAP-M004: ring:dev-frontend-visual - Incomplete Skip Conditions
+#### GAP-M004: bee:dev-frontend-visual - Incomplete Skip Conditions
 - **File:** `dev-team/skills/dev-frontend-visual/SKILL.md`
 - **Issue:** Uses `skip_when` in frontmatter but content says "Snapshots are brittle" as NOT_skip
 - **Fix:** Clarify the skip_when vs NOT_skip_when distinction in frontmatter
 
-#### GAP-M005: ring:sre - Validation Focus Could Be Clearer
+#### GAP-M005: bee:sre - Validation Focus Could Be Clearer
 - **File:** `dev-team/agents/sre.md`
 - **Issue:** Role as "validator not implementer" could be more prominently stated
 - **Fix:** Add more prominent role clarification at the top
 
 #### GAP-M006: Standards Loading URLs - 2 Skills Missing
-- **Files:** `ring:dev-feedback-loop`, `ring:using-dev-team`
+- **Files:** `bee:dev-feedback-loop`, `bee:using-dev-team`
 - **Issue:** No explicit WebFetch URLs in fetch_required tags
 - **Fix:** Add `<fetch_required>` blocks with explicit URLs
 
-#### GAP-M007: ring:dev-validation - Self-Approval Prohibition Needs More Examples
+#### GAP-M007: bee:dev-validation - Self-Approval Prohibition Needs More Examples
 - **File:** `dev-team/skills/dev-validation/SKILL.md`
 - **Issue:** Self-approval prohibition section could benefit from more edge case examples
 - **Fix:** Add more "role switching" scenarios as prohibited
@@ -215,13 +215,13 @@
 
 ### Priority 1: Address HIGH Severity Gaps (Week 1)
 
-1. **Add "When Not Needed" sections** to `ring:frontend-designer` and `ring:prompt-quality-reviewer`
-2. **Add inline summaries** to `ring:using-dev-team` for critical sections that reference shared-patterns
+1. **Add "When Not Needed" sections** to `bee:frontend-designer` and `bee:prompt-quality-reviewer`
+2. **Add inline summaries** to `bee:using-dev-team` for critical sections that reference shared-patterns
 
 ### Priority 2: Address MEDIUM Severity Gaps (Week 2)
 
 1. **Add Severity Calibration tables** to skills missing them
-2. **Expand `ring:dev-property-testing`** to match peer skill depth
+2. **Expand `bee:dev-property-testing`** to match peer skill depth
 3. **Add `<fetch_required>` blocks** to skills missing them
 
 ### Priority 3: Address LOW Severity Gaps (Ongoing)
@@ -249,17 +249,17 @@
 
 | File | Why It's Exemplary |
 |------|-------------------|
-| ring:backend-engineer-golang | Most comprehensive standards coverage (47 sections) |
-| ring:dev-cycle | Excellent orchestrator pattern with state persistence |
-| ring:dev-multi-tenant | Detailed gate-by-gate implementation guide |
-| ring:dev-refactor | Strong mandatory gap principle enforcement |
-| ring:qa-analyst | Clear 5-mode operation with distinct standards per mode |
+| bee:backend-engineer-golang | Most comprehensive standards coverage (47 sections) |
+| bee:dev-cycle | Excellent orchestrator pattern with state persistence |
+| bee:dev-multi-tenant | Detailed gate-by-gate implementation guide |
+| bee:dev-refactor | Strong mandatory gap principle enforcement |
+| bee:qa-analyst | Clear 5-mode operation with distinct standards per mode |
 
 ---
 
 ## Conclusion
 
-The bee-dev-team plugin demonstrates **excellent compliance** with CLAUDE.md standards. The 3 HIGH severity gaps and 8 MEDIUM severity gaps are minor documentation improvements that can be addressed incrementally. The plugin's architecture—with shared-patterns for reusable content, clear orchestrator-executor separation, and comprehensive anti-rationalization tables—serves as a model for other Ring plugins.
+The bee-dev-team plugin demonstrates **excellent compliance** with CLAUDE.md standards. The 3 HIGH severity gaps and 8 MEDIUM severity gaps are minor documentation improvements that can be addressed incrementally. The plugin's architecture—with shared-patterns for reusable content, clear orchestrator-executor separation, and comprehensive anti-rationalization tables—serves as a model for other Bee plugins.
 
 **Recommended Actions:**
 1. Address HIGH severity gaps within 1 week
@@ -268,4 +268,4 @@ The bee-dev-team plugin demonstrates **excellent compliance** with CLAUDE.md sta
 
 ---
 
-*Report generated by Claude (Factory AI) following Ring audit standards.*
+*Report generated by Claude (Factory AI) following Bee audit standards.*

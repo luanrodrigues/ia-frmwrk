@@ -1,5 +1,5 @@
 ---
-name: ring:create-handoff
+name: bee:create-handoff
 description: Create a handoff document capturing current session state for future resumption
 user_invocable: true
 arguments:

@@ -1,5 +1,5 @@
 ---
-name: ring:review-docs
+name: bee:review-docs
 description: Review existing documentation for quality, voice, tone, and completeness
 argument-hint: "[file]"
 arguments:
@@ -51,7 +51,7 @@ The review covers five dimensions:
 
 ```
 Task tool:
-  subagent_type: "ring:docs-reviewer"
+  subagent_type: "bee:docs-reviewer"
   model: "opus"
   prompt: "Review this documentation for quality. Check:
           1. Voice and tone (second person, active voice, present tense)
@@ -118,7 +118,7 @@ If no file path was provided, paste the documentation content or specify a file 
 **This command MUST load the skill for complete workflow execution.**
 
 ```
-Use Skill tool: ring:documentation-review
+Use Skill tool: bee:documentation-review
 ```
 
 The skill contains the complete workflow with:

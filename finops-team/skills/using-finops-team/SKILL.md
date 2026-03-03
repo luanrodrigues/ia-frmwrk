@@ -1,5 +1,5 @@
 ---
-name: ring:using-finops-team
+name: bee:using-finops-team
 description: |
   3 FinOps agents: 2 for Brazilian financial regulatory compliance (BACEN, RFB,
   Open Banking), 1 for infrastructure cost estimation when onboarding customers.
@@ -18,18 +18,18 @@ skip_when: |
   - One-time cost question → direct calculation
 ---
 
-# Using Ring FinOps & Regulatory Agents
+# Using Bee FinOps & Regulatory Agents
 
 The bee-finops-team plugin provides 3 specialized FinOps agents: 2 for Brazilian financial compliance and 1 for infrastructure cost estimation. Use them via `Task tool with subagent_type:`.
 
-**Remember:** Follow the **ORCHESTRATOR principle** from `ring:using-ring`. Dispatch agents to handle regulatory complexity; don't implement compliance manually.
+**Remember:** Follow the **ORCHESTRATOR principle** from `bee:using-bee`. Dispatch agents to handle regulatory complexity; don't implement compliance manually.
 
 ---
 
 ## 3 FinOps Specialists
 
 ### 0. Infrastructure Cost Estimator (Customer Onboarding)
-**`ring:infrastructure-cost-estimator`** (v5.0)
+**`bee:infrastructure-cost-estimator`** (v5.0)
 
 **Architecture: Skill Orchestrates → Agent Calculates**
 ```
@@ -90,7 +90,7 @@ SKILL gathers ALL data (including environment selection + Helm configs) → Agen
 **Example dispatch (with per-component sharing + backup config):**
 ```
 Task tool:
-  subagent_type: "ring:infrastructure-cost-estimator"
+  subagent_type: "bee:infrastructure-cost-estimator"
   model: "opus"
   prompt: |
     Calculate infrastructure costs and profitability.
@@ -132,12 +132,12 @@ Task tool:
     - Expected Volume: 1,000,000/month
 ```
 
-**Skill:** `ring:infrastructure-cost-estimation` - Reads LerianStudio/helm at runtime, orchestrates data collection.
+**Skill:** `bee:infrastructure-cost-estimation` - Reads LerianStudio/helm at runtime, orchestrates data collection.
 
 ---
 
 ### 1. FinOps Analyzer (Compliance Analysis) - Regulatory
-**`ring:finops-analyzer`**
+**`bee:finops-analyzer`**
 
 **Specializations:**
 - Brazilian regulatory compliance analysis
@@ -162,7 +162,7 @@ Task tool:
 **Example dispatch:**
 ```
 Task tool:
-  subagent_type: "ring:finops-analyzer"
+  subagent_type: "bee:finops-analyzer"
   model: "opus"
   prompt: "Analyze BACEN COSIF requirements for corporate account reporting"
 ```
@@ -170,7 +170,7 @@ Task tool:
 ---
 
 ### 2. FinOps Automation (Template Generation)
-**`ring:finops-automation`**
+**`bee:finops-automation`**
 
 **Specializations:**
 - Template generation from specifications
@@ -192,7 +192,7 @@ Task tool:
 **Example dispatch:**
 ```
 Task tool:
-  subagent_type: "ring:finops-automation"
+  subagent_type: "bee:finops-automation"
   model: "opus"
   prompt: "Generate BACEN COSIF template from analyzed requirements"
 ```
@@ -204,7 +204,7 @@ Task tool:
 Brazilian regulatory compliance follows a 3-gate workflow:
 
 ### Gate 1: Compliance Analysis
-**Agent:** ring:finops-analyzer
+**Agent:** bee:finops-analyzer
 **Purpose:** Understand requirements, identify fields, validate mappings
 **Output:** compliance analysis document
 
@@ -216,7 +216,7 @@ Brazilian regulatory compliance follows a 3-gate workflow:
 ---
 
 ### Gate 2: Validation & Confirmation
-**Agent:** ring:finops-analyzer (again)
+**Agent:** bee:finops-analyzer (again)
 **Purpose:** Confirm mappings are correct, validate against specs
 **Output:** validated specification document
 
@@ -228,7 +228,7 @@ Brazilian regulatory compliance follows a 3-gate workflow:
 ---
 
 ### Gate 3: Template Generation
-**Agent:** ring:finops-automation
+**Agent:** bee:finops-automation
 **Purpose:** Generate executable .tpl templates from validated specifications
 **Output:** complete .tpl files for Reporter platform
 
@@ -262,19 +262,19 @@ Brazilian regulatory compliance follows a 3-gate workflow:
 
 | Need | Agent | Use Case |
 |------|-------|----------|
-| **Is this deal profitable?** | ring:infrastructure-cost-estimator | Calculate revenue - cost = profit |
-| **Shared vs dedicated costs** | ring:infrastructure-cost-estimator | Per-component cost attribution |
-| **Infrastructure breakdown** | ring:infrastructure-cost-estimator | Detailed component costs by category |
-| **Break-even analysis** | ring:infrastructure-cost-estimator | Minimum volume to cover costs |
-| **Regulatory analysis** | ring:finops-analyzer | Analyze BACEN/RFB specs, identify fields |
-| **Mapping validation** | ring:finops-analyzer | Confirm correctness, validate |
-| **Template generation** | ring:finops-automation | Create .tpl files, finalize |
+| **Is this deal profitable?** | bee:infrastructure-cost-estimator | Calculate revenue - cost = profit |
+| **Shared vs dedicated costs** | bee:infrastructure-cost-estimator | Per-component cost attribution |
+| **Infrastructure breakdown** | bee:infrastructure-cost-estimator | Detailed component costs by category |
+| **Break-even analysis** | bee:infrastructure-cost-estimator | Minimum volume to cover costs |
+| **Regulatory analysis** | bee:finops-analyzer | Analyze BACEN/RFB specs, identify fields |
+| **Mapping validation** | bee:finops-analyzer | Confirm correctness, validate |
+| **Template generation** | bee:finops-automation | Create .tpl files, finalize |
 
 ---
 
 ## When to Use FinOps Agents
 
-### Use ring:infrastructure-cost-estimator for:
+### Use bee:infrastructure-cost-estimator for:
 - ✅ **"How much will this cost on AWS?"** – Auto-discovers from docker-compose
 - ✅ **"Which components are shared vs dedicated?"** – Per-component cost attribution
 - ✅ **"What's the cost breakdown by category?"** – Compute, database, network percentages
@@ -282,13 +282,13 @@ Brazilian regulatory compliance follows a 3-gate workflow:
 - ✅ **Customer onboarding** – Full detailed breakdown + profitability analysis
 - ✅ **Break-even analysis** – Shows minimum volume needed to cover costs
 
-### Use ring:finops-analyzer for:
+### Use bee:finops-analyzer for:
 - ✅ **Understanding regulations** – What does BACEN require?
 - ✅ **Compliance research** – How do we map our data?
 - ✅ **Requirement analysis** – Which fields are required?
 - ✅ **Validation** – Does our mapping match the spec?
 
-### Use ring:finops-automation for:
+### Use bee:finops-automation for:
 - ✅ **Template creation** – Build .tpl files
 - ✅ **Specification execution** – Convert analysis to templates
 - ✅ **Reporter platform prep** – Generate deployment files
@@ -302,9 +302,9 @@ If you need both analysis and template generation, **dispatch sequentially** (an
 
 ```
 Workflow:
-Step 1: Dispatch ring:finops-analyzer
+Step 1: Dispatch bee:finops-analyzer
   └─ Returns: compliance analysis
-Step 2: Dispatch ring:finops-automation
+Step 2: Dispatch bee:finops-automation
   └─ Returns: .tpl templates
 
 Note: These must run sequentially because automation depends on analysis.
@@ -318,10 +318,10 @@ Remember:
 - **You're the orchestrator** – Dispatch agents, don't implement compliance manually
 - **Don't write BACEN specs yourself** – Dispatch analyzer to understand
 - **Don't generate templates by hand** – Dispatch automation agent
-- **Combine with ring:using-ring principle** – Skills + Agents = complete workflow
+- **Combine with bee:using-bee principle** – Skills + Agents = complete workflow
 
 ### Good Example (ORCHESTRATOR):
-> "I need BACEN compliance. Let me dispatch ring:finops-analyzer to understand requirements, then ring:finops-automation to generate templates."
+> "I need BACEN compliance. Let me dispatch bee:finops-analyzer to understand requirements, then bee:finops-automation to generate templates."
 
 ### Bad Example (OPERATOR):
 > "I'll manually read BACEN documentation and write templates myself."
@@ -331,7 +331,7 @@ Remember:
 ## Reporter Platform Integration
 
 Generated .tpl files integrate directly with Reporter platform:
-- **Input:** Validated specifications from ring:finops-analyzer
+- **Input:** Validated specifications from bee:finops-analyzer
 - **Output:** .tpl files (XML, HTML, TXT formats)
 - **Deployment:** Direct integration with Reporter
 - **Validation:** Compliance verified by template structure
@@ -341,9 +341,9 @@ Generated .tpl files integrate directly with Reporter platform:
 ## Available in This Plugin
 
 **Agents (3):**
-- ring:infrastructure-cost-estimator (Infrastructure cost estimation)
-- ring:finops-analyzer (Regulatory Gates 1-2)
-- ring:finops-automation (Regulatory Gate 3)
+- bee:infrastructure-cost-estimator (Infrastructure cost estimation)
+- bee:finops-analyzer (Regulatory Gates 1-2)
+- bee:finops-automation (Regulatory Gate 3)
 
 **Skills (7):**
 - using-finops-team (this skill - plugin introduction)
@@ -459,9 +459,9 @@ Generated .tpl files integrate directly with Reporter platform:
 
 ## Integration with Other Plugins
 
-- **ring:using-ring** (default) – ORCHESTRATOR principle for ALL agents
-- **ring:using-dev-team** – Developer specialists
-- **ring:using-pm-team** – Pre-dev workflow agents
+- **bee:using-bee** (default) – ORCHESTRATOR principle for ALL agents
+- **bee:using-dev-team** – Developer specialists
+- **bee:using-pm-team** – Pre-dev workflow agents
 
 Dispatch based on your need:
 - General code review → default plugin agents

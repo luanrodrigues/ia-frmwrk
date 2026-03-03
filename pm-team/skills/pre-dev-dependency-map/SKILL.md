@@ -1,8 +1,8 @@
 ---
-name: ring:pre-dev-dependency-map
+name: bee:pre-dev-dependency-map
 description: |
   Gate 6: Technology choices document - explicit, versioned, validated technology
-  selections with justifications. Large Track only. HARD BLOCK: Must load Ring Standards
+  selections with justifications. Large Track only. HARD BLOCK: Must load Bee Standards
   and PROJECT_RULES.md before proceeding.
 
 trigger: |
@@ -17,15 +17,15 @@ skip_when: |
   - Data Model not validated → complete Gate 5 first
 
 sequence:
-  after: [ring:pre-dev-data-model]
-  before: [ring:pre-dev-task-breakdown]
+  after: [bee:pre-dev-data-model]
+  before: [bee:pre-dev-task-breakdown]
 ---
 
 # Dependency Map - Explicit Technology Choices
 
 ## Foundational Principle
 
-**Every technology choice must be explicit, versioned, validated against Ring Standards, and justified.**
+**Every technology choice must be explicit, versioned, validated against Bee Standards, and justified.**
 
 Using vague or "latest" dependencies creates:
 - Unreproducible builds across environments
@@ -39,7 +39,7 @@ Using vague or "latest" dependencies creates:
 
 ## ⛔ HARD BLOCK: Standards Loading (Step 0)
 
-**This is a HARD GATE. Do NOT proceed without loading Ring Standards and TRD decisions.**
+**This is a HARD GATE. Do NOT proceed without loading Bee Standards and TRD decisions.**
 
 ### Step 0.1: Read Technology Decisions from TRD
 
@@ -47,17 +47,17 @@ Read `docs/pre-dev/{feature-name}/trd.md` and extract: `deployment.model`, `tech
 
 **If TRD metadata missing:** BLOCKER → Go back to TRD (Gate 3) and complete Step 0.4
 
-### Step 0.2: Load Ring Standards via WebFetch
+### Step 0.2: Load Bee Standards via WebFetch
 
 | Standard | URL | Purpose |
 |----------|-----|---------|
-| **golang.md** | `https://raw.githubusercontent.com/LerianStudio/bee/main/dev-team/docs/standards/golang.md` | Go coding patterns |
-| **typescript.md** | `https://raw.githubusercontent.com/LerianStudio/bee/main/dev-team/docs/standards/typescript.md` | TypeScript patterns |
-| **frontend.md** | `https://raw.githubusercontent.com/LerianStudio/bee/main/dev-team/docs/standards/frontend.md` | Frontend patterns |
-| **devops.md** | `https://raw.githubusercontent.com/LerianStudio/bee/main/dev-team/docs/standards/devops.md` | DevOps patterns |
-| **sre.md** | `https://raw.githubusercontent.com/LerianStudio/bee/main/dev-team/docs/standards/sre.md` | Observability, logging |
+| **golang.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/golang.md` | Go coding patterns |
+| **typescript.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/typescript.md` | TypeScript patterns |
+| **frontend.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md` | Frontend patterns |
+| **devops.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/devops.md` | DevOps patterns |
+| **sre.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/sre.md` | Observability, logging |
 
-**Ring Standards** = coding patterns, observability, logging, error handling (shared across ALL projects)
+**Bee Standards** = coding patterns, observability, logging, error handling (shared across ALL projects)
 **PROJECT_RULES.md** = specific technologies, versions, database choices (specific to THIS project)
 
 ### Step 0.3: Generate PROJECT_RULES.md (OUTPUT)
@@ -69,7 +69,7 @@ Using TRD `project_technologies[]`, create `docs/PROJECT_RULES.md` with: deploym
 | Pressure | Response |
 |----------|----------|
 | "TRD doesn't have technology decisions" | "Go back to TRD (Gate 3) and complete Step 0.4 (PRD analysis)." |
-| "Ring Standards are optional" | "Ring Standards define coding patterns. PROJECT_RULES.md defines technologies. Both needed." |
+| "Bee Standards are optional" | "Bee Standards define coding patterns. PROJECT_RULES.md defines technologies. Both needed." |
 | "Just use defaults" | "Defaults come from PRD analysis in TRD. Read TRD first." |
 | "Skip to save time" | "PROJECT_RULES.md is the output. Cannot skip the output." |
 
@@ -79,8 +79,8 @@ Using TRD `project_technologies[]`, create `docs/PROJECT_RULES.md` with: deploym
 
 | Phase | Activities |
 |-------|------------|
-| **1. Evaluation** | Ring Standards loaded (Step 0); PROJECT_RULES.md loaded; Data Model (Gate 5), API Design (Gate 4), TRD (Gate 3) passed; map TRD components to tech candidates; validate against Ring Standards; map Data Model to storage; map API contracts to protocols; check team expertise; estimate costs |
-| **2. Selection** | Per technology: check Ring Standards (mandatory/prohibited), check PROJECT_RULES.md overrides, specify exact version, list alternatives with trade-offs, verify compatibility, check security (CVEs), validate licenses, calculate costs |
+| **1. Evaluation** | Bee Standards loaded (Step 0); PROJECT_RULES.md loaded; Data Model (Gate 5), API Design (Gate 4), TRD (Gate 3) passed; map TRD components to tech candidates; validate against Bee Standards; map Data Model to storage; map API contracts to protocols; check team expertise; estimate costs |
+| **2. Selection** | Per technology: check Bee Standards (mandatory/prohibited), check PROJECT_RULES.md overrides, specify exact version, list alternatives with trade-offs, verify compatibility, check security (CVEs), validate licenses, calculate costs |
 | **3. Gate 6 Validation** | All dependencies explicit, no conflicts, no critical CVEs, licenses compliant, team expertise, costs documented, all components mapped |
 
 ## Explicit Rules
@@ -132,7 +132,7 @@ If you catch yourself writing any of these in a Dependency Map, **STOP**:
 
 | Category | Requirements |
 |----------|--------------|
-| **Standards Compliance (HARD BLOCK)** | Ring Standards loaded; PROJECT_RULES.md loaded; mandatory deps included (or justified); no prohibited choices (or justified); version constraints respected; deviations documented |
+| **Standards Compliance (HARD BLOCK)** | Bee Standards loaded; PROJECT_RULES.md loaded; mandatory deps included (or justified); no prohibited choices (or justified); version constraints respected; deviations documented |
 | **Compatibility** | All deps have explicit versions; version matrix complete; no known conflicts; runtime requirements specified; upgrade path documented |
 | **Security** | All deps scanned for vulnerabilities; no critical (9.0+) or high (7.0-8.9) CVEs; security update policy documented; supply chain verified |
 | **Feasibility** | Team has expertise or learning path; tools available; licensing allows commercial use; costs fit budget |
@@ -257,12 +257,12 @@ If language cannot be auto-detected, use AskUserQuestion with tech stack options
 
 ## The Bottom Line
 
-**If you skipped loading Ring Standards, STOP and go back to Step 0.**
+**If you skipped loading Bee Standards, STOP and go back to Step 0.**
 
 **If you wrote a Dependency Map without explicit versions, add them now or start over.**
 
 Two non-negotiable requirements:
-1. **Ring Standards MUST be loaded** - Technology choices validated against organizational baseline
+1. **Bee Standards MUST be loaded** - Technology choices validated against organizational baseline
 2. **Every dependency MUST be explicit** - No @latest, no vague versions, no "we'll figure it out"
 
 **Load standards first. Be explicit. Be specific. Lock your versions.**
@@ -274,7 +274,7 @@ Two non-negotiable requirements:
 | Condition | Action | Severity |
 |-----------|--------|----------|
 | Data Model (Gate 5) not validated | STOP and complete Gate 5 first | CRITICAL |
-| Ring Standards not loaded via WebFetch | STOP and load required standards | CRITICAL |
+| Bee Standards not loaded via WebFetch | STOP and load required standards | CRITICAL |
 | TRD metadata missing technology decisions | STOP and complete TRD Step 0.4 | CRITICAL |
 | Version uses @latest or vague range | STOP and specify exact version | HIGH |
 | Critical CVE (9.0+) found in dependency | STOP and find alternative or document risk | CRITICAL |
@@ -315,7 +315,7 @@ These requirements are NON-NEGOTIABLE:
 | "Latest version is always best" | "Cannot use @latest. Latest is untested in this context. I'll specify exact version after validation." |
 | "Flexible version ranges are fine" | "Cannot use ranges. Ranges cause non-reproducible builds. I'll lock to specific versions." |
 | "Security scanning can happen in CI" | "Cannot defer security. CVE analysis must happen before committing. I'll scan now." |
-| "Skip Ring Standards, we know our stack" | "Cannot skip standards. Standards validate against organizational baseline. I'll load them first." |
+| "Skip Bee Standards, we know our stack" | "Cannot skip standards. Standards validate against organizational baseline. I'll load them first." |
 | "License compliance is legal's problem" | "Cannot ignore licenses. You're responsible for your dependencies. I'll verify now." |
 
 ---

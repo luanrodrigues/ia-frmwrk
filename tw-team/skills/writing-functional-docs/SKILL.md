@@ -1,5 +1,5 @@
 ---
-name: ring:writing-functional-docs
+name: bee:writing-functional-docs
 description: |
   Patterns and structure for writing functional documentation including guides,
   conceptual explanations, tutorials, and best practices documentation.
@@ -116,8 +116,8 @@ Use `---` to separate major sections. Improves scannability.
 
 Before writing any functional documentation, MUST load relevant standards:
 
-1. **Voice and Tone Guidelines** - Load `ring:voice-and-tone` skill
-2. **Documentation Structure** - Load `ring:documentation-structure` skill
+1. **Voice and Tone Guidelines** - Load `bee:voice-and-tone` skill
+2. **Documentation Structure** - Load `bee:documentation-structure` skill
 3. **Document Type Patterns** - Review patterns for specific document type (conceptual, how-to, tutorial)
 
 **HARD GATE:** CANNOT proceed with functional documentation without loading these standards.

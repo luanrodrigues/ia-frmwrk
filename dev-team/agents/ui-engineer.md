@@ -122,7 +122,7 @@ Invoke this agent when:
 ## Standards Loading (MANDATORY)
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md
 </fetch_required>
 
 MUST WebFetch the URL above before any implementation work.
@@ -176,7 +176,7 @@ See [shared-patterns/standards-workflow.md](../skills/shared-patterns/standards-
 
 | Setting | Value |
 |---------|-------|
-| **WebFetch URL** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend.md` |
+| **WebFetch URL** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md` |
 | **Standards File** | frontend.md |
 | **Prompt** | "Extract all frontend standards, patterns, and requirements" |
 
@@ -535,7 +535,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 
 | Setting | Value |
 |---------|-------|
-| **WebFetch URL** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend.md` |
+| **WebFetch URL** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md` |
 | **Standards File** | frontend.md |
 
 ### Sections to Check (MANDATORY)

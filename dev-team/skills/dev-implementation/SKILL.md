@@ -267,8 +267,8 @@ Task:
     Read and follow: [project_rules_path]
 
     ## Bee Standards Reference
-    For PHP: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php.md
-    For TS: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/typescript.md
+    For PHP: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/php.md
+    For TS: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/typescript.md
 
     ## Frontend TDD Policy (React/Next.js only)
     If the component is purely visual/presentational (layout, styling, animations,
@@ -372,8 +372,8 @@ Task:
     Read and follow: [project_rules_path]
 
     ## Bee Standards Reference
-    For PHP: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php.md
-    For TS: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/typescript.md
+    For PHP: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/php.md
+    For TS: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/typescript.md
 
     ## ⛔ CRITICAL: all Bee Standards Apply (no DEFERRAL)
     See Bee Standards for mandatory requirements:

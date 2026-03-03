@@ -1,5 +1,5 @@
 ---
-name: ring:requesting-code-review
+name: bee:requesting-code-review
 description: |
   Gate 4 of development cycle - dispatches 6 specialized reviewers (code, business-logic,
   security, test, nil-safety, consequences) in parallel for comprehensive code review feedback.
@@ -16,11 +16,11 @@ NOT_skip_when: |
   - "Already reviewed similar code" → Each change needs fresh review.
 
 sequence:
-  after: [ring:dev-testing]
-  before: [ring:dev-validation]
+  after: [bee:dev-testing]
+  before: [bee:dev-validation]
 
 related:
-  complementary: [ring:dev-cycle, ring:dev-implementation, ring:dev-testing]
+  complementary: [bee:dev-cycle, bee:dev-implementation, bee:dev-testing]
 
 input_schema:
   required: []  # All inputs optional for standalone usage
@@ -46,11 +46,11 @@ input_schema:
       description: "List of files changed (auto-detected via git diff if not provided)"
     - name: gate0_handoff
       type: object
-      description: "Full handoff from Gate 0 (only when called from ring:dev-cycle)"
+      description: "Full handoff from Gate 0 (only when called from bee:dev-cycle)"
     - name: skip_reviewers
       type: array
       items: string
-      enum: [ring:code-reviewer, ring:business-logic-reviewer, ring:security-reviewer, ring:test-reviewer, ring:nil-safety-reviewer, ring:consequences-reviewer]
+      enum: [bee:code-reviewer, bee:business-logic-reviewer, bee:security-reviewer, bee:test-reviewer, bee:nil-safety-reviewer, bee:consequences-reviewer]
       description: "Reviewers to skip (use sparingly)"
     - name: skip_preanalysis
       type: boolean
@@ -137,12 +137,12 @@ examples:
       ## Reviewer Verdicts
       | Reviewer | Verdict |
       |----------|---------|
-      | ring:code-reviewer | ✅ PASS |
-      | ring:business-logic-reviewer | ✅ PASS |
-      | ring:security-reviewer | ✅ PASS |
-      | ring:test-reviewer | ✅ PASS |
-      | ring:nil-safety-reviewer | ✅ PASS |
-      | ring:consequences-reviewer | ✅ PASS |
+      | bee:code-reviewer | ✅ PASS |
+      | bee:business-logic-reviewer | ✅ PASS |
+      | bee:security-reviewer | ✅ PASS |
+      | bee:test-reviewer | ✅ PASS |
+      | bee:nil-safety-reviewer | ✅ PASS |
+      | bee:consequences-reviewer | ✅ PASS |
 
       ## Handoff to Next Gate
       - Ready for Gate 5: YES
@@ -154,12 +154,12 @@ examples:
 
 Dispatch all six reviewer subagents in **parallel** for fast, comprehensive feedback:
 
-1. **ring:code-reviewer** - Architecture, design patterns, code quality
-2. **ring:business-logic-reviewer** - Domain correctness, business rules, edge cases
-3. **ring:security-reviewer** - Vulnerabilities, authentication, OWASP risks
-4. **ring:test-reviewer** - Test quality, coverage, edge cases, anti-patterns
-5. **ring:nil-safety-reviewer** - Nil/null pointer safety for Go and TypeScript
-6. **ring:consequences-reviewer** - Ripple effects, caller chain impact, downstream consequences
+1. **bee:code-reviewer** - Architecture, design patterns, code quality
+2. **bee:business-logic-reviewer** - Domain correctness, business rules, edge cases
+3. **bee:security-reviewer** - Vulnerabilities, authentication, OWASP risks
+4. **bee:test-reviewer** - Test quality, coverage, edge cases, anti-patterns
+5. **bee:nil-safety-reviewer** - Nil/null pointer safety for Go and TypeScript
+6. **bee:consequences-reviewer** - Ripple effects, caller chain impact, downstream consequences
 
 **Core principle:** All 6 reviewers run simultaneously in a single message with 6 Task tool calls.
 
@@ -303,12 +303,12 @@ If pipeline succeeded, read the 6 context files:
 
 | Reviewer | Context File |
 |----------|--------------|
-| `ring:code-reviewer` | `docs/codereview/context-code-reviewer.md` |
-| `ring:security-reviewer` | `docs/codereview/context-security-reviewer.md` |
-| `ring:business-logic-reviewer` | `docs/codereview/context-business-logic-reviewer.md` |
-| `ring:test-reviewer` | `docs/codereview/context-test-reviewer.md` |
-| `ring:nil-safety-reviewer` | `docs/codereview/context-nil-safety-reviewer.md` |
-| `ring:consequences-reviewer` | `docs/codereview/context-consequences-reviewer.md` |
+| `bee:code-reviewer` | `docs/codereview/context-code-reviewer.md` |
+| `bee:security-reviewer` | `docs/codereview/context-security-reviewer.md` |
+| `bee:business-logic-reviewer` | `docs/codereview/context-business-logic-reviewer.md` |
+| `bee:test-reviewer` | `docs/codereview/context-test-reviewer.md` |
+| `bee:nil-safety-reviewer` | `docs/codereview/context-nil-safety-reviewer.md` |
+| `bee:consequences-reviewer` | `docs/codereview/context-consequences-reviewer.md` |
 
 Store each file's content in `preanalysis_state.context[reviewer_name]`.
 
@@ -319,12 +319,12 @@ preanalysis_state = {
   enabled: true,
   success: false,
   context: {
-    "ring:code-reviewer": null,
-    "ring:security-reviewer": null,
-    "ring:business-logic-reviewer": null,
-    "ring:test-reviewer": null,
-    "ring:nil-safety-reviewer": null,
-    "ring:consequences-reviewer": null
+    "bee:code-reviewer": null,
+    "bee:security-reviewer": null,
+    "bee:business-logic-reviewer": null,
+    "bee:test-reviewer": null,
+    "bee:nil-safety-reviewer": null,
+    "bee:consequences-reviewer": null
   }
 }
 ```
@@ -336,7 +336,7 @@ preanalysis_state = {
 ```yaml
 # Task 1: Code Reviewer
 Task:
-  subagent_type: "ring:code-reviewer"
+  subagent_type: "bee:code-reviewer"
   description: "Code review for [unit_id]"
   prompt: |
     ## Code Review Request
@@ -362,8 +362,8 @@ Task:
 
     ---
 
-    [IF preanalysis_state.context["ring:code-reviewer"] exists AND is not empty:]
-    [INSERT the content of preanalysis_state.context["ring:code-reviewer"]]
+    [IF preanalysis_state.context["bee:code-reviewer"] exists AND is not empty:]
+    [INSERT the content of preanalysis_state.context["bee:code-reviewer"]]
     [ELSE:]
     _No pre-analysis context available. Perform standard review based on git diff._
 
@@ -389,7 +389,7 @@ Task:
 
 # Task 2: Business Logic Reviewer
 Task:
-  subagent_type: "ring:business-logic-reviewer"
+  subagent_type: "bee:business-logic-reviewer"
   description: "Business logic review for [unit_id]"
   prompt: |
     ## Business Logic Review Request
@@ -412,8 +412,8 @@ Task:
 
     ---
 
-    [IF preanalysis_state.context["ring:business-logic-reviewer"] exists AND is not empty:]
-    [INSERT the content of preanalysis_state.context["ring:business-logic-reviewer"]]
+    [IF preanalysis_state.context["bee:business-logic-reviewer"] exists AND is not empty:]
+    [INSERT the content of preanalysis_state.context["bee:business-logic-reviewer"]]
     [ELSE:]
     _No pre-analysis context available. Perform standard review based on git diff._
 
@@ -441,7 +441,7 @@ Task:
 
 # Task 3: Security Reviewer
 Task:
-  subagent_type: "ring:security-reviewer"
+  subagent_type: "bee:security-reviewer"
   description: "Security review for [unit_id]"
   prompt: |
     ## Security Review Request
@@ -464,8 +464,8 @@ Task:
 
     ---
 
-    [IF preanalysis_state.context["ring:security-reviewer"] exists AND is not empty:]
-    [INSERT the content of preanalysis_state.context["ring:security-reviewer"]]
+    [IF preanalysis_state.context["bee:security-reviewer"] exists AND is not empty:]
+    [INSERT the content of preanalysis_state.context["bee:security-reviewer"]]
     [ELSE:]
     _No pre-analysis context available. Perform standard review based on git diff._
 
@@ -495,7 +495,7 @@ Task:
 
 # Task 4: Test Reviewer
 Task:
-  subagent_type: "ring:test-reviewer"
+  subagent_type: "bee:test-reviewer"
   description: "Test quality review for [unit_id]"
   prompt: |
     ## Test Quality Review Request
@@ -518,8 +518,8 @@ Task:
 
     ---
 
-    [IF preanalysis_state.context["ring:test-reviewer"] exists AND is not empty:]
-    [INSERT the content of preanalysis_state.context["ring:test-reviewer"]]
+    [IF preanalysis_state.context["bee:test-reviewer"] exists AND is not empty:]
+    [INSERT the content of preanalysis_state.context["bee:test-reviewer"]]
     [ELSE:]
     _No pre-analysis context available. Perform standard review based on git diff._
 
@@ -550,7 +550,7 @@ Task:
 
 # Task 5: Nil-Safety Reviewer
 Task:
-  subagent_type: "ring:nil-safety-reviewer"
+  subagent_type: "bee:nil-safety-reviewer"
   description: "Nil/null safety review for [unit_id]"
   prompt: |
     ## Nil-Safety Review Request
@@ -574,8 +574,8 @@ Task:
 
     ---
 
-    [IF preanalysis_state.context["ring:nil-safety-reviewer"] exists AND is not empty:]
-    [INSERT the content of preanalysis_state.context["ring:nil-safety-reviewer"]]
+    [IF preanalysis_state.context["bee:nil-safety-reviewer"] exists AND is not empty:]
+    [INSERT the content of preanalysis_state.context["bee:nil-safety-reviewer"]]
     [ELSE:]
     _No pre-analysis context available. Perform standard review based on git diff._
 
@@ -602,7 +602,7 @@ Task:
 
 # Task 6: Consequences Reviewer
 Task:
-  subagent_type: "ring:consequences-reviewer"
+  subagent_type: "bee:consequences-reviewer"
   description: "Consequences review for [unit_id]"
   prompt: |
     ## Consequences Review Request
@@ -625,8 +625,8 @@ Task:
 
     ---
 
-    [IF preanalysis_state.context["ring:consequences-reviewer"] exists AND is not empty:]
-    [INSERT the content of preanalysis_state.context["ring:consequences-reviewer"]]
+    [IF preanalysis_state.context["bee:consequences-reviewer"] exists AND is not empty:]
+    [INSERT the content of preanalysis_state.context["bee:consequences-reviewer"]]
     [ELSE:]
     _No pre-analysis context available. Perform standard review based on git diff._
 
@@ -741,7 +741,7 @@ Task:
 
 **See [shared-patterns/orchestrator-direct-editing-anti-rationalization.md](../shared-patterns/orchestrator-direct-editing-anti-rationalization.md) for complete anti-rationalization table.**
 
-*Applies to: Step 6 (Fix dispatch after Ring reviewers) & Step 7.5.3 (Fix dispatch after CodeRabbit)*
+*Applies to: Step 6 (Fix dispatch after Bee reviewers) & Step 7.5.3 (Fix dispatch after CodeRabbit)*
 
 ## Step 7: Re-Run All Reviewers After Fixes
 
@@ -765,7 +765,7 @@ Do NOT cherry-pick reviewers.
 │ CODERABBIT PER-UNIT VALIDATION FLOW                             │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│ DURING REVIEW (after each subtask/task Ring reviewers pass):   │
+│ DURING REVIEW (after each subtask/task Bee reviewers pass):   │
 │   1. Run CodeRabbit for that unit's files                      │
 │   2. Append findings to .coderabbit-findings.md                │
 │   3. Continue to next unit                                     │
@@ -879,7 +879,7 @@ coderabbit auth login --token "cr_xxxxxxxxxxxxx"
 │                                                                 │
 │ CodeRabbit provides additional AI-powered code review that      │
 │ catches race conditions, memory leaks, security vulnerabilities,│
-│ and edge cases that may complement Ring reviewers.              │
+│ and edge cases that may complement Bee reviewers.              │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -910,7 +910,7 @@ FLOW:
 | Rationalization | Why It's WRONG | Required Action |
 |-----------------|----------------|-----------------|
 | "CodeRabbit is optional, I'll skip it" | If installed, it's MANDATORY. Optional only means installation is optional. | **Run CodeRabbit if installed** |
-| "Ring reviewers passed, that's enough" | Different tools catch different issues. CodeRabbit complements Ring. | **Run CodeRabbit if installed** |
+| "Bee reviewers passed, that's enough" | Different tools catch different issues. CodeRabbit complements Bee. | **Run CodeRabbit if installed** |
 | "User didn't ask for CodeRabbit" | User installed it. Installation = consent to mandatory execution. | **Run CodeRabbit if installed** |
 | "Takes too long, skip this time" | Time is irrelevant. Installed = mandatory. | **Run CodeRabbit if installed** |
 | "I'll just proceed without asking about install" | MUST ask every user if they want to install. No silent skips. | **Ask user about installation** |
@@ -1425,7 +1425,7 @@ IF coderabbit_results.overall_status == "ISSUES_FOUND":
             [list from unit.issues.high]
             
             ## Requirements
-            1. Fix each issue following Ring Standards
+            1. Fix each issue following Bee Standards
             2. Only modify files in scope: [unit.files]
             3. Run tests to verify fixes don't break functionality
             4. Commit fixes with message referencing unit: "fix([unit.id]): [description]"
@@ -1462,10 +1462,10 @@ IF coderabbit_results.overall_status == "ISSUES_FOUND":
             → Identify the correct agent for re-dispatch:
               - Check gate0_handoff.implementation_agent (if available)
               - OR infer from file type:
-                - *.go files → ring:backend-engineer-golang
-                - *.ts files (backend) → ring:backend-engineer-typescript
-                - *.ts/*.tsx files (frontend) → ring:frontend-engineer
-                - *.yaml/*.yml (infra) → ring:devops-engineer
+                - *.go files → bee:backend-engineer-golang
+                - *.ts files (backend) → bee:backend-engineer-typescript
+                - *.ts/*.tsx files (frontend) → bee:frontend-engineer
+                - *.yaml/*.yml (infra) → bee:devops-engineer
             
             → Re-dispatch ONLY unresolved issues to the correct agent:
             
@@ -1580,60 +1580,60 @@ LEGACY FLOW (when validation_scope.mode == "task"):
           [list from CodeRabbit output]
           
           ## Requirements
-          1. Fix each issue following Ring Standards
+          1. Fix each issue following Bee Standards
           2. Run tests to verify fixes don't break functionality
           3. Commit fixes with descriptive message
     
     → After agent completes, re-run CodeRabbit: `coderabbit --prompt-only`
     → If CodeRabbit issues remain, repeat fix cycle (max 2 iterations for CodeRabbit)
     
-    → ⛔ AFTER CodeRabbit passes, MUST re-run Ring reviewers:
+    → ⛔ AFTER CodeRabbit passes, MUST re-run Bee reviewers:
     
     ┌─────────────────────────────────────────────────────────────────┐
     │ 🔄 RE-RUNNING RING REVIEWERS AFTER CODERABBIT FIXES             │
     ├─────────────────────────────────────────────────────────────────┤
     │                                                                 │
     │ CodeRabbit fixes may have introduced new issues detectable by   │
-    │ Ring reviewers. Re-validation is MANDATORY before Gate 5.       │
+    │ Bee reviewers. Re-validation is MANDATORY before Gate 5.       │
     │                                                                 │
     └─────────────────────────────────────────────────────────────────┘
     
-    Step 7.5.3a: Re-Run All 6 Ring Reviewers
+    Step 7.5.3a: Re-Run All 6 Bee Reviewers
     ─────────────────────────────────────────
     1. Get new HEAD_SHA after CodeRabbit fixes
     2. Dispatch all 6 reviewers in parallel (per Step 3):
-       - ring:code-reviewer
-       - ring:business-logic-reviewer
-       - ring:security-reviewer
-       - ring:test-reviewer
-       - ring:nil-safety-reviewer
-       - ring:consequences-reviewer
+       - bee:code-reviewer
+       - bee:business-logic-reviewer
+       - bee:security-reviewer
+       - bee:test-reviewer
+       - bee:nil-safety-reviewer
+       - bee:consequences-reviewer
     3. Wait for all 6 to complete
 
-    Step 7.5.3b: Handle Ring Reviewer Results
+    Step 7.5.3b: Handle Bee Reviewer Results
     ─────────────────────────────────────────
-    IF all 6 Ring reviewers PASS:
+    IF all 6 Bee reviewers PASS:
       → Proceed to Step 8 (Success Output)
     
-    IF any Ring reviewer finds CRITICAL/HIGH/MEDIUM issues:
+    IF any Bee reviewer finds CRITICAL/HIGH/MEDIUM issues:
       → Increment ring_revalidation_iterations counter
       → IF ring_revalidation_iterations >= 2:
           → ESCALATE: "Max iterations reached after CodeRabbit fixes"
           → Go to Step 9 (Escalate)
-      → DISPATCH implementation agent to fix Ring reviewer issues
+      → DISPATCH implementation agent to fix Bee reviewer issues
       → After fixes committed:
           → Re-run CodeRabbit: `coderabbit --prompt-only`
           → IF CodeRabbit passes:
-              → Re-run all 6 Ring reviewers (loop back to Step 7.5.3a)
+              → Re-run all 6 Bee reviewers (loop back to Step 7.5.3a)
           → IF CodeRabbit finds issues:
-              → Fix CodeRabbit issues first, then re-run Ring reviewers
+              → Fix CodeRabbit issues first, then re-run Bee reviewers
     
     State tracking for CodeRabbit fix cycle:
     ```
     coderabbit_fix_state = {
       coderabbit_iterations: 0,      // max 2 for CodeRabbit-only fixes
-      ring_revalidation_iterations: 0,  // max 2 for Ring reviewer re-runs
-      total_max_iterations: 4        // absolute cap: 2 CR + 2 Ring
+      ring_revalidation_iterations: 0,  // max 2 for Bee reviewer re-runs
+      total_max_iterations: 4        // absolute cap: 2 CR + 2 Bee
     }
     ```
 
@@ -1652,21 +1652,21 @@ IF CodeRabbit found only MEDIUM/LOW issues:
       Format: // TODO(coderabbit): [issue description]
   
   → After TODO comments added (code changed):
-      → Re-run all 6 Ring reviewers (per Step 7.5.3a above)
-      → IF Ring reviewers PASS: Proceed to Step 8
-      → IF Ring reviewers find issues: Fix and re-run (max 2 iterations)
+      → Re-run all 6 Bee reviewers (per Step 7.5.3a above)
+      → IF Bee reviewers PASS: Proceed to Step 8
+      → IF Bee reviewers find issues: Fix and re-run (max 2 iterations)
 
 IF CodeRabbit found no issues:
   → Display: "✅ CodeRabbit review passed - no additional issues found"
   → No code changes made by CodeRabbit flow
-  → Proceed directly to Step 8 (no Ring re-run needed)
+  → Proceed directly to Step 8 (no Bee re-run needed)
 ```
 
 ### Anti-Rationalization for Direct Editing
 
 **See [shared-patterns/orchestrator-direct-editing-anti-rationalization.md](../shared-patterns/orchestrator-direct-editing-anti-rationalization.md) - same table applies here.**
 
-*Applies to: Step 6 (Fix dispatch after Ring reviewers) & Step 7.5.3 (Fix dispatch after CodeRabbit)*
+*Applies to: Step 6 (Fix dispatch after Bee reviewers) & Step 7.5.3 (Fix dispatch after CodeRabbit)*
 
 #### Step 7.5.4: CodeRabbit Results Summary
 
@@ -1733,7 +1733,7 @@ IF CodeRabbit found no issues:
 | Invalid Scenario | Why FORBIDDEN | Required Action |
 |------------------|---------------|-----------------|
 | CLI installed but "skipped for speed" | Installed = MANDATORY | **Run CodeRabbit** |
-| CLI installed but "Ring reviewers passed" | Complementary tools, both required | **Run CodeRabbit** |
+| CLI installed but "Bee reviewers passed" | Complementary tools, both required | **Run CodeRabbit** |
 | CLI not installed, no prompt shown | MUST ask user about installation | **Show installation prompt** |
 | Silent skip without user interaction | All skips require explicit user choice | **Ask user** |
 
@@ -1902,7 +1902,7 @@ ELSE (no findings file exists):
 
 **MANDATORY: Generate a visual HTML report before presenting the review summary.**
 
-Invokes `Skill("ring:visual-explainer")` to produce a self-contained HTML page showing review results visually. This complements the markdown output with an interactive browser view.
+Invokes `Skill("bee:visual-explainer")` to produce a self-contained HTML page showing review results visually. This complements the markdown output with an interactive browser view.
 
 **Read the code-diff template first:** Read `default/skills/visual-explainer/templates/code-diff.html` to absorb the patterns before generating.
 
@@ -1965,12 +1965,12 @@ Generate skill output:
 ## Reviewer Verdicts
 | Reviewer | Verdict | Issues |
 |----------|---------|--------|
-| ring:code-reviewer | ✅ PASS | [count] |
-| ring:business-logic-reviewer | ✅ PASS | [count] |
-| ring:security-reviewer | ✅ PASS | [count] |
-| ring:test-reviewer | ✅ PASS | [count] |
-| ring:nil-safety-reviewer | ✅ PASS | [count] |
-| ring:consequences-reviewer | ✅ PASS | [count] |
+| bee:code-reviewer | ✅ PASS | [count] |
+| bee:business-logic-reviewer | ✅ PASS | [count] |
+| bee:security-reviewer | ✅ PASS | [count] |
+| bee:test-reviewer | ✅ PASS | [count] |
+| bee:nil-safety-reviewer | ✅ PASS | [count] |
+| bee:consequences-reviewer | ✅ PASS | [count] |
 
 ## Low/Cosmetic Issues (TODO/FIXME added)
 [list with file locations]
@@ -2015,9 +2015,9 @@ Generate skill output:
 ## Reviewer Verdicts
 | Reviewer | Verdict |
 |----------|---------|
-| ring:code-reviewer | [PASS/FAIL] |
-| ring:business-logic-reviewer | [PASS/FAIL] |
-| ring:security-reviewer | [PASS/FAIL] |
+| bee:code-reviewer | [PASS/FAIL] |
+| bee:business-logic-reviewer | [PASS/FAIL] |
+| bee:security-reviewer | [PASS/FAIL] |
 
 ## Handoff to Next Gate
 - Review status: FAILED
@@ -2071,7 +2071,7 @@ See [dev-team/skills/shared-patterns/shared-pressure-resistance.md](../../dev-te
 | User Says | Your Response |
 |-----------|---------------|
 | "Skip review, code is simple" | "Simple code can have security issues. Dispatching all 6 reviewers." |
-| "Just run ring:code-reviewer" | "All 6 reviewers run in parallel. No time saved by skipping." |
+| "Just run bee:code-reviewer" | "All 6 reviewers run in parallel. No time saved by skipping." |
 | "Fix later, merge now" | "Blocking issues (Critical/High/Medium) MUST be fixed before Gate 5." |
 
 ## Anti-Rationalization Table
@@ -2083,7 +2083,7 @@ See [dev-team/skills/shared-patterns/shared-anti-rationalization.md](../../dev-t
 | Rationalization | Why It's WRONG | Required Action |
 |-----------------|----------------|-----------------|
 | "Run reviewers one at a time" | Sequential = slow. Parallel = 6x faster. | **Dispatch all 6 in single message** |
-| "Skip security for internal code" | Internal code can have vulnerabilities. | **Include ring:security-reviewer** |
+| "Skip security for internal code" | Internal code can have vulnerabilities. | **Include bee:security-reviewer** |
 | "Critical issue is false positive" | Prove it with evidence, don't assume. | **Fix or provide evidence** |
 | "Low issues don't need TODO" | TODOs ensure issues aren't forgotten. | **Add TODO comments** |
 | "5 of 6 reviewers passed" | Gate 4 requires ALL 6. 5/6 = 0/6. | **Re-run ALL 6 reviewers** |
@@ -2111,12 +2111,12 @@ See [dev-team/skills/shared-patterns/shared-anti-rationalization.md](../../dev-t
 ## Reviewer Verdicts
 | Reviewer | Verdict |
 |----------|---------|
-| ring:code-reviewer | ✅/❌ |
-| ring:business-logic-reviewer | ✅/❌ |
-| ring:security-reviewer | ✅/❌ |
-| ring:test-reviewer | ✅/❌ |
-| ring:nil-safety-reviewer | ✅/❌ |
-| ring:consequences-reviewer | ✅/❌ |
+| bee:code-reviewer | ✅/❌ |
+| bee:business-logic-reviewer | ✅/❌ |
+| bee:security-reviewer | ✅/❌ |
+| bee:test-reviewer | ✅/❌ |
+| bee:nil-safety-reviewer | ✅/❌ |
+| bee:consequences-reviewer | ✅/❌ |
 
 ## CodeRabbit External Review (MANDATORY if installed, Optional to install)
 **Status:** [PASS|ISSUES_FOUND|SKIPPED|NOT_INSTALLED]

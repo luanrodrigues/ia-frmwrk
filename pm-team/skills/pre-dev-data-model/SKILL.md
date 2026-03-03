@@ -1,5 +1,5 @@
 ---
-name: ring:pre-dev-data-model
+name: bee:pre-dev-data-model
 description: |
   Gate 5: Data structures document - defines entities, relationships, and ownership
   before database technology selection. Large Track only.
@@ -16,8 +16,8 @@ skip_when: |
   - API Design not validated → complete Gate 4 first
 
 sequence:
-  after: [ring:pre-dev-api-design]
-  before: [ring:pre-dev-dependency-map]
+  after: [bee:pre-dev-api-design]
+  before: [bee:pre-dev-dependency-map]
 ---
 
 # Data Modeling - Defining Data Structures
@@ -329,7 +329,7 @@ mkdir -p "${backend_path}/docs/pre-dev/{feature}"
 ## After Approval
 
 1. ✅ Lock data model - entity structure is now reference
-2. 🎯 Use model as input for Dependency Map (`ring:pre-dev-dependency-map`)
+2. 🎯 Use model as input for Dependency Map (`bee:pre-dev-dependency-map`)
 3. 🚫 Never add database specifics retroactively
 4. 📋 Keep technology-agnostic until Dependency Map
 

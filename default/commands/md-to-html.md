@@ -1,5 +1,5 @@
 ---
-name: ring:md-to-html
+name: bee:md-to-html
 description: Transform a markdown file into a standalone, styled HTML page
 argument-hint: "[markdown-file]"
 ---

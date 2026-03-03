@@ -1,5 +1,5 @@
 ---
-name: ring:write-plan
+name: bee:write-plan
 description: Create detailed implementation plan with bite-sized tasks
 argument-hint: "[feature-name]"
 ---
@@ -85,12 +85,12 @@ Plans specify recommended agents for execution:
 
 | Task Type | Recommended Agent |
 |-----------|-------------------|
-| Backend (Go) | `ring:backend-engineer-golang` |
-| Backend (TypeScript) | `ring:backend-engineer-typescript` |
+| Backend (Go) | `bee:backend-engineer-golang` |
+| Backend (TypeScript) | `bee:backend-engineer-typescript` |
 | Frontend (BFF/API Routes) | `frontend-bff-engineer-typescript` |
-| Infrastructure | `ring:devops-engineer` |
-| Testing | `ring:qa-analyst` |
-| Reliability | `ring:sre` |
+| Infrastructure | `bee:devops-engineer` |
+| Testing | `bee:qa-analyst` |
+| Reliability | `bee:sre` |
 | Fallback | `general-purpose` (built-in) |
 
 ## Related Commands/Skills
@@ -99,9 +99,9 @@ Plans specify recommended agents for execution:
 |---------------|--------------|
 | `/bee:brainstorm` | Use first if design is not yet validated |
 | `/bee:execute-plan` | Use after to execute the created plan |
-| `ring:brainstorming` | Design validation before planning |
-| `ring:executing-plans` | Batch execution with review checkpoints |
-| `ring:subagent-driven-development` | Alternative execution for current session |
+| `bee:brainstorming` | Design validation before planning |
+| `bee:executing-plans` | Batch execution with review checkpoints |
+| `bee:subagent-driven-development` | Alternative execution for current session |
 
 ## Troubleshooting
 
@@ -112,7 +112,7 @@ Planning requires a validated design. Use `/bee:brainstorm` first to refine your
 If the generated plan contains phrases like "implement the logic" or "add appropriate handling", the plan doesn't meet quality standards. Request revision with specific code examples.
 
 ### "Worktree not set up"
-This command is best run in a dedicated worktree created by the ring:brainstorming skill. You can still run it in main, but isolation is recommended.
+This command is best run in a dedicated worktree created by the bee:brainstorming skill. You can still run it in main, but isolation is recommended.
 
 ### "Agent selection unavailable"
 If `bee-dev-team` plugin is not installed, execution falls back to `general-purpose` agents automatically. Plans remain valid regardless.
@@ -129,7 +129,7 @@ If `bee-dev-team` plugin is not installed, execution falls back to `general-purp
 **This command MUST load the skill for complete workflow execution.**
 
 ```
-Use Skill tool: ring:writing-plans
+Use Skill tool: bee:writing-plans
 ```
 
 The skill contains the complete workflow with:

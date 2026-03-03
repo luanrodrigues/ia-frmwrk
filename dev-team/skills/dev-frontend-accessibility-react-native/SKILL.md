@@ -143,7 +143,7 @@ Ensure all React Native frontend components meet **mobile accessibility standard
 **MANDATORY:** Load testing-accessibility-rn.md standards via WebFetch.
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-react-native/testing-accessibility.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend-react-native/testing-accessibility.md
 </fetch_required>
 
 ---

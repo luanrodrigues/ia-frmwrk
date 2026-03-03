@@ -1,5 +1,5 @@
 ---
-name: ring:write-guide
+name: bee:write-guide
 description: Start writing a functional guide with voice, tone, and structure guidance
 argument-hint: "[topic]"
 arguments:
@@ -66,7 +66,7 @@ For complex documentation, dispatch the functional-writer agent:
 
 ```
 Task tool:
-  subagent_type: "ring:functional-writer"
+  subagent_type: "bee:functional-writer"
   model: "opus"
   prompt: "Write a [document type] for [topic]. Target audience: [audience].
           The reader should be able to [goal] after reading."
@@ -78,7 +78,7 @@ After writing, use the docs-reviewer agent:
 
 ```
 Task tool:
-  subagent_type: "ring:docs-reviewer"
+  subagent_type: "bee:docs-reviewer"
   model: "opus"
   prompt: "Review this documentation for voice, tone, structure, and completeness:
           [paste documentation]"
@@ -137,7 +137,7 @@ Definition paragraph
 **This command MUST load the skill for complete workflow execution.**
 
 ```
-Use Skill tool: ring:writing-functional-docs
+Use Skill tool: bee:writing-functional-docs
 ```
 
 The skill contains the complete workflow with:

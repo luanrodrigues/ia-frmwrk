@@ -1,5 +1,5 @@
 ---
-name: ring:pre-dev-prd-creation
+name: bee:pre-dev-prd-creation
 description: |
   Gate 1: Business requirements document - defines WHAT/WHY before HOW.
   Creates PRD with problem definition, user stories, success metrics.
@@ -16,7 +16,7 @@ skip_when: |
   - Bug fix → systematic-debugging
 
 sequence:
-  before: [ring:pre-dev-feature-map, ring:pre-dev-trd-creation]
+  before: [bee:pre-dev-feature-map, bee:pre-dev-trd-creation]
 ---
 
 # PRD Creation - Business Before Technical
@@ -215,7 +215,7 @@ topology:
 
 ```
 Task(
-  subagent_type="ring:product-designer",
+  subagent_type="bee:product-designer",
   model="opus",
   prompt="Validate PRD at docs/pre-dev/{feature}/prd.md against user needs. Mode: ux-validation.
 
@@ -479,7 +479,7 @@ mkdir -p "{frontend.path}/docs/pre-dev/{feature}"
 1. ✅ Lock the PRD - no changes without formal amendment
 2. ✅ Lock ux-criteria.md - defines UX acceptance for implementation
 3. ✅ Lock wireframes/ - defines visual structure for ui-engineer
-4. 🎯 Use all as input for Feature Map (`ring:pre-dev-feature-map`) or TRD (`ring:pre-dev-trd-creation`)
+4. 🎯 Use all as input for Feature Map (`bee:pre-dev-feature-map`) or TRD (`bee:pre-dev-trd-creation`)
 5. 🚫 Never add technical details retroactively
 6. 📋 Keep business/technical strictly separated
 
@@ -530,7 +530,7 @@ These requirements are NON-NEGOTIABLE:
 - MUST define measurable success metrics
 - MUST include explicit scope boundaries (in-scope/out-of-scope)
 - MUST include user personas with goals and frustrations
-- MUST dispatch `ring:product-designer` for UX validation after PRD
+- MUST dispatch `bee:product-designer` for UX validation after PRD
 - CANNOT proceed to Gate 2/3 with unvalidated PRD
 
 ---

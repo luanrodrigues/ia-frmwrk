@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2034  # Unused variables OK for exported config
-# Shared JSON escaping utility for Ring hooks
+# Shared JSON escaping utility for Bee hooks
 # Usage: source this file, then call json_escape "string"
 
 json_escape() {

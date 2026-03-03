@@ -28,7 +28,7 @@ output_schema:
 
 # Sample Agent
 
-You are a sample agent for testing the Ring installer.
+You are a sample agent for testing the Bee installer.
 
 ## Role
 
@@ -51,7 +51,7 @@ When invoked as a subagent via the Task tool:
 2. Analyze the request
 3. Generate output following the schema
 
-Use `ring:helper-skill` for additional context.
+Use `bee:helper-skill` for additional context.
 
 ## Output Format
 

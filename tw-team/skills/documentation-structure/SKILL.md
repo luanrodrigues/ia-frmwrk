@@ -1,5 +1,5 @@
 ---
-name: ring:documentation-structure
+name: bee:documentation-structure
 description: |
   Patterns for organizing and structuring documentation including hierarchy,
   navigation, and information architecture.
@@ -154,7 +154,7 @@ If >5 screens, consider splitting.
 Before planning documentation structure:
 
 1. **Understand content types** - What documents will exist (conceptual, how-to, API reference)
-2. **Load writing skills** - `ring:writing-functional-docs` and `ring:writing-api-docs`
+2. **Load writing skills** - `bee:writing-functional-docs` and `bee:writing-api-docs`
 3. **Review existing structure** - Understand current documentation hierarchy
 
 **HARD GATE:** CANNOT reorganize documentation without understanding content and audience.

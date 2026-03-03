@@ -13,7 +13,7 @@ Canonical source for TDD dispatch prompts used by bee:dev-cycle and bee:dev-impl
 
 **Anti-Duplication Check:** Before accepting PROJECT_RULES.md content, verify entries (tech stack, external integrations, domain terminology) do not overlap or contradict Bee Standards; reject duplicates.
 
-See [standards-workflow.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/skills/shared-patterns/standards-workflow.md) for the complete loading process.
+See [standards-workflow.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/skills/shared-patterns/standards-workflow.md) for the complete loading process.
 
 ### What Each Source Provides (no OVERLAP)
 
@@ -77,7 +77,7 @@ at tests/Feature/AuthenticationTest.php:15
 
 ## ⛔ CRITICAL: all Bee Standards Apply from Task 1 (no DEFERRAL)
 
-**See [shared-anti-rationalization.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/skills/shared-patterns/shared-anti-rationalization.md) → "Standards Deferral Anti-Rationalizations" section.**
+**See [shared-anti-rationalization.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/skills/shared-patterns/shared-anti-rationalization.md) → "Standards Deferral Anti-Rationalizations" section.**
 
 **Summary:** Bee Standards are not phased. They apply IMMEDIATELY to every task. PM defines WHAT, Bee Standards define HOW.
 
@@ -96,10 +96,10 @@ at tests/Feature/AuthenticationTest.php:15
 **⛔ BEE STANDARDS REQUIREMENTS (MANDATORY - all MUST BE IMPLEMENTED):**
 
 **You MUST WebFetch and implement all sections from Bee Standards for your language:**
-- **PHP:** `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php.md`
-- **TypeScript (BFF):** `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/typescript.md`
+- **PHP:** `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/php.md`
+- **TypeScript (BFF):** `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/typescript.md`
 
-**⛔ HARD GATE: You MUST implement all sections listed in [standards-coverage-table.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/skills/shared-patterns/standards-coverage-table.md).**
+**⛔ HARD GATE: You MUST implement all sections listed in [standards-coverage-table.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/skills/shared-patterns/standards-coverage-table.md).**
 
 - **PHP projects:** See `bee:backend-engineer-php → php.md` section index (46 sections)
 - **TypeScript BFF projects:** See `bee:frontend-bff-engineer-typescript → typescript.md` section index (21 sections)
@@ -126,7 +126,7 @@ at tests/Feature/AuthenticationTest.php:15
 
 ## Standards Coverage Table
 
-**You MUST output a Standards Coverage Table per [standards-coverage-table.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/skills/shared-patterns/standards-coverage-table.md).**
+**You MUST output a Standards Coverage Table per [standards-coverage-table.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/skills/shared-patterns/standards-coverage-table.md).**
 
 **Format:**
 ```markdown
@@ -224,7 +224,7 @@ if "all STANDARDS MET" = no:
 
 ### Anti-Rationalization for Standards Compliance
 
-See [standards-coverage-table.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/skills/shared-patterns/standards-coverage-table.md) for the complete anti-rationalization table.
+See [standards-coverage-table.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/skills/shared-patterns/standards-coverage-table.md) for the complete anti-rationalization table.
 
 **Key rules:**
 - all sections from standards-coverage-table.md MUST be checked

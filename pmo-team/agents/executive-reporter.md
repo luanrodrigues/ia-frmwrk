@@ -1,5 +1,5 @@
 ---
-name: ring:executive-reporter
+name: bee:executive-reporter
 version: 1.3.0
 description: Executive Reporting Specialist for creating dashboards, status summaries, board packages, and stakeholder communications. Focuses on actionable insights for leadership.
 type: specialist
@@ -342,7 +342,7 @@ Portfolio status: **YELLOW** - On track overall with two areas requiring attenti
 
 **N/A for PMO specialist agents.**
 
-**Rationale:** The ring:executive-reporter agent produces executive analysis, not code implementation. Standards loading is performed by engineer agents that implement the reported projects.
+**Rationale:** The bee:executive-reporter agent produces executive analysis, not code implementation. Standards loading is performed by engineer agents that implement the reported projects.
 
 ---
 
@@ -350,7 +350,7 @@ Portfolio status: **YELLOW** - On track overall with two areas requiring attenti
 
 **N/A for PMO specialist agents.**
 
-**Rationale:** The ring:executive-reporter agent produces executive analysis, not code implementation output. Standards compliance verification is performed by engineer agents.
+**Rationale:** The bee:executive-reporter agent produces executive analysis, not code implementation output. Standards compliance verification is performed by engineer agents.
 
 ---
 

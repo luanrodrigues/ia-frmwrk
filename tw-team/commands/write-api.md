@@ -1,5 +1,5 @@
 ---
-name: ring:write-api
+name: bee:write-api
 description: Start writing API reference documentation for an endpoint
 argument-hint: "[endpoint]"
 arguments:
@@ -101,7 +101,7 @@ For complex API documentation, dispatch the api-writer agent:
 
 ```
 Task tool:
-  subagent_type: "ring:api-writer"
+  subagent_type: "bee:api-writer"
   model: "opus"
   prompt: "Document the [endpoint] endpoint. Include:
           - All path/query parameters
@@ -117,7 +117,7 @@ After writing, use the docs-reviewer agent:
 
 ```
 Task tool:
-  subagent_type: "ring:docs-reviewer"
+  subagent_type: "bee:docs-reviewer"
   model: "opus"
   prompt: "Review this API documentation for completeness and accuracy:
           [paste documentation]"
@@ -153,7 +153,7 @@ Task tool:
 **This command MUST load the skill for complete workflow execution.**
 
 ```
-Use Skill tool: ring:writing-api-docs
+Use Skill tool: bee:writing-api-docs
 ```
 
 The skill contains the complete workflow with:

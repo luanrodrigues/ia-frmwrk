@@ -236,7 +236,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 - Anti-rationalization rules
 
 **Agent-Specific Standards:**
-- WebFetch URL: `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/{file}.md`
+- WebFetch URL: `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/{file}.md`
 - Sections to check: See [standards-coverage-table.md](../skills/shared-patterns/standards-coverage-table.md)
 
 **⛔ Standards Coverage Table is always required. No exceptions.**

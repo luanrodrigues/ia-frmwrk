@@ -1,6 +1,6 @@
 # Agent Design Reference
 
-This document contains agent output schema archetypes and standards compliance requirements for Ring agents.
+This document contains agent output schema archetypes and standards compliance requirements for Bee agents.
 
 ---
 
@@ -33,7 +33,7 @@ output_schema:
       required: true
 ```
 
-**Used by:** `ring:backend-engineer-golang`, `ring:backend-engineer-typescript`, `frontend-bff-engineer-typescript`, `ring:devops-engineer`, `ring:qa-analyst`, `ring:sre`, `finops-automation`
+**Used by:** `bee:backend-engineer-golang`, `bee:backend-engineer-typescript`, `frontend-bff-engineer-typescript`, `bee:devops-engineer`, `bee:qa-analyst`, `bee:sre`, `finops-automation`
 
 ---
 
@@ -59,7 +59,7 @@ output_schema:
       required: true
 ```
 
-**Used by:** `ring:frontend-designer`, `finops-analyzer`
+**Used by:** `bee:frontend-designer`, `finops-analyzer`
 
 ---
 
@@ -91,11 +91,11 @@ output_schema:
       required: true
 ```
 
-**Used by:** `ring:code-reviewer`, `ring:business-logic-reviewer`, `ring:security-reviewer`
+**Used by:** `bee:code-reviewer`, `bee:business-logic-reviewer`, `bee:security-reviewer`
 
-**Note:** `ring:business-logic-reviewer` and `ring:security-reviewer` extend the base Reviewer Schema with additional domain-specific required sections:
-- `ring:business-logic-reviewer` adds: "Mental Execution Analysis", "Business Requirements Coverage", "Edge Cases Analysis"
-- `ring:security-reviewer` adds: "OWASP Top 10 Coverage", "Compliance Status"
+**Note:** `bee:business-logic-reviewer` and `bee:security-reviewer` extend the base Reviewer Schema with additional domain-specific required sections:
+- `bee:business-logic-reviewer` adds: "Mental Execution Analysis", "Business Requirements Coverage", "Edge Cases Analysis"
+- `bee:security-reviewer` adds: "OWASP Top 10 Coverage", "Compliance Status"
 
 ---
 
@@ -124,7 +124,7 @@ output_schema:
       required: true
 ```
 
-**Used by:** `ring:codebase-explorer`
+**Used by:** `bee:codebase-explorer`
 
 ---
 
@@ -153,7 +153,7 @@ output_schema:
       required: true
 ```
 
-**Used by:** `ring:write-plan`
+**Used by:** `bee:write-plan`
 
 ---
 
@@ -168,8 +168,8 @@ All bee-dev-team agents include this in their `output_schema`:
 ```yaml
 - name: "Standards Compliance"
   pattern: "^## Standards Compliance"
-  required: false  # In schema, but MANDATORY when invoked from ring:dev-refactor
-  description: "Comparison of codebase against Lerian/bee standards. MANDATORY when invoked from ring:dev-refactor skill."
+  required: false  # In schema, but MANDATORY when invoked from bee:dev-refactor
+  description: "Comparison of codebase against Lerian/bee standards. MANDATORY when invoked from bee:dev-refactor skill."
 ```
 
 ### Conditional Requirement: `invoked_from_dev_refactor`
@@ -177,20 +177,20 @@ All bee-dev-team agents include this in their `output_schema`:
 | Context | Standards Compliance Required | Enforcement |
 |---------|------------------------------|-------------|
 | Direct agent invocation | Optional | Agent may include if relevant |
-| Via `ring:dev-cycle` | Optional | Agent may include if relevant |
-| Via `ring:dev-refactor` | **MANDATORY** | Prompt includes `MODE: ANALYSIS ONLY` |
+| Via `bee:dev-cycle` | Optional | Agent may include if relevant |
+| Via `bee:dev-refactor` | **MANDATORY** | Prompt includes `MODE: ANALYSIS ONLY` |
 
 **How It's Triggered:**
 1. User invokes `/bee:dev-refactor` command
 2. The skill dispatches agents with prompts starting with `**MODE: ANALYSIS ONLY**`
 3. This prompt pattern signals to agents that Standards Compliance output is MANDATORY
-4. Agents load Ring standards via WebFetch and produce comparison tables
+4. Agents load Bee standards via WebFetch and produce comparison tables
 
 **Detection in Agent Prompts:**
 ```text
 If prompt contains "**MODE: ANALYSIS ONLY**":
   → Standards Compliance section is MANDATORY
-  → Agent MUST load Ring standards via WebFetch
+  → Agent MUST load Bee standards via WebFetch
   → Agent MUST produce comparison tables
 
 If prompt does NOT contain "**MODE: ANALYSIS ONLY**":
@@ -204,13 +204,13 @@ All bee-dev-team agents support Standards Compliance:
 
 | Agent | Standards Source | Categories Checked |
 |-------|------------------|-------------------|
-| `ring:backend-engineer-golang` | `golang.md` | lib-commons, Error Handling, Logging, Config |
-| `ring:backend-engineer-typescript` | `typescript.md` | Type Safety, Error Handling, Validation |
-| `ring:devops-engineer` | `devops.md` | Dockerfile, docker-compose, CI/CD |
+| `bee:backend-engineer-golang` | `golang.md` | lib-commons, Error Handling, Logging, Config |
+| `bee:backend-engineer-typescript` | `typescript.md` | Type Safety, Error Handling, Validation |
+| `bee:devops-engineer` | `devops.md` | Dockerfile, docker-compose, CI/CD |
 | `frontend-bff-engineer-typescript` | `frontend.md` | Component patterns, State management |
-| `ring:frontend-designer` | `frontend.md` | Accessibility, Design patterns |
-| `ring:qa-analyst` | `qa.md` | Test coverage, Test patterns |
-| `ring:sre` | `sre.md` | Health endpoints, Logging, Tracing |
+| `bee:frontend-designer` | `frontend.md` | Accessibility, Design patterns |
+| `bee:qa-analyst` | `qa.md` | Test coverage, Test patterns |
+| `bee:sre` | `sre.md` | Health endpoints, Logging, Tracing |
 
 ### Output Format Examples
 

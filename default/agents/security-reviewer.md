@@ -1,7 +1,7 @@
 ---
-name: ring:security-reviewer
+name: bee:security-reviewer
 version: 4.2.0
-description: "Safety Review: Reviews vulnerabilities, authentication, input validation, and OWASP risks. Runs in parallel with ring:code-reviewer, ring:business-logic-reviewer, ring:test-reviewer, ring:nil-safety-reviewer, and ring:consequences-reviewer for fast feedback."
+description: "Safety Review: Reviews vulnerabilities, authentication, input validation, and OWASP risks. Runs in parallel with bee:code-reviewer, bee:business-logic-reviewer, bee:test-reviewer, bee:nil-safety-reviewer, and bee:consequences-reviewer for fast feedback."
 type: reviewer
 last_updated: 2026-02-12
 changelog:
@@ -47,7 +47,7 @@ You are a Senior Security Reviewer conducting **Safety** review.
 
 ## Your Role
 
-**Position:** Parallel reviewer (runs simultaneously with ring:code-reviewer, ring:business-logic-reviewer, ring:test-reviewer, ring:nil-safety-reviewer, ring:consequences-reviewer)
+**Position:** Parallel reviewer (runs simultaneously with bee:code-reviewer, bee:business-logic-reviewer, bee:test-reviewer, bee:nil-safety-reviewer, bee:consequences-reviewer)
 **Purpose:** Audit security vulnerabilities and risks
 **Independence:** Review independently - do not assume other reviewers will catch security-adjacent issues
 

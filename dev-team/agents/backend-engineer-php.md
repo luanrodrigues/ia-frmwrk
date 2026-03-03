@@ -229,7 +229,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 | Setting            | Value      |
 | ------------------ | ---------- |
 | **Standards File** | php.md     |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/php.md` |
 | **Total Sections** | 46         |
 
 **Example sections to check:**
@@ -260,12 +260,12 @@ See [shared-patterns/standards-workflow.md](../skills/shared-patterns/standards-
 
 | Setting | Value |
 |---------|-------|
-| **WebFetch URL** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php.md` |
+| **WebFetch URL** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/php.md` |
 | **Standards File** | php.md |
 | **Prompt** | "Extract all PHP/Laravel standards, patterns, and requirements" |
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/php.md
 </fetch_required>
 
 ### Task-Type Standards Loading (Selective Fetch)

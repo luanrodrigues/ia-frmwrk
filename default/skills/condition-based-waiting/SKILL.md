@@ -1,5 +1,5 @@
 ---
-name: ring:condition-based-waiting
+name: bee:condition-based-waiting
 description: |
   Flaky test fix pattern - replaces arbitrary timeouts with condition polling
   that waits for actual state changes.

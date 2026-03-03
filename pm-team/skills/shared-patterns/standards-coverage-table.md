@@ -1,6 +1,6 @@
 # Standards Coverage Table Pattern
 
-This file defines the MANDATORY output format for agents comparing designs against Ring product design standards. It ensures every section in the standards is explicitly checked and reported.
+This file defines the MANDATORY output format for agents comparing designs against Bee product design standards. It ensures every section in the standards is explicitly checked and reported.
 
 ---
 
@@ -161,7 +161,7 @@ Standards files may contain these meta-sections that are not counted in section 
 
 These sections describe HOW to use the standards, not WHAT the standards are.
 
-### ring:product-designer → product-design.md
+### bee:product-designer → product-design.md
 
 | #   | Section to Check             | Anchor                                       | Key Subsections                                                              |
 | --- | ---------------------------- | -------------------------------------------- | ---------------------------------------------------------------------------- |
@@ -211,7 +211,7 @@ See [shared-patterns/standards-coverage-table.md](../skills/shared-patterns/stan
 
 1. Edit `pm-team/docs/standards/product-design.md` - Add your new `## Section Name`
 2. Update the `## Table of Contents` in the same file
-3. Edit THIS file - Add the section to the ring:product-designer table above
+3. Edit THIS file - Add the section to the bee:product-designer table above
 4. Verify row count matches section count (currently 13)
 
 **Anti-Rationalization:**

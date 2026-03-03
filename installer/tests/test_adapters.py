@@ -9,7 +9,7 @@ from pathlib import Path
 
 import pytest
 
-from ring_installer.adapters import (
+from bee_installer.adapters import (
     ADAPTER_REGISTRY,
     SUPPORTED_PLATFORMS,
     ClaudeAdapter,
@@ -299,7 +299,7 @@ class TestFactoryAdapter:
 
         # Check terminology changes
         # The word "agent" in the content should be replaced with "droid"
-        # (except in ring: references which use a different pattern)
+        # (except in bee: references which use a different pattern)
         assert "Droid" in result or "droid" in result
 
     def test_transform_agent_frontmatter_preserves_subagent_type(self, adapter, minimal_agent_content):
@@ -384,9 +384,9 @@ Use this agent for review.
         result = adapter.get_target_filename("test-skill.md", "skill")
         assert result == "test-skill.md"
 
-    def test_replace_ring_references(self, adapter):
-        """FactoryAdapter should replace ring:*-agent references with hyphenated droid names."""
-        content = 'Use "ring:code-agent" for analysis.'
+    def test_replace_bee_references(self, adapter):
+        """FactoryAdapter should replace bee:*-agent references with hyphenated droid names."""
+        content = 'Use "bee:code-agent" for analysis.'
         result = adapter.transform_skill(content)
 
         # Factory uses hyphens, not colons in droid names
@@ -697,7 +697,7 @@ class TestCursorAdapter:
         assert mapping["commands"]["target_dir"] == "commands"
         assert mapping["skills"]["target_dir"] == "skills"
 
-    def test_transform_replaces_ring_terminology(self, adapter):
+    def test_transform_replaces_bee_terminology(self, adapter):
         """CursorAdapter should replace bee-specific terminology (CURSOR_REPLACEMENTS)."""
         content = "Use the Skill tool to load a skill."
         result = adapter.transform_skill(content)
@@ -819,20 +819,20 @@ class TestClineAdapter:
         assert mapping["commands"]["target_dir"] == "prompts/commands"
         assert mapping["skills"]["target_dir"] == "prompts/skills"
 
-    def test_transform_replaces_ring_references(self, adapter):
-        """ClineAdapter should convert ring: references to @ format."""
-        content = "Use `ring:helper-skill` for context."
+    def test_transform_replaces_bee_references(self, adapter):
+        """ClineAdapter should convert bee: references to @ format."""
+        content = "Use `bee:helper-skill` for context."
         result = adapter.transform_skill(content)
 
-        # ring: references should become @ references
+        # bee: references should become @ references
         assert "@helper-skill" in result or "@" in result
 
-    def test_transform_replaces_ring_terminology(self, adapter):
+    def test_transform_replaces_bee_terminology(self, adapter):
         """ClineAdapter should replace bee-specific terminology."""
         content = "Use the Task tool to dispatch subagent."
         result = adapter.transform_skill(content)
 
-        # Ring terminology should be replaced
+        # Bee terminology should be replaced
         assert "sub-prompt" in result.lower() or "prompt" in result.lower()
 
     def test_generate_prompt_index(self, adapter):
@@ -844,7 +844,7 @@ class TestClineAdapter:
 
         result = adapter.generate_prompt_index(prompts)
 
-        assert "Ring Prompts" in result
+        assert "Bee Prompts" in result
         assert "skill-1" in result.lower() or "Skill 1" in result
         assert "agent-1" in result.lower() or "Agent 1" in result
 

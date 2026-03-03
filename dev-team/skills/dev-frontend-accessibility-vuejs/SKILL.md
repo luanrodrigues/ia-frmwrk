@@ -135,7 +135,7 @@ Ensure all Vue.js frontend components meet **WCAG 2.1 AA** accessibility standar
 **MANDATORY:** Load testing-accessibility.md standards via WebFetch.
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-vuejs/testing-accessibility.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend-vuejs/testing-accessibility.md
 </fetch_required>
 
 ---

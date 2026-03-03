@@ -28,7 +28,7 @@ Generate visual executive presentation of squad deliveries (engineering, product
 
 ### Format 1: org/repo (RECOMMENDED)
 ```bash
---repos "LerianStudio/midaz,LerianStudio/product-console"
+--repos "LerianStudio/midaz,LerianStudio/midaz"
 ```
 - Standard GitHub format
 - Clear organization ownership
@@ -36,7 +36,7 @@ Generate visual executive presentation of squad deliveries (engineering, product
 
 ### Format 2: Full URLs (ALTERNATIVE)
 ```bash
---repos "https://github.com/LerianStudio/midaz,https://github.com/LerianStudio/product-console"
+--repos "https://github.com/LerianStudio/midaz,https://github.com/LerianStudio/midaz"
 ```
 - Convenient when copying from browser
 - Supports other Git hosts (GitLab, Bitbucket)
@@ -58,7 +58,7 @@ Or: Full URL (e.g., https://github.com/LerianStudio/midaz)
 | Option | Description | Use Case |
 |--------|-------------|----------|
 | `lerian` | Lerian Studio branding (default) | Internal Lerian reports |
-| `ring` | Ring neutral corporate style | Public/neutral branding |
+| `ring` | Bee neutral corporate style | Public/neutral branding |
 | `custom` | User-provided color scheme | Client-specific branding |
 
 **If `--visual custom` is selected, command will prompt for:**
@@ -75,7 +75,7 @@ Or: Full URL (e.g., https://github.com/LerianStudio/midaz)
 /delivery-report \
   --start-date 2026-01-12 \
   --end-date 2026-01-31 \
-  --repos "LerianStudio/midaz,LerianStudio/product-console"
+  --repos "LerianStudio/midaz,LerianStudio/midaz"
 ```
 
 ### With Business Context
@@ -83,7 +83,7 @@ Or: Full URL (e.g., https://github.com/LerianStudio/midaz)
 /delivery-report \
   --start-date 2026-01-01 \
   --end-date 2026-01-31 \
-  --repos "LerianStudio/midaz,LerianStudio/product-console,LerianStudio/api-gateway" \
+  --repos "LerianStudio/midaz,LerianStudio/midaz,LerianStudio/api-gateway" \
   --context "Q1 focus on security compliance and customer portal"
 ```
 
@@ -92,10 +92,10 @@ Or: Full URL (e.g., https://github.com/LerianStudio/midaz)
 /delivery-report \
   --start-date 2026-01-12 \
   --end-date 2026-01-31 \
-  --repos "https://github.com/LerianStudio/midaz,https://github.com/LerianStudio/product-console"
+  --repos "https://github.com/LerianStudio/midaz,https://github.com/LerianStudio/midaz"
 ```
 
-### Ring Neutral Branding
+### Bee Neutral Branding
 ```bash
 /delivery-report \
   --start-date 2026-01-12 \
@@ -170,7 +170,7 @@ gh auth status             # Should show "Logged in to github.com"
 **This command MUST load the delivery-reporting skill for complete workflow execution.**
 
 ```
-Use Skill tool: ring:delivery-reporting
+Use Skill tool: bee:delivery-reporting
 ```
 
 The skill contains the complete reporting workflow with:
@@ -200,7 +200,7 @@ The skill contains the complete reporting workflow with:
 
 ```
 Task tool:
-  subagent_type: "ring:delivery-reporter"
+  subagent_type: "bee:delivery-reporter"
   model: "opus"
   prompt: |
     Create delivery report for period {start_date} to {end_date}.

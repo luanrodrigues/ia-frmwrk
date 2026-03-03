@@ -463,7 +463,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 
 | Setting                       | Value                                                                                            |
 | ----------------------------- | ------------------------------------------------------------------------------------------------ |
-| **WebFetch URL (PHP)**        | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php.md`        |
+| **WebFetch URL (PHP)**        | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/php.md`        |
 | **Standards File**            | php.md                                                                                           |
 
 **Example sections to check:**
@@ -482,7 +482,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 ## Standards Loading (MANDATORY)
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/php.md
 </fetch_required>
 
 WebFetch the appropriate URL based on project language before any test work.
@@ -505,7 +505,7 @@ See [shared-patterns/standards-workflow.md](../skills/shared-patterns/standards-
 ### Standards Loading (Integration Mode)
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/php.md
 </fetch_required>
 
 ### Mode-Specific Requirements
@@ -605,7 +605,7 @@ _No precedence conflicts. Following Bee Standards._
 ### Standards Loading (Fuzz Mode)
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/php.md
 </fetch_required>
 
 ### Mode-Specific Requirements
@@ -702,7 +702,7 @@ _No precedence conflicts. Following Bee Standards._
 ### Standards Loading (Property Mode)
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/php.md
 </fetch_required>
 
 ### Mode-Specific Requirements
@@ -797,7 +797,7 @@ _No precedence conflicts. Following Bee Standards._
 ### Standards Loading (Chaos Mode)
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/php.md
 </fetch_required>
 
 ### Mode-Specific Requirements
@@ -942,7 +942,7 @@ REQUIRED: Use exact section names from `bee:qa-analyst` in standards-coverage-ta
 
 | Language | WebFetch URL                                                                                  | Standards File | Prompt                                                              |
 | -------- | --------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------- |
-| PHP      | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php.md`     | php.md         | "Extract all PHP testing standards, patterns, and requirements"     |
+| PHP      | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/php.md`     | php.md         | "Extract all PHP testing standards, patterns, and requirements"     |
 
 **Execute WebFetch for the relevant language standard based on the project's test stack.**
 
@@ -1050,7 +1050,7 @@ See [shared-patterns/standards-workflow.md](../skills/shared-patterns/standards-
 
 ## Standards Compliance Report (MANDATORY when invoked from bee:dev-refactor)
 
-See [docs/AGENT_DESIGN.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/docs/AGENT_DESIGN.md) for canonical output schema requirements.
+See [docs/AGENT_DESIGN.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/AGENT_DESIGN.md) for canonical output schema requirements.
 
 When invoked from the `bee:dev-refactor` skill with a codebase-report.md, you MUST produce a Standards Compliance section comparing the test implementation against Lerian/Bee QA Standards.
 
@@ -1351,7 +1351,7 @@ The following testing standards MUST be followed when designing and implementing
 
    ```
    # For PHP/Laravel projects:
-   WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php.md
+   WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/php.md
    Prompt: "Extract all PHP coding standards, patterns, and requirements"
    ```
 
@@ -1379,7 +1379,7 @@ The following testing standards MUST be followed when designing and implementing
 
    ```
    # For PHP/Laravel projects:
-   WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php.md
+   WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/php.md
    Prompt: "Extract all PHP coding standards, patterns, and requirements"
    ```
 

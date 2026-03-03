@@ -1,5 +1,5 @@
 ---
-name: ring:infrastructure-cost-estimation
+name: bee:infrastructure-cost-estimation
 version: 6.0.0
 description: |
   Orchestrates infrastructure cost estimation with tier-based or custom TPS sizing.
@@ -557,7 +557,7 @@ If Reporter selected:
 
 ```
 Task tool:
-  subagent_type: "ring:infrastructure-cost-estimator"
+  subagent_type: "bee:infrastructure-cost-estimator"
   model: "opus"
   prompt: |
     Calculate infrastructure costs using PRE-CONFIGURED TIER.
@@ -620,7 +620,7 @@ Task tool:
 
 ```
 Task tool:
-  subagent_type: "ring:infrastructure-cost-estimator"
+  subagent_type: "bee:infrastructure-cost-estimator"
   model: "opus"
   prompt: |
     Calculate infrastructure costs for CUSTOM TPS.
@@ -720,7 +720,7 @@ Tier: STARTER (50-100 TPS)
 ```
 Environments: Both (Homolog + Production)
 
-Component Sharing:
+Component Shabee:
 - EKS Cluster: SHARED (5)
 - PostgreSQL: DEDICATED (1)  ← user specified
 - Valkey: SHARED (5)

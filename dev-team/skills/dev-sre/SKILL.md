@@ -212,7 +212,7 @@ Task:
     - **External Dependencies:** [external_dependencies or "None"]
 
     ## Standards Reference
-    WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/sre.md
+    WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/sre.md
 
     ## Your Role
     - VALIDATE that observability is implemented correctly
@@ -386,8 +386,8 @@ Task:
     **Current:** [validation_state.sre_result.instrumentation_coverage]%
 
     ## Standards Reference
-    For PHP: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php.md
-    For TS: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/typescript.md
+    For PHP: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/php.md
+    For TS: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/typescript.md
 
     Focus on: Telemetry & Observability section
 

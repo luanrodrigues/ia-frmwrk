@@ -1,6 +1,6 @@
 # Using Production Readiness Audit
 
-**Skill:** `ring:production-readiness-audit` · **Implementation:** [SKILL.md](SKILL.md)
+**Skill:** `bee:production-readiness-audit` · **Implementation:** [SKILL.md](SKILL.md)
 
 ## Purpose
 
@@ -8,7 +8,7 @@ Evaluate codebase production readiness before deployment, during security/qualit
 
 ## Invocation
 
-- **Skill tool:** `Skill tool: "ring:production-readiness-audit"`
+- **Skill tool:** `Skill tool: "bee:production-readiness-audit"`
 - **Command (if available):** `/bee:production-readiness-audit` or `/bee:production-readiness-audit [options]`
 
 ## Batch behavior

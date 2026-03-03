@@ -1,12 +1,12 @@
-# Ring Workflows Reference
+# Bee Workflows Reference
 
-This document contains detailed workflow instructions for adding skills, agents, hooks, and other Ring components.
+This document contains detailed workflow instructions for adding skills, agents, hooks, and other Bee components.
 
 ---
 
 ## Adding a New Skill
 
-### For Core Ring Skills
+### For Core Bee Skills
 
 1. Create directory:
 
@@ -43,14 +43,14 @@ This document contains detailed workflow instructions for adding skills, agents,
 3. Test with:
 
    ```
-   Skill tool: "ring:testing-skills-with-subagents"
+   Skill tool: "bee:testing-skills-with-subagents"
    ```
 
 4. Skill auto-loads next SessionStart via `default/hooks/generate-skills-ref.py`
 
 ### Production Readiness Audit (bee-default)
 
-The **production-readiness-audit** skill (`ring:production-readiness-audit`) evaluates codebase production readiness across **27 dimensions** in 5 categories. **Invocation:** use the Skill tool or the `/bee:production-readiness-audit` command when preparing for production, conducting security/quality reviews, or assessing technical debt. **Batch behavior:** runs 10 explorer agents per batch and appends results incrementally to a single report file (`docs/audits/production-readiness-{date}-{time}.md`) to avoid context bloat. **Output:** 27-dimension scored report (0–270) with severity ratings and standards cross-reference. Implementation details: [default/skills/production-readiness-audit/SKILL.md](../default/skills/production-readiness-audit/SKILL.md).
+The **production-readiness-audit** skill (`bee:production-readiness-audit`) evaluates codebase production readiness across **27 dimensions** in 5 categories. **Invocation:** use the Skill tool or the `/bee:production-readiness-audit` command when preparing for production, conducting security/quality reviews, or assessing technical debt. **Batch behavior:** runs 10 explorer agents per batch and appends results incrementally to a single report file (`docs/audits/production-readiness-{date}-{time}.md`) to avoid context bloat. **Output:** 27-dimension scored report (0–270) with severity ratings and standards cross-reference. Implementation details: [default/skills/production-readiness-audit/SKILL.md](../default/skills/production-readiness-audit/SKILL.md).
 
 ### For Product/Team-Specific Skills
 
@@ -107,46 +107,46 @@ Each plugin auto-loads a `using-{plugin}` skill via SessionStart hook to introdu
 
 ### Default Plugin
 
-- `ring:using-ring` → ORCHESTRATOR principle, mandatory workflow
+- `bee:using-bee` → ORCHESTRATOR principle, mandatory workflow
 - Always injected, always mandatory
-- Located: `default/skills/using-ring/SKILL.md`
+- Located: `default/skills/using-bee/SKILL.md`
 
-### Ring Dev Team Plugin
+### Bee Dev Team Plugin
 
-- `ring:using-dev-team` → 10 specialist developer agents
+- `bee:using-dev-team` → 10 specialist developer agents
 - Auto-loads when bee-dev-team plugin is enabled
 - Located: `dev-team/skills/using-dev-team/SKILL.md`
-- Agents (invoke as `ring:{agent-name}`):
-  - ring:backend-engineer-golang
-  - ring:backend-engineer-typescript
-  - ring:devops-engineer
-  - ring:frontend-bff-engineer-typescript
-  - ring:frontend-designer
-  - ring:frontend-engineer
-  - ring:prompt-quality-reviewer
-  - ring:qa-analyst
-  - ring:sre
-  - ring:ui-engineer
+- Agents (invoke as `bee:{agent-name}`):
+  - bee:backend-engineer-golang
+  - bee:backend-engineer-typescript
+  - bee:devops-engineer
+  - bee:frontend-bff-engineer-typescript
+  - bee:frontend-designer
+  - bee:frontend-engineer
+  - bee:prompt-quality-reviewer
+  - bee:qa-analyst
+  - bee:sre
+  - bee:ui-engineer
 
-### Ring PM Team Plugin
+### Bee PM Team Plugin
 
-- `ring:using-pm-team` → Pre-dev workflow skills (8 gates)
+- `bee:using-pm-team` → Pre-dev workflow skills (8 gates)
 - Auto-loads when bee-pm-team plugin is enabled
 - Located: `pm-team/skills/using-pm-team/SKILL.md`
 - Skills: 8 pre-dev gates for feature planning
 
-### Ring TW Team Plugin
+### Bee TW Team Plugin
 
 - `using-tw-team` → 3 technical writing agents for documentation
 - Auto-loads when bee-tw-team plugin is enabled
 - Located: `tw-team/skills/using-tw-team/SKILL.md`
-- Agents (invoke as `ring:{agent-name}`):
-  - ring:functional-writer (guides)
-  - ring:api-writer (API reference)
-  - ring:docs-reviewer (quality review)
+- Agents (invoke as `bee:{agent-name}`):
+  - bee:functional-writer (guides)
+  - bee:api-writer (API reference)
+  - bee:docs-reviewer (quality review)
 - Commands: write-guide, write-api, review-docs
 
-### Ring FinOps Team Plugin
+### Bee FinOps Team Plugin
 
 - `using-finops-team` → 3 FinOps agents for Brazilian compliance and cost estimation
 - Auto-loads when bee-finops-team plugin is enabled
@@ -173,7 +173,7 @@ Each plugin auto-loads a `using-{plugin}` skill via SessionStart hook to introdu
 3. Dispatch via Task tool:
 
    ```
-   subagent_type="ring:your-reviewer"
+   subagent_type="bee:your-reviewer"
    ```
 
 4. **MUST run in parallel** with other reviewers (single message, multiple Tasks)
@@ -217,7 +217,7 @@ Each plugin auto-loads a `using-{plugin}` skill via SessionStart hook to introdu
 
 ## Development Cycle (11-gate)
 
-The **ring:dev-cycle** skill orchestrates task execution through **11 gates**: implementation (Gate 0) → multi-tenant (Gate 0.5) → devops (Gate 1) → SRE (Gate 2) → unit-testing (Gate 3) → fuzz-testing (Gate 4) → property-testing (Gate 5) → integration-testing (Gate 6) → chaos-testing (Gate 7) → review (Gate 8) → validation (Gate 9). All gates are MANDATORY. Invoke with `/bee:dev-cycle [tasks-file]` or Skill tool `ring:dev-cycle`. State is persisted to `docs/bee:dev-cycle/current-cycle.json`. See [dev-team/skills/dev-cycle/SKILL.md](../dev-team/skills/dev-cycle/SKILL.md) for full protocol.
+The **bee:dev-cycle** skill orchestrates task execution through **11 gates**: implementation (Gate 0) → multi-tenant (Gate 0.5) → devops (Gate 1) → SRE (Gate 2) → unit-testing (Gate 3) → fuzz-testing (Gate 4) → property-testing (Gate 5) → integration-testing (Gate 6) → chaos-testing (Gate 7) → review (Gate 8) → validation (Gate 9). All gates are MANDATORY. Invoke with `/bee:dev-cycle [tasks-file]` or Skill tool `bee:dev-cycle`. State is persisted to `docs/bee:dev-cycle/current-cycle.json`. See [dev-team/skills/dev-cycle/SKILL.md](../dev-team/skills/dev-cycle/SKILL.md) for full protocol.
 
 ---
 
@@ -226,23 +226,23 @@ The **ring:dev-cycle** skill orchestrates task execution through **11 gates**: i
 ### Instead of sequential (100 min)
 
 ```python
-review1 = Task("ring:code-reviewer")           # 20 min
-review2 = Task("ring:business-logic-reviewer") # 20 min
-review3 = Task("ring:security-reviewer")       # 20 min
-review4 = Task("ring:test-reviewer")           # 20 min
-review5 = Task("ring:nil-safety-reviewer")     # 20 min
+review1 = Task("bee:code-reviewer")           # 20 min
+review2 = Task("bee:business-logic-reviewer") # 20 min
+review3 = Task("bee:security-reviewer")       # 20 min
+review4 = Task("bee:test-reviewer")           # 20 min
+review5 = Task("bee:nil-safety-reviewer")     # 20 min
 ```
 
 ### Run parallel (20 min total)
 
 ```python
 Task.parallel([
-    ("ring:code-reviewer", prompt),
-    ("ring:business-logic-reviewer", prompt),
-    ("ring:security-reviewer", prompt),
-    ("ring:nil-safety-reviewer", prompt),
-    ("ring:test-reviewer", prompt),
-    ("ring:consequences-reviewer", prompt)
+    ("bee:code-reviewer", prompt),
+    ("bee:business-logic-reviewer", prompt),
+    ("bee:security-reviewer", prompt),
+    ("bee:nil-safety-reviewer", prompt),
+    ("bee:test-reviewer", prompt),
+    ("bee:consequences-reviewer", prompt)
 ])  # Single message, 6 tool calls
 ```
 

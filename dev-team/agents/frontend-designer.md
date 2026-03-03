@@ -860,7 +860,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 
 | Setting            | Value                                                                                          |
 | ------------------ | ---------------------------------------------------------------------------------------------- |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md` |
 | **Standards File** | frontend.md                                                                                    |
 
 ### Sections to Check (MANDATORY)
@@ -898,7 +898,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 ## Standards Loading (MANDATORY)
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md
 </fetch_required>
 
 MUST WebFetch the URL above before any design work.
@@ -941,7 +941,7 @@ See standards-coverage-table.md for the authoritative list of sections to check.
 
 | Setting            | Value                                                                                          |
 | ------------------ | ---------------------------------------------------------------------------------------------- |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md` |
 | **Standards File** | frontend.md                                                                                    |
 | **Prompt**         | "Extract all frontend design standards, patterns, and requirements"                            |
 
@@ -1239,7 +1239,7 @@ If any condition is true, STOP immediately and ask user for clarification.
 
 - Error: `destructive` (#ef4444)
 - Success: `success` (#22c55e)
-- Focus ring: `ring` (2px offset)
+- Focus bee: `ring` (2px offset)
 
 ### Typography
 

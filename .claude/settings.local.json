@@ -3,7 +3,13 @@
     "allow": [
       "Bash(grep -rn '\\\\bring\\\\b' --include=\"*.md\" --include=\"*.sh\" --include=\"*.json\" /Users/luanrodrigues/Desktop/1.16.1/ | grep -v \".git/\" | grep -v \"focus ring\" | grep -v \"ring\\\\`\" | head -30)",
       "Bash(wc -l /Users/luanrodrigues/Desktop/1.16.1/agents/*.md /Users/luanrodrigues/Desktop/1.16.1/skills/dev-*frontend*/*.md)",
-      "Bash(echo \"=== New React Native Files ===\" && find . -name \"*react-native*\" -type f | sort && echo \"\" && echo \"=== File sizes ===\" && find . -name \"*react-native*\" -type f -exec wc -l {} \\\\; | sort -t/ -k3 && echo \"\" && echo \"=== Total agent count ===\" && ls agents/*.md | wc -l && echo \"\" && echo \"=== Total skills ===\" && ls -d skills/*/SKILL.md 2>/dev/null | wc -l && echo \"\" && echo \"=== Total commands ===\" && ls commands/*.md | wc -l)"
+      "Bash(echo \"=== New React Native Files ===\" && find . -name \"*react-native*\" -type f | sort && echo \"\" && echo \"=== File sizes ===\" && find . -name \"*react-native*\" -type f -exec wc -l {} \\\\; | sort -t/ -k3 && echo \"\" && echo \"=== Total agent count ===\" && ls agents/*.md | wc -l && echo \"\" && echo \"=== Total skills ===\" && ls -d skills/*/SKILL.md 2>/dev/null | wc -l && echo \"\" && echo \"=== Total commands ===\" && ls commands/*.md | wc -l)",
+      "Bash(echo \"=== INSTALLER/PACKAGE NAME EXAMPLES ===\" && ls -la installer/bee_installer/ | head -20 && echo \"...\" && ls -la installer/*.sh)",
+      "Bash(find /Users/luanrodrigues/Desktop/bee-dev-team -name \"*.md\" -not -path \"*/.git/*\" -exec sed -i '' 's/bee:using-ring/bee:using-bee/g' {} +)",
+      "Bash(find /Users/luanrodrigues/Desktop/bee-dev-team/installer -name \"*.py\" -exec perl -pi -e 's/\\\\bRing\\\\b/Bee/g' {} +)",
+      "Bash(find /Users/luanrodrigues/Desktop/bee-dev-team/installer -name \"*.py\" -exec sed -i '' 's/ring_path/bee_path/g' {} +)",
+      "Bash(git -C /Users/luanrodrigues/Desktop/bee-dev-team diff --stat | tail -5)",
+      "Bash(find /Users/luanrodrigues/Desktop/bee-dev-team/installer -name \"*.py\" -exec sed -i '' 's/ring_contexts/bee_contexts/g' {} +)"
     ]
   }
 }

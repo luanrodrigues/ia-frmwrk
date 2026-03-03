@@ -145,11 +145,11 @@ Each reviewer adds domain-specific sections AFTER the core sections:
 
 | Reviewer | Additional Required Sections |
 |----------|------------------------------|
-| **ring:code-reviewer** | (core sections only) |
-| **ring:business-logic-reviewer** | Mental Execution Analysis, Business Requirements Coverage, Edge Cases Analysis |
-| **ring:security-reviewer** | OWASP Top 10 Coverage, Compliance Status |
-| **ring:test-reviewer** | Test Coverage Analysis, Edge Cases Not Tested, Test Anti-Patterns |
-| **ring:nil-safety-reviewer** | Nil Risk Trace, High-Risk Patterns, Recommended Guards |
+| **bee:code-reviewer** | (core sections only) |
+| **bee:business-logic-reviewer** | Mental Execution Analysis, Business Requirements Coverage, Edge Cases Analysis |
+| **bee:security-reviewer** | OWASP Top 10 Coverage, Compliance Status |
+| **bee:test-reviewer** | Test Coverage Analysis, Edge Cases Not Tested, Test Anti-Patterns |
+| **bee:nil-safety-reviewer** | Nil Risk Trace, High-Risk Patterns, Recommended Guards |
 
 ---
 

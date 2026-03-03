@@ -1,5 +1,5 @@
 ---
-name: ring:lint
+name: bee:lint
 description: Run lint checks and dispatch parallel agents to fix all issues
 argument-hint: "[path]"
 ---
@@ -27,7 +27,7 @@ Run linting tools, analyze results, and dispatch parallel AI agents to fix all i
 
 ## Process
 
-This command invokes the `ring:linting-codebase` skill which handles:
+This command invokes the `bee:linting-codebase` skill which handles:
 
 ### Phase 1: Lint Execution
 - Runs `make lint` (or detects appropriate lint command)
@@ -73,8 +73,8 @@ Lints only the services directory.
 
 | Command/Skill | Relationship |
 |---------------|--------------|
-| `ring:linting-codebase` | Underlying skill with full logic |
-| `ring:dispatching-parallel-agents` | Pattern used for parallel fixes |
+| `bee:linting-codebase` | Underlying skill with full logic |
+| `bee:dispatching-parallel-agents` | Pattern used for parallel fixes |
 | `/bee:codereview` | Use after lint passes for deeper review |
 
 ---
@@ -84,7 +84,7 @@ Lints only the services directory.
 **This command MUST load the skill for complete workflow execution.**
 
 ```
-Use Skill tool: ring:linting-codebase
+Use Skill tool: bee:linting-codebase
 ```
 
 The skill contains the complete workflow with:

@@ -120,8 +120,8 @@ You are a Senior Site Reliability Engineer specialized in VALIDATING observabili
 </forbidden>
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/sre.md
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/golang.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/sre.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/golang.md
 </fetch_required>
 
 Any FORBIDDEN pattern found = CRITICAL issue, automatic FAIL verdict.
@@ -325,7 +325,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 
 | Setting            | Value                                                                                     |
 | ------------------ | ----------------------------------------------------------------------------------------- |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/sre.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/sre.md` |
 | **Standards File** | sre.md                                                                                    |
 
 **Example sections from sre.md to check:**
@@ -380,8 +380,8 @@ See standards-coverage-table.md for sections to check (see coverage table for ap
 
 | Setting                      | Value                                                                                        |
 | ---------------------------- | -------------------------------------------------------------------------------------------- |
-| **WebFetch URL (sre.md)**    | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/sre.md`    |
-| **WebFetch URL (golang.md)** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/golang.md` |
+| **WebFetch URL (sre.md)**    | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/sre.md`    |
+| **WebFetch URL (golang.md)** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/golang.md` |
 | **Prompt**                   | "Extract all SRE/observability standards, patterns, and requirements"                        |
 
 **Required WebFetch for SRE validation:**
@@ -415,7 +415,7 @@ _Example rows — illustrative only; agents populate dynamically based on actual
 | Minimum log level       | WARN                   | ERROR              | PROJECT_RULES (override) |
 | Structured JSON logging | Required with trace_id | (silent)           | Bee (no override)       |
 
-_After rendering: if no row has Decision = "PROJECT_RULES (override)", append "No precedence conflicts. Following Bee Standards."_
+_After rendebee: if no row has Decision = "PROJECT_RULES (override)", append "No precedence conflicts. Following Bee Standards."_
 ```
 
 <gate>
@@ -483,7 +483,7 @@ Every validation MUST include:
 
 ## Standards Compliance Report (MANDATORY when invoked from bee:dev-refactor)
 
-See [docs/AGENT_DESIGN.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/docs/AGENT_DESIGN.md) for canonical output schema requirements.
+See [docs/AGENT_DESIGN.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/AGENT_DESIGN.md) for canonical output schema requirements.
 
 When invoked from the `bee:dev-refactor` skill with a codebase-report.md, you MUST produce a Standards Compliance section comparing the observability implementation against Lerian/Bee SRE Standards.
 

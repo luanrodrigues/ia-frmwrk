@@ -474,7 +474,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 
 | Setting            | Value                                                                                            |
 | ------------------ | ------------------------------------------------------------------------------------------------ |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/typescript.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/typescript.md` |
 | **Standards File** | typescript.md                                                                                    |
 
 **Example sections from typescript.md to check:**
@@ -494,7 +494,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 ## Standards Loading (MANDATORY)
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/typescript.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/typescript.md
 </fetch_required>
 
 MUST WebFetch the URL above before any implementation work.
@@ -564,7 +564,7 @@ Refer to standards-coverage-table.md for required sections and enforcement detai
 
 | Setting            | Value                                                                                            |
 | ------------------ | ------------------------------------------------------------------------------------------------ |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/typescript.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/typescript.md` |
 | **Standards File** | typescript.md                                                                                    |
 | **Prompt**         | "Extract all TypeScript coding standards, patterns, and requirements"                            |
 
@@ -746,7 +746,7 @@ You have deep expertise in TDD. **TDD is MANDATORY when invoked by bee:dev-cycle
 
 1. **Load Bee Standards FIRST (MANDATORY):**
    ```
-   WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/typescript.md
+   WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/typescript.md
    Prompt: "Extract all TypeScript coding standards, patterns, and requirements"
    ```
 2. Read the requirements and acceptance criteria
@@ -781,7 +781,7 @@ FAIL  src/use-cases/get-user.test.ts
 
 1. **Load Bee Standards FIRST (MANDATORY):**
    ```
-   WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/typescript.md
+   WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/typescript.md
    Prompt: "Extract all TypeScript coding standards, patterns, and requirements"
    ```
 2. Review the test file and failure output from TDD-RED
@@ -895,7 +895,7 @@ If code is ALREADY compliant with all standards:
 
 ## Standards Compliance Report (MANDATORY when invoked from bee:dev-refactor)
 
-See [docs/AGENT_DESIGN.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/docs/AGENT_DESIGN.md) for canonical output schema requirements.
+See [docs/AGENT_DESIGN.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/AGENT_DESIGN.md) for canonical output schema requirements.
 
 When invoked from the `bee:dev-refactor` skill with a codebase-report.md, you MUST produce a Standards Compliance section comparing the BFF layer against Lerian/Bee TypeScript Standards.
 
@@ -903,7 +903,7 @@ When invoked from the `bee:dev-refactor` skill with a codebase-report.md, you MU
 
 **Every category MUST be checked and reported. No exceptions.**
 
-Canonical policy: see [CLAUDE.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/CLAUDE.md) for the definitive standards compliance requirements.
+Canonical policy: see [CLAUDE.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/CLAUDE.md) for the definitive standards compliance requirements.
 
 **Anti-Rationalization:**
 

@@ -143,7 +143,7 @@ Ensure all frontend pages meet **Core Web Vitals** thresholds, achieve **Lightho
 **MANDATORY:** Load testing-performance.md standards via WebFetch.
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend/testing-performance.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend/testing-performance.md
 </fetch_required>
 
 ---

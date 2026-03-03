@@ -1,5 +1,5 @@
 ---
-name: ring:regulatory-templates-gate3
+name: bee:regulatory-templates-gate3
 description: |
   Gate 3 sub-skill - generates complete .tpl template file with all validated
   mappings from Gates 1-2.
@@ -132,7 +132,7 @@ Gate 3 is where 5+ hours of Gates 1-2 work becomes a production artifact. Shortc
 
 ### Agent Dispatch
 
-**Dispatch:** `Task(subagent_type: "ring:finops-automation", model: "sonnet")`
+**Dispatch:** `Task(subagent_type: "bee:finops-automation", model: "sonnet")`
 
 **Prompt includes:**
 

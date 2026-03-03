@@ -80,7 +80,7 @@ visual_identity:
   font_family: "Poppins, system-ui, sans-serif"
 ```
 
-### Option 2: Ring Neutral (Corporate)
+### Option 2: Bee Neutral (Corporate)
 
 ```yaml
 visual_identity:
@@ -119,7 +119,7 @@ User provides their own color scheme and fonts.
 
 **Repositórios para Análise:**
 - org/repo-name-1 (e.g., LerianStudio/midaz)
-- org/repo-name-2 (e.g., LerianStudio/product-console)
+- org/repo-name-2 (e.g., LerianStudio/midaz)
 - OR full URLs: https://github.com/org/repo
 
 **Contexto de Negócio (Opcional):**
@@ -203,12 +203,12 @@ git branch -r --sort=-committerdate  # Active branches
 
 | Repository Type | Agent to Dispatch | Why |
 |----------------|-------------------|-----|
-| **Backend Go** | `ring:backend-engineer-golang` | Deep Go expertise, architectural analysis |
-| **Backend TypeScript** | `ring:backend-engineer-typescript` | TS/Node API analysis |
-| **Frontend React/Next** | `ring:frontend-engineer` | UI/UX impact analysis |
-| **Infrastructure** | `ring:devops-engineer` | Deployment, scaling impact |
-| **Tests** | `ring:qa-analyst` | Quality improvements analysis |
-| **Unknown/Mixed** | `ring:codebase-explorer` | Comprehensive exploration |
+| **Backend Go** | `bee:backend-engineer-golang` | Deep Go expertise, architectural analysis |
+| **Backend TypeScript** | `bee:backend-engineer-typescript` | TS/Node API analysis |
+| **Frontend React/Next** | `bee:frontend-engineer` | UI/UX impact analysis |
+| **Infrastructure** | `bee:devops-engineer` | Deployment, scaling impact |
+| **Tests** | `bee:qa-analyst` | Quality improvements analysis |
+| **Unknown/Mixed** | `bee:codebase-explorer` | Comprehensive exploration |
 
 **Analysis Workflow:**
 
@@ -221,7 +221,7 @@ For each repository:
 
 2. **Dispatch Appropriate Specialized Agent**
    Task(
-     subagent_type="ring:backend-engineer-golang",  # or appropriate
+     subagent_type="bee:backend-engineer-golang",  # or appropriate
      model="opus",
      prompt="""
      Analyze {repo_name} deliveries for period {start} to {end}.
@@ -576,12 +576,12 @@ rc_releases = tags matching *-rc.*
 
 ## Integration with Executive Reporter Agent
 
-This skill dispatches the `ring:delivery-reporter` agent to perform repository analysis and HTML generation.
+This skill dispatches the `bee:delivery-reporter` agent to perform repository analysis and HTML generation.
 
 **Agent Invocation:**
 ```
 Task tool:
-  subagent_type: "ring:delivery-reporter"
+  subagent_type: "bee:delivery-reporter"
   model: "opus"
   prompt: |
     Create delivery report for period {start_date} to {end_date}.

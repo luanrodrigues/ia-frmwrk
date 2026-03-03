@@ -1,5 +1,5 @@
 ---
-name: ring:portfolio-planning
+name: bee:portfolio-planning
 description: |
   Strategic portfolio planning skill for multi-project coordination, capacity assessment,
   and portfolio optimization. Provides framework for portfolio-level decision making.
@@ -11,12 +11,12 @@ trigger: |
   - Rebalancing portfolio priorities
 
 skip_when: |
-  - Single project planning → use ring:pre-dev-feature
+  - Single project planning → use bee:pre-dev-feature
   - Immediate status report → use executive-reporting
   - Resource-only analysis → use resource-allocation
 
 related:
-  similar: [ring:pre-dev-feature]
+  similar: [bee:pre-dev-feature]
   complementary: [resource-allocation, risk-management, executive-reporting]
 ---
 
@@ -80,7 +80,7 @@ Before starting portfolio planning, ensure:
 3. Identify orphan projects (no strategic link)
 4. Flag misaligned projects
 
-**Alignment Scoring:**
+**Alignment Scobee:**
 
 | Score | Meaning |
 |-------|---------|

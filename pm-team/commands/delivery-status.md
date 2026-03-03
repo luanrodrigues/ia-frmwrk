@@ -38,10 +38,10 @@ This command will ask you for:
 2. **Semantic analysis** (accurate): Specialized agents compare scope vs code
 
 ### Specialized Agent Dispatch
-- **Go projects** → `ring:backend-engineer-golang`
-- **Frontend projects** → `ring:frontend-engineer`
+- **Go projects** → `bee:backend-engineer-golang`
+- **Frontend projects** → `bee:frontend-engineer`
 - **Full-stack** → Multiple agents per task type
-- **Unknown** → `ring:codebase-explorer`
+- **Unknown** → `bee:codebase-explorer`
 
 ## Output
 
@@ -101,7 +101,7 @@ This command will ask you for:
 
 **This command orchestrates the delivery status tracking skill.**
 
-Use Skill tool: `ring:delivery-status-tracking`
+Use Skill tool: `bee:delivery-status-tracking`
 
 The skill contains:
 - Input gathering workflow (flexible sources)

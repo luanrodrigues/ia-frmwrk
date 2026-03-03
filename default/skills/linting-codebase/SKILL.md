@@ -1,5 +1,5 @@
 ---
-name: ring:linting-codebase
+name: bee:linting-codebase
 description: |
   Parallel lint fixing pattern - runs lint checks, groups issues into independent
   streams, and dispatches AI agents to fix all issues until the codebase is clean.
@@ -124,8 +124,8 @@ After all agents complete, run `<lint_command> 2>&1`.
 | Issue Type | Agent Type |
 |------------|------------|
 | TypeScript/JavaScript | `general-purpose` |
-| Go | `general-purpose` or `ring:backend-engineer-golang` |
-| Security lints | `ring:security-reviewer` for analysis first |
+| Go | `general-purpose` or `bee:backend-engineer-golang` |
+| Security lints | `bee:security-reviewer` for analysis first |
 | Style/formatting | `general-purpose` |
 
 ## Output Format
@@ -146,9 +146,9 @@ After all agents complete, run `<lint_command> 2>&1`.
 
 | Skill | When to use |
 |-------|-------------|
-| `ring:dispatching-parallel-agents` | Pattern basis for this skill |
-| `ring:systematic-debugging` | If lint errors indicate deeper issues |
-| `ring:requesting-code-review` | After lint passes, before merge |
+| `bee:dispatching-parallel-agents` | Pattern basis for this skill |
+| `bee:systematic-debugging` | If lint errors indicate deeper issues |
+| `bee:requesting-code-review` | After lint passes, before merge |
 
 ## Example Session
 

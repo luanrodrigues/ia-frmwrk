@@ -82,8 +82,8 @@ else:
 **Default URLs (used when `standards_path` is not provided):**
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/CLAUDE.md
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-vuejs.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/CLAUDE.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend-vuejs.md
 </fetch_required>
 
 Fetch URLs above and extract: Agent Modification Verification requirements, Anti-Rationalization Tables requirements, Critical Rules, and Vue.js Frontend Standards.

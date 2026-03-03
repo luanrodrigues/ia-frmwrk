@@ -215,7 +215,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 
 | Setting            | Value                                                                                        |
 | ------------------ | -------------------------------------------------------------------------------------------- |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/devops.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/devops.md` |
 | **Standards File** | devops.md                                                                                    |
 
 **Example sections from devops.md to check:**
@@ -232,7 +232,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 ## Standards Loading (MANDATORY)
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/devops.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/devops.md
 </fetch_required>
 
 MUST WebFetch the URL above before any implementation work.
@@ -273,7 +273,7 @@ See standards-coverage-table.md for the authoritative list of sections to check.
 
 | Setting            | Value                                                                                        |
 | ------------------ | -------------------------------------------------------------------------------------------- |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/devops.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/devops.md` |
 | **Standards File** | devops.md                                                                                    |
 | **Prompt**         | "Extract all DevOps standards, patterns, and requirements"                                   |
 
@@ -406,7 +406,7 @@ See [shared-patterns/standards-workflow.md](../skills/shared-patterns/standards-
 
 ## Standards Compliance Report (MANDATORY when invoked from bee:dev-refactor)
 
-See [docs/AGENT_DESIGN.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/docs/AGENT_DESIGN.md) for canonical output schema requirements.
+See [docs/AGENT_DESIGN.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/AGENT_DESIGN.md) for canonical output schema requirements.
 
 When invoked from the `bee:dev-refactor` skill with a codebase-report.md, you MUST produce a Standards Compliance section comparing the infrastructure against Lerian/Bee DevOps Standards.
 

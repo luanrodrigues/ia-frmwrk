@@ -1,5 +1,5 @@
 ---
-name: ring:resume-handoff
+name: bee:resume-handoff
 description: Resume work from a handoff document after context clear
 user_invocable: true
 arguments:

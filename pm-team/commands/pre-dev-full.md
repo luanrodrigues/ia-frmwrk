@@ -1,5 +1,5 @@
 ---
-name: ring:pre-dev-full
+name: bee:pre-dev-full
 description: Complete 10-gate pre-dev workflow for large features (≥2 days)
 argument-hint: "[feature-name]"
 ---
@@ -292,7 +292,7 @@ mkdir -p docs/pre-dev/<feature-name>
 
 ## Gate 0: Research Phase
 
-**Skill:** ring:pre-dev-research
+**Skill:** bee:pre-dev-research
 
 1. Determine research mode by asking user or inferring from context:
    - **greenfield**: New capability, no existing patterns
@@ -300,10 +300,10 @@ mkdir -p docs/pre-dev/<feature-name>
    - **integration**: Connecting external systems
 
 2. Dispatch 4 research agents in PARALLEL:
-   - ring:repo-research-analyst (codebase patterns, file:line refs)
-   - ring:best-practices-researcher (web search, Context7)
-   - ring:framework-docs-researcher (tech stack, versions)
-   - ring:product-designer (UX research, user problem validation, mode: ux-research)
+   - bee:repo-research-analyst (codebase patterns, file:line refs)
+   - bee:best-practices-researcher (web search, Context7)
+   - bee:framework-docs-researcher (tech stack, versions)
+   - bee:product-designer (UX research, user problem validation, mode: ux-research)
 
 3. Aggregate findings into research document
 4. Save to: `docs/pre-dev/<feature-name>/research.md`
@@ -321,7 +321,7 @@ mkdir -p docs/pre-dev/<feature-name>
 
 ## Gate 1: PRD Creation + UX Validation
 
-**Skill:** ring:pre-dev-prd-creation
+**Skill:** bee:pre-dev-prd-creation
 
 1. Ask user to describe the feature (problem, users, business value)
 2. Create PRD document with:
@@ -345,7 +345,7 @@ mkdir -p docs/pre-dev/<feature-name>
 
 ## Gate 2: Feature Map Creation + UX Design
 
-**Skill:** ring:pre-dev-feature-map
+**Skill:** bee:pre-dev-feature-map
 
 1. Load PRD from `docs/pre-dev/<feature-name>/prd.md`
 2. Load ux-criteria.md from `docs/pre-dev/<feature-name>/ux-criteria.md`
@@ -371,7 +371,7 @@ mkdir -p docs/pre-dev/<feature-name>
 
 ## Gate 2.5: Design Validation (if feature has UI)
 
-**Skill:** ring:pre-dev-design-validation
+**Skill:** bee:pre-dev-design-validation
 
 **Purpose:** Verify UX specifications are complete before investing in technical architecture.
 
@@ -425,7 +425,7 @@ mkdir -p docs/pre-dev/<feature-name>
 
 ## Gate 3: TRD Creation
 
-**Skill:** ring:pre-dev-trd-creation
+**Skill:** bee:pre-dev-trd-creation
 
 1. Load PRD from `docs/pre-dev/<feature-name>/prd.md`
 2. Load Feature Map from `docs/pre-dev/<feature-name>/feature-map.md`
@@ -450,7 +450,7 @@ mkdir -p docs/pre-dev/<feature-name>
 
 ## Gate 4: API Design
 
-**Skill:** ring:pre-dev-api-design
+**Skill:** bee:pre-dev-api-design
 
 1. **Phase 0:** Ask user for API naming standards (URL/file/none)
 2. If provided: Load and extract to `api-standards-ref.md`
@@ -474,7 +474,7 @@ mkdir -p docs/pre-dev/<feature-name>
 
 ## Gate 5: Data Model
 
-**Skill:** ring:pre-dev-data-model
+**Skill:** bee:pre-dev-data-model
 
 1. **Phase 0:** Determine database field naming strategy
    - Check if Gate 4 API standards exist
@@ -502,7 +502,7 @@ mkdir -p docs/pre-dev/<feature-name>
 
 ## Gate 6: Dependency Map
 
-**Skill:** ring:pre-dev-dependency-map
+**Skill:** bee:pre-dev-dependency-map
 
 1. Load previous artifacts
 2. Create dependency map document with:
@@ -522,19 +522,19 @@ mkdir -p docs/pre-dev/<feature-name>
 
 ## Gate 7: Task Breakdown
 
-**Skill:** ring:pre-dev-task-breakdown
+**Skill:** bee:pre-dev-task-breakdown
 
 1. Load all previous artifacts (PRD, Feature Map, TRD, API Design, Data Model, Dependency Map)
 2. Run AI-assisted time estimation:
    - Auto-detect tech stack from Dependency Map (if available) OR repository files (go.mod, package.json, etc.)
    - Dispatch specialized agent based on detected stack:
-     - Go (go.mod detected) → ring:backend-engineer-golang
-     - TypeScript/Node (package.json + backend) → ring:backend-engineer-typescript
-     - React/Next.js (package.json + frontend) → ring:frontend-engineer
-     - Mixed/Unknown → ring:codebase-explorer
+     - Go (go.mod detected) → bee:backend-engineer-golang
+     - TypeScript/Node (package.json + backend) → bee:backend-engineer-typescript
+     - React/Next.js (package.json + frontend) → bee:frontend-engineer
+     - Mixed/Unknown → bee:codebase-explorer
    - Agent analyzes scope and estimates AI-agent-hours per task
    - Output includes: AI estimate (hours), confidence level (High/Medium/Low), detailed breakdown
-   - **AI-agent-hours definition:** Time for Claude Sonnet 4.5 to implement via ring:dev-cycle (includes TDD, automated review, SRE validation, DevOps setup)
+   - **AI-agent-hours definition:** Time for Claude Sonnet 4.5 to implement via bee:dev-cycle (includes TDD, automated review, SRE validation, DevOps setup)
 3. Create task breakdown document with:
    - Value-driven decomposition
    - Each task delivers working software
@@ -587,7 +587,7 @@ Formula:
 
 ## Gate 8: Subtask Creation
 
-**Skill:** ring:pre-dev-subtask-creation
+**Skill:** bee:pre-dev-subtask-creation
 
 1. Load tasks from `docs/pre-dev/<feature-name>/tasks.md`
 2. Create subtask breakdown document with:
@@ -607,7 +607,7 @@ Formula:
 
 ## Gate 9: Delivery Planning (MANDATORY)
 
-**Skill:** ring:pre-dev-delivery-planning
+**Skill:** bee:pre-dev-delivery-planning
 
 1. Load tasks from `docs/pre-dev/<feature-name>/tasks.md` (with AI-agent-hours estimates)
 2. Ask user for delivery inputs:
@@ -712,17 +712,17 @@ Next steps:
 
 | Gate | Skill | Purpose | New Outputs |
 |------|-------|---------|-------------|
-| 0 | `ring:pre-dev-research` | Domain, technical, and UX research (4 agents) | research.md (includes Product/UX Research) |
-| 1 | `ring:pre-dev-prd-creation` | Product requirements + UX validation | prd.md, ux-criteria.md |
-| 2 | `ring:pre-dev-feature-map` | Feature scope + UX design | feature-map.md, user-flows.md, wireframes/ |
-| 2.5 | `ring:pre-dev-design-validation` | Verify UX specs complete (if UI) | design-validation.md |
-| 3 | `ring:pre-dev-trd-creation` | Technical requirements | trd.md |
-| 4 | `ring:pre-dev-api-design` | API contracts | api-design.md |
-| 5 | `ring:pre-dev-data-model` | Data architecture | data-model.md |
-| 6 | `ring:pre-dev-dependency-map` | Technology selection | dependency-map.md |
-| 7 | `ring:pre-dev-task-breakdown` | Task decomposition | tasks.md |
-| 8 | `ring:pre-dev-subtask-creation` | Implementation steps | subtasks.md |
-| 9 | `ring:pre-dev-delivery-planning` | Delivery roadmap |
+| 0 | `bee:pre-dev-research` | Domain, technical, and UX research (4 agents) | research.md (includes Product/UX Research) |
+| 1 | `bee:pre-dev-prd-creation` | Product requirements + UX validation | prd.md, ux-criteria.md |
+| 2 | `bee:pre-dev-feature-map` | Feature scope + UX design | feature-map.md, user-flows.md, wireframes/ |
+| 2.5 | `bee:pre-dev-design-validation` | Verify UX specs complete (if UI) | design-validation.md |
+| 3 | `bee:pre-dev-trd-creation` | Technical requirements | trd.md |
+| 4 | `bee:pre-dev-api-design` | API contracts | api-design.md |
+| 5 | `bee:pre-dev-data-model` | Data architecture | data-model.md |
+| 6 | `bee:pre-dev-dependency-map` | Technology selection | dependency-map.md |
+| 7 | `bee:pre-dev-task-breakdown` | Task decomposition | tasks.md |
+| 8 | `bee:pre-dev-subtask-creation` | Implementation steps | subtasks.md |
+| 9 | `bee:pre-dev-delivery-planning` | Delivery roadmap |
 
 ### Execution Pattern
 

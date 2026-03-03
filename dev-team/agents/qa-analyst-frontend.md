@@ -277,7 +277,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 
 | Setting            | Value                                                                                          |
 | ------------------ | ---------------------------------------------------------------------------------------------- |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md` |
 | **Standards File** | frontend.md                                                                                    |
 
 **Example sections to check:**
@@ -293,7 +293,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 ## Standards Loading (MANDATORY)
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md
 </fetch_required>
 
 **Mode-specific standards (load based on test_mode):**
@@ -310,10 +310,10 @@ https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/
 
 | Mode          | URL                                                                                                                      |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| accessibility | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend/testing-accessibility.md`     |
-| visual        | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend/testing-visual.md`            |
-| e2e           | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend/testing-e2e.md`               |
-| performance   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend/testing-performance.md`       |
+| accessibility | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend/testing-accessibility.md`     |
+| visual        | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend/testing-visual.md`            |
+| e2e           | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend/testing-e2e.md`               |
+| performance   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend/testing-performance.md`       |
 
 WebFetch the URL above before any testing work.
 
@@ -1286,7 +1286,7 @@ REQUIRED: Use exact section names from `bee:qa-analyst-frontend` in standards-co
 
 | Standards File | WebFetch URL                                                                                     | Prompt                                                             |
 | -------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------ |
-| frontend.md    | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend.md`   | "Extract all frontend testing standards, patterns, and requirements" |
+| frontend.md    | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md`   | "Extract all frontend testing standards, patterns, and requirements" |
 
 **Execute WebFetch for frontend.md before any test work.**
 
@@ -1406,7 +1406,7 @@ See [shared-patterns/standards-workflow.md](../skills/shared-patterns/standards-
 
 ## Standards Compliance Report (MANDATORY when invoked from bee:dev-refactor)
 
-See [docs/AGENT_DESIGN.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/docs/AGENT_DESIGN.md) for canonical output schema requirements.
+See [docs/AGENT_DESIGN.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/AGENT_DESIGN.md) for canonical output schema requirements.
 
 When invoked from the `bee:dev-refactor` skill with a codebase-report.md, you MUST produce a Standards Compliance section comparing the test implementation against Lerian/Bee Frontend Standards.
 

@@ -258,7 +258,7 @@ Forces agent to acknowledge red flags at start:
 ## Next Steps
 
 1. **Verify hardening** - Test with agents that can access the skill
-2. **Add to ring:using-ring** - Document this skill in the ring skill catalog
+2. **Add to bee:using-bee** - Document this skill in the ring skill catalog
 3. **Create examples** - Add real Midaz exploration examples to skill
 4. **Monitor usage** - Collect data on whether agents follow the skill in production use
 

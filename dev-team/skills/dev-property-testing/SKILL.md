@@ -142,7 +142,7 @@ Ensure domain logic has **property-based tests** to verify invariants hold for a
 **MANDATORY:** Load testing-property.md standards via WebFetch.
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php/testing-property.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/php/testing-property.md
 </fetch_required>
 
 ---

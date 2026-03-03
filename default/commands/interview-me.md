@@ -1,5 +1,5 @@
 ---
-name: ring:interview-me
+name: bee:interview-me
 description: Proactive requirements gathering through structured user interview
 argument-hint: "[topic]"
 ---
@@ -91,7 +91,7 @@ You must explicitly confirm this before Claude proceeds.
 
 | Command/Skill | Relationship |
 |---------------|--------------|
-| `ring:doubt-triggered-questions` pattern | For single questions during work |
+| `bee:doubt-triggered-questions` pattern | For single questions during work |
 | `/bee:brainstorm` | Use AFTER interview to explore solutions |
 | `/bee:write-plan` | Use AFTER interview to create implementation plan |
 
@@ -116,7 +116,7 @@ Say "use your judgment" or "pick whatever fits best." Claude will make a choice 
 **This command MUST load the skill for complete workflow execution.**
 
 ```
-Use Skill tool: ring:interviewing-user
+Use Skill tool: bee:interviewing-user
 ```
 
 The skill contains the complete workflow with:

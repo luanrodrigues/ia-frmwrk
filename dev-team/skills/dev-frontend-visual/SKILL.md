@@ -141,7 +141,7 @@ Ensure all frontend components have **snapshot tests** covering all states, resp
 **MANDATORY:** Load testing-visual.md standards via WebFetch.
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend/testing-visual.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend/testing-visual.md
 </fetch_required>
 
 ---

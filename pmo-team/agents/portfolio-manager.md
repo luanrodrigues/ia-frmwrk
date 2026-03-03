@@ -1,5 +1,5 @@
 ---
-name: ring:portfolio-manager
+name: bee:portfolio-manager
 version: 1.2.0
 description: Senior Portfolio Manager specialized in multi-project coordination, strategic alignment assessment, and portfolio optimization. Handles portfolio-level planning, prioritization, and health monitoring.
 type: specialist
@@ -280,7 +280,7 @@ Analyzed 12 active projects across 3 strategic objectives. Overall portfolio hea
 
 **N/A for PMO specialist agents.**
 
-**Rationale:** The ring:portfolio-manager agent produces portfolio analysis, not code implementation. Standards loading is performed by engineer agents that implement the managed projects.
+**Rationale:** The bee:portfolio-manager agent produces portfolio analysis, not code implementation. Standards loading is performed by engineer agents that implement the managed projects.
 
 ---
 
@@ -288,13 +288,13 @@ Analyzed 12 active projects across 3 strategic objectives. Overall portfolio hea
 
 **N/A for PMO specialist agents.**
 
-**Rationale:** The ring:portfolio-manager agent produces portfolio analysis, not code implementation output. Standards compliance verification is performed by engineer agents.
+**Rationale:** The bee:portfolio-manager agent produces portfolio analysis, not code implementation output. Standards compliance verification is performed by engineer agents.
 
 ---
 
 ## What This Agent Does NOT Handle
 
-- Single project detailed planning (use `ring:pre-dev-feature`)
+- Single project detailed planning (use `bee:pre-dev-feature`)
 - Resource individual assignments (use `resource-planner`)
 - Detailed risk analysis (use `risk-analyst`)
 - Executive report formatting (use `executive-reporter`)

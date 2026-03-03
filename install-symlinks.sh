@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Ring - Claude Code Symlinks Installer
+# Bee - Claude Code Symlinks Installer
 # ==============================================================================
-# Creates symlinks from ~/.claude/{agents,commands,skills} to the Ring repo,
-# enabling all Ring agents, commands, and skills in your Claude Code environment.
+# Creates symlinks from ~/.claude/{agents,commands,skills} to the Bee repo,
+# enabling all Bee agents, commands, and skills in your Claude Code environment.
 #
 # Usage:
-#   bash install-symlinks.sh              # Auto-detects Ring repo from script location
-#   bash install-symlinks.sh /path/to/bee # Explicit Ring repo path
-#   bash install-symlinks.sh --remove      # Remove all Ring symlinks
+#   bash install-symlinks.sh              # Auto-detects Bee repo from script location
+#   bash install-symlinks.sh /path/to/bee # Explicit Bee repo path
+#   bash install-symlinks.sh --remove      # Remove all Bee symlinks
 #
 # Requirements:
 #   - Claude Code CLI installed
-#   - Ring repository cloned locally
+#   - Bee repository cloned locally
 # ==============================================================================
 
 set -euo pipefail
@@ -42,7 +42,7 @@ REMOVED=0
 print_banner() {
   echo -e "${CYAN}"
   echo "  ╔══════════════════════════════════════════════════╗"
-  echo "  ║        Ring - Claude Code Symlinks Installer     ║"
+  echo "  ║        Bee - Claude Code Symlinks Installer     ║"
   echo "  ╚══════════════════════════════════════════════════╝"
   echo -e "${NC}"
 }
@@ -53,7 +53,7 @@ log_skip()    { echo -e "  ${YELLOW}SKIP${NC}    $1"; }
 log_error()   { echo -e "  ${RED}ERROR${NC}   $1"; }
 log_section() { echo -e "\n  ${BOLD}${CYAN}── $1 ──${NC}\n"; }
 
-resolve_ring_dir() {
+resolve_bee_dir() {
   if [[ -n "${1:-}" && "$1" != "--remove" && "$1" != "--factory" && "$1" != "--all" && "$1" != "--claude" ]]; then
     RING_DIR="$(cd "$1" && pwd)"
   else
@@ -61,9 +61,9 @@ resolve_ring_dir() {
     RING_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
   fi
 
-  # Validate Ring repo
+  # Validate Bee repo
   if [[ ! -f "$RING_DIR/CLAUDE.md" ]]; then
-    log_error "Not a Ring repository: $RING_DIR"
+    log_error "Not a Bee repository: $RING_DIR"
     log_error "CLAUDE.md not found. Please provide the correct path."
     exit 1
   fi
@@ -194,7 +194,7 @@ install_symlinks() {
 }
 
 remove_symlinks() {
-  log_section "Removing Ring symlinks"
+  log_section "Removing Bee symlinks"
 
   for dir in agents commands skills; do
     local target_dir="$CLAUDE_DIR/$dir"
@@ -204,7 +204,7 @@ remove_symlinks() {
       [[ ! -L "$item" ]] && continue
       local link_target
       link_target="$(readlink "$item")"
-      # Only remove symlinks that point to the Ring repo
+      # Only remove symlinks that point to the Bee repo
       if [[ "$link_target" == *"/bee/"* ]]; then
         rm "$item"
         log_success "Removed: $dir/$(basename "$item")"
@@ -227,7 +227,7 @@ print_summary() {
   fi
   echo -e "  ${BOLD}════════════════════════════════════════${NC}"
   echo ""
-  echo -e "  ${CYAN}Ring repo:${NC}   $RING_DIR"
+  echo -e "  ${CYAN}Bee repo:${NC}   $RING_DIR"
   [[ "$INSTALL_CLAUDE" == true ]] && echo -e "  ${CYAN}Claude dir:${NC}  $CLAUDE_DIR"
   [[ "$INSTALL_FACTORY" == true ]] && echo -e "  ${CYAN}Factory dir:${NC} $FACTORY_DIR"
   echo ""
@@ -237,7 +237,7 @@ print_summary() {
     local target_names=""
     [[ "$INSTALL_CLAUDE" == true ]] && target_names="Claude Code"
     [[ "$INSTALL_FACTORY" == true ]] && { [[ -n "$target_names" ]] && target_names="$target_names and Factory AI" || target_names="Factory AI"; }
-    echo -e "  ${GREEN}${BOLD}Ring is ready!${NC} Open $target_names to use all skills, agents, and commands."
+    echo -e "  ${GREEN}${BOLD}Bee is ready!${NC} Open $target_names to use all skills, agents, and commands."
     echo ""
     echo -e "  Try these commands:"
     echo -e "    ${BOLD}/bee:brainstorm${NC}      - Socratic design refinement"
@@ -253,7 +253,7 @@ print_summary() {
 print_banner
 
 if [[ "${1:-}" == "--remove" ]]; then
-  resolve_ring_dir "${2:-}"
+  resolve_bee_dir "${2:-}"
   remove_symlinks
   exit 0
 fi
@@ -264,7 +264,7 @@ if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
   echo "    bash install-symlinks.sh --factory    # Install for Factory AI"
   echo "    bash install-symlinks.sh --all        # Install for both Claude Code and Factory AI"
   echo "    bash install-symlinks.sh /path/to/bee # Explicit path"
-  echo "    bash install-symlinks.sh --remove      # Remove Ring symlinks"
+  echo "    bash install-symlinks.sh --remove      # Remove Bee symlinks"
   echo ""
   exit 0
 fi
@@ -279,9 +279,9 @@ elif [[ "${1:-}" == "--all" ]]; then
   shift
 fi
 
-resolve_ring_dir "${1:-}"
+resolve_bee_dir "${1:-}"
 
-log_info "Ring repo: $RING_DIR"
+log_info "Bee repo: $RING_DIR"
 [[ "$INSTALL_CLAUDE" == true ]] && log_info "Claude dir: $CLAUDE_DIR"
 [[ "$INSTALL_FACTORY" == true ]] && log_info "Factory dir: $FACTORY_DIR"
 

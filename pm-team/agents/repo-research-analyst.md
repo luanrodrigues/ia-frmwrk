@@ -1,5 +1,5 @@
 ---
-name: ring:repo-research-analyst
+name: bee:repo-research-analyst
 description: |
   Codebase research specialist for pre-dev planning. Searches target repository
   for existing patterns, conventions, and prior solutions. Returns findings with
@@ -222,7 +222,7 @@ Relevance: [why this matters for the new feature]
 
 **N/A for research agents.**
 
-**Rationale:** The ring:repo-research-analyst agent produces research findings, not implementation output. Standards compliance verification is performed by engineer agents that consume research output.
+**Rationale:** The bee:repo-research-analyst agent produces research findings, not implementation output. Standards compliance verification is performed by engineer agents that consume research output.
 
 ---
 

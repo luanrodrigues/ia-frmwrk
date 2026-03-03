@@ -1,5 +1,5 @@
 ---
-name: ring:framework-docs-researcher
+name: bee:framework-docs-researcher
 description: |
   Tech stack analysis specialist for pre-dev planning. Detects project tech stack
   from manifest files and fetches relevant framework/library documentation.
@@ -232,7 +232,7 @@ From official docs, extract:
 
 **N/A for research agents.**
 
-**Rationale:** The ring:framework-docs-researcher agent produces research findings, not implementation output. Standards compliance verification is performed by engineer agents that consume research output.
+**Rationale:** The bee:framework-docs-researcher agent produces research findings, not implementation output. Standards compliance verification is performed by engineer agents that consume research output.
 
 ---
 

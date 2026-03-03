@@ -1,5 +1,5 @@
 ---
-name: ring:pre-dev-trd-creation
+name: bee:pre-dev-trd-creation
 description: |
   Gate 3: Technical architecture document - defines HOW/WHERE with technology-agnostic
   patterns before concrete implementation choices.
@@ -18,8 +18,8 @@ skip_when: |
   - Pure business requirement change → update PRD
 
 sequence:
-  after: [ring:pre-dev-prd-creation, ring:pre-dev-feature-map, ring:pre-dev-design-validation]
-  before: [ring:pre-dev-api-design, ring:pre-dev-task-breakdown]
+  after: [bee:pre-dev-prd-creation, bee:pre-dev-feature-map, bee:pre-dev-design-validation]
+  before: [bee:pre-dev-api-design, bee:pre-dev-task-breakdown]
 ---
 
 # TRD Creation - Architecture Before Implementation
@@ -59,7 +59,7 @@ Check: docs/pre-dev/{feature}/design-validation.md
 If file NOT FOUND:
   → STOP. Cannot proceed to TRD.
   → Message: "Design Validation (Gate 1.5/2.5) not completed.
-             Run ring:pre-dev-design-validation before TRD."
+             Run bee:pre-dev-design-validation before TRD."
 
 If file FOUND but verdict is NOT "DESIGN VALIDATED":
   → STOP. Cannot proceed to TRD.
@@ -92,7 +92,7 @@ Backend-only features do not require design validation. Proceed directly to tech
 | "Skip design validation, we're behind schedule" | "Design validation prevents 10x implementation rework. CANNOT proceed to TRD without it." |
 | "The designer approved it verbally" | "Verbal approval ≠ systematic validation. Need design-validation.md with VALIDATED verdict." |
 | "We can validate design in parallel with TRD" | "TRD depends on complete design. Cannot architect what isn't fully specified. Run validation first." |
-| "Just this once, trust me the design is complete" | "Trust but verify. Ring requires documented validation. Run ring:pre-dev-design-validation." |
+| "Just this once, trust me the design is complete" | "Trust but verify. Bee requires documented validation. Run bee:pre-dev-design-validation." |
 
 ---
 
@@ -106,15 +106,15 @@ Backend-only features do not require design validation. Proceed directly to tech
 
 **If ambiguous, AskUserQuestion:** "What is the primary technology stack?" Options: Go (Backend), TypeScript (Backend), TypeScript (Frontend), Full-Stack TypeScript
 
-### Step 0.2: Load Ring Standards via WebFetch
+### Step 0.2: Load Bee Standards via WebFetch
 
 | Standard | URL | Purpose |
 |----------|-----|---------|
-| **golang/index.md** | `https://raw.githubusercontent.com/LerianStudio/bee/main/dev-team/docs/standards/golang/index.md` | Go patterns index (modular) |
-| **typescript.md** | `https://raw.githubusercontent.com/LerianStudio/bee/main/dev-team/docs/standards/typescript.md` | TS patterns, async |
-| **frontend.md** | `https://raw.githubusercontent.com/LerianStudio/bee/main/dev-team/docs/standards/frontend.md` | React, Next.js, a11y |
-| **devops.md** | `https://raw.githubusercontent.com/LerianStudio/bee/main/dev-team/docs/standards/devops.md` | Docker, CI/CD |
-| **sre.md** | `https://raw.githubusercontent.com/LerianStudio/bee/main/dev-team/docs/standards/sre.md` | Health checks, logging |
+| **golang/index.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/golang/index.md` | Go patterns index (modular) |
+| **typescript.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/typescript.md` | TS patterns, async |
+| **frontend.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md` | React, Next.js, a11y |
+| **devops.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/devops.md` | Docker, CI/CD |
+| **sre.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/sre.md` | Health checks, logging |
 
 | Tech Stack | Load |
 |------------|------|
@@ -703,7 +703,7 @@ If reviewing a TRD for a UI feature and you see NONE of these, **STOP and add th
 
 ## Standards Loading (MANDATORY)
 
-This skill REQUIRES loading Ring Standards via WebFetch as part of Step 0 (Tech Stack Definition).
+This skill REQUIRES loading Bee Standards via WebFetch as part of Step 0 (Tech Stack Definition).
 
 **HARD GATE:** MUST load appropriate standards based on detected/selected tech stack:
 
@@ -725,7 +725,7 @@ This skill REQUIRES loading Ring Standards via WebFetch as part of Step 0 (Tech 
 | PRD (Gate 1) not validated | STOP and complete Gate 1 first | CRITICAL |
 | Design Validation failed (UI features) | STOP and complete design validation first | CRITICAL |
 | Tech stack cannot be determined | STOP and ask user for clarification | CRITICAL |
-| Ring Standards not loaded | STOP and WebFetch required standards | CRITICAL |
+| Bee Standards not loaded | STOP and WebFetch required standards | CRITICAL |
 | Technology product names in architecture | STOP and abstract to capabilities | HIGH |
 | PROJECT_RULES.md not found (new project) | Continue but MUST create during Step 0.3 | MEDIUM |
 | Component ownership unclear | STOP and define single owner per component | HIGH |
@@ -741,7 +741,7 @@ These requirements are NON-NEGOTIABLE:
 - MUST NOT include cloud service names (AWS RDS, Azure Functions, etc.)
 - MUST complete Step 0 (Tech Stack Definition) before architecture
 - MUST complete Step -1 (Design Validation Check) for UI features
-- MUST load Ring Standards via WebFetch
+- MUST load Bee Standards via WebFetch
 - MUST abstract all technology choices to capabilities
 - CANNOT proceed to Gate 4 with technology-specific content
 
@@ -809,7 +809,7 @@ fi
 - **multi-repo:** Both `{backend.path}/docs/pre-dev/{feature}/trd.md` AND `{frontend.path}/docs/pre-dev/{feature}/trd.md`
 
 1. ✅ Lock TRD - architecture patterns are now reference
-2. 🎯 Use as input for API Design (`ring:pre-dev-api-design`)
+2. 🎯 Use as input for API Design (`bee:pre-dev-api-design`)
 3. 🚫 Never add technologies retroactively
 4. 📋 Keep architecture/implementation strictly separated
 

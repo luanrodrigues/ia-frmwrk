@@ -1,5 +1,5 @@
 ---
-name: ring:regulatory-templates-gate2
+name: bee:regulatory-templates-gate2
 description: |
   Gate 2 sub-skill - validates uncertain mappings from Gate 1 and confirms
   all field specifications through testing.
@@ -144,7 +144,7 @@ Check for template-specific sub-skill at `skills/regulatory-{template}/SKILL.md`
 
 ### Agent Dispatch with Gate 1 Context
 
-**Dispatch:** `Task(subagent_type: "ring:finops-analyzer", model: "opus")`
+**Dispatch:** `Task(subagent_type: "bee:finops-analyzer", model: "opus")`
 
 **CRITICAL:** ⚠️ DO NOT MAKE MCP API CALLS - use Gate 1 context ONLY
 

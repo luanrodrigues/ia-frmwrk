@@ -270,7 +270,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 
 | Setting            | Value                                                                                                        |
 | ------------------ | ------------------------------------------------------------------------------------------------------------ |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-vuejs.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend-vuejs.md` |
 | **Standards File** | frontend-vuejs.md                                                                                            |
 
 **Example sections to check:**
@@ -286,7 +286,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 ## Standards Loading (MANDATORY)
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-vuejs.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend-vuejs.md
 </fetch_required>
 
 **Mode-specific standards (load based on test_mode):**
@@ -303,10 +303,10 @@ https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/
 
 | Mode          | URL                                                                                                                                                  |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| accessibility | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-vuejs/testing-accessibility.md`                    |
-| visual        | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-vuejs/testing-visual.md`                           |
-| e2e           | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-vuejs/testing-e2e.md`                              |
-| performance   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-vuejs/testing-performance.md`                      |
+| accessibility | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend-vuejs/testing-accessibility.md`                    |
+| visual        | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend-vuejs/testing-visual.md`                           |
+| e2e           | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend-vuejs/testing-e2e.md`                              |
+| performance   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend-vuejs/testing-performance.md`                      |
 
 WebFetch the URL above before any testing work.
 
@@ -1213,7 +1213,7 @@ REQUIRED: Use exact section names from `bee:qa-analyst-frontend-vuejs` in standa
 
 | Standards File    | WebFetch URL                                                                                                        | Prompt                                                               |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| frontend-vuejs.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-vuejs.md`         | "Extract all Vue/Nuxt frontend testing standards, patterns, and requirements" |
+| frontend-vuejs.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend-vuejs.md`         | "Extract all Vue/Nuxt frontend testing standards, patterns, and requirements" |
 
 **Execute WebFetch for frontend-vuejs.md before any test work.**
 

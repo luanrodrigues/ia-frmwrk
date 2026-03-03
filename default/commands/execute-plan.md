@@ -1,5 +1,5 @@
 ---
-name: ring:execute-plan
+name: bee:execute-plan
 description: Execute plan in batches with review checkpoints
 argument-hint: "[plan-file-path]"
 ---
@@ -58,20 +58,20 @@ You will be asked to choose between:
 - Default batch size: first 3 tasks
 - Each task is marked in_progress, executed, then completed
 - Dispatches to specialized agents when available:
-  - Backend Go: `ring:backend-engineer-golang`
-  - Backend TypeScript: `ring:backend-engineer-typescript`
+  - Backend Go: `bee:backend-engineer-golang`
+  - Backend TypeScript: `bee:backend-engineer-typescript`
   - Frontend React/Next.js/BFF: `frontend-bff-engineer-typescript`
-  - Infrastructure: `ring:devops-engineer`
-  - Testing: `ring:qa-analyst`
-  - Reliability: `ring:sre`
+  - Infrastructure: `bee:devops-engineer`
+  - Testing: `bee:qa-analyst`
+  - Reliability: `bee:sre`
 
 ### Step 4: Run Code Review
 After each batch, all 5 reviewers run in parallel:
-- `ring:code-reviewer` - Architecture and patterns
-- `ring:business-logic-reviewer` - Requirements and edge cases
-- `ring:security-reviewer` - OWASP and auth validation
-- `ring:test-reviewer` - Test coverage and quality
-- `ring:nil-safety-reviewer` - Null/nil safety patterns
+- `bee:code-reviewer` - Architecture and patterns
+- `bee:business-logic-reviewer` - Requirements and edge cases
+- `bee:security-reviewer` - OWASP and auth validation
+- `bee:test-reviewer` - Test coverage and quality
+- `bee:nil-safety-reviewer` - Null/nil safety patterns
 
 **Issue handling by severity:**
 | Severity | Action |
@@ -87,7 +87,7 @@ After each batch, all 5 reviewers run in parallel:
 
 ### Step 6: Complete Development
 After all tasks complete:
-- Uses `ring:finishing-a-development-branch` skill
+- Uses `bee:finishing-a-development-branch` skill
 - Verifies tests pass
 - Presents options for branch completion
 
@@ -96,10 +96,10 @@ After all tasks complete:
 | Command/Skill | Relationship |
 |---------------|--------------|
 | `/bee:write-plan` | Use first to create the plan file |
-| `/bee:brainstorm` | Use before ring:writing-plans if design unclear |
-| `ring:writing-plans` | Creates the plan files this command executes |
-| `ring:requesting-code-review` | Called automatically after each batch |
-| `ring:finishing-a-development-branch` | Called at completion |
+| `/bee:brainstorm` | Use before bee:writing-plans if design unclear |
+| `bee:writing-plans` | Creates the plan files this command executes |
+| `bee:requesting-code-review` | Called automatically after each batch |
+| `bee:finishing-a-development-branch` | Called at completion |
 
 ## Troubleshooting
 
@@ -121,7 +121,7 @@ If you're not prompted for execution mode, this is a violation of the skill prot
 ### When NOT to use this command
 - No plan exists - use `/bee:write-plan` first
 - Plan needs revision - use `/bee:brainstorm` to refine the design
-- Working on independent tasks in current session - use `ring:subagent-driven-development` skill directly
+- Working on independent tasks in current session - use `bee:subagent-driven-development` skill directly
 
 ---
 
@@ -130,7 +130,7 @@ If you're not prompted for execution mode, this is a violation of the skill prot
 **This command MUST load the skill for complete workflow execution.**
 
 ```
-Use Skill tool: ring:executing-plans
+Use Skill tool: bee:executing-plans
 ```
 
 The skill contains the complete workflow with:

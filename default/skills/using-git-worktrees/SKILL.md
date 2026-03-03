@@ -1,5 +1,5 @@
 ---
-name: ring:using-git-worktrees
+name: bee:using-git-worktrees
 description: |
   Isolated workspace creation - creates git worktrees with smart directory selection
   and safety verification for parallel feature development.
@@ -16,7 +16,7 @@ skip_when: |
 
 sequence:
   after: [brainstorming]
-  before: [ring:writing-plans, ring:executing-plans]
+  before: [bee:writing-plans, bee:executing-plans]
 ---
 
 # Using Git Worktrees
@@ -27,7 +27,7 @@ Git worktrees create isolated workspaces sharing the same repository, allowing w
 
 **Core principle:** Systematic directory selection + safety verification = reliable isolation.
 
-**Announce at start:** "I'm using the ring:using-git-worktrees skill to set up an isolated workspace."
+**Announce at start:** "I'm using the bee:using-git-worktrees skill to set up an isolated workspace."
 
 ## Directory Selection Process
 
@@ -118,7 +118,7 @@ Announce → Check `.worktrees/` exists → Verify .gitignore → `git worktree 
 
 **Pairs with:**
 - **finishing-a-development-branch** - REQUIRED for cleanup after work complete
-- **ring:executing-plans** or **ring:subagent-driven-development** - Work happens in this worktree
+- **bee:executing-plans** or **bee:subagent-driven-development** - Work happens in this worktree
 
 ## Blocker Criteria
 

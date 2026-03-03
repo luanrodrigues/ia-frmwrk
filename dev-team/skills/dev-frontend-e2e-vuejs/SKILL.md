@@ -143,7 +143,7 @@ Ensure all user flows from `bee:product-designer` have passing **Playwright E2E 
 **MANDATORY:** Load testing-e2e.md standards via WebFetch.
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-vuejs/testing-e2e.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend-vuejs/testing-e2e.md
 </fetch_required>
 
 ---

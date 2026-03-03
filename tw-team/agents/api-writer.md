@@ -1,5 +1,5 @@
 ---
-name: ring:api-writer
+name: bee:api-writer
 version: 0.3.0
 description: Senior Technical Writer specialized in API reference documentation including endpoint descriptions, request/response schemas, and error documentation.
 type: specialist
@@ -329,8 +329,8 @@ Brief description of what this endpoint does.
 
 - Conceptual documentation (use `functional-writer`)
 - Documentation review (use `docs-reviewer`)
-- API implementation (use `ring:backend-engineer-golang` or `ring:backend-engineer-typescript`)
-- API design decisions (use `ring:backend-engineer-golang` or `ring:backend-engineer-typescript`)
+- API implementation (use `bee:backend-engineer-golang` or `bee:backend-engineer-typescript`)
+- API design decisions (use `bee:backend-engineer-golang` or `bee:backend-engineer-typescript`)
 
 ---
 
@@ -338,7 +338,7 @@ Brief description of what this endpoint does.
 
 **N/A for technical writing agents.**
 
-**Rationale:** The ring:api-writer agent produces documentation output, not code implementation. Standards compliance verification is performed by engineer agents that implement the documented APIs/features.
+**Rationale:** The bee:api-writer agent produces documentation output, not code implementation. Standards compliance verification is performed by engineer agents that implement the documented APIs/features.
 
 ## Output Expectations
 

@@ -1,5 +1,5 @@
 ---
-name: ring:infrastructure-cost-estimator
+name: bee:infrastructure-cost-estimator
 version: 7.3.0
 description: Infrastructure Cost Calculator with per-component sharing model, environment-specific calculations (Homolog vs Production), dynamic Helm chart data from LerianStudio/helm, TPS capacity analysis, networking architecture, and service-component dependency mapping. RECEIVES complete data (read at runtime from LerianStudio/helm) and CALCULATES detailed cost attribution, capacity planning, and profitability.
 type: calculator
@@ -278,7 +278,7 @@ Your job:
 
 **N/A for FinOps specialist agents.**
 
-**Rationale:** The ring:infrastructure-cost-estimator agent does not implement code against standards files. It produces infrastructure cost calculations. Standards loading is performed by engineer agents.
+**Rationale:** The bee:infrastructure-cost-estimator agent does not implement code against standards files. It produces infrastructure cost calculations. Standards loading is performed by engineer agents.
 
 ---
 
@@ -366,7 +366,7 @@ MUST: Estimation is minimal only when all these conditions are met:
 
 **N/A for FinOps specialist agents.**
 
-**Rationale:** The ring:infrastructure-cost-estimator agent produces infrastructure cost output, not code implementation. Standards compliance verification is performed by engineer agents.
+**Rationale:** The bee:infrastructure-cost-estimator agent produces infrastructure cost output, not code implementation. Standards compliance verification is performed by engineer agents.
 
 ---
 
@@ -872,7 +872,7 @@ Monthly data volume = TPS × 86,400 × 30 × 15KB ÷ 1,000,000 = [X,XXX] GB
 
 ```
 Task tool:
-  subagent_type: "ring:infrastructure-cost-estimator"
+  subagent_type: "bee:infrastructure-cost-estimator"
   model: "opus"
   prompt: |
     Calculate infrastructure costs and profitability.

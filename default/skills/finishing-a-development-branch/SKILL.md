@@ -1,5 +1,5 @@
 ---
-name: ring:finishing-a-development-branch
+name: bee:finishing-a-development-branch
 description: |
   Branch completion workflow - guides merge/PR/cleanup decisions after implementation
   is verified complete.
@@ -15,7 +15,7 @@ skip_when: |
   - Already merged → proceed to next task
 
 sequence:
-  after: [verification-before-completion, ring:requesting-code-review]
+  after: [verification-before-completion, bee:requesting-code-review]
 ---
 
 # Finishing a Development Branch
@@ -97,11 +97,11 @@ Present exactly these 4 options (no explanation):
 ## Integration
 
 **Called by:**
-- **ring:subagent-driven-development** (Step 7) - After all tasks complete
-- **ring:executing-plans** (Step 5) - After all batches complete
+- **bee:subagent-driven-development** (Step 7) - After all tasks complete
+- **bee:executing-plans** (Step 5) - After all batches complete
 
 **Pairs with:**
-- **ring:using-git-worktrees** - Cleans up worktree created by that skill
+- **bee:using-git-worktrees** - Cleans up worktree created by that skill
 
 ## Blocker Criteria
 

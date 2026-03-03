@@ -1,17 +1,17 @@
 # bee-pm-team Changelog
 
-## [0.19.0](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.19.0)
+## [0.19.0](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.19.0)
 
 - **Features:**
   - Added task status tracking between tasks.md and dev-cycle.
 
 Contributors: @jeff, @jota
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.1...bee-pm-team@0.19.0)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.18.1...bee-pm-team@0.19.0)
 
 ---
 
-## [0.19.0](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.19.0)
+## [0.19.0](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.19.0)
 
 - **Features:**
   - Added task status tracking between tasks.md and dev-cycle. (fa0351e4)
@@ -19,11 +19,11 @@ Contributors: @jeff, @jota
 
 Contributors: @jeff, @jota
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.1...bee-pm-team@0.19.0)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.18.1...bee-pm-team@0.19.0)
 
 ---
 
-## [0.18.1](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.18.1)
+## [0.18.1](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.18.1)
 
 - Fixes:
   - Applied lexical salience guidelines across skills.
@@ -31,11 +31,11 @@ Contributors: @jeff, @jota
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
 
 ---
 
-## [0.18.1](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.18.1)
+## [0.18.1](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.18.1)
 
 - Fixes:
   - Applied lexical salience guidelines across skills.
@@ -43,11 +43,11 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
 
 ---
 
-## [0.18.1](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.18.1)
+## [0.18.1](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.18.1)
 
 - Fixes:
   - Applied lexical salience guidelines across skills.
@@ -55,11 +55,11 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
 
 ---
 
-## [0.18.1](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.18.1)
+## [0.18.1](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.18.1)
 
 - Fixes:
   - Applied lexical salience guidelines across skills.
@@ -67,11 +67,11 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
 
 ---
 
-## [0.18.1](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.18.1)
+## [0.18.1](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.18.1)
 
 - Fixes:
   - Applied lexical salience guidelines across skills.
@@ -79,11 +79,11 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
 
 ---
 
-## [0.18.1](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.18.1)
+## [0.18.1](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.18.1)
 
 - Fixes:
   - Applied lexical salience guidelines across skills.
@@ -91,11 +91,11 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
 
 ---
 
-## [0.18.1](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.18.1)
+## [0.18.1](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.18.1)
 
 - Fixes:
   - Applied lexical salience guidelines across skills.
@@ -103,11 +103,11 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
 
 ---
 
-## [0.18.1](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.18.1)
+## [0.18.1](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.18.1)
 
 - Fixes:
   - Applied lexical salience guidelines across skills.
@@ -115,11 +115,11 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
 
 ---
 
-## [0.18.1](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.18.1)
+## [0.18.1](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.18.1)
 
 - Fixes:
   - Applied lexical salience guidelines across skills.
@@ -127,11 +127,11 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
 
 ---
 
-## [0.18.1](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.18.1)
+## [0.18.1](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.18.1)
 
 - Fixes:
   - Applied lexical salience guidelines across skills to enhance clarity and consistency.
@@ -139,11 +139,11 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
 
 ---
 
-## [0.18.1](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.18.1)
+## [0.18.1](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.18.1)
 
 - Fixes:
   - Applied lexical salience guidelines across skills.
@@ -151,11 +151,11 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jeff, @jefferson.comff
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.18.0...bee-pm-team@0.18.1)
 
 ---
 
-## [0.18.0](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.18.0)
+## [0.18.0](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.18.0)
 
 - **Features**
   - Add business deliverables view to task summary.
@@ -168,11 +168,11 @@ Contributors: @jeff, @jefferson.comff
 
 Contributors: @jota
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.17.0...bee-pm-team@0.18.0)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.17.0...bee-pm-team@0.18.0)
 
 ---
 
-## [0.18.0](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.18.0)
+## [0.18.0](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.18.0)
 
 - **Features**
   - Added business deliverables view to task summary.
@@ -185,22 +185,22 @@ Contributors: @jota
 
 Contributors: @jota
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.17.0...bee-pm-team@0.18.0)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.17.0...bee-pm-team@0.18.0)
 
 ---
 
-## [0.17.0](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.17.0)
+## [0.17.0](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.17.0)
 
 - **Features**
   - Added GPT Changelog workflow and initial CHANGELOG files for bee-pm-team.
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
 
 ---
 
-## [0.17.0](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.17.0)
+## [0.17.0](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.17.0)
 
 - **Features**
   - Added GPT Changelog workflow.
@@ -208,11 +208,11 @@ Contributors: @gui.rodrigues
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
 
 ---
 
-## [0.17.0](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.17.0)
+## [0.17.0](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.17.0)
 
 - Features:
   - Added GPT Changelog workflow for bee-pm-team.
@@ -220,11 +220,11 @@ Contributors: @gui.rodrigues
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
 
 ---
 
-## [0.17.0](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.17.0)
+## [0.17.0](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.17.0)
 
 - **Features**
   - Added GPT Changelog workflow.
@@ -232,11 +232,11 @@ Contributors: @gui.rodrigues
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
 
 ---
 
-## [0.17.0](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.17.0)
+## [0.17.0](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.17.0)
 
 - **Features:**
   - Added GPT Changelog workflow for bee-pm-team.
@@ -244,11 +244,11 @@ Contributors: @gui.rodrigues
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
 
 ---
 
-## [0.17.0](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.17.0)
+## [0.17.0](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.17.0)
 
 - **Features**
   - Added GPT Changelog workflow.
@@ -256,11 +256,11 @@ Contributors: @gui.rodrigues
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
 
 ---
 
-## [0.17.0](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.17.0)
+## [0.17.0](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.17.0)
 
 - **Features**
   - Added GPT Changelog workflow.
@@ -268,11 +268,11 @@ Contributors: @gui.rodrigues
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
 
 ---
 
-## [0.17.0](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.17.0)
+## [0.17.0](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.17.0)
 
 - **Features**
   - Added GPT Changelog workflow.
@@ -280,16 +280,16 @@ Contributors: @gui.rodrigues
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
 
 ---
 
-## [0.17.0](https://github.com/LerianStudio/bee/releases/tag/bee-pm-team@0.17.0)
+## [0.17.0](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-pm-team@0.17.0)
 
 - Added GPT Changelog workflow.
 - Created initial CHANGELOG files for teams header.
 
 Contributors: @gui.rodrigues
 
-[Compare changes](https://github.com/LerianStudio/bee/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
+[Compare changes](https://github.com/luanrodrigues/ia-frmwrk/compare/bee-pm-team@0.16.3...bee-pm-team@0.17.0)
 

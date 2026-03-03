@@ -1,4 +1,4 @@
-# Ring Architecture Documentation
+# Bee Architecture Documentation
 
 ## Table of Contents
 
@@ -13,13 +13,13 @@
 
 ## Overview
 
-Ring is a **Claude Code plugin marketplace** that provides a comprehensive skills library and workflow system with **6 active plugins**. It extends Claude Code's capabilities through structured, reusable patterns that enforce proven software engineering practices across the software delivery value chain: Product Planning → Development → Documentation.
+Bee is a **Claude Code plugin marketplace** that provides a comprehensive skills library and workflow system with **6 active plugins**. It extends Claude Code's capabilities through structured, reusable patterns that enforce proven software engineering practices across the software delivery value chain: Product Planning → Development → Documentation.
 
 ### Architecture Philosophy
 
-Ring operates on three core principles:
+Bee operates on three core principles:
 
-1. **Mandatory Workflows** - Critical skills (like ring:using-ring) enforce specific behaviors
+1. **Mandatory Workflows** - Critical skills (like bee:using-bee) enforce specific behaviors
 2. **Parallel Execution** - Review systems run concurrently for speed
 3. **Session Context** - Skills load automatically at session start
 4. **Modular Plugins** - Specialized plugins for different domains and teams
@@ -30,7 +30,7 @@ Ring operates on three core principles:
 ┌─────────────────────────────────────────────────────────────────────────────────┐
 │                              Claude Code                                         │
 │  ┌───────────────────────────────────────────────────────────────────────────┐  │
-│  │                          Ring Marketplace                                  │  │
+│  │                          Bee Marketplace                                  │  │
 │  │  ┌──────────────────────┐  ┌──────────────────────┐                       │  │
 │  │  │ bee-default         │  │ bee-dev-team        │                       │  │
 │  │  │ Skills(26) Agents(8) │  │ Skills(21) Agents(11)│                       │  │
@@ -54,7 +54,7 @@ Ring operates on three core principles:
 
 ## Marketplace Structure
 
-Ring is organized as a monorepo marketplace with multiple plugin collections:
+Bee is organized as a monorepo marketplace with multiple plugin collections:
 
 ```
 ring/                                  # Monorepo root
@@ -115,31 +115,31 @@ skills/
 
 ```
 default/agents/
-├── code-reviewer.md           # Foundation review (`ring:code-reviewer`)
-├── business-logic-reviewer.md # Correctness review (`ring:business-logic-reviewer`)
-├── security-reviewer.md       # Safety review (`ring:security-reviewer`)
-├── test-reviewer.md           # Test coverage and quality review (`ring:test-reviewer`)
-├── nil-safety-reviewer.md     # Null/nil safety analysis (`ring:nil-safety-reviewer`)
-├── consequences-reviewer.md   # Ripple effect review (`ring:consequences-reviewer`)
-├── write-plan.md              # Implementation planning (`ring:write-plan`)
-└── codebase-explorer.md       # Deep architecture analysis (`ring:codebase-explorer`)
+├── code-reviewer.md           # Foundation review (`bee:code-reviewer`)
+├── business-logic-reviewer.md # Correctness review (`bee:business-logic-reviewer`)
+├── security-reviewer.md       # Safety review (`bee:security-reviewer`)
+├── test-reviewer.md           # Test coverage and quality review (`bee:test-reviewer`)
+├── nil-safety-reviewer.md     # Null/nil safety analysis (`bee:nil-safety-reviewer`)
+├── consequences-reviewer.md   # Ripple effect review (`bee:consequences-reviewer`)
+├── write-plan.md              # Implementation planning (`bee:write-plan`)
+└── codebase-explorer.md       # Deep architecture analysis (`bee:codebase-explorer`)
 ```
 
 **Structure (bee-dev-team plugin):**
 
 ```
 dev-team/agents/
-├── backend-engineer-golang.md         # Go backend specialist (`ring:backend-engineer-golang`)
-├── backend-engineer-typescript.md     # TypeScript backend specialist (`ring:backend-engineer-typescript`)
-├── devops-engineer.md                 # DevOps specialist (`ring:devops-engineer`)
-├── frontend-bff-engineer-typescript.md # BFF specialist (`ring:frontend-bff-engineer-typescript`)
-├── frontend-designer.md               # Visual design specialist (`ring:frontend-designer`)
-├── frontend-engineer.md               # Frontend engineer (`ring:frontend-engineer`)
-├── prompt-quality-reviewer.md         # Prompt quality specialist (`ring:prompt-quality-reviewer`)
-├── qa-analyst.md                      # Backend QA specialist (`ring:qa-analyst`)
-├── qa-analyst-frontend.md             # Frontend QA specialist (`ring:qa-analyst-frontend`)
-├── sre.md                             # Site reliability engineer (`ring:sre`)
-└── ui-engineer.md                     # UI component specialist (`ring:ui-engineer`)
+├── backend-engineer-golang.md         # Go backend specialist (`bee:backend-engineer-golang`)
+├── backend-engineer-typescript.md     # TypeScript backend specialist (`bee:backend-engineer-typescript`)
+├── devops-engineer.md                 # DevOps specialist (`bee:devops-engineer`)
+├── frontend-bff-engineer-typescript.md # BFF specialist (`bee:frontend-bff-engineer-typescript`)
+├── frontend-designer.md               # Visual design specialist (`bee:frontend-designer`)
+├── frontend-engineer.md               # Frontend engineer (`bee:frontend-engineer`)
+├── prompt-quality-reviewer.md         # Prompt quality specialist (`bee:prompt-quality-reviewer`)
+├── qa-analyst.md                      # Backend QA specialist (`bee:qa-analyst`)
+├── qa-analyst-frontend.md             # Frontend QA specialist (`bee:qa-analyst-frontend`)
+├── sre.md                             # Site reliability engineer (`bee:sre`)
+└── ui-engineer.md                     # UI component specialist (`bee:ui-engineer`)
 ```
 
 **Structure (bee-pmo-team plugin):**
@@ -171,8 +171,8 @@ All bee-dev-team agents include a `## Standards Compliance` section in their out
 ```yaml
 - name: "Standards Compliance"
   pattern: "^## Standards Compliance"
-  required: false # In schema, but MANDATORY when invoked from ring:dev-refactor
-  description: "MANDATORY when invoked from ring:dev-refactor skill"
+  required: false # In schema, but MANDATORY when invoked from bee:dev-refactor
+  description: "MANDATORY when invoked from bee:dev-refactor skill"
 ```
 
 **Conditional Requirement: `invoked_from_dev_refactor`**
@@ -180,8 +180,8 @@ All bee-dev-team agents include a `## Standards Compliance` section in their out
 | Invocation Context            | Standards Compliance | Detection Mechanism                       |
 | ----------------------------- | -------------------- | ----------------------------------------- |
 | Direct agent call             | Optional             | N/A                                       |
-| Via `ring:dev-cycle` skill    | Optional             | N/A                                       |
-| Via `ring:dev-refactor` skill | **MANDATORY**        | Prompt contains `**MODE: ANALYSIS ONLY**` |
+| Via `bee:dev-cycle` skill    | Optional             | N/A                                       |
+| Via `bee:dev-refactor` skill | **MANDATORY**        | Prompt contains `**MODE: ANALYSIS ONLY**` |
 
 **How Enforcement Works:**
 
@@ -189,12 +189,12 @@ All bee-dev-team agents include a `## Standards Compliance` section in their out
 ┌─────────────────────────────────────────────────────────────────────┐
 │  User invokes: /bee:dev-refactor                          │
 │         ↓                                                           │
-│  ring:dev-refactor skill dispatches agents with prompt:                  │
-│  "**MODE: ANALYSIS ONLY** - Compare codebase with Ring standards"   │
+│  bee:dev-refactor skill dispatches agents with prompt:                  │
+│  "**MODE: ANALYSIS ONLY** - Compare codebase with Bee standards"   │
 │         ↓                                                           │
 │  Agent detects "**MODE: ANALYSIS ONLY**" in prompt                  │
 │         ↓                                                           │
-│  Agent loads Ring standards via WebFetch                            │
+│  Agent loads Bee standards via WebFetch                            │
 │         ↓                                                           │
 │  Agent produces Standards Compliance output (MANDATORY)             │
 └─────────────────────────────────────────────────────────────────────┘
@@ -202,14 +202,14 @@ All bee-dev-team agents include a `## Standards Compliance` section in their out
 
 **Affected Agents:**
 
-- `ring:backend-engineer-golang` → loads `golang.md`
-- `ring:backend-engineer-typescript` → loads `typescript.md`
-- `ring:devops-engineer` → loads `devops.md`
-- `ring:frontend-bff-engineer-typescript` → loads `typescript.md`
-- `ring:frontend-designer` → loads `frontend.md`
-- `ring:qa-analyst` → loads `testing-*.md` (unit/fuzz/property/integration/chaos)
-- `ring:qa-analyst-frontend` → loads `frontend/testing-*.md` (accessibility/visual/e2e/performance)
-- `ring:sre` → loads `sre.md`
+- `bee:backend-engineer-golang` → loads `golang.md`
+- `bee:backend-engineer-typescript` → loads `typescript.md`
+- `bee:devops-engineer` → loads `devops.md`
+- `bee:frontend-bff-engineer-typescript` → loads `typescript.md`
+- `bee:frontend-designer` → loads `frontend.md`
+- `bee:qa-analyst` → loads `testing-*.md` (unit/fuzz/property/integration/chaos)
+- `bee:qa-analyst-frontend` → loads `frontend/testing-*.md` (accessibility/visual/e2e/performance)
+- `bee:sre` → loads `sre.md`
 
 **Output Format (when non-compliant):**
 
@@ -400,7 +400,7 @@ sequenceDiagram
     hooks.json->>session-start.sh: Execute initialization
     session-start.sh->>generate-skills-ref.py: Generate skills overview
     generate-skills-ref.py-->>session-start.sh: Return formatted reference
-    session-start.sh->>Claude Context: Inject skills + ring:using-ring content
+    session-start.sh->>Claude Context: Inject skills + bee:using-bee content
     Claude Context-->>User: Session ready with skills loaded
 ```
 
@@ -415,7 +415,7 @@ sequenceDiagram
     participant TodoWrite
 
     User->>Claude: Request task
-    Claude->>Claude: Check ring:using-ring mandatory workflow
+    Claude->>Claude: Check bee:using-bee mandatory workflow
     Claude->>Skill Tool: Invoke relevant skill
     Skill Tool->>SKILL.md: Load skill instructions
     SKILL.md-->>Claude: Return structured workflow
@@ -430,12 +430,12 @@ sequenceDiagram
     participant User
     participant Claude
     participant Task Tool
-    participant ring:code-reviewer
-    participant ring:business-logic-reviewer
-    participant ring:security-reviewer
-    participant ring:test-reviewer
-    participant ring:nil-safety-reviewer
-    participant ring:consequences-reviewer
+    participant bee:code-reviewer
+    participant bee:business-logic-reviewer
+    participant bee:security-reviewer
+    participant bee:test-reviewer
+    participant bee:nil-safety-reviewer
+    participant bee:consequences-reviewer
 
     User->>Claude: /bee:codereview
     Note over Claude: Command provides<br/>parallel review workflow
@@ -443,25 +443,25 @@ sequenceDiagram
     Claude->>Task Tool: Dispatch 6 parallel tasks
 
     par Parallel Execution
-        Task Tool->>ring:code-reviewer: Review architecture
+        Task Tool->>bee:code-reviewer: Review architecture
         and
-        Task Tool->>ring:business-logic-reviewer: Review correctness
+        Task Tool->>bee:business-logic-reviewer: Review correctness
         and
-        Task Tool->>ring:security-reviewer: Review vulnerabilities
+        Task Tool->>bee:security-reviewer: Review vulnerabilities
         and
-        Task Tool->>ring:test-reviewer: Review test coverage
+        Task Tool->>bee:test-reviewer: Review test coverage
         and
-        Task Tool->>ring:nil-safety-reviewer: Review nil safety
+        Task Tool->>bee:nil-safety-reviewer: Review nil safety
         and
-        Task Tool->>ring:consequences-reviewer: Review ripple effects
+        Task Tool->>bee:consequences-reviewer: Review ripple effects
     end
 
-    ring:code-reviewer-->>Claude: Return findings
-    ring:business-logic-reviewer-->>Claude: Return findings
-    ring:security-reviewer-->>Claude: Return findings
-    ring:test-reviewer-->>Claude: Return findings
-    ring:nil-safety-reviewer-->>Claude: Return findings
-    ring:consequences-reviewer-->>Claude: Return findings
+    bee:code-reviewer-->>Claude: Return findings
+    bee:business-logic-reviewer-->>Claude: Return findings
+    bee:security-reviewer-->>Claude: Return findings
+    bee:test-reviewer-->>Claude: Return findings
+    bee:nil-safety-reviewer-->>Claude: Return findings
+    bee:consequences-reviewer-->>Claude: Return findings
 
     Note over Claude: Aggregate & prioritize by severity
     Claude->>User: Consolidated report
@@ -471,17 +471,17 @@ sequenceDiagram
 
 ### Native Tool Integration
 
-Ring leverages four primary Claude Code tools:
+Bee leverages four primary Claude Code tools:
 
 1. **Skill Tool**
 
-   - Invokes skills by name: `skill: "ring:test-driven-development"`
+   - Invokes skills by name: `skill: "bee:test-driven-development"`
    - Skills expand into full instructions within conversation
    - Skill content becomes part of Claude's working context
 
 2. **Task Tool**
 
-   - Dispatches agents to subagent instances: `Task(subagent_type="ring:code-reviewer")`
+   - Dispatches agents to subagent instances: `Task(subagent_type="bee:code-reviewer")`
    - Enables parallel execution (multiple Tasks in one message)
    - Returns structured reports from independent analysis
 
@@ -498,12 +498,12 @@ Ring leverages four primary Claude Code tools:
 
 ### Session Context Injection
 
-At session start, Ring injects two critical pieces of context:
+At session start, Bee injects two critical pieces of context:
 
 1. **Skills Quick Reference** - Auto-generated overview of all available skills
-2. **ring:using-ring Skill** - Mandatory workflow that enforces skill checking
+2. **bee:using-bee Skill** - Mandatory workflow that enforces skill checking
 
-This context becomes part of Claude's memory for the entire session, ensuring:
+This context becomes part of Claude's memory for the entire session, ensubee:
 
 - Claude knows which skills are available
 - Mandatory workflows are enforced
@@ -514,23 +514,23 @@ This context becomes part of Claude's memory for the entire session, ensuring:
 ### Pattern 1: Mandatory Skill Checking
 
 ```
-User Request → ring:using-ring check → Relevant skill?
+User Request → bee:using-bee check → Relevant skill?
     ├─ Yes → Invoke skill → Follow workflow
     └─ No → Proceed with task
 ```
 
-**Implementation:** The ring:using-ring skill is loaded at session start and contains strict instructions to check for relevant skills before ANY task.
+**Implementation:** The bee:using-bee skill is loaded at session start and contains strict instructions to check for relevant skills before ANY task.
 
 ### Pattern 2: Parallel Review Execution
 
 ```
 Review Request → /bee:codereview → Dispatch 6 Tasks (parallel)
-    ├─ ring:code-reviewer           ─┐
-    ├─ ring:business-logic-reviewer  │
-    ├─ ring:security-reviewer        │
-    ├─ ring:test-reviewer            ┼─→ Aggregate findings → Handle by severity
-    ├─ ring:nil-safety-reviewer      │
-    └─ ring:consequences-reviewer   ─┘
+    ├─ bee:code-reviewer           ─┐
+    ├─ bee:business-logic-reviewer  │
+    ├─ bee:security-reviewer        │
+    ├─ bee:test-reviewer            ┼─→ Aggregate findings → Handle by severity
+    ├─ bee:nil-safety-reviewer      │
+    └─ bee:consequences-reviewer   ─┘
 ```
 
 **Implementation:** Single message with 5 Task tool calls ensures parallel execution. All reviewers work independently and return simultaneously.
@@ -544,9 +544,9 @@ SlashCommand Tool
     ↓
 commands/brainstorm.md
     ↓
-"Use and follow the ring:brainstorming skill"
+"Use and follow the bee:brainstorming skill"
     ↓
-Skill Tool: ring:brainstorming
+Skill Tool: bee:brainstorming
     ↓
 skills/brainstorming/SKILL.md
 ```
@@ -576,7 +576,7 @@ Complex Skill → TodoWrite tracking
 
 **Interaction:**
 
-- Skills can invoke agents (e.g., ring:requesting-code-review skill dispatches review agents)
+- Skills can invoke agents (e.g., bee:requesting-code-review skill dispatches review agents)
 - Agents don't typically invoke skills (they're independent analyzers)
 
 ### Skills ↔ Commands
@@ -588,9 +588,9 @@ Complex Skill → TodoWrite tracking
 
 **Example Mappings:**
 
-- `/bee:brainstorm` → `ring:brainstorming` skill
-- `/bee:write-plan` → `ring:writing-plans` skill
-- `/bee:codereview` → dispatches 6 parallel review agents (`ring:code-reviewer`, `ring:business-logic-reviewer`, `ring:security-reviewer`, `ring:test-reviewer`, `ring:nil-safety-reviewer`, `ring:consequences-reviewer`)
+- `/bee:brainstorm` → `bee:brainstorming` skill
+- `/bee:write-plan` → `bee:writing-plans` skill
+- `/bee:codereview` → dispatches 6 parallel review agents (`bee:code-reviewer`, `bee:business-logic-reviewer`, `bee:security-reviewer`, `bee:test-reviewer`, `bee:nil-safety-reviewer`, `bee:consequences-reviewer`)
 
 ### Skills ↔ Shared Patterns
 
@@ -613,7 +613,7 @@ See `skills/shared-patterns/todowrite-integration.md` for tracking setup
 
 - Hooks load skill metadata at session start
 - generate-skills-ref.py scans all SKILL.md frontmatter
-- session-start.sh injects ring:using-ring skill content
+- session-start.sh injects bee:using-bee skill content
 
 **Data Flow:**
 
@@ -653,7 +653,7 @@ SKILL.md frontmatter → generate-skills-ref.py → formatted overview → sessi
 
 ### 3. Mandatory Workflows
 
-**Decision:** Some skills (ring:using-ring) are non-negotiable
+**Decision:** Some skills (bee:using-bee) are non-negotiable
 **Rationale:** Prevents common failures, enforces best practices
 **Enforcement:** Loaded automatically, contains strict instructions
 
@@ -681,7 +681,7 @@ SKILL.md frontmatter → generate-skills-ref.py → formatted overview → sessi
 
 1. Create `{plugin}/agents/{name}.md` with model specification
 2. Include YAML frontmatter: `name`, `description`, `model`, `version`
-3. Invoke via Task tool with `subagent_type="ring:{name}"`
+3. Invoke via Task tool with `subagent_type="bee:{name}"`
 4. Review agents can run in parallel via `/bee:codereview`
 5. Developer agents provide domain expertise via direct Task invocation
 
@@ -746,7 +746,7 @@ SKILL.md frontmatter → generate-skills-ref.py → formatted overview → sessi
 
 ### Anti-Patterns to Avoid
 
-❌ Skipping skill checks (violates ring:using-ring)
+❌ Skipping skill checks (violates bee:using-bee)
 ❌ Running reviewers sequentially (3x slower)
 ❌ Implementing without tests (violates TDD)
 ❌ Claiming completion without verification
@@ -780,7 +780,7 @@ SKILL.md frontmatter → generate-skills-ref.py → formatted overview → sessi
 
 ## Summary
 
-Ring's architecture is designed for:
+Bee's architecture is designed for:
 
 - **Modularity** - Independent, composable components across multiple plugins
 - **Performance** - Parallel execution wherever possible (3x faster reviews)

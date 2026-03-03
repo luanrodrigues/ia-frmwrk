@@ -1014,7 +1014,7 @@ List required packages in your SKILL.md and verify they're available in the [cod
 
 Skills run in a code execution environment with filesystem access, bash commands, and code execution capabilities. For the conceptual explanation of this architecture, see [The Skills architecture](/en/docs/agents-and-tools/agent-skills/overview#the-skills-architecture) in the overview.
 
-**How this affects your authoring:**
+**How this affects your authobee:**
 
 **How Claude accesses Skills:**
 

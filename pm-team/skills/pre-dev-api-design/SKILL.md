@@ -1,5 +1,5 @@
 ---
-name: ring:pre-dev-api-design
+name: bee:pre-dev-api-design
 description: |
   Gate 4: API contracts document - defines component interfaces and data contracts
   before protocol/technology selection. Large Track only.
@@ -16,8 +16,8 @@ skip_when: |
   - TRD not validated → complete Gate 3 first
 
 sequence:
-  after: [ring:pre-dev-trd-creation]
-  before: [ring:pre-dev-data-model]
+  after: [bee:pre-dev-trd-creation]
+  before: [bee:pre-dev-data-model]
 ---
 
 # API/Contract Design - Defining Component Interfaces
@@ -444,7 +444,7 @@ The BFF consumes EXISTING backend APIs (documented in PRD Data Sources).
 ## After Approval
 
 1. ✅ Lock contracts - interfaces are now implementation reference
-2. 🎯 Use contracts as input for Data Modeling (`ring:pre-dev-data-model`)
+2. 🎯 Use contracts as input for Data Modeling (`bee:pre-dev-data-model`)
 3. 🚫 Never add protocol specifics retroactively
 4. 📋 Keep technology-agnostic until Dependency Map
 

@@ -1,5 +1,5 @@
 ---
-name: ring:using-tw-team
+name: bee:using-tw-team
 description: |
   Technical writing specialists for functional and API documentation. Dispatch when
   you need to create guides, conceptual docs, or API references following established
@@ -17,22 +17,22 @@ skip_when: |
   - General code review → use default plugin reviewers
 
 related:
-  similar: [ring:using-ring, ring:using-dev-team]
+  similar: [bee:using-bee, bee:using-dev-team]
 ---
 
-# Using Ring Technical Writing Specialists
+# Using Bee Technical Writing Specialists
 
 The bee-tw-team plugin provides specialized agents for technical documentation. Use them via `Task tool with subagent_type:`.
 
-**Remember:** Follow the **ORCHESTRATOR principle** from `ring:using-ring`. Dispatch agents to handle documentation tasks; don't write complex documentation directly.
+**Remember:** Follow the **ORCHESTRATOR principle** from `bee:using-bee`. Dispatch agents to handle documentation tasks; don't write complex documentation directly.
 
 ## 3 Documentation Specialists
 
 | Agent | Specialization | Use When |
 |-------|---------------|----------|
-| `ring:functional-writer` | Conceptual docs, guides, tutorials, best practices, workflows | Writing product guides, tutorials, "how to" content |
-| `ring:api-writer` | REST API reference, endpoints, schemas, errors, field descriptions | Documenting API endpoints, request/response examples |
-| `ring:docs-reviewer` | Voice/tone, structure, completeness, clarity, accuracy | Reviewing drafts, pre-publication quality check |
+| `bee:functional-writer` | Conceptual docs, guides, tutorials, best practices, workflows | Writing product guides, tutorials, "how to" content |
+| `bee:api-writer` | REST API reference, endpoints, schemas, errors, field descriptions | Documenting API endpoints, request/response examples |
+| `bee:docs-reviewer` | Voice/tone, structure, completeness, clarity, accuracy | Reviewing drafts, pre-publication quality check |
 
 ---
 
@@ -99,9 +99,9 @@ Task #3: docs-reviewer (review both)
 
 | Plugin | Use For |
 |--------|---------|
-| ring:using-ring (default) | ORCHESTRATOR principle |
-| ring:using-dev-team | Developer agents for technical accuracy |
-| ring:using-pm-team | Pre-dev planning before documentation |
+| bee:using-bee (default) | ORCHESTRATOR principle |
+| bee:using-dev-team | Developer agents for technical accuracy |
+| bee:using-pm-team | Pre-dev planning before documentation |
 
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: ring:dependency-analysis
+name: bee:dependency-analysis
 description: Analyze cross-project dependencies across the portfolio
 argument-hint: "[scope] [options]"
 ---
@@ -75,7 +75,7 @@ Analyze cross-project dependencies across the portfolio.
 **This command MUST load the dependency-mapping skill for complete workflow execution.**
 
 ```
-Use Skill tool: ring:dependency-mapping
+Use Skill tool: bee:dependency-mapping
 ```
 
 The skill contains the complete dependency mapping gates with:
@@ -95,7 +95,7 @@ Collect schedule and deliverable information from projects in scope.
 
 ```
 Task tool:
-  subagent_type: "ring:portfolio-manager"
+  subagent_type: "bee:portfolio-manager"
   model: "opus"
   prompt: "Identify cross-project dependencies for: [scope]"
 ```
@@ -104,7 +104,7 @@ Task tool:
 
 ```
 Task tool:
-  subagent_type: "ring:risk-analyst"
+  subagent_type: "bee:risk-analyst"
   model: "opus"
   prompt: "Analyze risks associated with identified dependencies"
 ```

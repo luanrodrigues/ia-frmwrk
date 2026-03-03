@@ -100,12 +100,12 @@ Read docs/PROJECT_RULES.md
 
 | Agent | Standards File | URL |
 |-------|---------------|-----|
-| `bee:backend-engineer-php` | php.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php.md` |
-| `frontend-bff-engineer-typescript` | typescript.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/typescript.md` |
-| `bee:frontend-engineer` | frontend.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend.md` |
-| `bee:frontend-designer` | frontend.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend.md` |
-| `bee:devops-engineer` | devops.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/devops.md` |
-| `bee:sre` | sre.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/sre.md` |
+| `bee:backend-engineer-php` | php.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/php.md` |
+| `frontend-bff-engineer-typescript` | typescript.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/typescript.md` |
+| `bee:frontend-engineer` | frontend.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md` |
+| `bee:frontend-designer` | frontend.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md` |
+| `bee:devops-engineer` | devops.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/devops.md` |
+| `bee:sre` | sre.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/sre.md` |
 | `bee:qa-analyst` | php.md | Based on project language (check PROJECT_RULES.md first) |
 | `prompt-quality-reviewer` | N/A | Domain-independent (no standards WebFetch required) |
 
@@ -169,11 +169,11 @@ Read docs/PROJECT_RULES.md
 > This file documents only project-specific information not covered by Bee Standards.
 >
 > Bee Standards URLs:
-> - PHP: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php.md
-> - TypeScript (BFF): https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/typescript.md
-> - Frontend: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend.md
-> - DevOps: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/devops.md
-> - SRE: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/sre.md
+> - PHP: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/php.md
+> - TypeScript (BFF): https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/typescript.md
+> - Frontend: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md
+> - DevOps: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/devops.md
+> - SRE: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/sre.md
 
 ## What Bee Standards Cover (DO not DUPLICATE HERE)
 
@@ -383,7 +383,7 @@ See [shared-patterns/standards-workflow.md](../skills/shared-patterns/standards-
 
 | Setting | Value |
 |---------|-------|
-| **WebFetch URL** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/{file}.md` |
+| **WebFetch URL** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/{file}.md` |
 | **Standards File** | {file}.md |
 | **Prompt** | "Extract all [domain] standards, patterns, and requirements" |
 ```

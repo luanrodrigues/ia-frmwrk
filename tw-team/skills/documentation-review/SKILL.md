@@ -1,5 +1,5 @@
 ---
-name: ring:documentation-review
+name: bee:documentation-review
 description: |
   Comprehensive checklist and process for reviewing documentation quality
   including voice, tone, structure, completeness, and technical accuracy.
@@ -147,9 +147,9 @@ Review documentation systematically across multiple dimensions. A thorough revie
 
 Before reviewing documentation:
 
-1. **Load voice and tone** - `ring:voice-and-tone` for style verification
-2. **Load structure patterns** - `ring:documentation-structure` for organization checks
-3. **Load document type patterns** - `ring:writing-functional-docs` or `ring:writing-api-docs`
+1. **Load voice and tone** - `bee:voice-and-tone` for style verification
+2. **Load structure patterns** - `bee:documentation-structure` for organization checks
+3. **Load document type patterns** - `bee:writing-functional-docs` or `bee:writing-api-docs`
 
 **HARD GATE:** CANNOT review documentation without loading relevant standards.
 

@@ -1,5 +1,5 @@
 ---
-name: ring:visual-explainer
+name: bee:visual-explainer
 description: Generate beautiful, self-contained HTML pages that visually explain systems, code changes, plans, and data. Use when the user asks for a diagram, architecture overview, diff review, plan review, project recap, comparison table, or any visual explanation of technical concepts. Also use proactively when you are about to render a complex ASCII table (4+ rows or 3+ columns) — present it as a styled HTML page instead.
 license: MIT
 compatibility: Requires a browser to view generated HTML files. Optional surf-cli for AI image generation.
@@ -21,7 +21,7 @@ Every visual-explainer output MUST start from `./templates/standard.html`. This 
 **Before generating any HTML, MUST read `./templates/standard.html`** and copy:
 1. The complete `<style>` block (everything above the "DO NOT MODIFY" marker)
 2. The `<header class="lerian-header">` with the inline Lerian logo SVG
-3. The `<footer class="lerian-footer">` with logo, company name, and "Generated with Ring"
+3. The `<footer class="lerian-footer">` with logo, company name, and "Generated with Bee"
 4. The date auto-fill `<script>`
 
 Then add diagram-specific styles after the "TEMPLATE-SPECIFIC STYLES" marker.
@@ -30,7 +30,7 @@ Then add diagram-specific styles after the "TEMPLATE-SPECIFIC STYLES" marker.
 - **Font**: Inter (via Google Fonts) — MUST be the body font
 - **Color palette**: Lerian product-console tokens (sunglow accent, zinc neutrals, semantic status colors)
 - **Logo**: Inline SVG in header and footer, using `fill="currentColor"` for automatic light/dark adaptation
-- **Footer**: Full bar with Lerian Studio branding and "Generated with Ring"
+- **Footer**: Full bar with Lerian Studio branding and "Generated with Bee"
 - **Dark mode**: `@media (prefers-color-scheme: dark)` with zinc-based dark tokens
   - **Exception:** code-diff diagrams MAY use GitHub-dark background tokens (`#0d1117`) for code panel readability while keeping the Lerian header/footer/accent intact
 
@@ -253,7 +253,7 @@ Use for refactoring previews (before/after code comparison), development cycle c
 This is especially common in security-focused code reviews where XSS examples naturally contain `<script>` tags.
 
 Two modes depending on context:
-- **Refactoring diffs** (before/after known): Two-column layout with the current code on the left and the Ring standard / target code on the right. Each finding gets its own diff panel with a severity badge. Group by severity (Critical first).
+- **Refactoring diffs** (before/after known): Two-column layout with the current code on the left and the Bee standard / target code on the right. Each finding gets its own diff panel with a severity badge. Group by severity (Critical first).
 - **New development summaries** (planned changes): Single-column cards showing the task context, acceptance criteria, files to create/modify, and a code preview of the planned implementation approach.
 
 Layout patterns:
@@ -298,7 +298,7 @@ Every diagram is a single self-contained `.html` file. No external assets except
 
     <!-- Diagram content -->
 
-    <!-- Lerian footer with logo, company name, "Generated with Ring" -->
+    <!-- Lerian footer with logo, company name, "Generated with Bee" -->
     <footer class="lerian-footer">...</footer>
   </div>
 
@@ -318,7 +318,7 @@ Before delivering, verify:
 
 HARD GATE: Standard template compliance MUST be verified by comparing the generated HTML against `./templates/standard.html` — re-read the file if not currently in context. Self-certification from memory is NOT valid.
 
-- **Standard template compliance**: MUST verify by searching the generated HTML for: (1) the exact SVG logo path from standard.html, (2) the exact footer text 'Generated with Ring', (3) `font-family: 'Inter'`. If any element is absent, STOP and fix before delivering.
+- **Standard template compliance**: MUST verify by searching the generated HTML for: (1) the exact SVG logo path from standard.html, (2) the exact footer text 'Generated with Bee', (3) `font-family: 'Inter'`. If any element is absent, STOP and fix before delivering.
 - **No token conflicts:** Template-specific CSS does NOT redefine standard foundation tokens (`--bg`, `--surface`, `--text`, `--accent`, `--font-body`, `--font-mono`, `--success`, `--warning`, `--error`, `--info`, `--border`). Use NEW variable names for diagram-specific aliases (e.g., `--node-a`, `--pipeline-step`).
 - **The squint test**: Blur your eyes. Can you still perceive hierarchy? Are sections visually distinct? (Verify at least 3 distinct visual depth levels: hero/elevated, default surface, recessed/muted)
 - **The swap test**: Would replacing your template-specific styles with nothing make this indistinguishable from the raw standard template? If yes, push the aesthetic further. (Template-specific CSS must define at least: 1 background atmosphere, 2+ semantic color aliases, and component-specific classes)
@@ -346,7 +346,7 @@ The following requirements CANNOT be waived:
 - MUST use the Lerian standard template (`standard.html`) as the foundation for every output
 - MUST include the Lerian logo in header and footer (inline SVG from the standard template)
 - MUST use Inter as the body font (loaded via Google Fonts)
-- MUST include the Lerian footer with "Generated with Ring"
+- MUST include the Lerian footer with "Generated with Bee"
 - MUST use the Lerian color palette (sunglow accent, zinc neutrals, semantic status colors)
 - MUST generate an HTML table for any data >3 columns or 4 rows
 - MUST always provide a browser-openable HTML file, never fallback to ASCII art if the threshold is met

@@ -1,5 +1,5 @@
 """
-Pytest fixtures for Ring installer tests.
+Pytest fixtures for Bee installer tests.
 
 Provides shared fixtures for testing adapters, transformers, utilities, and core functions.
 """
@@ -13,7 +13,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-# Ensure ring_installer is importable when running pytest from repo root.
+# Ensure bee_installer is importable when running pytest from repo root.
 INSTALLER_ROOT = Path(__file__).resolve().parents[1]
 if str(INSTALLER_ROOT) not in sys.path:
     sys.path.insert(0, str(INSTALLER_ROOT))
@@ -57,21 +57,21 @@ def fixtures_path() -> Path:
 
 
 @pytest.fixture
-def tmp_ring_root(tmp_path: Path, fixtures_path: Path) -> Path:
+def tmp_bee_root(tmp_path: Path, fixtures_path: Path) -> Path:
     """
-    Create a temporary Ring source directory with test fixtures.
+    Create a temporary Bee source directory with test fixtures.
 
     This fixture copies the test fixtures to a temporary directory,
-    simulating a Ring installation for testing.
+    simulating a Bee installation for testing.
 
     Returns:
-        Path to temporary Ring root with test components.
+        Path to temporary Bee root with test components.
     """
-    ring_root = tmp_path / "ring"
-    ring_root.mkdir()
+    bee_root = tmp_path / "bee"
+    bee_root.mkdir()
 
     # Create marketplace.json
-    marketplace_dir = ring_root / ".claude-plugin"
+    marketplace_dir = bee_root / ".claude-plugin"
     marketplace_dir.mkdir()
 
     marketplace_content = {
@@ -79,7 +79,7 @@ def tmp_ring_root(tmp_path: Path, fixtures_path: Path) -> Path:
         "plugins": [
             {
                 "name": "bee-default",
-                "description": "Core Ring plugin",
+                "description": "Core Bee plugin",
                 "version": "1.0.0",
                 "source": "./default"
             },
@@ -96,7 +96,7 @@ def tmp_ring_root(tmp_path: Path, fixtures_path: Path) -> Path:
         json.dump(marketplace_content, f, indent=2)
 
     # Create default plugin structure
-    default_plugin = ring_root / "default"
+    default_plugin = bee_root / "default"
     default_plugin.mkdir()
 
     # Copy fixtures to default plugin
@@ -114,10 +114,10 @@ def tmp_ring_root(tmp_path: Path, fixtures_path: Path) -> Path:
                         shutil.copy2(file, dst / file.name)
 
     # Create test-plugin with minimal structure
-    test_plugin = ring_root / "test-plugin"
+    test_plugin = bee_root / "test-plugin"
     test_plugin.mkdir()
 
-    return ring_root
+    return bee_root
 
 
 @pytest.fixture
@@ -438,7 +438,7 @@ def transform_context():
     Returns:
         Function that creates TransformContext instances.
     """
-    from ring_installer.transformers.base import TransformContext
+    from bee_installer.transformers.base import TransformContext
 
     def _create_context(
         platform: str = "claude",
@@ -470,14 +470,14 @@ def mock_platform_detection():
     Yields:
         Dictionary of mocked detection functions.
     """
-    with patch("ring_installer.utils.platform_detect._detect_claude") as mock_claude, \
-         patch("ring_installer.utils.platform_detect._detect_codex") as mock_codex, \
-         patch("ring_installer.utils.platform_detect._detect_factory") as mock_factory, \
-         patch("ring_installer.utils.platform_detect._detect_cursor") as mock_cursor, \
-         patch("ring_installer.utils.platform_detect._detect_cline") as mock_cline, \
-         patch("ring_installer.utils.platform_detect._detect_opencode") as mock_opencode:
+    with patch("bee_installer.utils.platform_detect._detect_claude") as mock_claude, \
+         patch("bee_installer.utils.platform_detect._detect_codex") as mock_codex, \
+         patch("bee_installer.utils.platform_detect._detect_factory") as mock_factory, \
+         patch("bee_installer.utils.platform_detect._detect_cursor") as mock_cursor, \
+         patch("bee_installer.utils.platform_detect._detect_cline") as mock_cline, \
+         patch("bee_installer.utils.platform_detect._detect_opencode") as mock_opencode:
 
-        from ring_installer.utils.platform_detect import PlatformInfo
+        from bee_installer.utils.platform_detect import PlatformInfo
 
         # Default: no platforms installed
         mock_claude.return_value = PlatformInfo(

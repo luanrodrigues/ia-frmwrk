@@ -19,7 +19,7 @@ args:
 
 # Sample Command
 
-Execute this command to test the Ring installer.
+Execute this command to test the Bee installer.
 
 ## Usage
 
@@ -55,5 +55,5 @@ With options:
 
 ## Related
 
-- See also: `ring:helper-agent`
-- Related skill: `ring:sample-skill`
+- See also: `bee:helper-agent`
+- Related skill: `bee:sample-skill`

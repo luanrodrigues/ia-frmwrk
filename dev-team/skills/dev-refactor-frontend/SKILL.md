@@ -82,8 +82,8 @@ else:
 **Default URLs (used when `standards_path` is not provided):**
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/CLAUDE.md
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/CLAUDE.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md
 </fetch_required>
 
 Fetch URLs above and extract: Agent Modification Verification requirements, Anti-Rationalization Tables requirements, Critical Rules, and Frontend Standards.
@@ -959,7 +959,7 @@ Total finding count MUST match total issues from Step 4.5
 ### Bee Standard Reference
 **Standard:** {standards-file}.md -> Section: {section-name}
 **Pattern:** {pattern-name}
-**URL:** https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/{file}.md
+**URL:** https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/{file}.md
 
 ### Required Changes
 1. {action item 1 - what to change}
@@ -1068,7 +1068,7 @@ Before proceeding to Step 7, verify:
 ### Bee Standard Reference
 | Standard File | Section | URL |
 |---------------|---------|-----|
-| {file}.md | {section} | [Link](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/{file}.md) |
+| {file}.md | {section} | [Link](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/{file}.md) |
 
 ### Required Actions
 1. [ ] {action 1 - specific change to make}

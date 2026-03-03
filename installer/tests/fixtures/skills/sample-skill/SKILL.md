@@ -1,12 +1,12 @@
 <!--
-NOTE: This fixture intentionally uses ambiguous ring: shorthand to test the adapter
+NOTE: This fixture intentionally uses ambiguous bee: shorthand to test the adapter
 transformation logic. DO NOT change to  format.
 See installer/bee_installer/adapters/factory.py for transformation tests.
 -->
 ---
 name: sample-skill
 description: |
-  A sample skill for testing the Ring multi-platform installer.
+  A sample skill for testing the Bee multi-platform installer.
   This skill demonstrates the full frontmatter structure.
 
 trigger: |
@@ -29,7 +29,7 @@ related:
 
 # Sample Skill
 
-This is a sample skill used for testing the Ring installer.
+This is a sample skill used for testing the Bee installer.
 
 ## Purpose
 
@@ -40,7 +40,7 @@ This skill demonstrates:
 
 ## Usage
 
-Use the `ring:sample-skill` skill when you need to:
+Use the `bee:sample-skill` skill when you need to:
 
 1. Test the installation process
 2. Validate transformer output
@@ -52,10 +52,10 @@ The skill uses the Task tool to dispatch subagents:
 
 ```python
 # Example subagent dispatch
-Task.dispatch("ring:helper-agent", prompt="Process data")
+Task.dispatch("bee:helper-agent", prompt="Process data")
 ```
 
 ## References
 
-- Related skill: `ring:related-skill`
-- Agent reference: "ring:sample-agent"
+- Related skill: `bee:related-skill`
+- Agent reference: "bee:sample-agent"

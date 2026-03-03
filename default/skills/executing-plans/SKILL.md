@@ -1,5 +1,5 @@
 ---
-name: ring:executing-plans
+name: bee:executing-plans
 description: |
   Controlled plan execution with human review checkpoints - loads plan, executes
   in batches, pauses for feedback. Supports one-go (autonomous) or batch modes.
@@ -10,15 +10,15 @@ trigger: |
   - Need structured checkpoints during implementation
 
 skip_when: |
-  - Same session with independent tasks → use ring:subagent-driven-development
-  - No plan exists → use ring:writing-plans first
-  - Plan needs revision → use ring:brainstorming first
+  - Same session with independent tasks → use bee:subagent-driven-development
+  - No plan exists → use bee:writing-plans first
+  - Plan needs revision → use bee:brainstorming first
 
 sequence:
-  after: [ring:writing-plans, ring:pre-dev-task-breakdown]
+  after: [bee:writing-plans, bee:pre-dev-task-breakdown]
 
 related:
-  similar: [ring:subagent-driven-development]
+  similar: [bee:subagent-driven-development]
 ---
 
 # Executing Plans
@@ -33,7 +33,7 @@ Load plan, review critically, choose execution mode, execute tasks with code rev
 - **One-go (autonomous):** Execute all batches continuously with code review, report only at completion
 - **Batch (with review):** Execute one batch, code review, pause for human feedback, repeat
 
-**Announce at start:** "I'm using the ring:executing-plans skill to implement this plan."
+**Announce at start:** "I'm using the bee:executing-plans skill to implement this plan."
 
 ## The Process
 
@@ -142,12 +142,12 @@ User saying "don't wait", "don't ask questions", or "just execute" does NOT skip
 ### Step 3: Execute Batch
 **Default: First 3 tasks**
 
-**Agent Selection:** Backend Go → `ring:backend-engineer-golang` | Backend TS → `ring:backend-engineer-typescript` | Frontend → `ring:frontend-bff-engineer-typescript` | Infra → `ring:devops-engineer` | Testing → `ring:qa-analyst` | Reliability → `ring:sre`
+**Agent Selection:** Backend Go → `bee:backend-engineer-golang` | Backend TS → `bee:backend-engineer-typescript` | Frontend → `bee:frontend-bff-engineer-typescript` | Infra → `bee:devops-engineer` | Testing → `bee:qa-analyst` | Reliability → `bee:sre`
 
 For each task: Check context switch (Step 2.5) → Mark in_progress → Dispatch to agent with working_directory → Follow plan steps exactly → Run verifications → Mark completed
 
 ### Step 4: Run Code Review
-**After each batch, REQUIRED:** Use ring:requesting-code-review (all 6 reviewers in parallel)
+**After each batch, REQUIRED:** Use bee:requesting-code-review (all 6 reviewers in parallel)
 
 **Handle by severity:**
 - **Critical/High/Medium:** Fix immediately (no TODO) → re-run all 6 reviewers → repeat until resolved

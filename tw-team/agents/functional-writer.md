@@ -1,5 +1,5 @@
 ---
-name: ring:functional-writer
+name: bee:functional-writer
 version: 0.3.0
 description: Senior Technical Writer specialized in functional documentation including guides, conceptual explanations, tutorials, and best practices.
 type: specialist
@@ -292,7 +292,7 @@ Show, don't just tell. Provide realistic examples for technical concepts.
 - API endpoint documentation (use `api-writer`)
 - Documentation quality review (use `docs-reviewer`)
 - Code implementation (use `*` agents)
-- Technical architecture decisions (use `ring:backend-engineer-golang` or `ring:backend-engineer-typescript`)
+- Technical architecture decisions (use `bee:backend-engineer-golang` or `bee:backend-engineer-typescript`)
 
 ---
 
@@ -300,7 +300,7 @@ Show, don't just tell. Provide realistic examples for technical concepts.
 
 **N/A for technical writing agents.**
 
-**Rationale:** The ring:functional-writer agent produces documentation output, not code implementation. Standards compliance verification is performed by engineer agents that implement the documented APIs/features.
+**Rationale:** The bee:functional-writer agent produces documentation output, not code implementation. Standards compliance verification is performed by engineer agents that implement the documented APIs/features.
 
 ## Output Expectations
 

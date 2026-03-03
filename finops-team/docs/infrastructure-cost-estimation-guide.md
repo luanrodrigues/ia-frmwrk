@@ -29,7 +29,7 @@ This document is the **single source of truth** for infrastructure cost estimati
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                      SKILL (Orchestrator)                        │
-│                ring:infrastructure-cost-estimation               │
+│                bee:infrastructure-cost-estimation               │
 │                                                                  │
 │  Role: Collect ALL data before dispatching agent                 │
 │  Principle: "Skill asks, Agent calculates"                       │
@@ -39,7 +39,7 @@ This document is the **single source of truth** for infrastructure cost estimati
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                      AGENT (Calculator)                          │
-│                ring:infrastructure-cost-estimator                │
+│                bee:infrastructure-cost-estimator                │
 │                                                                  │
 │  Role: Calculate costs, never ask questions                      │
 │  Principle: "Pure calculation, no interaction"                   │
@@ -220,7 +220,7 @@ Total Data Transfer: R$ 607/month
 
 **CRITICAL: Data is read at runtime, NOT hardcoded.**
 
-The skill reads actual CPU/memory values from LerianStudio/helm repository at runtime, ensuring:
+The skill reads actual CPU/memory values from LerianStudio/helm repository at runtime, ensubee:
 - Always current values (no stale data)
 - Smaller prompt size
 - Single source of truth
@@ -515,7 +515,7 @@ Cost per Customer = Total Component Cost ÷ Number of Customers Sharing
 
 Example:
   Valkey Total Cost: R$ 650
-  Customers Sharing: 5
+  Customers Shabee: 5
   Cost per Customer: R$ 650 ÷ 5 = R$ 130
 ```
 
@@ -691,7 +691,7 @@ Status: ✅ OK (plenty of headroom)
                               ▼
 ┌──────────────────────────────────────────────────────────────────┐
 │ Step 5: Skill Dispatches Agent with ALL Data                     │
-│ Task(subagent_type="ring:infrastructure-cost-estimator",         │
+│ Task(subagent_type="bee:infrastructure-cost-estimator",         │
 │      prompt="ALL DATA PROVIDED...")                              │
 │ Includes: Actual values from LerianStudio/helm, Environments     │
 └──────────────────────────────────────────────────────────────────┘
@@ -758,7 +758,7 @@ If any NO → Ask user first, then dispatch.
 
 ```yaml
 Task tool:
-  subagent_type: "ring:infrastructure-cost-estimator"
+  subagent_type: "bee:infrastructure-cost-estimator"
   model: "opus"
   prompt: |
     Calculate infrastructure costs and profitability.

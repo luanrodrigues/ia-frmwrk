@@ -30,7 +30,7 @@ related:
 
 ## Overview
 
-See [CLAUDE.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/CLAUDE.md) for canonical validation and gate requirements. This skill collects metrics and generates improvement reports.
+See [CLAUDE.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/CLAUDE.md) for canonical validation and gate requirements. This skill collects metrics and generates improvement reports.
 
 Continuous improvement system that tracks development cycle effectiveness through assertiveness scores, identifies recurring failure patterns, and generates actionable improvement suggestions.
 

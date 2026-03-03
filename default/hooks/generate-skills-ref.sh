@@ -123,7 +123,7 @@ categorize_skill() {
 
 # Generate markdown output
 generate_markdown() {
-    echo "# Ring Skills Quick Reference"
+    echo "# Bee Skills Quick Reference"
     echo ""
     echo "> **Note:** Python unavailable. Using bash fallback parser."
     echo "> Install Python + PyYAML for full output with categories."
@@ -161,7 +161,7 @@ generate_markdown() {
     echo "## Usage"
     echo ""
     echo "To use a skill: Use the Skill tool with skill name"
-    echo "Example: \`ring:brainstorming\`"
+    echo "Example: \`bee:brainstorming\`"
 
     # Output stats to stderr (like Python version)
     echo "" >&2

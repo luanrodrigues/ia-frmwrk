@@ -1,5 +1,5 @@
 ---
-name: ring:finops-analyzer
+name: bee:finops-analyzer
 version: 1.2.0
 description: Senior Regulatory Compliance Analyst specializing in Brazilian financial regulatory template analysis and field mapping validation (Gates 1-2). Expert in BACEN, RFB, and Open Banking compliance.
 type: specialist
@@ -414,7 +414,7 @@ You have access to critical regulatory documentation and data dictionaries:
 
 **N/A for FinOps specialist agents.**
 
-**Rationale:** The ring:finops-analyzer agent produces regulatory analysis output, not code implementation. Standards compliance verification is performed by engineer agents.
+**Rationale:** The bee:finops-analyzer agent produces regulatory analysis output, not code implementation. Standards compliance verification is performed by engineer agents.
 
 ---
 

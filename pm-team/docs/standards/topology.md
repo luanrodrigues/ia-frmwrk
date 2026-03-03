@@ -1,6 +1,6 @@
 # Project Topology Standards
 
-Standards for project structure discovery and multi-module coordination in Ring workflows.
+Standards for project structure discovery and multi-module coordination in Bee workflows.
 
 ---
 
@@ -144,7 +144,7 @@ docs/pre-dev/{feature}/
 
 **Target:** backend
 **Working Directory:** packages/api
-**Agent:** ring:backend-engineer-golang
+**Agent:** bee:backend-engineer-golang
 
 ...task details...
 ```
@@ -317,10 +317,10 @@ API Pattern determines how the frontend communicates with backend services and a
 
 | API Pattern | Frontend Tasks | Agent |
 |-------------|----------------|-------|
-| `direct` | UI components, pages, forms | `ring:frontend-engineer` |
-| `direct` | Server Actions, data fetching | `ring:frontend-engineer` (Next.js Server Components) |
-| `bff` | API routes, data aggregation | `ring:frontend-bff-engineer-typescript` |
-| `bff` | UI components, pages | `ring:frontend-engineer` |
+| `direct` | UI components, pages, forms | `bee:frontend-engineer` |
+| `direct` | Server Actions, data fetching | `bee:frontend-engineer` (Next.js Server Components) |
+| `bff` | API routes, data aggregation | `bee:frontend-bff-engineer-typescript` |
+| `bff` | UI components, pages | `bee:frontend-engineer` |
 
 ### Pattern in TopologyConfig
 

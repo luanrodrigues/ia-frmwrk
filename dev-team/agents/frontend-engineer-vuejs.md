@@ -159,7 +159,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 
 | Setting            | Value                                                                                                    |
 | ------------------ | -------------------------------------------------------------------------------------------------------- |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-vuejs.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend-vuejs.md` |
 | **Standards File** | frontend-vuejs.md                                                                                        |
 
 **Example sections from frontend-vuejs.md to check:**
@@ -179,7 +179,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 ## Standards Loading (MANDATORY)
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-vuejs.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend-vuejs.md
 </fetch_required>
 
 MUST WebFetch the URL above before any implementation work.
@@ -292,7 +292,7 @@ All sections are mandatory—see standards-coverage-table.md for the authoritati
 
 | Setting            | Value                                                                                                    |
 | ------------------ | -------------------------------------------------------------------------------------------------------- |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-vuejs.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend-vuejs.md` |
 | **Standards File** | frontend-vuejs.md                                                                                        |
 | **Prompt**         | "Extract all Vue/Nuxt frontend standards, patterns, and requirements"                                    |
 
@@ -1141,7 +1141,7 @@ See [shared-patterns/standards-coverage-table.md](../skills/shared-patterns/stan
 
 ### When Invoked from bee:dev-refactor
 
-See [docs/AGENT_DESIGN.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/docs/AGENT_DESIGN.md) for canonical output schema requirements.
+See [docs/AGENT_DESIGN.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/AGENT_DESIGN.md) for canonical output schema requirements.
 
 When invoked from the `bee:dev-refactor` skill with a codebase-report.md, you MUST produce a Standards Compliance section comparing the frontend implementation against Bee Frontend Vue Standards.
 

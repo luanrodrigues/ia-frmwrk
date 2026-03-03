@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Session utilities for Ring hooks
+# Session utilities for Bee hooks
 # Provides centralized session ID handling
 
 # Sanitize session ID for safe use in filenames

@@ -82,7 +82,7 @@ Works for both SQL databases (tables) and MongoDB (collections).
 
 ## Date and Time
 
-Current date/time when rendering:
+Current date/time when rendebee:
 ```django
 {% date_time "dd/MM/YYYY HH:mm" %}
 ```

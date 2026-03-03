@@ -143,7 +143,7 @@ DECIDE WHEN: [specific condition] → [what to decide]
 ## Standards Loading (MANDATORY)
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/CLAUDE.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/CLAUDE.md
 </fetch_required>
 
 WebFetch CLAUDE.md before any analysis work.
@@ -154,7 +154,7 @@ WebFetch CLAUDE.md before any analysis work.
 
 | Setting | Value |
 |---------|-------|
-| **WebFetch URL** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/CLAUDE.md` |
+| **WebFetch URL** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/CLAUDE.md` |
 | **Extract** | "Agent Modification Verification" and "Anti-Rationalization Tables" sections |
 | **Purpose** | Load current agent requirements to validate against |
 

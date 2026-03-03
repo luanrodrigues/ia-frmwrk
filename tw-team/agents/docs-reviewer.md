@@ -1,5 +1,5 @@
 ---
-name: ring:docs-reviewer
+name: bee:docs-reviewer
 version: 0.3.0
 description: Documentation Quality Reviewer specialized in checking voice, tone, structure, completeness, and technical accuracy of documentation.
 type: reviewer
@@ -330,9 +330,9 @@ When reviewing documentation:
 
 ## What This Agent Does NOT Handle
 
-- Writing new documentation (use `ring:functional-writer` or `ring:api-writer`)
+- Writing new documentation (use `bee:functional-writer` or `bee:api-writer`)
 - Technical implementation (use `*` agents)
-- Code review (use `ring:code-reviewer`)
+- Code review (use `bee:code-reviewer`)
 
 ---
 
@@ -340,7 +340,7 @@ When reviewing documentation:
 
 **N/A for technical writing agents.**
 
-**Rationale:** The ring:docs-reviewer agent produces documentation output, not code implementation. Standards compliance verification is performed by engineer agents that implement the documented APIs/features.
+**Rationale:** The bee:docs-reviewer agent produces documentation output, not code implementation. Standards compliance verification is performed by engineer agents that implement the documented APIs/features.
 
 ## Output Expectations
 

@@ -1,5 +1,5 @@
 ---
-name: ring:pre-dev-feature
+name: bee:pre-dev-feature
 description: Lightweight 5-gate pre-dev workflow for small features (<2 days)
 argument-hint: "[feature-name]"
 ---
@@ -300,16 +300,16 @@ mkdir -p docs/pre-dev/<feature-name>
 
 ## Gate 0: Research Phase (Lightweight)
 
-**Skill:** ring:pre-dev-research
+**Skill:** bee:pre-dev-research
 
 Even small features benefit from quick research:
 
 1. Determine research mode (usually **modification** for small features)
 2. Dispatch 4 research agents in PARALLEL (quick mode):
-   - ring:repo-research-analyst (codebase patterns)
-   - ring:best-practices-researcher (external best practices)
-   - ring:framework-docs-researcher (tech stack docs)
-   - ring:product-designer (UX research, mode: ux-research)
+   - bee:repo-research-analyst (codebase patterns)
+   - bee:best-practices-researcher (external best practices)
+   - bee:framework-docs-researcher (tech stack docs)
+   - bee:product-designer (UX research, mode: ux-research)
 3. Save to: `docs/pre-dev/<feature-name>/research.md`
 4. Get human approval before proceeding
 
@@ -323,7 +323,7 @@ Even small features benefit from quick research:
 
 ## Gate 1: PRD Creation + UX Validation
 
-**Skill:** ring:pre-dev-prd-creation
+**Skill:** bee:pre-dev-prd-creation
 
 1. Ask user to describe the feature (what problem does it solve, who are the users, what's the business value)
 2. Create PRD document with:
@@ -351,7 +351,7 @@ Even small features benefit from quick research:
 
 ## Gate 1.5: Design Validation (if feature has UI)
 
-**Skill:** ring:pre-dev-design-validation
+**Skill:** bee:pre-dev-design-validation
 
 **Purpose:** Verify UX specifications are complete before investing in technical architecture.
 
@@ -405,7 +405,7 @@ Even small features benefit from quick research:
 
 ## Gate 2: TRD Creation (Skipping Feature Map)
 
-**Skill:** ring:pre-dev-trd-creation
+**Skill:** bee:pre-dev-trd-creation
 
 1. Load PRD from `docs/pre-dev/<feature-name>/prd.md`
 2. Note: No Feature Map exists (small track) - map PRD features directly to components
@@ -428,7 +428,7 @@ Even small features benefit from quick research:
 
 ## Gate 3: Task Breakdown (Skipping API/Data/Deps)
 
-**Skill:** ring:pre-dev-task-breakdown
+**Skill:** bee:pre-dev-task-breakdown
 
 1. Load PRD from `docs/pre-dev/<feature-name>/prd.md`
 2. Load TRD from `docs/pre-dev/<feature-name>/trd.md`
@@ -437,10 +437,10 @@ Even small features benefit from quick research:
    - Auto-detect tech stack from repository files (go.mod, package.json, pyproject.toml, etc.)
    - Note: Small Track has no Dependency Map, so inspect repo directly
    - Dispatch specialized agent based on detected stack:
-     - Go (go.mod detected) → ring:backend-engineer-golang
-     - TypeScript/Node (package.json + backend) → ring:backend-engineer-typescript
-     - React/Next.js (package.json + frontend) → ring:frontend-engineer
-     - Mixed/Unknown → ring:codebase-explorer
+     - Go (go.mod detected) → bee:backend-engineer-golang
+     - TypeScript/Node (package.json + backend) → bee:backend-engineer-typescript
+     - React/Next.js (package.json + frontend) → bee:frontend-engineer
+     - Mixed/Unknown → bee:codebase-explorer
    - Agent analyzes scope and estimates AI-agent-hours per task
    - Output includes: AI estimate (hours), confidence level (High/Medium/Low), detailed breakdown
 5. Create task breakdown document with:
@@ -463,7 +463,7 @@ Even small features benefit from quick research:
 
 ## Gate 4: Delivery Planning (MANDATORY)
 
-**Skill:** ring:pre-dev-delivery-planning
+**Skill:** bee:pre-dev-delivery-planning
 
 1. Load tasks from `docs/pre-dev/<feature-name>/tasks.md` (with AI-agent-hours estimates)
 2. Ask user for delivery inputs:
@@ -567,12 +567,12 @@ Next steps:
 
 | Gate | Skill | Purpose | New Outputs |
 |------|-------|---------|-------------|
-| 0 | `ring:pre-dev-research` | Domain, technical, and UX research (4 agents) | research.md (includes Product/UX Research) |
-| 1 | `ring:pre-dev-prd-creation` | Product requirements + UX validation + wireframes | prd.md, ux-criteria.md, wireframes/ (if UI) |
-| 1.5 | `ring:pre-dev-design-validation` | Verify UX specs complete (if UI) | design-validation.md |
-| 2 | `ring:pre-dev-trd-creation` | Technical requirements | trd.md |
-| 3 | `ring:pre-dev-task-breakdown` | Task decomposition | tasks.md |
-| 4 | `ring:pre-dev-delivery-planning` | Delivery roadmap |
+| 0 | `bee:pre-dev-research` | Domain, technical, and UX research (4 agents) | research.md (includes Product/UX Research) |
+| 1 | `bee:pre-dev-prd-creation` | Product requirements + UX validation + wireframes | prd.md, ux-criteria.md, wireframes/ (if UI) |
+| 1.5 | `bee:pre-dev-design-validation` | Verify UX specs complete (if UI) | design-validation.md |
+| 2 | `bee:pre-dev-trd-creation` | Technical requirements | trd.md |
+| 3 | `bee:pre-dev-task-breakdown` | Task decomposition | tasks.md |
+| 4 | `bee:pre-dev-delivery-planning` | Delivery roadmap |
 
 ### Execution Pattern
 

@@ -1,5 +1,5 @@
 ---
-name: ring:systematic-debugging
+name: bee:systematic-debugging
 description: |
   Four-phase debugging framework - root cause investigation, pattern analysis,
   hypothesis testing, implementation. Ensures understanding before attempting fixes.
@@ -69,7 +69,7 @@ Complete each phase before proceeding to the next.
 
 **Fix root cause, not symptom:**
 
-1. **Create Failing Test** - Simplest reproduction. **Use ring:test-driven-development skill.**
+1. **Create Failing Test** - Simplest reproduction. **Use bee:test-driven-development skill.**
 2. **Implement Single Fix** - Address root cause only. ONE change at a time. No "while I'm here" improvements.
 3. **Verify Fix** - Test passes? No other tests broken? Issue resolved?
 4. **If Fix Doesn't Work** - Count fixes. If < 3: Return to Phase 1. **If ≥ 3: STOP → Architecture review required.**
@@ -120,7 +120,7 @@ Complete each phase before proceeding to the next.
 
 **Required sub-skills:**
 - **root-cause-tracing** - When error is deep in call stack (Phase 1, Step 5)
-- **ring:test-driven-development** - For failing test case (Phase 4, Step 1)
+- **bee:test-driven-development** - For failing test case (Phase 4, Step 1)
 
 **Complementary:**
 - **defense-in-depth** - Add validation after finding root cause

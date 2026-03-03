@@ -80,7 +80,7 @@ Action: Cannot proceed. Orchestrator must reinvoke with model="opus"
 
 **Orchestrator Requirement:**
 ```
-Task(subagent_type="ring:delivery-reporter", model="opus", ...)  # REQUIRED
+Task(subagent_type="bee:delivery-reporter", model="opus", ...)  # REQUIRED
 ```
 
 **Rationale:** Repository analysis requires sophisticated data extraction, business value interpretation, and HTML generation with visual design that demands Opus-level reasoning capabilities.
@@ -90,7 +90,7 @@ Task(subagent_type="ring:delivery-reporter", model="opus", ...)  # REQUIRED
 ## Standards Loading (MANDATORY)
 
 <fetch_required>
-Skill tool: ring:delivery-reporting
+Skill tool: bee:delivery-reporting
 </fetch_required>
 
 MUST load the skill above before any analysis work.
@@ -98,20 +98,20 @@ MUST load the skill above before any analysis work.
 **Purpose:**
 - Gate 2.5 workflow: Deep Code Analysis methodology
 - Anti-rationalization patterns: Speed vs quality protections
-- Visual identity templates: Lerian, Ring, Custom color schemes
+- Visual identity templates: Lerian, Bee, Custom color schemes
 - HTML slide generation: Template structure and CSS
 
 **If skill loading fails:**
 
 <blocker>
-BLOCKER: Cannot load ring:delivery-reporting skill
+BLOCKER: Cannot load bee:delivery-reporting skill
 Agent: delivery-reporter
 STOP: Immediately report to orchestrator
 Reason: Workflow gates and quality frameworks unavailable
 </blocker>
 
 **Verification:**
-- [ ] Skill ring:delivery-reporting loaded successfully
+- [ ] Skill bee:delivery-reporting loaded successfully
 - [ ] Gate 2.5 instructions available
 - [ ] Visual identity templates accessible
 - [ ] Anti-rationalization tables loaded
@@ -219,14 +219,14 @@ Invoke this agent when the task involves:
 ### Format 1: org/repo (RECOMMENDED)
 ```
 LerianStudio/midaz
-LerianStudio/product-console
+LerianStudio/midaz
 ```
 **Use case:** Standard GitHub format, works for any organization
 
 ### Format 2: Full URL (SUPPORTED)
 ```
 https://github.com/LerianStudio/midaz
-https://github.com/LerianStudio/product-console
+https://github.com/LerianStudio/midaz
 ```
 **Use case:** When copying from browser, supports other Git hosts
 
@@ -334,13 +334,13 @@ cat README.md | head -50
 
 | Repository Type | Agent to Use | Purpose |
 |----------------|--------------|---------|
-| **Backend Go** | `ring:backend-engineer-golang` | Analyze Go code changes, architecture, patterns |
-| **Backend TypeScript/Node** | `ring:backend-engineer-typescript` | Analyze TS/Node code, API changes |
-| **Frontend React/Next** | `ring:frontend-engineer` | Analyze UI/UX changes, component architecture |
-| **Infrastructure** | `ring:devops-engineer` | Analyze deployment, config, infrastructure changes |
-| **Tests** | `ring:qa-analyst` | Analyze test coverage, quality improvements |
-| **Documentation** | `ring:functional-writer` | Analyze docs quality, completeness |
-| **Unknown/Mixed** | `ring:codebase-explorer` | Deep exploration of codebase structure |
+| **Backend Go** | `bee:backend-engineer-golang` | Analyze Go code changes, architecture, patterns |
+| **Backend TypeScript/Node** | `bee:backend-engineer-typescript` | Analyze TS/Node code, API changes |
+| **Frontend React/Next** | `bee:frontend-engineer` | Analyze UI/UX changes, component architecture |
+| **Infrastructure** | `bee:devops-engineer` | Analyze deployment, config, infrastructure changes |
+| **Tests** | `bee:qa-analyst` | Analyze test coverage, quality improvements |
+| **Documentation** | `bee:functional-writer` | Analyze docs quality, completeness |
+| **Unknown/Mixed** | `bee:codebase-explorer` | Deep exploration of codebase structure |
 
 #### Analysis Workflow Per Repository
 
@@ -354,7 +354,7 @@ For each significant PR (>100 lines changed):
 2. **Dispatch appropriate specialized agent**
    ```
    Task(
-     subagent_type="ring:backend-engineer-golang",  # or appropriate agent
+     subagent_type="bee:backend-engineer-golang",  # or appropriate agent
      model="opus",
      prompt="""
      Analyze PR #{number} in {repo_name}.
@@ -455,7 +455,7 @@ For each significant PR (>100 lines changed):
 }
 ```
 
-### Ring Neutral (Corporate)
+### Bee Neutral (Corporate)
 
 ```css
 :root {
@@ -787,7 +787,7 @@ Before delivering report, MUST verify:
 
 ## Standards Compliance Report
 
-**MANDATORY: Verify compliance with ring:delivery-reporting skill before delivering report.**
+**MANDATORY: Verify compliance with bee:delivery-reporting skill before delivering report.**
 
 ### Compliance Verification Checklist
 

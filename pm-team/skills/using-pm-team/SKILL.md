@@ -1,5 +1,5 @@
 ---
-name: ring:using-pm-team
+name: bee:using-pm-team
 description: |
   12 pre-dev workflow skills + 4 research agents organized into Small Track (4 gates, <2 days) and
   Large Track (9 gates, 2+ days) for systematic feature planning with research-first approach.
@@ -10,16 +10,16 @@ trigger: |
   - User requests "plan a feature"
 
 skip_when: |
-  - Quick exploratory work → ring:brainstorming may suffice
+  - Quick exploratory work → bee:brainstorming may suffice
   - Bug fix with known solution → direct implementation
   - Trivial change (<1 hour) → skip formal planning
 ---
 
-# Using Ring Team-Product: Pre-Dev Workflow & Delivery Tracking
+# Using Bee Team-Product: Pre-Dev Workflow & Delivery Tracking
 
-The bee-pm-team plugin provides 12 pre-development planning skills and 4 research agents. Use them via `Skill tool: "ring:gate-name"` or via slash commands.
+The bee-pm-team plugin provides 12 pre-development planning skills and 4 research agents. Use them via `Skill tool: "bee:gate-name"` or via slash commands.
 
-**Remember:** Follow the **ORCHESTRATOR principle** from `ring:using-ring`. Dispatch pre-dev workflow to handle planning; plan thoroughly before coding.
+**Remember:** Follow the **ORCHESTRATOR principle** from `bee:using-bee`. Dispatch pre-dev workflow to handle planning; plan thoroughly before coding.
 
 ## Pre-Dev Philosophy
 
@@ -50,11 +50,11 @@ Pre-dev workflow ensures:
 
 | Gate | Skill                       | Output      |
 | ---- | --------------------------- | ----------- |
-| 0    | ring:pre-dev-research       | research.md |
-| 1    | ring:pre-dev-prd-creation   | PRD.md      |
-| 2    | ring:pre-dev-trd-creation   | TRD.md      |
-| 3    | ring:pre-dev-task-breakdown | tasks.md    |
-| 4    | ring:pre-dev-delivery-planning | delivery-roadmap.md |
+| 0    | bee:pre-dev-research       | research.md |
+| 1    | bee:pre-dev-prd-creation   | PRD.md      |
+| 2    | bee:pre-dev-trd-creation   | TRD.md      |
+| 3    | bee:pre-dev-task-breakdown | tasks.md    |
+| 4    | bee:pre-dev-delivery-planning | delivery-roadmap.md |
 
 **Planning time:** 60-90 minutes
 
@@ -71,16 +71,16 @@ Pre-dev workflow ensures:
 
 | Gate | Skill                         | Output          |
 | ---- | ----------------------------- | --------------- |
-| 0    | ring:pre-dev-research         | research.md     |
-| 1    | ring:pre-dev-prd-creation     | PRD.md          |
-| 2    | ring:pre-dev-feature-map      | feature-map.md  |
-| 3    | ring:pre-dev-trd-creation     | TRD.md          |
-| 4    | ring:pre-dev-api-design       | API.md          |
-| 5    | ring:pre-dev-data-model       | data-model.md   |
-| 6    | ring:pre-dev-dependency-map   | dependencies.md |
-| 7    | ring:pre-dev-task-breakdown   | tasks.md        |
-| 8    | ring:pre-dev-subtask-creation | subtasks/       |
-| 9    | ring:pre-dev-delivery-planning | delivery-roadmap.md |
+| 0    | bee:pre-dev-research         | research.md     |
+| 1    | bee:pre-dev-prd-creation     | PRD.md          |
+| 2    | bee:pre-dev-feature-map      | feature-map.md  |
+| 3    | bee:pre-dev-trd-creation     | TRD.md          |
+| 4    | bee:pre-dev-api-design       | API.md          |
+| 5    | bee:pre-dev-data-model       | data-model.md   |
+| 6    | bee:pre-dev-dependency-map   | dependencies.md |
+| 7    | bee:pre-dev-task-breakdown   | tasks.md        |
+| 8    | bee:pre-dev-subtask-creation | subtasks/       |
+| 9    | bee:pre-dev-delivery-planning | delivery-roadmap.md |
 
 **Planning time:** 2.5-5 hours
 
@@ -88,24 +88,24 @@ Pre-dev workflow ensures:
 
 | Gate | Skill                         | What It Does                                                         |
 | ---- | ----------------------------- | -------------------------------------------------------------------- |
-| 0    | ring:pre-dev-research         | Parallel research: codebase patterns, best practices, framework docs |
-| 1    | ring:pre-dev-prd-creation     | Business requirements (WHAT/WHY), user stories, success metrics      |
-| 2    | ring:pre-dev-feature-map      | Feature relationships, dependencies, deployment order (Large only)   |
-| 3    | ring:pre-dev-trd-creation     | Technical architecture, technology-agnostic patterns                 |
-| 4    | ring:pre-dev-api-design       | API contracts, operations, error handling (Large only)               |
-| 5    | ring:pre-dev-data-model       | Entities, relationships, ownership (Large only)                      |
-| 6    | ring:pre-dev-dependency-map   | Explicit tech choices, versions, licenses (Large only)               |
-| 7    | ring:pre-dev-task-breakdown   | Value-driven tasks with success criteria                             |
-| 8    | ring:pre-dev-subtask-creation | Zero-context 2-5 min implementation steps (Large only)               |
-| 9    | ring:pre-dev-delivery-planning | Delivery roadmap with timeline, critical path, resource allocation (MANDATORY for both tracks) |
+| 0    | bee:pre-dev-research         | Parallel research: codebase patterns, best practices, framework docs |
+| 1    | bee:pre-dev-prd-creation     | Business requirements (WHAT/WHY), user stories, success metrics      |
+| 2    | bee:pre-dev-feature-map      | Feature relationships, dependencies, deployment order (Large only)   |
+| 3    | bee:pre-dev-trd-creation     | Technical architecture, technology-agnostic patterns                 |
+| 4    | bee:pre-dev-api-design       | API contracts, operations, error handling (Large only)               |
+| 5    | bee:pre-dev-data-model       | Entities, relationships, ownership (Large only)                      |
+| 6    | bee:pre-dev-dependency-map   | Explicit tech choices, versions, licenses (Large only)               |
+| 7    | bee:pre-dev-task-breakdown   | Value-driven tasks with success criteria                             |
+| 8    | bee:pre-dev-subtask-creation | Zero-context 2-5 min implementation steps (Large only)               |
+| 9    | bee:pre-dev-delivery-planning | Delivery roadmap with timeline, critical path, resource allocation (MANDATORY for both tracks) |
 
 ## Research Agents (Gate 0)
 
 | Agent                            | Focus                                             |
 | -------------------------------- | ------------------------------------------------- |
-| `ring:repo-research-analyst`     | Codebase patterns, docs/solutions/ knowledge base |
-| `ring:best-practices-researcher` | Web search, Context7 for best practices           |
-| `ring:framework-docs-researcher` | Tech stack versions, official patterns            |
+| `bee:repo-research-analyst`     | Codebase patterns, docs/solutions/ knowledge base |
+| `bee:best-practices-researcher` | Web search, Context7 for best practices           |
+| `bee:framework-docs-researcher` | Tech stack versions, official patterns            |
 
 **Research Modes:**
 
@@ -119,7 +119,7 @@ After planning and during execution, track progress:
 
 | Skill                           | Command                 | Purpose                                                   |
 | ------------------------------- | ----------------------- | --------------------------------------------------------- |
-| `ring:delivery-status-tracking` | `/bee:delivery-status` | Evidence-based progress analysis against delivery roadmap |
+| `bee:delivery-status-tracking` | `/bee:delivery-status` | Evidence-based progress analysis against delivery roadmap |
 
 **What it does:**
 
@@ -150,9 +150,9 @@ After planning and during execution, track progress:
 ### Via Skills (Manual)
 
 ```
-Skill tool: "ring:pre-dev-prd-creation"
+Skill tool: "bee:pre-dev-prd-creation"
 (Review output)
-Skill tool: "ring:pre-dev-trd-creation"
+Skill tool: "bee:pre-dev-trd-creation"
 (Review output)
 ```
 
@@ -181,17 +181,17 @@ docs/pre-dev/{feature}/
 
 | Plugin                    | Use For                                     |
 | ------------------------- | ------------------------------------------- |
-| ring:using-ring (default) | ORCHESTRATOR principle for ALL tasks        |
-| ring:using-dev-team       | Developer specialists for reviewing designs |
-| ring:using-finops-team    | Regulatory compliance planning              |
-| ring:using-tw-team        | Documentation for features                  |
+| bee:using-bee (default) | ORCHESTRATOR principle for ALL tasks        |
+| bee:using-dev-team       | Developer specialists for reviewing designs |
+| bee:using-finops-team    | Regulatory compliance planning              |
+| bee:using-tw-team        | Documentation for features                  |
 
 **Combined with:**
 
-- `ring:execute-plan` – Run tasks in batches
-- `ring:write-plan` – Generate plan from scratch
+- `bee:execute-plan` – Run tasks in batches
+- `bee:write-plan` – Generate plan from scratch
 - `*-engineer` – Specialist review of design
-- `ring:requesting-code-review` – Post-implementation review
+- `bee:requesting-code-review` – Post-implementation review
 
 ## ORCHESTRATOR Principle
 
@@ -202,7 +202,7 @@ docs/pre-dev/{feature}/
 
 ### Good (ORCHESTRATOR):
 
-> "I need to plan payment system. Let me run /bee:pre-dev-full, then dispatch ring:backend-engineer-golang to review the architecture."
+> "I need to plan payment system. Let me run /bee:pre-dev-full, then dispatch bee:backend-engineer-golang to review the architecture."
 
 ### Bad (OPERATOR):
 
@@ -214,7 +214,7 @@ docs/pre-dev/{feature}/
 
 This skill is an orchestration/navigation skill for the pm-team plugin. It does NOT require WebFetch of language-specific standards.
 
-**However**, when dispatching implementation agents (e.g., `ring:backend-engineer-golang`), those agents MUST load their respective standards via WebFetch before proceeding.
+**However**, when dispatching implementation agents (e.g., `bee:backend-engineer-golang`), those agents MUST load their respective standards via WebFetch before proceeding.
 
 ---
 
@@ -258,7 +258,7 @@ These requirements are NON-NEGOTIABLE:
 
 | User Says | Your Response |
 |-----------|---------------|
-| "Skip planning, just start coding" | "Cannot proceed. Planning prevents 10x rework cost. I'll start with ring:pre-dev-research to gather context first." |
+| "Skip planning, just start coding" | "Cannot proceed. Planning prevents 10x rework cost. I'll start with bee:pre-dev-research to gather context first." |
 | "We don't need PRD, requirements are obvious" | "Cannot skip PRD. 'Obvious' requirements cause scope creep. I'll create a focused PRD documenting what we're building and why." |
 | "Use Small Track, we're in a hurry" | "Cannot compromise on track selection. If feature meets Large Track criteria, I MUST use Large Track. Shortcuts now = rework later." |
 | "Skip research, we know the codebase" | "Cannot skip Gate 0. Research validates assumptions and finds existing patterns. Takes 30 mins, saves hours of reinvention." |
@@ -281,9 +281,9 @@ These requirements are NON-NEGOTIABLE:
 
 ## When This Skill Is Not Needed
 
-- Quick exploratory work where `ring:brainstorming` suffices
+- Quick exploratory work where `bee:brainstorming` suffices
 - Bug fix with known solution requiring no design changes
 - Trivial changes that take less than 1 hour
 - Documentation-only updates
 - Configuration changes with no code impact
-- Direct implementation after planning is already complete (use `ring:executing-plans` or `ring:dev-cycle` instead)
+- Direct implementation after planning is already complete (use `bee:executing-plans` or `bee:dev-cycle` instead)

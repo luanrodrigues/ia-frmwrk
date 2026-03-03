@@ -1,5 +1,5 @@
 ---
-name: ring:test-driven-development
+name: bee:test-driven-development
 description: |
   RED-GREEN-REFACTOR implementation methodology - write failing test first,
   minimal implementation to pass, then refactor. Ensures tests verify behavior.
@@ -44,15 +44,15 @@ prerequisites:
     severity: "warning"
 composition:
   works_well_with:
-    - skill: "ring:systematic-debugging"
+    - skill: "bee:systematic-debugging"
       when: "test reveals unexpected behavior or bug"
       transition: "Pause TDD at current phase, use systematic-debugging to find root cause, return to TDD after fix"
 
-    - skill: "ring:verification-before-completion"
+    - skill: "bee:verification-before-completion"
       when: "before marking test suite or feature complete"
       transition: "Run verification to ensure all tests pass, return to TDD if issues found"
 
-    - skill: "ring:requesting-code-review"
+    - skill: "bee:requesting-code-review"
       when: "after completing RED-GREEN-REFACTOR cycle for feature"
       transition: "Request review before merging, address feedback, mark complete"
 

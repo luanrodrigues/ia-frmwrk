@@ -41,7 +41,7 @@ When a review cycle completes, optionally record feedback:
 ## Review Quality Feedback
 
 **Review Date:** [YYYY-MM-DD]
-**Reviewer:** [ring:code-reviewer | ring:business-logic-reviewer | ring:security-reviewer | ring:test-reviewer | ring:nil-safety-reviewer | ring:consequences-reviewer]
+**Reviewer:** [bee:code-reviewer | bee:business-logic-reviewer | bee:security-reviewer | bee:test-reviewer | bee:nil-safety-reviewer | bee:consequences-reviewer]
 **Files Reviewed:** [count]
 
 ### Accuracy Assessment
