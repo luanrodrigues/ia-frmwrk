@@ -329,8 +329,8 @@ Brief description of what this endpoint does.
 
 - Conceptual documentation (use `functional-writer`)
 - Documentation review (use `docs-reviewer`)
-- API implementation (use `bee:backend-engineer-golang` or `bee:backend-engineer-typescript`)
-- API design decisions (use `bee:backend-engineer-golang` or `bee:backend-engineer-typescript`)
+- API implementation (use `bee:backend-engineer-typescript`)
+- API design decisions (use `bee:backend-engineer-typescript`)
 
 ---
 

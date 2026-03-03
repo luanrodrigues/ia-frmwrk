@@ -199,7 +199,6 @@ Use when you need expert depth in specific domains:
 
 | Agent                                   | Specialization               | Technologies                                       |
 | --------------------------------------- | ---------------------------- | -------------------------------------------------- |
-| `bee:backend-engineer-golang`          | Go microservices & APIs      | Fiber, gRPC, PostgreSQL, MongoDB, Kafka, OAuth2    |
 | `bee:backend-engineer-typescript`      | TypeScript/Node.js backend   | Express, NestJS, Prisma, TypeORM, GraphQL          |
 | `bee:devops-engineer`                  | Infrastructure & CI/CD       | Docker, Kubernetes, Terraform, GitHub Actions      |
 | `bee:frontend-bff-engineer-typescript` | BFF & React/Next.js frontend | Next.js API Routes, Clean Architecture, DDD, React |
@@ -353,7 +352,6 @@ These enforce quality standards:
 | General code quality review       | 6 parallel reviewers via `/bee:codereview` |
 | Implementation planning           | `bee:write-plan`                           |
 | Deep codebase analysis            | `bee:codebase-explorer`                    |
-| Go backend expertise              | `bee:backend-engineer-golang`              |
 | TypeScript/Node.js backend        | `bee:backend-engineer-typescript`          |
 | Infrastructure/DevOps             | `bee:devops-engineer`                      |
 | React/Next.js frontend & BFF      | `bee:frontend-bff-engineer-typescript`     |

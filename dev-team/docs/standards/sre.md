@@ -245,7 +245,7 @@ ctx := otel.GetTextMapPropagator().Extract(
 
 All Go services **MUST** integrate OpenTelemetry using `lib-commons/v2`. This ensures consistent observability patterns across all Lerian Studio services.
 
-> **Reference**: See `dev-team/docs/standards/golang.md` for complete lib-commons integration patterns.
+> **Reference**: See the lib-commons v2 documentation for complete integration patterns.
 
 ### Required Imports
 

@@ -7,7 +7,7 @@ model: opus
 last_updated: 2026-03-02
 changelog:
   - 2.0.0: Upgraded to primary backend agent. Added WebFetch strategy for php.md, task-type routing table, Standards Coverage Table binding (46 sections), precedence decision table, error classification (Business vs Technical), Pest data providers, RabbitMQ reconnection strategy, Laravel container instrumentation patterns.
-  - 1.0.0: Initial release - adapted from backend-engineer-golang v1.7.0 for PHP ecosystem
+  - 1.0.0: Initial release for PHP ecosystem
 output_schema:
   format: "markdown"
   required_sections:

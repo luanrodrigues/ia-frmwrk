@@ -51,7 +51,6 @@ Read `docs/pre-dev/{feature-name}/trd.md` and extract: `deployment.model`, `tech
 
 | Standard | URL | Purpose |
 |----------|-----|---------|
-| **golang.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/golang.md` | Go coding patterns |
 | **typescript.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/typescript.md` | TypeScript patterns |
 | **frontend.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md` | Frontend patterns |
 | **devops.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/devops.md` | DevOps patterns |
@@ -157,7 +156,6 @@ If language cannot be auto-detected, use AskUserQuestion with tech stack options
 
 | Selection | Standards to Load |
 |-----------|-------------------|
-| Go Backend | golang.md + devops.md + sre.md |
 | TypeScript Backend | typescript.md + devops.md + sre.md |
 | TypeScript Frontend | frontend.md + devops.md |
 | Full-Stack TypeScript | typescript.md + frontend.md + devops.md + sre.md |
@@ -173,61 +171,23 @@ If language cannot be auto-detected, use AskUserQuestion with tech stack options
 
 **If TRD specifies authentication/authorization requirements, include these dependencies:**
 
-| Tech Stack | Auth Requirement | Mandatory Dependency | Reference |
-|------------|------------------|---------------------|-----------|
-| Go Backend | User authentication | `github.com/LerianStudio/lib-auth/v2` | `golang.md` → Access Manager Integration |
-| Go Backend | Service-to-service auth | `github.com/LerianStudio/lib-auth/v2` | `golang.md` → Access Manager Integration |
-| Go Backend | User + permissions (RBAC) | `github.com/LerianStudio/lib-auth/v2` | `golang.md` → Access Manager Integration |
-
-**For Go services, the dependency entry MUST include:**
-
-```markdown
-### Authentication
-
-**Package:** `github.com/LerianStudio/lib-auth/v2@vX.Y.Z`
-**Purpose:** Integration with Lerian Access Manager (plugin-auth + identity)
-**Rationale:** Standard authentication library for all Lerian Go services
-**Environment Variables:** PLUGIN_AUTH_ADDRESS, PLUGIN_AUTH_ENABLED
-**Additional (if S2S):** CLIENT_ID, CLIENT_SECRET
-**Reference:** See `golang.md` → Access Manager Integration for implementation patterns
-```
-
-**CRITICAL:** Go services MUST use lib-auth for authentication. Direct integration with plugin-auth is FORBIDDEN.
+**Authentication dependencies are defined per tech stack in the appropriate language standards.**
 
 **Implementation Requirement (from TRD):**
-- Every protected endpoint MUST have route middleware: `auth.Authorize(applicationName, resource, action)`
+- Every protected endpoint MUST have route middleware for authorization
 - Middleware is applied per-route, not globally
-- See `golang.md` → Access Manager Integration → Router Setup for patterns
+- See the appropriate language standards for implementation patterns
 
 ### Licensing Dependencies (Mandatory for Licensed Products)
 
 **If TRD specifies this is a licensed product/plugin, include these dependencies:**
 
-| Tech Stack | License Requirement | Mandatory Dependency | Reference |
-|------------|---------------------|---------------------|-----------|
-| Go Backend | Single-org (global) license | `github.com/LerianStudio/lib-license-go/v2` | `golang.md` → License Manager Integration |
-| Go Backend | Multi-org license | `github.com/LerianStudio/lib-license-go/v2` | `golang.md` → License Manager Integration |
-
-**For Go services, the dependency entry MUST include:**
-
-```markdown
-### Licensing
-
-**Package:** `github.com/LerianStudio/lib-license-go/v2/middleware@vX.Y.Z`
-**Purpose:** Integration with Lerian License Manager for product licensing
-**Rationale:** Standard licensing library for all Lerian licensed Go services
-**Environment Variables:** LICENSE_KEY, ORGANIZATION_IDS
-**Mode:** Global (ORGANIZATION_IDS=global) or Multi-org (comma-separated org IDs)
-**Reference:** See `golang.md` → License Manager Integration for implementation patterns
-```
-
-**CRITICAL:** Go services MUST use lib-license-go for licensing. Custom license validation is FORBIDDEN.
+**Licensing dependencies are defined per tech stack in the appropriate language standards.**
 
 **Implementation Requirement (from TRD):**
-- License middleware applied GLOBALLY: `f.Use(lc.Middleware())`
-- Middleware applied early in chain (first after Fiber creation)
-- Graceful shutdown MUST include: `licenseClient.GetLicenseManagerShutdown()`
-- See `golang.md` → License Manager Integration → Router Setup for patterns
+- License middleware applied globally, early in the chain
+- Graceful shutdown MUST include license manager cleanup
+- See the appropriate language standards for implementation patterns
 
 ## License & Cost Templates
 
@@ -291,8 +251,8 @@ These requirements are NON-NEGOTIABLE:
 - MUST specify exact versions for ALL dependencies
 - MUST scan for CVEs before finalizing selections
 - MUST verify license compatibility for commercial use
-- MUST include lib-auth for Go services requiring authentication
-- MUST include lib-license-go for Go services requiring licensing
+- MUST include appropriate auth libraries for services requiring authentication
+- MUST include appropriate license libraries for services requiring licensing
 - CANNOT proceed to Gate 7 with missing versions or unresolved CVEs
 
 ---

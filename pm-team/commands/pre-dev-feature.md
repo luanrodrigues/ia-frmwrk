@@ -107,7 +107,7 @@ Topology Configuration:
   - "User + permissions" - Full user auth with role-based access control
   - "Service-to-service auth" - Machine-to-machine authentication only
   - "Full (user + service-to-service)" - Both user and service auth
-- **Note:** For Go services requiring auth, reference `golang.md` → Access Manager Integration section during TRD creation (Gate 2)
+- **Note:** For services requiring auth, reference the appropriate language standards → Access Manager Integration section during TRD creation (Gate 2)
 
 **Question 3 (CONDITIONAL):** "Is this a licensed product/plugin?"
 - **Auto-detection:** Before asking, check if `go.mod` contains `github.com/LerianStudio/lib-license-go`
@@ -117,7 +117,7 @@ Topology Configuration:
 - Options:
   - "No" - Not a licensed product (open source, internal tool, etc.)
   - "Yes" - Licensed product that requires License Manager integration
-- **Note:** For Go services requiring license validation, reference `golang.md` → License Manager Integration section during TRD creation (Gate 2)
+- **Note:** For services requiring license validation, reference the appropriate language standards → License Manager Integration section during TRD creation (Gate 2)
 
 **Why auto-detection?** Access Manager and License Manager are project-level infrastructure decisions, not feature-level. Once integrated, all features in the project inherit them.
 
@@ -437,7 +437,6 @@ Even small features benefit from quick research:
    - Auto-detect tech stack from repository files (go.mod, package.json, pyproject.toml, etc.)
    - Note: Small Track has no Dependency Map, so inspect repo directly
    - Dispatch specialized agent based on detected stack:
-     - Go (go.mod detected) → bee:backend-engineer-golang
      - TypeScript/Node (package.json + backend) → bee:backend-engineer-typescript
      - React/Next.js (package.json + frontend) → bee:frontend-engineer
      - Mixed/Unknown → bee:codebase-explorer

@@ -2,7 +2,7 @@
 
 **Generated:** 2026-02-27
 **Auditor:** Claude (Factory AI)
-**Scope:** bee-dev-team plugin (11 agents, 19 skills)
+**Scope:** bee-dev-team plugin (10 agents, 19 skills)
 **Standards Reference:** CLAUDE.md Agent Modification Verification
 
 ---
@@ -11,13 +11,13 @@
 
 | Metric | Value |
 |--------|-------|
-| **Total Files Audited** | 30 (11 agents + 19 skills) |
+| **Total Files Audited** | 29 (10 agents + 19 skills) |
 | **Average Agent Compliance Score** | 92.5% |
 | **Average Skill Compliance Score** | 89.5% |
 | **Critical Gaps** | 0 |
 | **High Severity Gaps** | 3 |
 | **Medium Severity Gaps** | 8 |
-| **Low Severity Gaps** | 12 |
+| **Low Severity Gaps** | 11 |
 
 **Overall Assessment:** The dev-team plugin demonstrates **strong compliance** with CLAUDE.md standards. All agents have the required sections, use strong language (MUST, REQUIRED, CANNOT), and include anti-rationalization tables. Minor improvements are needed in a few areas.
 
@@ -27,15 +27,15 @@
 
 ### Required Sections (from CLAUDE.md Agent Modification Verification)
 
-| Section | Agents (11) | Skills (19) | Notes |
+| Section | Agents (10) | Skills (19) | Notes |
 |---------|-------------|-------------|-------|
-| Standards Loading (MANDATORY) | 11/11 ✅ | 17/19 ⚠️ | 2 skills missing explicit WebFetch URLs |
-| Blocker Criteria - STOP and Report | 11/11 ✅ | 18/19 ⚠️ | using-dev-team uses pattern reference |
-| Cannot Be Overridden | 11/11 ✅ | 15/19 ⚠️ | 4 skills use shared-patterns reference |
-| Severity Calibration | 10/11 ⚠️ | 12/19 ⚠️ | Some use inline tables, some reference shared |
-| Pressure Resistance | 11/11 ✅ | 18/19 ⚠️ | Excellent shared-patterns usage |
-| Anti-Rationalization Table | 11/11 ✅ | 19/19 ✅ | All have tables or reference shared-patterns |
-| When Not Needed / Skip When | 9/11 ⚠️ | 17/19 ⚠️ | Some agents missing explicit section |
+| Standards Loading (MANDATORY) | 10/10 ✅ | 17/19 ⚠️ | 2 skills missing explicit WebFetch URLs |
+| Blocker Criteria - STOP and Report | 10/10 ✅ | 18/19 ⚠️ | using-dev-team uses pattern reference |
+| Cannot Be Overridden | 10/10 ✅ | 15/19 ⚠️ | 4 skills use shared-patterns reference |
+| Severity Calibration | 9/10 ⚠️ | 12/19 ⚠️ | Some use inline tables, some reference shared |
+| Pressure Resistance | 10/10 ✅ | 18/19 ⚠️ | Excellent shared-patterns usage |
+| Anti-Rationalization Table | 10/10 ✅ | 19/19 ✅ | All have tables or reference shared-patterns |
+| When Not Needed / Skip When | 8/10 ⚠️ | 17/19 ⚠️ | Some agents missing explicit section |
 
 ### Strong Language Usage
 
@@ -63,7 +63,6 @@
 
 | Agent | Version | Score | Missing Sections | Critical Gaps |
 |-------|---------|-------|------------------|---------------|
-| bee:backend-engineer-golang | v1.7.0 | 95% | None | None |
 | bee:backend-engineer-typescript | v1.5.0 | 95% | None | None |
 | bee:devops-engineer | v1.4.0 | 92% | None | None |
 | bee:frontend-bff-engineer-typescript | v2.5.0 | 95% | None | None |
@@ -171,18 +170,17 @@
 
 | GAP ID | File | Issue | Fix |
 |--------|------|-------|-----|
-| GAP-L001 | backend-engineer-golang | 47 sections is very long | Consider splitting into core vs extended |
-| GAP-L002 | backend-engineer-typescript | Could use more examples | Add 2-3 more code examples per section |
-| GAP-L003 | devops-engineer | Missing cloud-specific guidance | Add AWS/GCP/Azure patterns |
-| GAP-L004 | frontend-bff-engineer-typescript | Dual-mode complexity | Add decision tree for mode selection |
-| GAP-L005 | frontend-engineer | sindarian-ui priority could be clearer | Add visual decision flowchart |
-| GAP-L006 | qa-analyst | Chaos testing section brief | Expand Toxiproxy examples |
-| GAP-L007 | qa-analyst-frontend | New (v1.0.0) - may need iteration | Monitor for gaps in practice |
-| GAP-L008 | dev-chaos-testing | Toxiproxy setup could be more detailed | Add docker-compose example |
-| GAP-L009 | dev-cycle | 10-gate complexity | Add visual gate flow diagram |
-| GAP-L010 | dev-cycle-frontend | 9-gate mirrors backend closely | Document key differences prominently |
-| GAP-L011 | dev-multi-tenant | Very detailed (good) but long | Add TL;DR summary at top |
-| GAP-L012 | dev-refactor | Long skill file | Consider splitting into sub-skills |
+| GAP-L001 | backend-engineer-typescript | Could use more examples | Add 2-3 more code examples per section |
+| GAP-L002 | devops-engineer | Missing cloud-specific guidance | Add AWS/GCP/Azure patterns |
+| GAP-L003 | frontend-bff-engineer-typescript | Dual-mode complexity | Add decision tree for mode selection |
+| GAP-L004 | frontend-engineer | sindarian-ui priority could be clearer | Add visual decision flowchart |
+| GAP-L005 | qa-analyst | Chaos testing section brief | Expand Toxiproxy examples |
+| GAP-L006 | qa-analyst-frontend | New (v1.0.0) - may need iteration | Monitor for gaps in practice |
+| GAP-L007 | dev-chaos-testing | Toxiproxy setup could be more detailed | Add docker-compose example |
+| GAP-L008 | dev-cycle | 10-gate complexity | Add visual gate flow diagram |
+| GAP-L009 | dev-cycle-frontend | 9-gate mirrors backend closely | Document key differences prominently |
+| GAP-L010 | dev-multi-tenant | Very detailed (good) but long | Add TL;DR summary at top |
+| GAP-L011 | dev-refactor | Long skill file | Consider splitting into sub-skills |
 
 ---
 
@@ -249,7 +247,6 @@
 
 | File | Why It's Exemplary |
 |------|-------------------|
-| bee:backend-engineer-golang | Most comprehensive standards coverage (47 sections) |
 | bee:dev-cycle | Excellent orchestrator pattern with state persistence |
 | bee:dev-multi-tenant | Detailed gate-by-gate implementation guide |
 | bee:dev-refactor | Strong mandatory gap principle enforcement |

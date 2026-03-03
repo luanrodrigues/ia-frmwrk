@@ -91,11 +91,11 @@ Each task MUST include:
 
 **Target:** backend
 **Working Directory:** packages/api
-**Agent:** bee:backend-engineer-golang
+**Agent:** bee:backend-engineer-typescript
 
 **Files to Create/Modify:**
-- `packages/api/internal/handlers/auth.go`
-- `packages/api/internal/services/auth_service.go`
+- `packages/api/src/handlers/auth.ts`
+- `packages/api/src/services/auth-service.ts`
 
 ...rest of task...
 ```
@@ -104,7 +104,7 @@ Each task MUST include:
 
 | Target | When | Agent |
 |--------|------|-------|
-| `backend` | API endpoints, services, data layer, CLI | `bee:backend-engineer-{golang,typescript}` |
+| `backend` | API endpoints, services, data layer, CLI | `bee:backend-engineer-{typescript,php}` |
 | `frontend` | UI components, pages, BFF routes | See [Frontend Tasks (api_pattern aware)](#frontend-tasks-api_pattern-aware) |
 | `shared` | CI/CD, configs, docs, cross-module | `bee:devops-engineer` or `bee:general-purpose` |
 
@@ -122,8 +122,8 @@ Each task MUST include:
 
 | Task Type | Agent |
 |-----------|-------|
-| Go backend API/services | `bee:backend-engineer-golang` |
 | TypeScript backend API/services | `bee:backend-engineer-typescript` |
+| PHP backend API/services | `bee:backend-engineer-php` |
 
 ### Frontend Tasks (api_pattern aware)
 

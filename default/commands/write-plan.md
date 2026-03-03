@@ -85,8 +85,8 @@ Plans specify recommended agents for execution:
 
 | Task Type | Recommended Agent |
 |-----------|-------------------|
-| Backend (Go) | `bee:backend-engineer-golang` |
 | Backend (TypeScript) | `bee:backend-engineer-typescript` |
+| Backend (PHP) | `bee:backend-engineer-php` |
 | Frontend (BFF/API Routes) | `frontend-bff-engineer-typescript` |
 | Infrastructure | `bee:devops-engineer` |
 | Testing | `bee:qa-analyst` |

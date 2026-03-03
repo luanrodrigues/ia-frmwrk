@@ -33,7 +33,7 @@ output_schema:
       required: true
 ```
 
-**Used by:** `bee:backend-engineer-golang`, `bee:backend-engineer-typescript`, `frontend-bff-engineer-typescript`, `bee:devops-engineer`, `bee:qa-analyst`, `bee:sre`, `finops-automation`
+**Used by:** `bee:backend-engineer-typescript`, `frontend-bff-engineer-typescript`, `bee:devops-engineer`, `bee:qa-analyst`, `bee:sre`, `finops-automation`
 
 ---
 
@@ -204,7 +204,6 @@ All bee-dev-team agents support Standards Compliance:
 
 | Agent | Standards Source | Categories Checked |
 |-------|------------------|-------------------|
-| `bee:backend-engineer-golang` | `golang.md` | lib-commons, Error Handling, Logging, Config |
 | `bee:backend-engineer-typescript` | `typescript.md` | Type Safety, Error Handling, Validation |
 | `bee:devops-engineer` | `devops.md` | Dockerfile, docker-compose, CI/CD |
 | `frontend-bff-engineer-typescript` | `frontend.md` | Component patterns, State management |

@@ -33,7 +33,7 @@ Bee operates on three core principles:
 │  │                          Bee Marketplace                                  │  │
 │  │  ┌──────────────────────┐  ┌──────────────────────┐                       │  │
 │  │  │ bee-default         │  │ bee-dev-team        │                       │  │
-│  │  │ Skills(26) Agents(8) │  │ Skills(21) Agents(11)│                       │  │
+│  │  │ Skills(26) Agents(8) │  │ Skills(21) Agents(10)│                       │  │
 │  │  │ Cmds(13) Hooks/Lib   │  │ Cmds(7)              │                       │  │
 │  │  └──────────────────────┘  └──────────────────────┘                       │  │
 │  │  ┌──────────────────────┐  ┌──────────────────────┐                       │  │
@@ -75,7 +75,7 @@ _Versions managed in `.claude-plugin/marketplace.json`_
 | Plugin               | Description                          | Components                       |
 | -------------------- | ------------------------------------ | -------------------------------- |
 | **bee-default**     | Core skills library                  | 26 skills, 8 agents, 13 commands |
-| **bee-dev-team**    | Developer agents                     | 21 skills, 11 agents, 7 commands |
+| **bee-dev-team**    | Developer agents                     | 21 skills, 10 agents, 7 commands |
 | **bee-finops-team** | FinOps regulatory compliance         | 7 skills, 3 agents               |
 | **bee-pm-team**     | Product planning workflows           | 13 skills, 4 agents, 3 commands  |
 | **bee-pmo-team**    | PMO portfolio management specialists | 9 skills, 6 agents, 4 commands   |
@@ -129,7 +129,6 @@ default/agents/
 
 ```
 dev-team/agents/
-├── backend-engineer-golang.md         # Go backend specialist (`bee:backend-engineer-golang`)
 ├── backend-engineer-typescript.md     # TypeScript backend specialist (`bee:backend-engineer-typescript`)
 ├── devops-engineer.md                 # DevOps specialist (`bee:devops-engineer`)
 ├── frontend-bff-engineer-typescript.md # BFF specialist (`bee:frontend-bff-engineer-typescript`)
@@ -202,7 +201,6 @@ All bee-dev-team agents include a `## Standards Compliance` section in their out
 
 **Affected Agents:**
 
-- `bee:backend-engineer-golang` → loads `golang.md`
 - `bee:backend-engineer-typescript` → loads `typescript.md`
 - `bee:devops-engineer` → loads `devops.md`
 - `bee:frontend-bff-engineer-typescript` → loads `typescript.md`
@@ -804,12 +802,12 @@ _Component counts reflect current state; plugin versions managed in `.claude-plu
 | Skills (bee-tw-team)     | 7          | `tw-team/skills/`      |
 | **Total Skills**          | **83**     | **All plugins**        |
 | Agents (bee-default)     | 8          | `default/agents/`      |
-| Agents (bee-dev-team)    | 11         | `dev-team/agents/`     |
+| Agents (bee-dev-team)    | 10         | `dev-team/agents/`     |
 | Agents (bee-finops-team) | 3          | `finops-team/agents/`  |
 | Agents (bee-pm-team)     | 4          | `pm-team/agents/`      |
 | Agents (bee-pmo-team)    | 6          | `pmo-team/agents/`     |
 | Agents (bee-tw-team)     | 3          | `tw-team/agents/`      |
-| **Total Agents**          | **35**     | **All plugins**        |
+| **Total Agents**          | **34**     | **All plugins**        |
 | Commands (bee-default)   | 13         | `default/commands/`    |
 | Commands (bee-dev-team)  | 7          | `dev-team/commands/`   |
 | Commands (bee-pm-team)   | 3          | `pm-team/commands/`    |

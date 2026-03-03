@@ -38,8 +38,8 @@ This command will ask you for:
 2. **Semantic analysis** (accurate): Specialized agents compare scope vs code
 
 ### Specialized Agent Dispatch
-- **Go projects** → `bee:backend-engineer-golang`
 - **Frontend projects** → `bee:frontend-engineer`
+- **TypeScript Backend projects** → `bee:backend-engineer-typescript`
 - **Full-stack** → Multiple agents per task type
 - **Unknown** → `bee:codebase-explorer`
 

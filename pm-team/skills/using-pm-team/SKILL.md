@@ -202,7 +202,7 @@ docs/pre-dev/{feature}/
 
 ### Good (ORCHESTRATOR):
 
-> "I need to plan payment system. Let me run /bee:pre-dev-full, then dispatch bee:backend-engineer-golang to review the architecture."
+> "I need to plan payment system. Let me run /bee:pre-dev-full, then dispatch bee:backend-engineer-typescript to review the architecture."
 
 ### Bad (OPERATOR):
 
@@ -214,7 +214,7 @@ docs/pre-dev/{feature}/
 
 This skill is an orchestration/navigation skill for the pm-team plugin. It does NOT require WebFetch of language-specific standards.
 
-**However**, when dispatching implementation agents (e.g., `bee:backend-engineer-golang`), those agents MUST load their respective standards via WebFetch before proceeding.
+**However**, when dispatching implementation agents (e.g., `bee:backend-engineer-typescript`), those agents MUST load their respective standards via WebFetch before proceeding.
 
 ---
 

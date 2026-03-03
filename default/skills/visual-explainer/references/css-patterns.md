@@ -1149,7 +1149,7 @@ Extended patterns for code-level diff views with line numbers, added/removed ind
     <summary>Why This Matters</summary>
     <div class="collapsible__body">
       <strong>Problem:</strong> Missing error context makes debugging impossible<br>
-      <strong>Standard:</strong> golang.md -> Error Handling<br>
+      <strong>Standard:</strong> Language Standards -> Error Handling<br>
       <strong>Impact:</strong> Production incidents take 3x longer to diagnose
     </div>
   </details>

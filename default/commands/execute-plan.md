@@ -58,8 +58,8 @@ You will be asked to choose between:
 - Default batch size: first 3 tasks
 - Each task is marked in_progress, executed, then completed
 - Dispatches to specialized agents when available:
-  - Backend Go: `bee:backend-engineer-golang`
   - Backend TypeScript: `bee:backend-engineer-typescript`
+  - Backend PHP: `bee:backend-engineer-php`
   - Frontend React/Next.js/BFF: `frontend-bff-engineer-typescript`
   - Infrastructure: `bee:devops-engineer`
   - Testing: `bee:qa-analyst`

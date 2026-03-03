@@ -107,7 +107,7 @@ Topology Configuration:
   - "User + permissions" - Full user auth with role-based access control
   - "Service-to-service auth" - Machine-to-machine authentication only
   - "Full (user + service-to-service)" - Both user and service auth
-- **Note:** For Go services requiring auth, reference `golang.md` → Access Manager Integration section during TRD creation (Gate 3) and Dependency Map (Gate 6)
+- **Note:** For services requiring auth, reference the appropriate language standards → Access Manager Integration section during TRD creation (Gate 3) and Dependency Map (Gate 6)
 
 **Question 3 (CONDITIONAL):** "Is this a licensed product/plugin?"
 - **Auto-detection:** Before asking, check if `go.mod` contains `github.com/LerianStudio/lib-license-go`
@@ -117,7 +117,7 @@ Topology Configuration:
 - Options:
   - "No" - Not a licensed product (open source, internal tool, etc.)
   - "Yes" - Licensed product that requires License Manager integration
-- **Note:** For Go services requiring license validation, reference `golang.md` → License Manager Integration section during TRD creation (Gate 3) and Dependency Map (Gate 6)
+- **Note:** For services requiring license validation, reference the appropriate language standards → License Manager Integration section during TRD creation (Gate 3) and Dependency Map (Gate 6)
 
 **Why auto-detection?** Access Manager and License Manager are project-level infrastructure decisions, not feature-level. Once integrated, all features in the project inherit them.
 
@@ -528,7 +528,6 @@ mkdir -p docs/pre-dev/<feature-name>
 2. Run AI-assisted time estimation:
    - Auto-detect tech stack from Dependency Map (if available) OR repository files (go.mod, package.json, etc.)
    - Dispatch specialized agent based on detected stack:
-     - Go (go.mod detected) → bee:backend-engineer-golang
      - TypeScript/Node (package.json + backend) → bee:backend-engineer-typescript
      - React/Next.js (package.json + frontend) → bee:frontend-engineer
      - Mixed/Unknown → bee:codebase-explorer

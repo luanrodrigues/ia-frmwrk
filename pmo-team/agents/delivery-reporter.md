@@ -334,7 +334,6 @@ cat README.md | head -50
 
 | Repository Type | Agent to Use | Purpose |
 |----------------|--------------|---------|
-| **Backend Go** | `bee:backend-engineer-golang` | Analyze Go code changes, architecture, patterns |
 | **Backend TypeScript/Node** | `bee:backend-engineer-typescript` | Analyze TS/Node code, API changes |
 | **Frontend React/Next** | `bee:frontend-engineer` | Analyze UI/UX changes, component architecture |
 | **Infrastructure** | `bee:devops-engineer` | Analyze deployment, config, infrastructure changes |
@@ -354,7 +353,7 @@ For each significant PR (>100 lines changed):
 2. **Dispatch appropriate specialized agent**
    ```
    Task(
-     subagent_type="bee:backend-engineer-golang",  # or appropriate agent
+     subagent_type="bee:backend-engineer-typescript",  # or appropriate agent
      model="opus",
      prompt="""
      Analyze PR #{number} in {repo_name}.

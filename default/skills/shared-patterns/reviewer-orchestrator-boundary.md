@@ -23,8 +23,8 @@ This document defines the mandatory separation of responsibilities between revie
 ┌─────────────────────────────┐          ┌─────────────────────────────────┐
 │         REVIEWERS           │          │     IMPLEMENTATION AGENTS       │
 │                             │          │                                 │
-│ • bee:code-reviewer         │          │ • bee:backend-engineer-golang      │
-│ • bee:business-logic-reviewer│          │ • bee:backend-engineer-typescript  │
+│ • bee:code-reviewer         │          │ • bee:backend-engineer-typescript  │
+│ • bee:business-logic-reviewer│          │ • bee:backend-engineer-php         │
 │ • bee:security-reviewer     │          │ • bee:frontend-engineer            │
 │ • bee:test-reviewer         │          │ • bee:devops-engineer              │
 │ • bee:nil-safety-reviewer   │          │ • bee:qa-analyst                   │

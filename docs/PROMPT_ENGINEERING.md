@@ -346,14 +346,14 @@ For EACH issue, output MUST include:
 **⛔ DO NOT hardcode line numbers.** Standards files change over time.
 
 **REQUIRED:** Derive exact `:{line_range}` values at runtime by:
-1. Reading the current standards file (e.g., `golang.md`, `typescript.md`)
+1. Reading the current standards file (e.g., `typescript.md`, `frontend.md`)
 2. Searching for the relevant section header
 3. Citing the actual line numbers from the live file
 
 **Example derivation:**
 ```
-Agent reads golang.md → Finds "## Configuration Loading" at line 99
-Agent cites: "Configuration Loading (golang.md:99-230)"
+Agent reads typescript.md → Finds "## Configuration Loading" at line 99
+Agent cites: "Configuration Loading (typescript.md:99-230)"
 ```
 
 ### Anti-Rationalization
@@ -395,7 +395,6 @@ The more assertive and explicit the language, the less room for AI to rationaliz
 ## Required Resources
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/golang.md
 https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/CLAUDE.md
 </fetch_required>
 
@@ -423,7 +422,7 @@ Any occurrence = IMMEDIATE REJECTION.
 
 ---
 
-<dispatch_required agent="bee:backend-engineer-golang">
+<dispatch_required agent="bee:backend-engineer-typescript">
 Implement user authentication endpoint with JWT validation.
 </dispatch_required>
 
@@ -431,7 +430,7 @@ MUST use Task tool with specified agent and model.
 
 ---
 
-<parallel_dispatch agents="bee:backend-engineer-golang, bee:qa-analyst, bee:devops-engineer, bee:sre">
+<parallel_dispatch agents="bee:backend-engineer-typescript, bee:qa-analyst, bee:devops-engineer, bee:sre">
 Analyze codebase against Bee standards. All agents receive same context:
 - Codebase Report: docs/bee:dev-refactor/{timestamp}/codebase-report.md
 - Project Rules: docs/PROJECT_RULES.md

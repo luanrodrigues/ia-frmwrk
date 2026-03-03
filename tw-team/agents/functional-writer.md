@@ -292,7 +292,7 @@ Show, don't just tell. Provide realistic examples for technical concepts.
 - API endpoint documentation (use `api-writer`)
 - Documentation quality review (use `docs-reviewer`)
 - Code implementation (use `*` agents)
-- Technical architecture decisions (use `bee:backend-engineer-golang` or `bee:backend-engineer-typescript`)
+- Technical architecture decisions (use `bee:backend-engineer-typescript`)
 
 ---
 

@@ -99,7 +99,7 @@ You are a Senior Site Reliability Engineer specialized in VALIDATING observabili
 
 | Component                      | Standard Section                                      |
 | ------------------------------ | ----------------------------------------------------- |
-| **FORBIDDEN Logging Patterns** | golang.md: Logging Standards (CRITICAL - Check FIRST) |
+| **FORBIDDEN Logging Patterns** | sre.md: Logging Standards (CRITICAL - Check FIRST)    |
 | Structured JSON Logging        | sre.md: Logging Standards                             |
 | OpenTelemetry Tracing          | sre.md: Tracing Standards                             |
 | Health Check Endpoints         | sre.md: Health Checks                                 |
@@ -121,7 +121,6 @@ You are a Senior Site Reliability Engineer specialized in VALIDATING observabili
 
 <fetch_required>
 https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/sre.md
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/golang.md
 </fetch_required>
 
 Any FORBIDDEN pattern found = CRITICAL issue, automatic FAIL verdict.
@@ -132,8 +131,8 @@ Any FORBIDDEN pattern found = CRITICAL issue, automatic FAIL verdict.
 
 | Language   | Standards File | Section to Load                       | Anchor                                                          |
 | ---------- | -------------- | ------------------------------------- | --------------------------------------------------------------- |
-| Go         | golang.md      | Logging                               | #logging                                                        |
 | TypeScript | sre.md         | Structured Logging with lib-common-js | #structured-logging-with-lib-common-js-mandatory-for-typescript |
+| PHP        | sre.md         | Structured Logging with Monolog       | #structured-logging-with-monolog-mandatory-for-php              |
 
 **Process:**
 
@@ -148,7 +147,7 @@ Any FORBIDDEN pattern found = CRITICAL issue, automatic FAIL verdict.
 ```markdown
 ## FORBIDDEN Patterns Acknowledged
 
-I have loaded [golang.md|sre.md] standards via WebFetch.
+I have loaded sre.md standards via WebFetch.
 
 ### From "[Logging Standards|Structured Logging]" section:
 
@@ -381,15 +380,13 @@ See standards-coverage-table.md for sections to check (see coverage table for ap
 | Setting                      | Value                                                                                        |
 | ---------------------------- | -------------------------------------------------------------------------------------------- |
 | **WebFetch URL (sre.md)**    | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/sre.md`    |
-| **WebFetch URL (golang.md)** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/golang.md` |
 | **Prompt**                   | "Extract all SRE/observability standards, patterns, and requirements"                        |
 
 **Required WebFetch for SRE validation:**
 
 1. `sre.md` - Logging, Tracing, Health Checks standards
-2. `golang.md` - FORBIDDEN logging patterns (for Go projects)
 
-**If any WebFetch fails → STOP. Report blocker. Do not use inline patterns.**
+**If WebFetch fails → STOP. Report blocker. Do not use inline patterns.**
 
 ### Standards Verification Output (MANDATORY - FIRST SECTION)
 
@@ -403,8 +400,7 @@ See standards-coverage-table.md for sections to check (see coverage table for ap
 | Check                      | Status          | Details                     |
 | -------------------------- | --------------- | --------------------------- |
 | PROJECT_RULES.md           | Found/Not Found | Path: docs/PROJECT_RULES.md |
-| Bee Standards (sre.md)    | Loaded          | 6 sections fetched          |
-| Bee Standards (golang.md) | Loaded          | For FORBIDDEN patterns      |
+| Bee Standards (sre.md)    | Loaded          | 7 sections fetched          |
 
 ### Precedence Decisions
 

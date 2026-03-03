@@ -1462,7 +1462,7 @@ IF coderabbit_results.overall_status == "ISSUES_FOUND":
             → Identify the correct agent for re-dispatch:
               - Check gate0_handoff.implementation_agent (if available)
               - OR infer from file type:
-                - *.go files → bee:backend-engineer-golang
+                - *.go files → general-purpose
                 - *.ts files (backend) → bee:backend-engineer-typescript
                 - *.ts/*.tsx files (frontend) → bee:frontend-engineer
                 - *.yaml/*.yml (infra) → bee:devops-engineer

@@ -39,7 +39,7 @@ When creating or modifying any agent in `*/agents/*.md`:
 All Bee components use the unified `bee:` prefix. Plugin differentiation is handled internally.
 
 - ✅ `bee:code-reviewer`
-- ✅ `bee:backend-engineer-golang`
+- ✅ `bee:backend-engineer-typescript`
 - ❌ `<missing bee prefix>` (FORBIDDEN: omitting the `bee:` prefix)
 - ❌ `bee-default:bee:code-reviewer` (deprecated plugin-specific prefix)
 
@@ -74,7 +74,7 @@ Before committing changes to dev-team/docs/standards/*.md:
     - Add/remove row: `| N | [Section Name](#anchor) | Description |`
     - Update numbering if needed
 [ ] 3. Did you update `dev-team/skills/shared-patterns/standards-coverage-table.md`?
-    - Find the agent's section index (e.g., "bee:backend-engineer-golang → golang.md")
+    - Find the agent's section index (e.g., "bee:backend-engineer-typescript → typescript.md")
     - Add/remove the section row
 [ ] 4. Do the section counts match?
     - Count `## ` headers in standards file (excluding meta-sections)
@@ -98,7 +98,6 @@ If any checkbox is no → Fix before committing.
 
 | Standards File  | Agents That Use It                                                                             |
 | --------------- | ---------------------------------------------------------------------------------------------- |
-| `golang.md`     | `bee:backend-engineer-golang`, `bee:qa-analyst`                                              |
 | `typescript.md` | `bee:backend-engineer-typescript`, `bee:frontend-bff-engineer-typescript`, `bee:qa-analyst` |
 | `frontend.md`   | `bee:frontend-engineer`, `bee:frontend-designer`                                             |
 | `devops.md`     | `bee:devops-engineer`                                                                         |
@@ -112,14 +111,13 @@ MUST match `dev-team/skills/shared-patterns/standards-coverage-table.md`. See th
 
 | Agent                                   | Standards File             |
 | --------------------------------------- | -------------------------- |
-| `bee:backend-engineer-golang`          | golang.md                  |
 | `bee:backend-engineer-typescript`      | typescript.md              |
 | `bee:frontend-bff-engineer-typescript` | typescript.md              |
 | `bee:frontend-engineer`                | frontend.md                |
 | `bee:frontend-designer`                | frontend.md                |
 | `bee:devops-engineer`                  | devops.md                  |
 | `bee:sre`                              | sre.md                     |
-| `bee:qa-analyst`                       | golang.md or typescript.md |
+| `bee:qa-analyst`                       | typescript.md              |
 
 **⛔ If section counts in skills don't match the coverage table → Update the skill.**
 
@@ -222,7 +220,7 @@ AI models naturally attempt to be "helpful" by making autonomous decisions. This
 | "[Common excuse AI might generate]" | [Why this thinking is incorrect] | **[MANDATORY action in bold]** |
 ```
 
-**Example from bee:backend-engineer-golang.md:**
+**Example from bee:backend-engineer-typescript.md:**
 
 ```markdown
 | Rationalization                          | Why It's WRONG                                     | Required Action           |
@@ -419,7 +417,7 @@ Bee is a comprehensive skills library and workflow system for AI agents that enf
 **Active Plugins:**
 
 - **bee-default**: 26 core skills, 13 slash commands, 8 specialized agents
-- **bee-dev-team**: 21 development skills, 7 slash commands, 11 developer agents (Backend Go, Backend TypeScript, DevOps, Frontend TypeScript, Frontend Designer, Frontend Engineer, QA Backend, QA Frontend, SRE, UI Engineer, Prompt Quality Reviewer)
+- **bee-dev-team**: 21 development skills, 7 slash commands, 10 developer agents (Backend TypeScript, DevOps, Frontend TypeScript, Frontend Designer, Frontend Engineer, QA Backend, QA Frontend, SRE, UI Engineer, Prompt Quality Reviewer)
 - **bee-pm-team**: 13 product management skills, 4 research agents, 3 slash commands (includes delivery planning + status tracking + Product Designer)
 - **bee-pmo-team**: 9 PMO skills, 4 slash commands, 6 PMO agents (Portfolio Manager, Resource Planner, Risk Analyst, Governance Specialist, Executive Reporter, Delivery Reporter)
 - **bee-finops-team**: 7 regulatory skills, 3 FinOps agents (Analyzer, Automation, Infrastructure Cost Estimator)
@@ -428,7 +426,7 @@ Bee is a comprehensive skills library and workflow system for AI agents that enf
 **Note:** Plugin versions are managed in `.claude-plugin/marketplace.json` (current marketplace version: `0.256.0`)
 
 **Total: 83 skills (26 + 21 + 13 + 9 + 7 + 7) across 6 plugins**
-**Total: 35 agents (8 + 11 + 4 + 6 + 3 + 3) across 6 plugins**
+**Total: 34 agents (8 + 10 + 4 + 6 + 3 + 3) across 6 plugins**
 **Total: 30 commands (13 + 7 + 3 + 4 + 0 + 3) across 6 plugins**
 
 The architecture uses markdown-based skill definitions with YAML frontmatter, auto-discovered at session start via hooks, and executed through Claude Code's native Skill/Task tools.
@@ -450,7 +448,7 @@ See [README.md](README.md#installation) for detailed installation instructions.
 | Plugin           | Path           | Contents                         |
 | ---------------- | -------------- | -------------------------------- |
 | bee-default     | `default/`     | 26 skills, 8 agents, 13 commands |
-| bee-dev-team    | `dev-team/`    | 21 skills, 11 agents, 7 commands |
+| bee-dev-team    | `dev-team/`    | 21 skills, 10 agents, 7 commands |
 | bee-pm-team     | `pm-team/`     | 13 skills, 4 agents, 3 commands  |
 | bee-pmo-team    | `pmo-team/`    | 9 skills, 6 agents, 4 commands   |
 | bee-finops-team | `finops-team/` | 7 skills, 3 agents               |
@@ -529,7 +527,7 @@ See [docs/WORKFLOWS.md](docs/WORKFLOWS.md) for detailed instructions.
 
 #### Agent/Skill/Command Invocation
 
-See [Unified Bee Namespace](#4-unified-bee-namespace-mandatory) above for invocation format. MUST use `bee:{component}` (e.g., `bee:code-reviewer`, `bee:backend-engineer-golang`).
+See [Unified Bee Namespace](#4-unified-bee-namespace-mandatory) above for invocation format. MUST use `bee:{component}` (e.g., `bee:code-reviewer`, `bee:backend-engineer-typescript`).
 
 ---
 
@@ -590,7 +588,7 @@ The system loads at SessionStart (from `default/` plugin):
 - Active plugins: 6 (`bee-default`, `bee-dev-team`, `bee-pm-team`, `bee-pmo-team`, `bee-finops-team`, `bee-tw-team`)
 - Plugin versions: See `.claude-plugin/marketplace.json`
 - Core plugin: `default/` (26 skills, 8 agents, 13 commands)
-- Developer agents: `dev-team/` (21 skills, 11 agents, 7 commands)
+- Developer agents: `dev-team/` (21 skills, 10 agents, 7 commands)
 - Product planning: `pm-team/` (13 skills, 4 agents, 3 commands)
 - PMO specialists: `pmo-team/` (9 skills, 6 agents, 4 commands)
 - FinOps regulatory: `finops-team/` (7 skills, 3 agents)

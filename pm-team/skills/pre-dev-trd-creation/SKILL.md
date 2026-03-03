@@ -110,7 +110,6 @@ Backend-only features do not require design validation. Proceed directly to tech
 
 | Standard | URL | Purpose |
 |----------|-----|---------|
-| **golang/index.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/golang/index.md` | Go patterns index (modular) |
 | **typescript.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/typescript.md` | TS patterns, async |
 | **frontend.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md` | React, Next.js, a11y |
 | **devops.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/devops.md` | Docker, CI/CD |
@@ -118,7 +117,6 @@ Backend-only features do not require design validation. Proceed directly to tech
 
 | Tech Stack | Load |
 |------------|------|
-| Go Backend | golang/index.md (then required modules) + devops.md + sre.md |
 | TypeScript Backend | typescript.md + devops.md + sre.md |
 | TypeScript Frontend | frontend.md + devops.md |
 | Full-Stack TypeScript | typescript.md + frontend.md + devops.md + sre.md |
@@ -246,10 +244,10 @@ If feature requires authentication or authorization (as determined in Question 2
 
 | Auth Type | TRD Description (Abstract) | Implementation Reference |
 |-----------|---------------------------|-------------------------|
-| User authentication only | "Token-based authentication with stateless validation" | For Go: `golang/security.md` → Access Manager Integration |
-| User + permissions | "Token-based authentication with role-based access control (RBAC)" | For Go: `golang/security.md` → Access Manager Integration |
-| Service-to-service | "Machine-to-machine authentication with client credentials" | For Go: `golang/security.md` → Access Manager Integration (GetApplicationToken) |
-| Full (user + S2S) | "Dual-layer authentication: user tokens for end-users, client credentials for services" | For Go: `golang/security.md` → Access Manager Integration |
+| User authentication only | "Token-based authentication with stateless validation" | See appropriate language standards → Access Manager Integration |
+| User + permissions | "Token-based authentication with role-based access control (RBAC)" | See appropriate language standards → Access Manager Integration |
+| Service-to-service | "Machine-to-machine authentication with client credentials" | See appropriate language standards → Access Manager Integration |
+| Full (user + S2S) | "Dual-layer authentication: user tokens for end-users, client credentials for services" | See appropriate language standards → Access Manager Integration |
 
 **Document in TRD:** `Security Architecture → Authentication/Authorization → Strategy + Implementation Reference`
 
@@ -258,7 +256,7 @@ If feature requires authentication or authorization (as determined in Question 2
 - Pattern: `auth.Authorize(applicationName, resource, action)` on each route
 - Engineers will implement per-route protection following the referenced standard
 
-**Note for Go Services:** Lerian's Access Manager (plugin-auth + identity + lib-auth) is the standard authentication system. Reference `golang/security.md` → Access Manager Integration section in the TRD so engineers know where to find implementation patterns including route middleware protection.
+**Note:** Lerian's Access Manager (plugin-auth + identity) is the standard authentication system. Reference the appropriate language standards → Access Manager Integration section in the TRD so engineers know where to find implementation patterns including route middleware protection.
 
 ## License Manager Architecture (If Required)
 
@@ -266,8 +264,8 @@ If feature is a licensed product/plugin (as determined in Question 3 of pre-dev 
 
 | License Type | TRD Description (Abstract) | Implementation Reference |
 |--------------|---------------------------|-------------------------|
-| Single-org (global) | "Global license validation at service startup with fail-fast behavior" | For Go: `golang/security.md` → License Manager Integration |
-| Multi-org | "Per-request license validation with organization context" | For Go: `golang/security.md` → License Manager Integration |
+| Single-org (global) | "Global license validation at service startup with fail-fast behavior" | See appropriate language standards → License Manager Integration |
+| Multi-org | "Per-request license validation with organization context" | See appropriate language standards → License Manager Integration |
 
 **Document in TRD:** `Security Architecture → Licensing → Strategy + Implementation Reference`
 
@@ -277,7 +275,7 @@ If feature is a licensed product/plugin (as determined in Question 3 of pre-dev 
 - Graceful shutdown integration for license manager resources
 - Built-in skip paths for health/readiness endpoints
 
-**Note for Go Services:** Lerian's License Manager (lib-license-go) is the standard licensing system. Reference `golang/security.md` → License Manager Integration section in the TRD so engineers know where to find implementation patterns including global middleware and graceful shutdown.
+**Note:** Lerian's License Manager is the standard licensing system. Reference the appropriate language standards → License Manager Integration section in the TRD so engineers know where to find implementation patterns including global middleware and graceful shutdown.
 
 ## Frontend-Backend Integration Pattern (If Fullstack)
 
@@ -709,7 +707,6 @@ This skill REQUIRES loading Bee Standards via WebFetch as part of Step 0 (Tech S
 
 | Tech Stack | Standards to Load via WebFetch |
 |------------|-------------------------------|
-| Go Backend | golang/index.md + devops.md + sre.md |
 | TypeScript Backend | typescript.md + devops.md + sre.md |
 | TypeScript Frontend | frontend.md + devops.md |
 | Full-Stack TypeScript | typescript.md + frontend.md + devops.md + sre.md |

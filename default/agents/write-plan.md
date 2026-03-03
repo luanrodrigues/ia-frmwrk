@@ -56,7 +56,7 @@ You are a specialized agent that writes detailed implementation plans. Your plan
 
 **Standards Application:**
 - Plans reference "DRY, YAGNI, TDD principles" generically
-- Implementation agents apply language-specific standards (golang.md, typescript.md, etc.)
+- Implementation agents apply language-specific standards (typescript.md, php.md, etc.)
 - This separation of concerns prevents planning from being language-coupled
 
 ## Blocker Criteria - STOP and Report

@@ -131,7 +131,7 @@ Before running any explorers, detect the project stack to determine which Bee st
 
 | Check | Flag | Standards to Load |
 |-------|------|-------------------|
-| `**/go.mod` exists | GO=true | All golang/*.md modules |
+| `**/go.mod` exists | GO=true | (Go detected - no golang standards currently) |
 | `**/package.json` + React/Next.js deps | FRONTEND=true | (future enrichment) |
 | `**/package.json` + Express/Fastify deps | TS_BACKEND=true | (future enrichment) |
 | `**/Dockerfile*` exists | DOCKER=true | devops.md |
@@ -156,28 +156,7 @@ Grep("MULTI_TENANT") → if found in env/config files: MULTI_TENANT=true
 
 Based on detected stack, load Bee development standards via WebFetch from the canonical source of truth. Store fetched content for injection into explorer prompts.
 
-**WebFetch URL Map** (from `dev-team/docs/standards/golang/index.md`):
-
-If **GO=true**, WebFetch these and store content:
-
-| Module | Variable | URL |
-|--------|----------|-----|
-| core.md | `standards_core` | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/golang/core.md` |
-| bootstrap.md | `standards_bootstrap` | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/golang/bootstrap.md` |
-| security.md | `standards_security` | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/golang/security.md` |
-| domain.md | `standards_domain` | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/golang/domain.md` |
-| api-patterns.md | `standards_api` | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/golang/api-patterns.md` |
-| quality.md | `standards_quality` | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/golang/quality.md` |
-| architecture.md | `standards_arch` | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/golang/architecture.md` |
-| messaging.md | `standards_messaging` | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/golang/messaging.md` |
-| domain-modeling.md | `standards_dm` | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/golang/domain-modeling.md` |
-| idempotency.md | `standards_idempotency` | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/golang/idempotency.md` |
-
-If **MULTI_TENANT=true**, also WebFetch:
-
-| Module | Variable | URL |
-|--------|----------|-----|
-| multi-tenant.md | `standards_multitenant` | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/golang/multi-tenant.md` |
+**WebFetch URL Map:**
 
 **Always** WebFetch (stack-independent):
 
@@ -6628,7 +6607,6 @@ The reference implementations in this skill are derived from two sources:
 
 ### Bee Development Standards (Primary - Source of Truth)
 Standards loaded at runtime via WebFetch from `dev-team/docs/standards/`:
-- **golang/*.md** — Go-specific standards (core, bootstrap, security, domain, API patterns, quality, architecture, messaging, domain-modeling, idempotency, multi-tenant)
 - **devops.md** — Container, Makefile, and infrastructure standards
 - **sre.md** — Observability and health check standards
 

@@ -144,7 +144,7 @@ docs/pre-dev/{feature}/
 
 **Target:** backend
 **Working Directory:** packages/api
-**Agent:** bee:backend-engineer-golang
+**Agent:** bee:backend-engineer-typescript
 
 ...task details...
 ```

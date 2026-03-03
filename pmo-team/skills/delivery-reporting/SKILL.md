@@ -33,7 +33,7 @@ Creating visual executive presentations that showcase squad deliveries and busin
 | **Analysis Approach** | Deep code analysis with specialized agents |
 | **Time Expectation** | 40-80 minutes for 8 repositories (5-10 min each) |
 | **Quality Standard** | Accurate business value from actual code, not titles |
-| **Agent Strategy** | Specialized agents (backend-engineer-golang, etc.) per repo type |
+| **Agent Strategy** | Specialized agents (backend-engineer-typescript, etc.) per repo type |
 
 **FORBIDDEN:**
 - ❌ Using `general-purpose` agent for parallel speed
@@ -203,7 +203,6 @@ git branch -r --sort=-committerdate  # Active branches
 
 | Repository Type | Agent to Dispatch | Why |
 |----------------|-------------------|-----|
-| **Backend Go** | `bee:backend-engineer-golang` | Deep Go expertise, architectural analysis |
 | **Backend TypeScript** | `bee:backend-engineer-typescript` | TS/Node API analysis |
 | **Frontend React/Next** | `bee:frontend-engineer` | UI/UX impact analysis |
 | **Infrastructure** | `bee:devops-engineer` | Deployment, scaling impact |
@@ -221,7 +220,7 @@ For each repository:
 
 2. **Dispatch Appropriate Specialized Agent**
    Task(
-     subagent_type="bee:backend-engineer-golang",  # or appropriate
+     subagent_type="bee:backend-engineer-typescript",  # or appropriate
      model="opus",
      prompt="""
      Analyze {repo_name} deliveries for period {start} to {end}.

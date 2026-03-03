@@ -187,8 +187,8 @@ done
 If pattern matching finds <50% of expected work:
 
 1. Detect project type:
-   - go.mod → bee:backend-engineer-golang
    - package.json + React → bee:frontend-engineer
+   - package.json + backend (express/fastify/nest) → bee:backend-engineer-typescript
    - Mixed → bee:codebase-explorer
 
 2. Dispatch agent with task scope:
@@ -375,12 +375,11 @@ Parallel Stream:
 
 ```
 1. Check repository structure:
-   - go.mod exists? → Go project
    - package.json + React? → Frontend project
+   - package.json + backend (express/fastify/nest)? → TypeScript Backend project
    - Both? → Full-stack
 
 2. Dispatch appropriate agents:
-   - Go → bee:backend-engineer-golang
    - TypeScript Backend → bee:backend-engineer-typescript
    - Frontend → bee:frontend-engineer
    - Unknown/Mixed → bee:codebase-explorer
@@ -527,7 +526,7 @@ This skill is a status tracking skill and does NOT require WebFetch of language-
 
 **Purpose:** Delivery Status Tracking analyzes repository evidence to calculate progress. Technical standards are irrelevant at this stage—this skill focuses on evidence-based progress reporting.
 
-**However**, when dispatching specialized agents for semantic analysis (e.g., `bee:backend-engineer-golang`), those agents apply their standards to evaluate code quality.
+**However**, when dispatching specialized agents for semantic analysis (e.g., `bee:backend-engineer-typescript`), those agents apply their standards to evaluate code quality.
 
 ---
 
