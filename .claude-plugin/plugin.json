@@ -1,0 +1,33 @@
+{
+  "name": "ring-dev-team",
+  "description": "10 specialized developer agents + 19 development skills + 7 slash commands: Backend 10-gate dev cycle + Frontend 9-gate dev cycle (accessibility, visual, E2E, performance) + Frontend refactoring. PHP/Laravel Backend specialist, DevOps Engineer, Frontend TypeScript specialist, Frontend Designer, QA Backend Analyst, QA Frontend Analyst, and SRE. Complete development team coverage with TDD, observability, and security best practices.",
+  "version": "2.0.0",
+  "source": "./dev-team",
+  "homepage": "https://github.com/lerianstudio/ring/tree/dev-team",
+  "repository": "https://github.com/lerianstudio/ring/tree/dev-team",
+  "license": "MIT",
+  "keywords": [
+    "agents",
+    "developers",
+    "php",
+    "laravel",
+    "backend",
+    "devops",
+    "frontend",
+    "react",
+    "nextjs",
+    "qa",
+    "testing",
+    "accessibility",
+    "e2e",
+    "playwright",
+    "performance",
+    "sre",
+    "reliability",
+    "infrastructure",
+    "refactoring",
+    "pest",
+    "phpunit",
+    "phpstan"
+  ]
+}
