@@ -4,7 +4,7 @@
 
 This module covers end-to-end testing patterns for React/Next.js applications using Playwright. E2E tests validate complete user flows from the product-designer's specifications.
 
-> **Gate Reference:** This module is loaded by `ring:qa-analyst-frontend` at Gate 5 (E2E Testing).
+> **Gate Reference:** This module is loaded by `bee:qa-analyst-frontend` at Gate 5 (E2E Testing).
 
 ---
 
@@ -24,11 +24,11 @@ This module covers end-to-end testing patterns for React/Next.js applications us
 
 ## User Flow Consumption (MANDATORY)
 
-**HARD GATE:** All user flows from `ring:product-designer` output MUST have corresponding E2E tests.
+**HARD GATE:** All user flows from `bee:product-designer` output MUST have corresponding E2E tests.
 
 ### Input Source
 
-The `ring:product-designer` agent produces `user-flows.md` with structured user flows:
+The `bee:product-designer` agent produces `user-flows.md` with structured user flows:
 
 ```markdown
 ## User Flow: Create Transaction

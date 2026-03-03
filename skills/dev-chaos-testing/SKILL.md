@@ -1,5 +1,5 @@
 ---
-name: ring:dev-chaos-testing
+name: bee:dev-chaos-testing
 title: Development cycle chaos testing (Gate 7)
 category: development-cycle
 tier: 1
@@ -21,11 +21,11 @@ NOT_skip_when: |
   - "Toxiproxy is complex" - One container, 20 minutes setup. Prevents production incidents.
 
 sequence:
-  after: [ring:dev-integration-testing]
-  before: [ring:requesting-code-review]
+  after: [bee:dev-integration-testing]
+  before: [bee:requesting-code-review]
 
 related:
-  complementary: [ring:dev-cycle, ring:dev-integration-testing, ring:qa-analyst]
+  complementary: [bee:dev-cycle, bee:dev-integration-testing, bee:qa-analyst]
 
 input_schema:
   required:
@@ -141,7 +141,7 @@ Ensure code handles **failure conditions gracefully** by injecting faults using 
 **MANDATORY:** Load testing-chaos.md standards via WebFetch.
 
 <fetch_required>
-https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php/testing-chaos.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php/testing-chaos.md
 </fetch_required>
 
 ---
@@ -216,7 +216,7 @@ if external_dependencies is empty (AFTER auto-detection in Step 0):
 
 ```text
 Task tool:
-  subagent_type: "ring:qa-analyst"
+  subagent_type: "bee:qa-analyst"
   model: "opus"
   prompt: |
     **MODE:** CHAOS TESTING (Gate 7)

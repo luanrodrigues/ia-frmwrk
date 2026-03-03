@@ -1,4 +1,4 @@
-# Ring Dev Team
+# Bee Dev Team
 
 > A Claude AI plugin that provides **10 specialized developer agents**, **19 development skills**, and **7 slash commands** for enterprise-grade software development workflows.
 
@@ -7,7 +7,7 @@
 
 ## Overview
 
-Ring Dev Team orchestrates a complete development team through Claude AI. It enforces quality through **gate-based development cycles** — 10 gates for backend (PHP/Laravel) and 9 gates for frontend (React/Next.js) — with mandatory standards compliance, automated testing strategies, and anti-rationalization safeguards.
+Bee Dev Team orchestrates a complete development team through Claude AI. It enforces quality through **gate-based development cycles** — 10 gates for backend (PHP/Laravel) and 9 gates for frontend (React/Next.js) — with mandatory standards compliance, automated testing strategies, and anti-rationalization safeguards.
 
 ## Agents
 
@@ -59,13 +59,13 @@ Gate 8  Deployment           →  Frontend deployment
 
 | Command | Description |
 |---------|-------------|
-| `/ring:dev-cycle [tasks] [prompt]` | Execute backend development cycle (10 gates) |
-| `/ring:dev-cycle-frontend [tasks] [prompt]` | Execute frontend development cycle (9 gates) |
-| `/ring:dev-refactor [path] [prompt]` | Analyze and refactor backend code |
-| `/ring:dev-refactor-frontend [path] [prompt]` | Analyze and refactor frontend code |
-| `/ring:dev-status` | Show current cycle status |
-| `/ring:dev-cancel` | Cancel current development cycle |
-| `/ring:dev-report` | Generate execution report |
+| `/bee:dev-cycle [tasks] [prompt]` | Execute backend development cycle (10 gates) |
+| `/bee:dev-cycle-frontend [tasks] [prompt]` | Execute frontend development cycle (9 gates) |
+| `/bee:dev-refactor [path] [prompt]` | Analyze and refactor backend code |
+| `/bee:dev-refactor-frontend [path] [prompt]` | Analyze and refactor frontend code |
+| `/bee:dev-status` | Show current cycle status |
+| `/bee:dev-cancel` | Cancel current development cycle |
+| `/bee:dev-report` | Generate execution report |
 
 ## Tech Stack
 
@@ -94,7 +94,7 @@ Gate 8  Deployment           →  Frontend deployment
 ## Project Structure
 
 ```
-ring-dev-team/
+bee-dev-team/
 ├── agents/                 # 10 specialized agent definitions
 ├── skills/                 # 19 development workflow skills
 │   └── shared-patterns/    # Reusable patterns & anti-rationalization
@@ -108,14 +108,14 @@ ring-dev-team/
 
 1. Clone into your Claude plugins directory:
    ```bash
-   git clone https://github.com/lerianstudio/ring.git -b dev-team
+   git clone https://github.com/luanrodrigues/ia-frmwrk.git -b dev-team
    ```
 
 2. The plugin auto-initializes on session start via `hooks/session-start.sh`.
 
 3. Use slash commands to start a development cycle:
    ```
-   /ring:dev-cycle "Implement user authentication with Laravel Sanctum"
+   /bee:dev-cycle "Implement user authentication with Laravel Sanctum"
    ```
 
 ## Standards

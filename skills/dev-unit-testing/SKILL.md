@@ -1,5 +1,5 @@
 ---
-name: ring:dev-unit-testing
+name: bee:dev-unit-testing
 description: |
   Gate 3 of development cycle - ensures unit test coverage meets threshold (85%+)
   for all acceptance criteria using TDD methodology.
@@ -15,11 +15,11 @@ NOT_skip_when: |
   - "Coverage is close to 85%" → Close enough is not passing. Meet exact threshold.
 
 sequence:
-  after: [ring:dev-implementation, ring:dev-devops, ring:dev-ring:sre]
-  before: [ring:requesting-code-review]
+  after: [bee:dev-implementation, bee:dev-devops, bee:dev-bee:sre]
+  before: [bee:requesting-code-review]
 
 related:
-  complementary: [ring:test-driven-development, ring:qa-analyst]
+  complementary: [bee:test-driven-development, bee:qa-analyst]
 
 input_schema:
   required:
@@ -134,7 +134,7 @@ Ensure every acceptance criterion has at least one **unit test** proving it work
 - Any acceptance criterion without test = FAIL
 </block_condition>
 
-**Coverage threshold:** 85% minimum (Ring standard). PROJECT_RULES.md can raise, not lower.
+**Coverage threshold:** 85% minimum (Bee standard). PROJECT_RULES.md can raise, not lower.
 
 ## CRITICAL: Role Clarification
 
@@ -150,7 +150,7 @@ Ensure every acceptance criterion has at least one **unit test** proving it work
 ## Step 1: Validate Input
 
 ```text
-REQUIRED INPUT (from ring:dev-cycle orchestrator):
+REQUIRED INPUT (from bee:dev-cycle orchestrator):
 <verify_before_proceed>
 - unit_id exists
 - acceptance_criteria is not empty
@@ -174,7 +174,7 @@ if any REQUIRED input is missing:
   → Return to orchestrator with error
 
 if coverage_threshold < 85:
-  → STOP and report: "Coverage threshold cannot be below Ring minimum (85%)"
+  → STOP and report: "Coverage threshold cannot be below Bee minimum (85%)"
   → Use 85% as threshold
 ```
 
@@ -195,13 +195,13 @@ testing_state = {
 
 ## Step 3: Dispatch QA Analyst Agent
 
-<dispatch_required agent="ring:qa-analyst">
+<dispatch_required agent="bee:qa-analyst">
 Write unit tests for all acceptance criteria with 85%+ coverage.
 </dispatch_required>
 
 ```yaml
 Task:
-  subagent_type: "ring:qa-analyst"
+  subagent_type: "bee:qa-analyst"
   description: "Write unit tests for [unit_id]"
   prompt: |
     ⛔ WRITE UNIT TESTS for All Acceptance Criteria
@@ -218,8 +218,8 @@ Task:
     [list implementation_files]
 
     ## Standards Reference
-    For PHP: https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php.md
-    For TS: https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/typescript.md
+    For PHP: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php.md
+    For TS: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/typescript.md
 
     Focus on: Testing Patterns section
 
@@ -328,7 +328,7 @@ if verdict == "FAIL" or coverage_actual < coverage_threshold:
 
 ```yaml
 Task:
-  subagent_type: "[implementation_agent from Gate 0]"  # e.g., "ring:backend-engineer-php"
+  subagent_type: "[implementation_agent from Gate 0]"  # e.g., "bee:backend-engineer-php"
   description: "Add tests to meet coverage threshold for [unit_id]"
   prompt: |
     ⛔ COVERAGE BELOW THRESHOLD - Add More Tests

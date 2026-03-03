@@ -1,6 +1,6 @@
 # Standards Boundary Enforcement
 
-Canonical source for preventing agents from hallucinating requirements beyond what exists in Ring standards files.
+Canonical source for preventing agents from hallucinating requirements beyond what exists in Bee standards files.
 
 ---
 
@@ -12,7 +12,7 @@ Canonical source for preventing agents from hallucinating requirements beyond wh
 |------|-------------|
 | **only check items explicitly listed in standards** | If not in WebFetch result → not a requirement |
 | **never invent "should have" items** | Standards define WHAT exists, not what you think should exist |
-| **never add industry best practices not in standards** | Ring standards ARE the best practices for this org |
+| **never add industry best practices not in standards** | Bee standards ARE the best practices for this org |
 | **never assume common patterns are required** | If not listed → not required |
 
 **If you flag something not in standards → Your output is INVALID. Remove the hallucinated finding.**
@@ -98,7 +98,7 @@ Each agent MUST:
 
 **These are items agents commonly invent that are not typically in standards. Always verify in WebFetch result before flagging.**
 
-#### ring:devops-engineer → devops.md
+#### bee:devops-engineer → devops.md
 
 | Common Hallucination | Action |
 |---------------------|--------|
@@ -108,7 +108,7 @@ Each agent MUST:
 | `make install` | Verify in devops.md "Makefile Standards" section |
 | `make clean` | Verify in devops.md "Makefile Standards" section |
 
-#### ring:backend-engineer-php → php.md
+#### bee:backend-engineer-php → php.md
 
 | Common Hallucination | Action |
 |---------------------|--------|
@@ -119,7 +119,7 @@ Each agent MUST:
 | PHPUnit instead of Pest | Check actual testing framework in php.md |
 | class-validator | Verify validation library in php.md |
 
-#### ring:sre → sre.md
+#### bee:sre → sre.md
 
 | Common Hallucination | Action |
 |---------------------|--------|
@@ -128,7 +128,7 @@ Each agent MUST:
 | Custom dashboards | Verify in sre.md if explicitly required |
 | Alert rules | Verify in sre.md if explicitly required |
 
-#### ring:frontend-designer → frontend.md
+#### bee:frontend-designer → frontend.md
 
 | Common Hallucination | Action |
 |---------------------|--------|
@@ -143,7 +143,7 @@ Each agent MUST:
 
 | Rationalization | Why It's WRONG | Required Action |
 |-----------------|----------------|-----------------|
-| "Industry standard to have make proto" | Industry ≠ Ring standards. Ring defines requirements. | **Do not flag** |
+| "Industry standard to have make proto" | Industry ≠ Bee standards. Bee defines requirements. | **Do not flag** |
 | "Most PHP projects need gRPC" | Most ≠ this project. Standards define this project. | **Do not flag** |
 | "It's a best practice to have X" | Best practices are IN the standards. If not there, not required. | **Do not flag** |
 | "This would improve the codebase" | Improvement suggestions ≠ compliance findings. | **Do not flag as non-compliant** |

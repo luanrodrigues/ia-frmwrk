@@ -1,10 +1,10 @@
 ---
-name: ring:dev-refactor
-description: Analyze existing codebase against standards and execute refactoring through ring:dev-cycle
+name: bee:dev-refactor
+description: Analyze existing codebase against standards and execute refactoring through bee:dev-cycle
 argument-hint: "[path] [options] [prompt]"
 ---
 
-Analyze existing codebase against standards and execute refactoring through ring:dev-cycle.
+Analyze existing codebase against standards and execute refactoring through bee:dev-cycle.
 
 ## ⛔ PRE-EXECUTION CHECK (EXECUTE FIRST)
 
@@ -12,7 +12,7 @@ Analyze existing codebase against standards and execute refactoring through ring
 
 ```
 Does docs/PROJECT_RULES.md exist in the target project?
-├── YES → Load skill: ring:dev-refactor
+├── YES → Load skill: bee:dev-refactor
 └── no  → Output blocker below and STOP
 ```
 
@@ -30,7 +30,7 @@ Create `docs/PROJECT_RULES.md` with your project's:
 - Testing requirements
 - DevOps standards
 
-Then re-run `/ring:dev-refactor`.
+Then re-run `/bee:dev-refactor`.
 ```
 
 **DO not:**
@@ -44,8 +44,8 @@ Then re-run `/ring:dev-refactor`.
 ## Usage
 
 ```
-/ring:dev-refactor [path] [options] [prompt]
-/ring:dev-refactor [prompt]
+/bee:dev-refactor [path] [options] [prompt]
+/bee:dev-refactor [prompt]
 ```
 
 ## Arguments
@@ -68,35 +68,35 @@ Then re-run `/ring:dev-refactor`.
 
 ```bash
 # Direct prompt - focus refactoring on specific area
-/ring:dev-refactor Focus on multi-tenant patterns and ensure all repositories use tenantmanager
+/bee:dev-refactor Focus on multi-tenant patterns and ensure all repositories use tenantmanager
 
 # Direct prompt - another example
-/ring:dev-refactor Check idempotency implementation against standards
+/bee:dev-refactor Check idempotency implementation against standards
 
 # Analyze entire project and refactor
-/ring:dev-refactor
+/bee:dev-refactor
 
 # Analyze specific directory
-/ring:dev-refactor src/domain
+/bee:dev-refactor src/domain
 
 # Analyze with specific focus
-/ring:dev-refactor src/domain Focus on error handling patterns
+/bee:dev-refactor src/domain Focus on error handling patterns
 
 # Analysis only (no execution)
-/ring:dev-refactor --analyze-only
+/bee:dev-refactor --analyze-only
 
 # Only fix critical issues
-/ring:dev-refactor --critical-only
+/bee:dev-refactor --critical-only
 
 # Use custom standards with focus
-/ring:dev-refactor --standards docs/team-standards.md Prioritize security issues
+/bee:dev-refactor --standards docs/team-standards.md Prioritize security issues
 ```
 
 ## Workflow
 
-**See skill `ring:dev-refactor` for the complete 13-step workflow with TodoWrite template.**
+**See skill `bee:dev-refactor` for the complete 13-step workflow with TodoWrite template.**
 
-The skill defines all steps including: stack detection, ring:codebase-explorer dispatch, individual agent reports, finding mapping, and artifact generation.
+The skill defines all steps including: stack detection, bee:codebase-explorer dispatch, individual agent reports, finding mapping, and artifact generation.
 
 ## Analysis Dimensions
 
@@ -114,7 +114,7 @@ The skill defines all steps including: stack detection, ring:codebase-explorer d
 - **Analysis (always):** All five dimensions analyzed, all severities (Critical, High, Medium, Low) tracked
 - **Execution (filterable):** `--critical-only` limits execution/prioritization to Critical and High severity issues
 
-Example: `/ring:dev-refactor --critical-only` analyzes all issues but only executes fixes for Critical and High.
+Example: `/bee:dev-refactor --critical-only` analyzes all issues but only executes fixes for Critical and High.
 
 ### Instrumentation Checklist (Quick Reference)
 
@@ -134,15 +134,15 @@ When analyzing services for instrumentation compliance, verify:
 
 **Timestamp format:** `{timestamp}` = `YYYY-MM-DDTHH:MM:SS` (e.g., `2026-02-07T22:30:45`)
 
-**Analysis Report** (`docs/ring:dev-refactor/{timestamp}/analysis-report.md`):
+**Analysis Report** (`docs/bee:dev-refactor/{timestamp}/analysis-report.md`):
 - Summary table with issue counts by severity
 - Detailed findings grouped by dimension
 - Specific file locations and line numbers
 
-**Tasks File** (`docs/ring:dev-refactor/{timestamp}/tasks.md`):
+**Tasks File** (`docs/bee:dev-refactor/{timestamp}/tasks.md`):
 - Grouped refactoring tasks (REFACTOR-001, REFACTOR-002, etc.)
 - Same format as PM Team output
-- Compatible with ring:dev-cycle execution
+- Compatible with bee:dev-cycle execution
 
 ## Severity Levels (all ARE MANDATORY)
 
@@ -167,9 +167,9 @@ When analyzing services for instrumentation compliance, verify:
 
 | Command | Description |
 |---------|-------------|
-| `/ring:dev-cycle` | Execute development cycle (used after analysis) |
-| `/ring:pre-dev-feature` | Plan new features (use instead for greenfield) |
-| `/ring:codereview` | Manual code review (ring:dev-cycle includes this) |
+| `/bee:dev-cycle` | Execute development cycle (used after analysis) |
+| `/bee:pre-dev-feature` | Plan new features (use instead for greenfield) |
+| `/bee:codereview` | Manual code review (bee:dev-cycle includes this) |
 
 ---
 
@@ -178,12 +178,12 @@ When analyzing services for instrumentation compliance, verify:
 **After PROJECT_RULES.md check passes, load the skill:**
 
 ```
-Use Skill tool: ring:dev-refactor
+Use Skill tool: bee:dev-refactor
 ```
 
 The skill contains the complete analysis workflow with:
 - Anti-rationalization tables for codebase exploration
-- Mandatory use of `ring:codebase-explorer` (not Bash/Explore)
+- Mandatory use of `bee:codebase-explorer` (not Bash/Explore)
 - Standards coverage table requirements
 - Finding → Task mapping gates
 - Full agent dispatch prompts with `**MODE: ANALYSIS only**`
@@ -197,7 +197,7 @@ Pass the following context to the skill:
 | `path` | First argument if it's a directory path (default: project root) |
 | `prompt` | Remaining text after path and options (direct instruction for focus) |
 | `--standards` | If provided, custom standards file path |
-| `--analyze-only` | If provided, skip ring:dev-cycle execution |
+| `--analyze-only` | If provided, skip bee:dev-cycle execution |
 | `--critical-only` | If provided, filter to Critical/High only |
 | `--dry-run` | If provided, show what would be analyzed |
 
@@ -208,7 +208,7 @@ Pass the following context to the skill:
 
 ## User Approval (MANDATORY)
 
-**Before executing ring:dev-cycle, you MUST ask:**
+**Before executing bee:dev-cycle, you MUST ask:**
 
 ```yaml
 AskUserQuestion:
@@ -217,7 +217,7 @@ AskUserQuestion:
       header: "Approval"
       options:
         - label: "Approve all"
-          description: "Proceed to ring:dev-cycle execution"
+          description: "Proceed to bee:dev-cycle execution"
         - label: "Critical only"
           description: "Execute only Critical/High tasks"
         - label: "Cancel"
@@ -226,11 +226,11 @@ AskUserQuestion:
 
 ## Quick Reference
 
-See skill `ring:dev-refactor` for full details. Key rules:
+See skill `bee:dev-refactor` for full details. Key rules:
 
 - **All agents dispatch in parallel** - Single message, multiple Task calls
 - **Specify model: "opus"** - All agents need opus for comprehensive analysis
 - **MODE: ANALYSIS only** - Agents analyze, they DO NOT implement
-- **Save artifacts** to `docs/ring:dev-refactor/{timestamp}/`
-- **Get user approval** before executing ring:dev-cycle
-- **Handoff**: `/ring:dev-cycle docs/ring:dev-refactor/{timestamp}/tasks.md`
+- **Save artifacts** to `docs/bee:dev-refactor/{timestamp}/`
+- **Get user approval** before executing bee:dev-cycle
+- **Handoff**: `/bee:dev-cycle docs/bee:dev-refactor/{timestamp}/tasks.md`

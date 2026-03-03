@@ -110,7 +110,7 @@ server:
 
 ingester:
   lifecycler:
-    ring:
+    bee:
       kvstore:
         store: inmemory
       replication_factor: 1

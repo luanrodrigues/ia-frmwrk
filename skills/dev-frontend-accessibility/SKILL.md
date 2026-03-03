@@ -1,5 +1,5 @@
 ---
-name: ring:dev-frontend-accessibility
+name: bee:dev-frontend-accessibility
 title: Frontend development cycle accessibility testing (Gate 2)
 category: development-cycle-frontend
 tier: 1
@@ -21,11 +21,11 @@ NOT_skip_when: |
   - "We'll add accessibility later" - Retrofitting costs 10x more.
 
 sequence:
-  after: [ring:dev-devops]
-  before: [ring:dev-unit-testing]
+  after: [bee:dev-devops]
+  before: [bee:dev-unit-testing]
 
 related:
-  complementary: [ring:dev-cycle-frontend, ring:dev-devops, ring:qa-analyst-frontend]
+  complementary: [bee:dev-cycle-frontend, bee:dev-devops, bee:qa-analyst-frontend]
 
 input_schema:
   required:
@@ -135,7 +135,7 @@ Ensure all frontend components meet **WCAG 2.1 AA** accessibility standards thro
 **MANDATORY:** Load testing-accessibility.md standards via WebFetch.
 
 <fetch_required>
-https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/frontend/testing-accessibility.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/frontend/testing-accessibility.md
 </fetch_required>
 
 ---
@@ -162,7 +162,7 @@ if language != "typescript":
 
 ```text
 Task tool:
-  subagent_type: "ring:qa-analyst-frontend"
+  subagent_type: "bee:qa-analyst-frontend"
   model: "opus"
   prompt: |
     **MODE:** ACCESSIBILITY TESTING (Gate 2)
@@ -198,7 +198,7 @@ if "Status: PASS" in output:
   → Return success with metrics
 
 if "Status: FAIL" in output:
-  → Dispatch fix to implementation agent (ring:frontend-engineer or ring:ui-engineer)
+  → Dispatch fix to implementation agent (bee:frontend-engineer or bee:ui-engineer)
   → Re-run accessibility tests (max 3 iterations)
   → If still failing: ESCALATE to user
 ```

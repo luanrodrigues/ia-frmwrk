@@ -1,15 +1,15 @@
 ---
-name: ring:dev-multi-tenant
+name: bee:dev-multi-tenant
 slug: dev-multi-tenant
 version: 2.0.0
 type: skill
 description: |
-  Multi-tenant development cycle orchestrator following Ring Standards.
+  Multi-tenant development cycle orchestrator following Bee Standards.
   Auto-detects the service stack (PostgreSQL, MongoDB, Redis, RabbitMQ, S3),
   then executes a gate-based implementation using tenantId from JWT
   for database-per-tenant isolation via stancl/tenancy or spatie/multitenancy packages (TenantManager, TenantService).
   MUST install and configure the tenancy package first; auth middleware depends on it. Both are required dependencies.
-  Each gate dispatches ring:backend-engineer-php with context and section references.
+  Each gate dispatches bee:backend-engineer-php with context and section references.
   The agent loads multi-tenant.md via WebFetch and has all code examples.
 
 trigger: |
@@ -26,10 +26,10 @@ NOT_skip_when: |
   - "tenancy package upgrade is too risky" → REQUIRES stancl/tenancy or spatie/multitenancy packages. No tenancy package = no multi-tenant.
 
 sequence:
-  after: [ring:dev-devops]
+  after: [bee:dev-devops]
 
 related:
-  complementary: [ring:dev-cycle, ring:dev-implementation, ring:dev-devops, ring:dev-unit-testing, ring:requesting-code-review, ring:dev-validation]
+  complementary: [bee:dev-cycle, bee:dev-implementation, bee:dev-devops, bee:dev-unit-testing, bee:requesting-code-review, bee:dev-validation]
 
 output_schema:
   format: markdown
@@ -56,7 +56,7 @@ output_schema:
 
 examples:
   - name: "Add multi-tenant to a service"
-    invocation: "/ring:dev-multi-tenant"
+    invocation: "/bee:dev-multi-tenant"
     expected_flow: |
       1. Gate 0: Auto-detect stack
       2. Gate 1: Analyze codebase (build implementation roadmap)
@@ -78,13 +78,13 @@ examples:
 | Who | Responsibility |
 |-----|----------------|
 | **This Skill** | Detect stack, determine gates, pass context to agent, verify outputs, enforce order |
-| **ring:backend-engineer-php** | Load multi-tenant.md via WebFetch, implement following the standards |
+| **bee:backend-engineer-php** | Load multi-tenant.md via WebFetch, implement following the standards |
 | **6 reviewers** | Review at Gate 9 |
 
 **CANNOT change scope:** the skill defines WHAT to implement. The agent implements HOW.
 
 **FORBIDDEN: Orchestrator MUST NOT use Edit, Write, or Bash tools to modify source code files.**
-All code changes MUST go through `Task(subagent_type="ring:backend-engineer-php")`.
+All code changes MUST go through `Task(subagent_type="bee:backend-engineer-php")`.
 The orchestrator only verifies outputs (grep, composer, php artisan test) — MUST NOT write implementation code.
 
 **MANDATORY: TDD for all implementation gates (Gates 2-6).** MUST follow RED → GREEN → REFACTOR: write a failing test first, then implement to make it pass, then refactor for clarity/performance. MUST include in every dispatch: "Follow TDD: write failing test (RED), implement to make it pass (GREEN), then refactor for clarity/performance (REFACTOR)."
@@ -99,7 +99,7 @@ Multi-tenant isolation is 100% based on `tenantId` from JWT → Laravel tenant m
 
 **Standards reference:** All code examples and implementation patterns are in [multi-tenant.md](../../docs/standards/php/multi-tenant.md). MUST load via WebFetch before implementing any gate.
 
-**WebFetch URL:** `https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php/multi-tenant.md`
+**WebFetch URL:** `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php/multi-tenant.md`
 
 ### MANDATORY: Canonical Environment Variables
 
@@ -143,9 +143,9 @@ HARD GATE: A client without circuit breaker can cascade failures across all tena
 
 ### MANDATORY: Agent Instruction (include in EVERY gate dispatch)
 
-MUST include these instructions in every dispatch to `ring:backend-engineer-php`:
+MUST include these instructions in every dispatch to `bee:backend-engineer-php`:
 
-> **STANDARDS: WebFetch `https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php/multi-tenant.md` and follow the sections referenced below. All code examples, patterns, and implementation details are in that document. Use them as-is.**
+> **STANDARDS: WebFetch `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php/multi-tenant.md` and follow the sections referenced below. All code examples, patterns, and implementation details are in that document. Use them as-is.**
 >
 > **TDD: For implementation gates (2-6), follow TDD methodology — write a failing test first (RED), then implement to make it pass (GREEN). MUST have test coverage for every change.**
 
@@ -160,7 +160,7 @@ MUST include these instructions in every dispatch to `ring:backend-engineer-php`
 | "organization_id is our tenant identifier" | AUTHORITY_OVERRIDE | "STOP. organization_id is NOT multi-tenant. tenantId from JWT is the only mechanism." |
 | "Skip code review, we tested it" | QUALITY_BYPASS | "MANDATORY: 6 reviewers. One security mistake = cross-tenant data leak." |
 | "We don't need RabbitMQ multi-tenant" | SCOPE_REDUCTION | "MUST execute Gate 6 if RabbitMQ was detected. CANNOT skip detected stack." |
-| "I'll make a quick edit directly" | CODE_BYPASS | "FORBIDDEN: All code changes go through ring:backend-engineer-php. Dispatch the agent." |
+| "I'll make a quick edit directly" | CODE_BYPASS | "FORBIDDEN: All code changes go through bee:backend-engineer-php. Dispatch the agent." |
 | "It's just one line, no need for an agent" | CODE_BYPASS | "FORBIDDEN: Even single-line changes MUST be dispatched. Agent ensures standards compliance." |
 | "Agent is slow, I'll edit faster" | CODE_BYPASS | "FORBIDDEN: Speed is not a justification. Agent applies TDD and standards checks." |
 
@@ -171,15 +171,15 @@ MUST include these instructions in every dispatch to `ring:backend-engineer-php`
 | Gate | Name | Condition | Agent |
 |------|------|-----------|-------|
 | 0 | Stack Detection | Always | Orchestrator |
-| 1 | Codebase Analysis (multi-tenant focus) | Always | ring:codebase-explorer |
-| 1.5 | Implementation Preview (visual report) | Always | Orchestrator (ring:visual-explainer) |
-| 2 | stancl/tenancy + Auth Package Setup | Skip if already installed | ring:backend-engineer-php |
-| 3 | Multi-Tenant Configuration | Skip if already configured | ring:backend-engineer-php |
-| 4 | Tenant Middleware (Laravel Middleware) | Always (core) | ring:backend-engineer-php |
-| 5 | Repository/Eloquent Adaptation | Per detected DB/storage | ring:backend-engineer-php |
-| 6 | RabbitMQ Multi-Tenant | Skip if no RabbitMQ | ring:backend-engineer-php |
-| 7 | Metrics & Backward Compat | Always | ring:backend-engineer-php |
-| 8 | Tests | Always | ring:backend-engineer-php |
+| 1 | Codebase Analysis (multi-tenant focus) | Always | bee:codebase-explorer |
+| 1.5 | Implementation Preview (visual report) | Always | Orchestrator (bee:visual-explainer) |
+| 2 | stancl/tenancy + Auth Package Setup | Skip if already installed | bee:backend-engineer-php |
+| 3 | Multi-Tenant Configuration | Skip if already configured | bee:backend-engineer-php |
+| 4 | Tenant Middleware (Laravel Middleware) | Always (core) | bee:backend-engineer-php |
+| 5 | Repository/Eloquent Adaptation | Per detected DB/storage | bee:backend-engineer-php |
+| 6 | RabbitMQ Multi-Tenant | Skip if no RabbitMQ | bee:backend-engineer-php |
+| 7 | Metrics & Backward Compat | Always | bee:backend-engineer-php |
+| 8 | Tests | Always | bee:backend-engineer-php |
 | 9 | Code Review | Always | 6 parallel reviewers |
 | 10 | User Validation | Always | User |
 | 11 | Activation Guide | Always | Orchestrator |
@@ -218,7 +218,7 @@ MUST confirm: user explicitly approves detection results before proceeding.
 
 **Always executes. This gate builds the implementation roadmap for all subsequent gates.**
 
-**Dispatch `ring:codebase-explorer` with multi-tenant-focused context:**
+**Dispatch `bee:codebase-explorer` with multi-tenant-focused context:**
 
 > TASK: Analyze this codebase exclusively under the multi-tenant perspective.
 > DETECTED STACK: {databases and messaging from Gate 0}
@@ -257,11 +257,11 @@ MUST ensure backward compatibility context: the analysis MUST identify how the s
 
 **Always executes. This gate generates a visual HTML report showing exactly what will change before any code is written.**
 
-**Uses the `ring:visual-explainer` skill to produce a self-contained HTML page.**
+**Uses the `bee:visual-explainer` skill to produce a self-contained HTML page.**
 
 The report is built from Gate 0 (stack detection) and Gate 1 (codebase analysis). It shows the developer a complete preview of every change that will be made across all subsequent gates, with backward compatibility analysis.
 
-**Orchestrator generates the report using `ring:visual-explainer` with this content:**
+**Orchestrator generates the report using `bee:visual-explainer` with this content:**
 
 The HTML page MUST include these sections:
 
@@ -430,7 +430,7 @@ HARD GATE: Developer MUST explicitly approve the implementation preview before a
 
 **SKIP IF:** stancl/tenancy already installed AND auth package configured.
 
-**Dispatch `ring:backend-engineer-php` with context:**
+**Dispatch `bee:backend-engineer-php` with context:**
 
 > TASK: Install stancl/tenancy package first, then configure the auth package (auth depends on tenancy being set up).
 > Run in order:
@@ -454,7 +454,7 @@ HARD GATE: MUST pass tests before proceeding.
 
 **SKIP IF:** config already has `MULTI_TENANT_ENABLED`.
 
-**Dispatch `ring:backend-engineer-php` with context from Gate 1 analysis:**
+**Dispatch `bee:backend-engineer-php` with context from Gate 1 analysis:**
 
 > TASK: Add the 7 canonical multi-tenant environment variables to `config/tenancy.php`.
 > CONTEXT FROM GATE 1: {Config file location and current fields from analysis report}
@@ -483,7 +483,7 @@ HARD GATE: MUST pass tests before proceeding.
 
 **This is the CORE gate. Without TenantMiddleware, there is no tenant isolation.**
 
-**Dispatch `ring:backend-engineer-php` with context from Gate 1 analysis:**
+**Dispatch `bee:backend-engineer-php` with context from Gate 1 analysis:**
 
 > TASK: Implement tenant middleware using stancl/tenancy or custom TenantMiddleware.
 > DETECTED DATABASES: {postgresql: Y/N, mongodb: Y/N} (from Gate 0)
@@ -516,7 +516,7 @@ HARD GATE: CANNOT proceed without TenantMiddleware.
 
 **SKIP IF:** models/repositories already use tenant-scoped connections.
 
-**Dispatch `ring:backend-engineer-php` with context from Gate 1 analysis:**
+**Dispatch `bee:backend-engineer-php` with context from Gate 1 analysis:**
 
 > TASK: Adapt all Eloquent models and repository implementations to use tenant-scoped database connections instead of static connections. Also adapt S3/object storage operations to prefix keys with tenant ID.
 > DETECTED STACK: {postgresql: Y/N, mongodb: Y/N, redis: Y/N, s3: Y/N} (from Gate 0)
@@ -538,7 +538,7 @@ HARD GATE: CANNOT proceed without TenantMiddleware.
 
 **SKIP IF:** no RabbitMQ detected.
 
-**Dispatch `ring:backend-engineer-php` with context from Gate 1 analysis:**
+**Dispatch `bee:backend-engineer-php` with context from Gate 1 analysis:**
 
 > TASK: Implement RabbitMQ multi-tenant patterns with lazy initialization.
 > CONTEXT FROM GATE 1: {Producer and consumer file:line locations from analysis report}
@@ -565,7 +565,7 @@ HARD GATE: MUST NOT connect directly to RabbitMQ at startup in multi-tenant mode
 
 ## Gate 7: Metrics & Backward Compatibility
 
-**Dispatch `ring:backend-engineer-php` with context:**
+**Dispatch `bee:backend-engineer-php` with context:**
 
 > TASK: Add multi-tenant metrics and validate backward compatibility.
 >
@@ -597,7 +597,7 @@ HARD GATE: Backward compatibility MUST pass.
 
 ## Gate 8: Tests
 
-**Dispatch `ring:backend-engineer-php` with context:**
+**Dispatch `bee:backend-engineer-php` with context:**
 
 > TASK: Write multi-tenant tests.
 > DETECTED STACK: {postgresql: Y/N, mongodb: Y/N, redis: Y/N, s3: Y/N, rabbitmq: Y/N} (from Gate 0)
@@ -612,7 +612,7 @@ HARD GATE: Backward compatibility MUST pass.
 
 ## Gate 9: Code Review
 
-**Dispatch 6 parallel reviewers (same pattern as ring:requesting-code-review).**
+**Dispatch 6 parallel reviewers (same pattern as bee:requesting-code-review).**
 
 MUST include this context in ALL 6 reviewer dispatches:
 
@@ -623,12 +623,12 @@ MUST include this context in ALL 6 reviewer dispatches:
 
 | Reviewer | Focus |
 |----------|-------|
-| ring:code-reviewer | Architecture, stancl/tenancy usage, TenantMiddleware placement, package usage |
-| ring:business-logic-reviewer | Tenant context propagation via tenantId (NOT organization_id) |
-| ring:security-reviewer | Cross-tenant DB isolation, JWT tenantId validation, no data leaks between tenant databases |
-| ring:test-reviewer | Coverage, isolation tests between two tenants, backward compat tests |
-| ring:nil-safety-reviewer | Null risks in tenant context extraction from JWT and service resolution |
-| ring:consequences-reviewer | Impact on single-tenant paths, backward compat when MULTI_TENANT_ENABLED=false |
+| bee:code-reviewer | Architecture, stancl/tenancy usage, TenantMiddleware placement, package usage |
+| bee:business-logic-reviewer | Tenant context propagation via tenantId (NOT organization_id) |
+| bee:security-reviewer | Cross-tenant DB isolation, JWT tenantId validation, no data leaks between tenant databases |
+| bee:test-reviewer | Coverage, isolation tests between two tenants, backward compat tests |
+| bee:nil-safety-reviewer | Null risks in tenant context extraction from JWT and service resolution |
+| bee:consequences-reviewer | Impact on single-tenant paths, backward compat when MULTI_TENANT_ENABLED=false |
 
 MUST pass all 6 reviewers. Critical findings → fix and re-review.
 
@@ -674,7 +674,7 @@ The guide MUST include:
 
 ## State Persistence
 
-Save to `docs/ring-dev-multi-tenant/current-cycle.json` for resume support:
+Save to `docs/bee-dev-multi-tenant/current-cycle.json` for resume support:
 
 ```json
 {

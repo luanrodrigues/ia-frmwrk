@@ -1,5 +1,5 @@
 ---
-name: ring:dev-report
+name: bee:dev-report
 description: View the feedback report from the last development cycle
 argument-hint: "[cycle-date]"
 ---
@@ -9,7 +9,7 @@ View the feedback report from the last development cycle.
 ## Usage
 
 ```
-/ring:dev-report [cycle-date]
+/bee:dev-report [cycle-date]
 ```
 
 ## Arguments
@@ -22,10 +22,10 @@ View the feedback report from the last development cycle.
 
 ```bash
 # View most recent report
-/ring:dev-report
+/bee:dev-report
 
 # View specific date
-/ring:dev-report 2024-01-15
+/bee:dev-report 2024-01-15
 ```
 
 ## Report Contents
@@ -78,7 +78,7 @@ Top Issues:
 2. Gate 6 (review): Security findings in 2 tasks
 
 Recommendations:
-→ Skill ring:dev-unit-testing: Add test planning phase
+→ Skill bee:dev-unit-testing: Add test planning phase
 → Agent backend-*: Reinforce input validation
 
 Full report: docs/dev-team/feedback/cycle-2024-01-15.md
@@ -99,9 +99,9 @@ ls docs/dev-team/feedback/
 
 | Command | Description |
 |---------|-------------|
-| `/ring:dev-cycle` | Start new cycle |
-| `/ring:dev-status` | Check current status |
-| `/ring:dev-cancel` | Cancel running cycle |
+| `/bee:dev-cycle` | Start new cycle |
+| `/bee:dev-status` | Check current status |
+| `/bee:dev-cancel` | Cancel running cycle |
 
 ---
 
@@ -116,11 +116,11 @@ Search for reports in: `docs/dev-team/feedback/cycle-*.md`
 **This command MUST load the skill for complete workflow execution.**
 
 ```
-Use Skill tool: ring:dev-feedback-loop
+Use Skill tool: bee:dev-feedback-loop
 ```
 
 The skill contains the complete workflow with:
-- Metrics collection from ring:dev-cycle
+- Metrics collection from bee:dev-cycle
 - Pattern analysis
 - Improvement recommendations
 - Report generation format

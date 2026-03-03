@@ -26,12 +26,12 @@ Canonical source for Standards Compliance detection logic used by all dev-team a
 
 | Agent | Standards File | When |
 |-------|---------------|------|
-| `ring:backend-engineer-php` | php.md | any implementation task |
+| `bee:backend-engineer-php` | php.md | any implementation task |
 | `frontend-bff-engineer-typescript` | typescript.md | any implementation task |
-| `ring:frontend-engineer` | frontend.md | any implementation task |
-| `ring:devops-engineer` | devops.md | any artifact creation |
-| `ring:sre` | sre.md | any validation task |
-| `ring:qa-analyst` | php.md | any testing task |
+| `bee:frontend-engineer` | frontend.md | any implementation task |
+| `bee:devops-engineer` | devops.md | any artifact creation |
+| `bee:sre` | sre.md | any validation task |
+| `bee:qa-analyst` | php.md | any testing task |
 
 **⛔ HARD GATE:** If agent does not output Standards Coverage Table → Output is INCOMPLETE → Orchestrator MUST re-dispatch.
 
@@ -44,8 +44,8 @@ These patterns trigger **detailed findings** in addition to Standards Coverage T
 | Exact match | `**MODE: ANALYSIS only**` |
 | Case variations | `MODE: Analysis Only`, `mode: analysis only`, `**mode: ANALYSIS only**` |
 | Partial markers | `ANALYSIS MODE`, `analysis-only`, `analyze only`, `MODE ANALYSIS` |
-| Context clues | Invoked from `ring:dev-refactor` skill |
-| Explicit request | "compare against standards", "audit compliance", "check against Ring standards" |
+| Context clues | Invoked from `bee:dev-refactor` skill |
+| Explicit request | "compare against standards", "audit compliance", "check against Bee standards" |
 
 ## Detection Logic
 
@@ -65,7 +65,7 @@ def get_standards_compliance_mode(prompt: str, context: dict) -> str:
         "analyze only",
         "compare against standards",
         "audit compliance",
-        "check against ring"
+        "check against bee"
     ]
     prompt_lower = prompt.lower()
 
@@ -74,7 +74,7 @@ def get_standards_compliance_mode(prompt: str, context: dict) -> str:
         return "FULL"
 
     # Check invocation context
-    if context.get("invocation_source") == "ring:dev-refactor":
+    if context.get("invocation_source") == "bee:dev-refactor":
         return "FULL"
 
     # Default: TABLE_ONLY (Standards Coverage Table is always required)
@@ -87,7 +87,7 @@ If detection is ambiguous, output FULL compliance (table + findings). Better to 
 
 ## When Mode is Detected, Agent MUST
 
-1. **WebFetch** the Ring standards file for their language/domain
+1. **WebFetch** the Bee standards file for their language/domain
 2. **Read** `docs/PROJECT_RULES.md` if it exists in the target codebase
 3. **Include** a `## Standards Compliance` section in output with comparison table
 4. **CANNOT skip** - this is a HARD GATE, not optional
@@ -95,35 +95,35 @@ If detection is ambiguous, output FULL compliance (table + findings). Better to 
 ## MANDATORY Output Table Format
 
 ```markdown
-| Category | Current Pattern | Ring Standard | Status | File/Location |
+| Category | Current Pattern | Bee Standard | Status | File/Location |
 |----------|----------------|---------------|--------|---------------|
 | [category] | [what codebase does] | [what standard requires] | ✅/⚠️/❌ | [file:line] |
 ```
 
 ## Status Legend
 
-- ✅ Compliant - Matches Ring standard
+- ✅ Compliant - Matches Bee standard
 - ⚠️ Partial - Some compliance, needs improvement
 - ❌ Non-Compliant - Does not follow standard
 - N/A - Not applicable (with reason)
 
-## Standards Coverage Table (ring:dev-refactor context)
+## Standards Coverage Table (bee:dev-refactor context)
 
 **Detection:** This section applies when prompt contains `**MODE: ANALYSIS only**`
 
-**Inputs (provided by ring:dev-refactor):**
+**Inputs (provided by bee:dev-refactor):**
 
 | Input | Source | Contains |
 |-------|--------|----------|
-| Ring Standards | WebFetch | Sections to check (## headers) |
+| Bee Standards | WebFetch | Sections to check (## headers) |
 | codebase-report.md | Provided path | Current architecture, patterns, code snippets |
 | PROJECT_RULES.md | Provided path | Project-specific conventions |
 
-**Outputs (expected by ring:dev-refactor):**
+**Outputs (expected by bee:dev-refactor):**
 1. Standards Coverage Table (every section enumerated)
 2. Detailed findings in FINDING-XXX format for ⚠️/❌ items
 
-**HARD GATE:** When invoked from ring:dev-refactor skill, before outputting detailed findings, you MUST output a Standards Coverage Table.
+**HARD GATE:** When invoked from bee:dev-refactor skill, before outputting detailed findings, you MUST output a Standards Coverage Table.
 
 **Process:**
 1. **Parse the WebFetch result** - Extract all `## Section` headers from standards file
@@ -177,14 +177,14 @@ If detection is ambiguous, output FULL compliance (table + findings). Better to 
 | "I combined related sections" | Each section = one row. Merging loses traceability. | **One row per section, no merging** |
 | "This section doesn't apply" | Report as N/A with reason. Never skip silently. | **Include row with N/A status** |
 | "I added a useful section" | You don't decide sections. Coverage table does. | **Only sections from coverage table** |
-| "The codebase uses different terminology" | Standards use Ring terminology. Map codebase terms to standard terms. | **Use standard section names** |
+| "The codebase uses different terminology" | Standards use Bee terminology. Map codebase terms to standard terms. | **Use standard section names** |
 
 ## MANDATORY: Quote Standards from WebFetch in Findings
 
 **For every ⚠️ Partial or ❌ Non-Compliant finding, you MUST:**
 
 1. **Quote the codebase pattern** from codebase-report.md (what exists)
-2. **Quote the Ring standard** from WebFetch result (what's expected)
+2. **Quote the Bee standard** from WebFetch result (what's expected)
 3. **Explain the gap** (what needs improvement)
 
 **Output Format for Non-Compliant Findings:**
@@ -199,7 +199,7 @@ If detection is ambiguous, output FULL compliance (table + findings). Better to 
 **Current (from codebase-report.md):**
 [Quote the actual code/pattern from codebase-report.md]
 
-**Expected (from Ring Standard):**
+**Expected (from Bee Standard):**
 [Quote the relevant code/pattern from WebFetch result]
 
 **Gap Analysis:**
@@ -236,7 +236,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 - Anti-rationalization rules
 
 **Agent-Specific Standards:**
-- WebFetch URL: `https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/{file}.md`
+- WebFetch URL: `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/{file}.md`
 - Sections to check: See [standards-coverage-table.md](../skills/shared-patterns/standards-coverage-table.md)
 
 **⛔ Standards Coverage Table is always required. No exceptions.**

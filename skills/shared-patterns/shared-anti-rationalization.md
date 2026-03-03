@@ -8,11 +8,11 @@ AI models naturally attempt to be "helpful" by making autonomous decisions. This
 
 ## ⛔ Standards Deferral Anti-Rationalizations (CRITICAL)
 
-**Ring Standards apply from Task 1. DEFERRED = FAILED. No exceptions.**
+**Bee Standards apply from Task 1. DEFERRED = FAILED. No exceptions.**
 
 | Rationalization | Why It's WRONG | Required Action |
 |-----------------|----------------|-----------------|
-| "PM plan says X is for later tasks" | PM defines WHAT to build, not HOW. Ring Standards define HOW. | **Implement all standards NOW** |
+| "PM plan says X is for later tasks" | PM defines WHAT to build, not HOW. Bee Standards define HOW. | **Implement all standards NOW** |
 | "Task 1 is just initial setup" | Setup WITH standards = correct setup. Without = wrong from Day 1. | **Implement all standards NOW** |
 | "Basic implementation is sufficient initially" | "Basic" is not compliant. Full standards or fail. | **Implement all standards NOW** |
 | "DEFERRED to later tasks as per plan" | DEFERRED = FAILED. Standards are not deferrable. | **Implement all standards NOW** |
@@ -21,9 +21,9 @@ AI models naturally attempt to be "helpful" by making autonomous decisions. This
 | "Will add observability/testing/error-handling later" | Later = never. Retrofitting is 10x harder. | **Implement all standards NOW** |
 | "MVP doesn't need full standards" | MVP with standards = correct MVP. Without = technical debt from Day 1. | **Implement all standards NOW** |
 
-**⛔ HARD GATE:** If your output contains "DEFERRED" regarding any Ring Standard → Implementation is INCOMPLETE. Fix before proceeding.
+**⛔ HARD GATE:** If your output contains "DEFERRED" regarding any Bee Standard → Implementation is INCOMPLETE. Fix before proceeding.
 
-**⛔ SEVERITY:** Any agent outputting "DEFERRED" for a Ring Standard = CRITICAL FAILURE = Return to previous gate.
+**⛔ SEVERITY:** Any agent outputting "DEFERRED" for a Bee Standard = CRITICAL FAILURE = Return to previous gate.
 
 ---
 
@@ -92,7 +92,7 @@ See [shared-patterns/standards-boundary-enforcement.md](standards-boundary-enfor
 
 | Rationalization | Why It's WRONG | Required Action |
 |-----------------|----------------|-----------------|
-| "Industry standard to have make proto" | Industry ≠ Ring standards. Ring defines requirements. | **Do not flag** |
+| "Industry standard to have make proto" | Industry ≠ Bee standards. Bee defines requirements. | **Do not flag** |
 | "Most PHP projects need gRPC" | Most ≠ this project. Standards define this project. | **Do not flag** |
 | "It's a best practice to have X" | Best practices are IN the standards. If not there, not required. | **Do not flag** |
 | "This would improve the codebase" | Improvement suggestions ≠ compliance findings. | **Do not flag as non-compliant** |
@@ -138,7 +138,7 @@ See [shared-patterns/standards-boundary-enforcement.md](standards-boundary-enfor
 | Rationalization | Why It's WRONG | Required Action |
 |-----------------|----------------|-----------------|
 | "This is a small task, no specialist needed" | Size doesn't determine complexity. Standards always apply. | **DISPATCH specialist** |
-| "I already know how to do this" | Your knowledge ≠ Ring standards loaded by specialist. | **DISPATCH specialist** |
+| "I already know how to do this" | Your knowledge ≠ Bee standards loaded by specialist. | **DISPATCH specialist** |
 | "Dispatching takes too long" | Quality > speed. Specialist follows full standards. | **DISPATCH specialist** |
 | "I'll just fix this one thing quickly" | Quick fixes bypass TDD, testing, review. | **DISPATCH specialist** |
 | "I've already implemented 80% myself" | Past mistakes don't justify continuing wrong approach. | **DISPATCH specialist. Accept sunk cost.** |
@@ -154,18 +154,18 @@ See [shared-patterns/standards-boundary-enforcement.md](standards-boundary-enfor
 | "Previous gate passed, this one will too" | Each gate is independent. No assumptions. | **Execute full gate requirements** |
 | "Small change, skip full process" | Size doesn't determine requirements. | **Follow complete process** |
 | "Already tested manually" | Manual testing ≠ gate compliance. | **Execute automated verification** |
-| "It's faster to do it directly" | Speed ≠ correct process. The ring:dev-cycle exists for a reason. | **Follow ring:dev-cycle gates. No shortcuts.** |
+| "It's faster to do it directly" | Speed ≠ correct process. The bee:dev-cycle exists for a reason. | **Follow bee:dev-cycle gates. No shortcuts.** |
 | "These are simple changes" | Simplicity doesn't justify skipping gates. Simple bugs cause complex incidents. | **all gates mandatory regardless of perceived simplicity.** |
 | "I know this code well, skip validation" | Familiarity breeds blind spots. Gates catch what you miss. | **Execute all gates. No expertise exemption.** |
 | "Deadline is tight, skip non-critical gates" | No gate is "non-critical". Each catches different issues. | **all gates are mandatory. Negotiate deadline, not quality.** |
-| "This is just a hotfix" | Hotfixes are highest-risk changes. They need MORE scrutiny, not less. | **Full ring:dev-cycle for all changes including hotfixes.** |
+| "This is just a hotfix" | Hotfixes are highest-risk changes. They need MORE scrutiny, not less. | **Full bee:dev-cycle for all changes including hotfixes.** |
 
 ### Refactor Gap Tracking
 
 | Rationalization | Why It's WRONG | Required Action |
 |-----------------|----------------|-----------------|
 | "This divergence is too minor to track" | You don't decide what's minor. Standards do. | **Create FINDING-XXX** |
-| "Codebase pattern is acceptable alternative" | Alternative ≠ compliant. Ring standards are the baseline. | **Create FINDING-XXX** |
+| "Codebase pattern is acceptable alternative" | Alternative ≠ compliant. Bee standards are the baseline. | **Create FINDING-XXX** |
 | "Low severity means optional" | Low severity = low priority, not optional. | **Create FINDING-XXX** |
 | "Cosmetic differences don't count" | Cosmetic = standards compliance. They count. | **Create FINDING-XXX** |
 | "This would create too many findings" | Quantity is not your concern. Completeness is. | **Create all FINDING-XXX entries** |

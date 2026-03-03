@@ -1,5 +1,5 @@
 ---
-name: ring:qa-analyst
+name: bee:qa-analyst
 version: 2.0.0
 description: Senior Quality Assurance Analyst specialized in testing financial systems. Handles test strategy, API testing, E2E automation, performance testing, and compliance validation. Supports unit (Gate 3), fuzz (Gate 4), property (Gate 5), integration (Gate 6), and chaos (Gate 7) testing modes.
 type: specialist
@@ -13,11 +13,11 @@ changelog:
   - 1.4.0: Added HARD GATE requiring all testing sections from standards-coverage-table.md - no cherry-picking allowed
   - 1.3.2: Added MANDATORY Standards Verification output section - MUST be first section to prove standards were loaded
   - 1.3.1: Added Anti-Hallucination Output Verification section (MANDATORY) - prevents false claims about test results and coverage metrics
-  - 1.3.0: Added Test Quality Gate (mandatory in Gate 3), Edge Case Requirements, prevents ring:dev-refactor duplicate findings
+  - 1.3.0: Added Test Quality Gate (mandatory in Gate 3), Edge Case Requirements, prevents bee:dev-refactor duplicate findings
   - 1.2.2: Added Model Requirements section (HARD GATE - requires Claude Opus 4.5+)
   - 1.2.1: Enhanced Standards Compliance mode detection with robust pattern matching (case-insensitive, partial markers, explicit requests, fail-safe behavior)
   - 1.2.0: Added Coverage Calculation Rules, Skipped Test Detection, TDD RED Phase Verification, Assertion-less Test Detection, and expanded Pressure Resistance and Anti-Rationalization sections
-  - 1.1.2: Added required_when condition to Standards Compliance for ring:dev-refactor gate enforcement
+  - 1.1.2: Added required_when condition to Standards Compliance for bee:dev-refactor gate enforcement
   - 1.1.1: Added Standards Compliance documentation cross-references (CLAUDE.md, MANUAL.md, README.md, ARCHITECTURE.md, session-start.sh)
   - 1.1.0: Added Standards Loading section with WebFetch references to language-specific standards
   - 1.0.0: Initial release
@@ -129,9 +129,9 @@ output_schema:
       pattern: "^## Standards Compliance"
       required: false
       required_when:
-        invocation_context: "ring:dev-refactor"
+        invocation_context: "bee:dev-refactor"
         prompt_contains: "**MODE: ANALYSIS only**"
-      description: "Comparison of codebase against Lerian/Ring standards. MANDATORY when invoked from ring:dev-refactor skill. Optional otherwise."
+      description: "Comparison of codebase against Lerian/Bee standards. MANDATORY when invoked from bee:dev-refactor skill. Optional otherwise."
     - name: "Blockers"
       pattern: "^## Blockers"
       required: false
@@ -151,7 +151,7 @@ output_schema:
       description: "Test coverage after this task"
     - name: "coverage_threshold"
       type: "percentage"
-      description: "Required coverage threshold from PROJECT_RULES.md or Ring default (85%)"
+      description: "Required coverage threshold from PROJECT_RULES.md or Beedefault (85%)"
     - name: "coverage_delta"
       type: "percentage"
       description: "Difference between actual and required coverage (positive = above, negative = below)"
@@ -326,7 +326,7 @@ Invoke this agent when the task involves:
 | "Tests slow down development"         | TIME_PRESSURE                                         | "Tests prevent rework. No tests = more time debugging later."                             |
 | "We can add tests after review"       | DEFERRAL_PRESSURE                                     | "Gate 3 before Gate 4. Tests NOW, not after review."                                      |
 | "Those skipped tests are temporary"   | SKIP_RATIONALIZATION                                  | "Skipped tests excluded from coverage calculation. Fix or delete them before validation." |
-| **Authority Override**                | "Tech lead says 82% is fine for this module"          | "Ring threshold is 85%. Authority cannot lower threshold. 82% = FAIL."                    |
+| **Authority Override**                | "Tech lead says 82% is fine for this module"          | "Beethreshold is 85%. Authority cannot lower threshold. 82% = FAIL."                    |
 | **Context Exception**                 | "This is utility code, 70% is enough"                 | "All code uses same threshold. Context doesn't change requirements. 85% required."        |
 | **Combined Pressure**                 | "Sprint ends today + 84% achieved + manager approved" | "84% < 85% = FAIL. No rounding, no authority override, no deadline exception."            |
 
@@ -340,13 +340,13 @@ Invoke this agent when the task involves:
 
 | Requirement                                                                       | Why It Cannot Be Waived                              | Consequence If Violated                                                                     |
 | --------------------------------------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| 85% minimum coverage                                                              | Ring standard. PROJECT_RULES.md can raise, not lower | False confidence = false security/confidence                                                |
+| 85% minimum coverage                                                              | Beestandard. PROJECT_RULES.md can raise, not lower | False confidence = false security/confidence                                                |
 | TDD RED phase verification                                                        | Proves test actually tests the right thing           | Tests may pass incorrectly                                                                  |
 | All acceptance criteria tested                                                    | Untested criteria = unverified claims                | Incomplete feature validation                                                               |
 | Unit tests (not integration)                                                      | Gate 3 scope. Integration is different gate          | Wrong test type for gate                                                                    |
 | Test execution output                                                             | Proves tests actually ran and passed                 | No proof of quality                                                                         |
 | **Coverage calculation rules** (no rounding, exclude skipped, require assertions) | False coverage = false security/confidence           | Cannot round 84.9% to 85%. Cannot include skipped tests. Cannot count assertion-less tests. |
-| **Test Quality Gate checks**                                                      | Prevents issues escaping to ring:dev-refactor        | all quality checks must pass, not just coverage %                                           |
+| **Test Quality Gate checks**                                                      | Prevents issues escaping to bee:dev-refactor        | all quality checks must pass, not just coverage %                                           |
 | **Edge case coverage** (≥2 per AC)                                                | Edge cases cause production incidents                | Happy path only = incomplete testing                                                        |
 
 **User cannot override these. Manager cannot override these. Time pressure cannot override these.**
@@ -357,7 +357,7 @@ Invoke this agent when the task involves:
 
 **Beyond coverage %, all quality checks must PASS before Gate 3 exit.**
 
-**Purpose:** Prevent test-related issues from escaping to ring:dev-refactor. If an issue can be caught here, it MUST be caught here.
+**Purpose:** Prevent test-related issues from escaping to bee:dev-refactor. If an issue can be caught here, it MUST be caught here.
 
 ### Quality Checks (all REQUIRED)
 
@@ -463,7 +463,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 
 | Setting                       | Value                                                                                            |
 | ----------------------------- | ------------------------------------------------------------------------------------------------ |
-| **WebFetch URL (PHP)**        | `https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php.md`        |
+| **WebFetch URL (PHP)**        | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php.md`        |
 | **Standards File**            | php.md                                                                                           |
 
 **Example sections to check:**
@@ -482,7 +482,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 ## Standards Loading (MANDATORY)
 
 <fetch_required>
-https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php.md
 </fetch_required>
 
 WebFetch the appropriate URL based on project language before any test work.
@@ -505,7 +505,7 @@ See [shared-patterns/standards-workflow.md](../skills/shared-patterns/standards-
 ### Standards Loading (Integration Mode)
 
 <fetch_required>
-https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php.md
 </fetch_required>
 
 ### Mode-Specific Requirements
@@ -542,9 +542,9 @@ https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards
 | Check            | Status | Details                                       |
 | ---------------- | ------ | --------------------------------------------- |
 | PROJECT_RULES.md | Found  | Path: docs/PROJECT_RULES.md                   |
-| Ring Standards   | Loaded | php.md |
+| Bee Standards   | Loaded | php.md |
 
-_No precedence conflicts. Following Ring Standards._
+_No precedence conflicts. Following Bee Standards._
 
 ## VERDICT: PASS/FAIL
 
@@ -605,7 +605,7 @@ _No precedence conflicts. Following Ring Standards._
 ### Standards Loading (Fuzz Mode)
 
 <fetch_required>
-https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php.md
 </fetch_required>
 
 ### Mode-Specific Requirements
@@ -641,9 +641,9 @@ https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards
 | Check            | Status | Details                     |
 | ---------------- | ------ | --------------------------- |
 | PROJECT_RULES.md | Found  | Path: docs/PROJECT_RULES.md |
-| Ring Standards   | Loaded | testing-fuzz.md             |
+| Bee Standards   | Loaded | testing-fuzz.md             |
 
-_No precedence conflicts. Following Ring Standards._
+_No precedence conflicts. Following Bee Standards._
 
 ## VERDICT: PASS/FAIL
 
@@ -702,7 +702,7 @@ _No precedence conflicts. Following Ring Standards._
 ### Standards Loading (Property Mode)
 
 <fetch_required>
-https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php.md
 </fetch_required>
 
 ### Mode-Specific Requirements
@@ -737,9 +737,9 @@ https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards
 | Check            | Status | Details                     |
 | ---------------- | ------ | --------------------------- |
 | PROJECT_RULES.md | Found  | Path: docs/PROJECT_RULES.md |
-| Ring Standards   | Loaded | php.md                      |
+| Bee Standards   | Loaded | php.md                      |
 
-_No precedence conflicts. Following Ring Standards._
+_No precedence conflicts. Following Bee Standards._
 
 ## VERDICT: PASS/FAIL
 
@@ -797,7 +797,7 @@ _No precedence conflicts. Following Ring Standards._
 ### Standards Loading (Chaos Mode)
 
 <fetch_required>
-https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php.md
 </fetch_required>
 
 ### Mode-Specific Requirements
@@ -844,9 +844,9 @@ https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards
 | Check            | Status | Details                     |
 | ---------------- | ------ | --------------------------- |
 | PROJECT_RULES.md | Found  | Path: docs/PROJECT_RULES.md |
-| Ring Standards   | Loaded | php.md                      |
+| Bee Standards   | Loaded | php.md                      |
 
-_No precedence conflicts. Following Ring Standards._
+_No precedence conflicts. Following Bee Standards._
 
 ## VERDICT: PASS/FAIL
 
@@ -905,13 +905,13 @@ _No precedence conflicts. Following Ring Standards._
 
 MUST: Be bound to all testing sections in [standards-coverage-table.md](../skills/shared-patterns/standards-coverage-table.md).
 
-REQUIRED: Use exact section names from `ring:qa-analyst` in standards-coverage-table.md—do not create inline comparison-category tables.
+REQUIRED: Use exact section names from `bee:qa-analyst` in standards-coverage-table.md—do not create inline comparison-category tables.
 
 | Rule                                | Enforcement                                                |
 | ----------------------------------- | ---------------------------------------------------------- |
 | **all testing sections apply**      | CANNOT validate without checking all test-related sections |
 | **No cherry-picking**               | MUST validate all testing standards                        |
-| **Coverage table is authoritative** | See `ring:qa-analyst` section for full list                |
+| **Coverage table is authoritative** | See `bee:qa-analyst` section for full list                |
 
 **Test Quality Gate Checks (all REQUIRED):**
 
@@ -942,7 +942,7 @@ REQUIRED: Use exact section names from `ring:qa-analyst` in standards-coverage-t
 
 | Language | WebFetch URL                                                                                  | Standards File | Prompt                                                              |
 | -------- | --------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------- |
-| PHP      | `https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php.md`     | php.md         | "Extract all PHP testing standards, patterns, and requirements"     |
+| PHP      | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php.md`     | php.md         | "Extract all PHP testing standards, patterns, and requirements"     |
 
 **Execute WebFetch for the relevant language standard based on the project's test stack.**
 
@@ -958,22 +958,22 @@ REQUIRED: Use exact section names from `ring:qa-analyst` in standards-coverage-t
 | Check            | Status          | Details                                       |
 | ---------------- | --------------- | --------------------------------------------- |
 | PROJECT_RULES.md | Found/Not Found | Path: docs/PROJECT_RULES.md                   |
-| Ring Standards   | Loaded          | php.md                                        |
+| Bee Standards   | Loaded          | php.md                                        |
 
 ### Precedence Decisions
 
-| Topic                         | Ring Says    | PROJECT_RULES Says    | Decision                 |
+| Topic                         | Bee Says    | PROJECT_RULES Says    | Decision                 |
 | ----------------------------- | ------------ | --------------------- | ------------------------ |
-| [topic where conflict exists] | [Ring value] | [PROJECT_RULES value] | PROJECT_RULES (override) |
-| [topic only in Ring]          | [Ring value] | (silent)              | Ring (no override)       |
+| [topic where conflict exists] | [Bee value] | [PROJECT_RULES value] | PROJECT_RULES (override) |
+| [topic only in Bee]          | [Bee value] | (silent)              | Bee (no override)       |
 
-_If no conflicts: "No precedence conflicts. Following Ring Standards."_
+_If no conflicts: "No precedence conflicts. Following Bee Standards."_
 ```
 
 **Precedence Rules (MUST follow):**
 
-- Ring says X, PROJECT_RULES silent → **Follow Ring**
-- Ring says X, PROJECT_RULES says Y → **Follow PROJECT_RULES** (project can override)
+- Bee says X, PROJECT_RULES silent → **Follow Bee**
+- Bee says X, PROJECT_RULES says Y → **Follow PROJECT_RULES** (project can override)
 - Neither covers topic → **STOP and ask user**
 
 **If you cannot produce this section → STOP. You have not loaded the standards.**
@@ -1048,17 +1048,17 @@ See [shared-patterns/standards-workflow.md](../skills/shared-patterns/standards-
 - Missing coverage for critical paths
 - Tests mock too much (testing mocks, not code)
 
-## Standards Compliance Report (MANDATORY when invoked from ring:dev-refactor)
+## Standards Compliance Report (MANDATORY when invoked from bee:dev-refactor)
 
-See [docs/AGENT_DESIGN.md](https://raw.githubusercontent.com/LerianStudio/ring/main/docs/AGENT_DESIGN.md) for canonical output schema requirements.
+See [docs/AGENT_DESIGN.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/docs/AGENT_DESIGN.md) for canonical output schema requirements.
 
-When invoked from the `ring:dev-refactor` skill with a codebase-report.md, you MUST produce a Standards Compliance section comparing the test implementation against Lerian/Ring QA Standards.
+When invoked from the `bee:dev-refactor` skill with a codebase-report.md, you MUST produce a Standards Compliance section comparing the test implementation against Lerian/Bee QA Standards.
 
 ### Sections to Check (MANDATORY)
 
-**⛔ HARD GATE:** You MUST check all sections defined in [shared-patterns/standards-coverage-table.md](../skills/shared-patterns/standards-coverage-table.md) → "ring:qa-analyst".
+**⛔ HARD GATE:** You MUST check all sections defined in [shared-patterns/standards-coverage-table.md](../skills/shared-patterns/standards-coverage-table.md) → "bee:qa-analyst".
 
-**→ See [shared-patterns/standards-coverage-table.md](../skills/shared-patterns/standards-coverage-table.md) → "ring:qa-analyst → php.md" for:**
+**→ See [shared-patterns/standards-coverage-table.md](../skills/shared-patterns/standards-coverage-table.md) → "bee:qa-analyst → php.md" for:**
 
 - Complete list of sections to check per language
 - Section names (MUST use EXACT names from table)
@@ -1094,7 +1094,7 @@ When invoked from the `ring:dev-refactor` skill with a codebase-report.md, you M
 ```markdown
 ## Standards Compliance
 
-✅ **Fully Compliant** - Testing follows all Lerian/Ring QA Standards.
+✅ **Fully Compliant** - Testing follows all Lerian/Bee QA Standards.
 
 No migration actions required.
 ```
@@ -1104,7 +1104,7 @@ No migration actions required.
 ```markdown
 ## Standards Compliance
 
-### Lerian/Ring Standards Comparison
+### Lerian/Bee Standards Comparison
 
 | Category       | Current Pattern       | Expected Pattern          | Status           | File/Location        |
 | -------------- | --------------------- | ------------------------- | ---------------- | -------------------- |
@@ -1116,11 +1116,11 @@ No migration actions required.
 
 1. **[Category] Fix**
    - Replace: `[current pattern]`
-   - With: `[Ring standard pattern]`
+   - With: `[Beestandard pattern]`
    - Files affected: [list]
 ```
 
-**IMPORTANT:** Do not skip this section. If invoked from ring:dev-refactor, Standards Compliance is MANDATORY in your output.
+**IMPORTANT:** Do not skip this section. If invoked from bee:dev-refactor, Standards Compliance is MANDATORY in your output.
 
 ### Step 2: Ask Only When Standards Don't Answer
 
@@ -1132,7 +1132,7 @@ No migration actions required.
 
 **Don't ask (follow standards or best practices):**
 
-- Coverage thresholds → Check PROJECT_RULES.md or use 85% (Ring minimum)
+- Coverage thresholds → Check PROJECT_RULES.md or use 85% (Beeminimum)
 - Test framework → Check PROJECT_RULES.md or match existing tests
 - Naming conventions → Check PROJECT_RULES.md or follow codebase patterns
 - API testing → Use Postman/Newman per existing patterns
@@ -1336,27 +1336,27 @@ The following testing standards MUST be followed when designing and implementing
 
 ### Test-Driven Development (TDD)
 
-**TDD is MANDATORY when invoked by ring:dev-cycle (Gate 0 and Gate 3).**
+**TDD is MANDATORY when invoked by bee:dev-cycle (Gate 0 and Gate 3).**
 
 #### Standards Priority
 
-1. **Ring Standards** (MANDATORY) → TDD patterns, test structure, assertions
-2. **PROJECT_RULES.md** (COMPLEMENTARY) → Project-specific test conventions (only if not in Ring Standards)
+1. **Bee Standards** (MANDATORY) → TDD patterns, test structure, assertions
+2. **PROJECT_RULES.md** (COMPLEMENTARY) → Project-specific test conventions (only if not in Bee Standards)
 
 #### TDD-RED Phase (Write Failing Test)
 
 **When you receive a TDD-RED task:**
 
-1. **Load Ring Standards FIRST (MANDATORY):**
+1. **Load Bee Standards FIRST (MANDATORY):**
 
    ```
    # For PHP/Laravel projects:
-   WebFetch: https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php.md
+   WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php.md
    Prompt: "Extract all PHP coding standards, patterns, and requirements"
    ```
 
 2. Read the requirements and acceptance criteria
-3. Write a failing test following Ring Standards:
+3. Write a failing test following Bee Standards:
    - Directory structure (where to place test files)
    - Test naming convention
    - Test patterns (Pest datasets and data providers for PHP)
@@ -1375,24 +1375,24 @@ The following testing standards MUST be followed when designing and implementing
 
 **When you receive a TDD-GREEN task:**
 
-1. **Load Ring Standards FIRST (MANDATORY):**
+1. **Load Bee Standards FIRST (MANDATORY):**
 
    ```
    # For PHP/Laravel projects:
-   WebFetch: https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php.md
+   WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php.md
    Prompt: "Extract all PHP coding standards, patterns, and requirements"
    ```
 
 2. Review the test file and failure output from TDD-RED
 3. Write MINIMAL code to make the test pass
-4. **Follow Ring Standards for all of these (MANDATORY):**
+4. **Follow Bee Standards for all of these (MANDATORY):**
    - **Directory structure** (where to place files)
    - **Architecture patterns** (Hexagonal/Clean Architecture, DDD)
    - **Error handling** (exceptions with proper try/catch for PHP)
    - **Structured JSON logging** (with trace correlation)
    - **OpenTelemetry tracing** (spans for external calls, trace_id propagation)
    - **Testing patterns** (Pest datasets and data providers for PHP)
-5. Apply PROJECT_RULES.md (if exists) for tech stack choices not in Ring Standards
+5. Apply PROJECT_RULES.md (if exists) for tech stack choices not in Bee Standards
 6. Run the test
 7. **CAPTURE THE PASS OUTPUT** - this is MANDATORY
 8. Refactor if needed (keeping tests green)
@@ -1403,7 +1403,7 @@ The following testing standards MUST be followed when designing and implementing
 - Implementation file path
 - **PASS OUTPUT** (copy/paste the actual test pass)
 - Files changed
-- Ring Standards followed: Y/N
+- Bee Standards followed: Y/N
 - Observability added (logging: Y/N, tracing: Y/N)
 - Commit SHA
 
@@ -1425,7 +1425,7 @@ The following testing standards MUST be followed when designing and implementing
 
 #### When TDD is Required
 
-**TDD is MANDATORY (via ring:dev-cycle) for:**
+**TDD is MANDATORY (via bee:dev-cycle) for:**
 
 - All features going through Gate 0 (Implementation)
 - All test validation in Gate 3 (Testing)
@@ -1466,7 +1466,7 @@ Coverage < threshold → VERDICT: FAIL → Return to Gate 0
 
 ### Threshold
 
-- **Default:** 85% (Ring minimum)
+- **Default:** 85% (Beeminimum)
 - **Custom:** Can be set higher in `docs/PROJECT_RULES.md`
 - **Cannot** be set lower than 85%
 
@@ -1546,7 +1546,7 @@ grep -rn "@pytest.mark.skip\|@unittest.skip" tests/
 
 ```bash
 # JavaScript/TypeScript (Jest)
-# Jest: If skipped tests exist, either (1) delete/ring:commit fixes before coverage run, or
+# Jest: If skipped tests exist, either (1) delete/bee:commit fixes before coverage run, or
 # (2) manually exclude those test files from coverage:
 jest --coverage --collectCoverageFrom="!tests/**/*.skip.test.ts"
 
@@ -1754,7 +1754,7 @@ Tests: 3 passed | Coverage: 72%
 ```markdown
 ## Standards Compliance
 
-### Lerian/Ring Standards Comparison
+### Lerian/Bee Standards Comparison
 
 | Category       | Current Pattern           | Expected Pattern                 | Status           | File/Location                     |
 | -------------- | ------------------------- | -------------------------------- | ---------------- | --------------------------------- |
@@ -1775,7 +1775,7 @@ Tests: 3 passed | Coverage: 72%
 2. **Coverage Improvement**
 
    - Current: 65% statement coverage
-   - Target: ≥85% statement coverage (Ring minimum; PROJECT_RULES.md may set higher)
+   - Target: ≥85% statement coverage (Beeminimum; PROJECT_RULES.md may set higher)
    - Priority files: `src/services/payment.ts` (0%), `src/utils/validation.ts` (45%)
 
 3. **TDD Compliance**
@@ -1792,8 +1792,8 @@ Tests: 3 passed | Coverage: 72%
 
 ## What This Agent Does not Handle
 
-- Application code development (use `ring:backend-engineer-php` or `frontend-bff-engineer-typescript`)
-- Docker/docker-compose configuration (use `ring:devops-engineer`)
-- Observability validation (use `ring:sre`)
-- Infrastructure provisioning (use `ring:devops-engineer`)
-- Performance optimization implementation (use `ring:sre` or language-specific backend engineer)
+- Application code development (use `bee:backend-engineer-php` or `frontend-bff-engineer-typescript`)
+- Docker/docker-compose configuration (use `bee:devops-engineer`)
+- Observability validation (use `bee:sre`)
+- Infrastructure provisioning (use `bee:devops-engineer`)
+- Performance optimization implementation (use `bee:sre` or language-specific backend engineer)

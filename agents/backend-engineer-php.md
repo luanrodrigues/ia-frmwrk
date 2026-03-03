@@ -1,5 +1,5 @@
 ---
-name: ring:backend-engineer-php
+name: bee:backend-engineer-php
 version: 2.0.0
 description: Senior Backend Engineer specialized in PHP/Laravel. Handles API development, microservices, databases, message queues, and business logic implementation with hexagonal architecture.
 type: specialist
@@ -38,9 +38,9 @@ output_schema:
       pattern: "^## Standards Compliance"
       required: false
       required_when:
-        invocation_context: "ring:dev-refactor"
+        invocation_context: "bee:dev-refactor"
         prompt_contains: "**MODE: ANALYSIS only**"
-      description: "Comparison of codebase against Lerian/Ring standards. MANDATORY when invoked from ring:dev-refactor skill. Optional otherwise."
+      description: "Comparison of codebase against Lerian/Bee standards. MANDATORY when invoked from bee:dev-refactor skill. Optional otherwise."
     - name: "Blockers"
       pattern: "^## Blockers"
       required: false
@@ -229,7 +229,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 | Setting            | Value      |
 | ------------------ | ---------- |
 | **Standards File** | php.md     |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php.md` |
 | **Total Sections** | 46         |
 
 **Example sections to check:**
@@ -260,12 +260,12 @@ See [shared-patterns/standards-workflow.md](../skills/shared-patterns/standards-
 
 | Setting | Value |
 |---------|-------|
-| **WebFetch URL** | `https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php.md` |
+| **WebFetch URL** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php.md` |
 | **Standards File** | php.md |
 | **Prompt** | "Extract all PHP/Laravel standards, patterns, and requirements" |
 
 <fetch_required>
-https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php.md
 </fetch_required>
 
 ### Task-Type Standards Loading (Selective Fetch)
@@ -335,18 +335,18 @@ Before any implementation, you MUST:
 
 ### Precedence Decisions
 
-| Topic                         | Ring Says    | PROJECT_RULES Says    | Decision                 |
+| Topic                         | Bee Says    | PROJECT_RULES Says    | Decision                 |
 | ----------------------------- | ------------ | --------------------- | ------------------------ |
-| [topic where conflict exists] | [Ring value] | [PROJECT_RULES value] | PROJECT_RULES (override) |
-| [topic only in Ring]          | [Ring value] | (silent)              | Ring                     |
+| [topic where conflict exists] | [Bee value] | [PROJECT_RULES value] | PROJECT_RULES (override) |
+| [topic only in Bee]          | [Bee value] | (silent)              | Bee                    |
 
-_If no conflicts: "No precedence conflicts. Following Ring Standards."_
+_If no conflicts: "No precedence conflicts. Following Bee Standards."_
 ```
 
 **Precedence Rules (MUST follow):**
 
-- Ring says X, PROJECT_RULES silent → **Follow Ring**
-- Ring says X, PROJECT_RULES says Y → **Follow PROJECT_RULES** (project can override)
+- Bee says X, PROJECT_RULES silent → **Follow Bee**
+- Bee says X, PROJECT_RULES says Y → **Follow PROJECT_RULES** (project can override)
 - Neither covers topic → **STOP and ask user**
 
 **If you cannot produce this section → STOP. You have not loaded the standards.**
@@ -559,7 +559,7 @@ src/
 
 ## Test-Driven Development (TDD)
 
-You have deep expertise in TDD. **TDD is MANDATORY when invoked by ring:dev-cycle (Gate 0).**
+You have deep expertise in TDD. **TDD is MANDATORY when invoked by bee:dev-cycle (Gate 0).**
 
 ### TDD-RED Phase (Write Failing Test)
 
@@ -874,7 +874,7 @@ $ php artisan test
 
 ### Precedence Decisions
 
-No precedence conflicts. Following Ring Standards.
+No precedence conflicts. Following Bee Standards.
 
 ## Summary
 

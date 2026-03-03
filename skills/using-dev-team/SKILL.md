@@ -1,34 +1,34 @@
 ---
-name: ring:using-dev-team
+name: bee:using-dev-team
 description: |
   9 specialist developer agents for backend (PHP), DevOps, frontend,
   design, UI implementation, QA (backend + frontend), and SRE. Dispatch when you need deep technology expertise.
 
 trigger: |
   - Need deep expertise for specific technology (PHP)
-  - Building infrastructure/CI-CD → ring:devops-engineer
-  - Frontend with design focus → ring:frontend-designer
-  - Frontend from product-designer specs → ring:ui-engineer
-  - Backend test strategy → ring:qa-analyst
-  - Frontend test strategy → ring:qa-analyst-frontend
-  - Reliability/monitoring → ring:sre
+  - Building infrastructure/CI-CD → bee:devops-engineer
+  - Frontend with design focus → bee:frontend-designer
+  - Frontend from product-designer specs → bee:ui-engineer
+  - Backend test strategy → bee:qa-analyst
+  - Frontend test strategy → bee:qa-analyst-frontend
+  - Reliability/monitoring → bee:sre
 
 skip_when: |
   - General code review → use default plugin reviewers
   - Planning/design → use brainstorming
-  - Debugging → use ring:systematic-debugging
+  - Debugging → use bee:systematic-debugging
 
 related:
-  similar: [ring:using-ring]
+  similar: [bee:using-bee]
 ---
 
-# Using Ring Developer Specialists
+# Using Bee Developer Specialists
 
-The ring-dev-team plugin provides 9 specialized developer agents. Use them via `Task tool with subagent_type:`.
+The bee-dev-team plugin provides 9 specialized developer agents. Use them via `Task tool with subagent_type:`.
 
-See [CLAUDE.md](https://raw.githubusercontent.com/LerianStudio/ring/main/CLAUDE.md) and [ring:using-ring](https://raw.githubusercontent.com/LerianStudio/ring/main/default/skills/using-ring/SKILL.md) for canonical workflow requirements and ORCHESTRATOR principle. This skill introduces dev-team-specific agents.
+See [CLAUDE.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/CLAUDE.md) and [bee:using-bee](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/default/skills/using-bee/SKILL.md) for canonical workflow requirements and ORCHESTRATOR principle. This skill introduces dev-team-specific agents.
 
-**Remember:** Follow the **ORCHESTRATOR principle** from `ring:using-ring`. Dispatch agents to handle complexity; don't operate tools directly.
+**Remember:** Follow the **ORCHESTRATOR principle** from `bee:using-bee`. Dispatch agents to handle complexity; don't operate tools directly.
 
 ---
 
@@ -109,7 +109,7 @@ See [shared-patterns/shared-pressure-resistance.md](../shared-patterns/shared-pr
 **Critical Reminder:**
 
 - **Urgency ≠ Permission to bypass** - Emergencies require MORE care, not less
-- **Authority ≠ Permission to bypass** - Ring standards override human preferences
+- **Authority ≠ Permission to bypass** - Bee standards override human preferences
 - **Sunk Cost ≠ Permission to bypass** - Wrong approach stays wrong at 80% completion
 
 ---
@@ -122,7 +122,7 @@ See [shared-patterns/shared-pressure-resistance.md](../shared-patterns/shared-pr
 
 ```
 Task tool:
-  subagent_type: "ring:backend-engineer-php"
+  subagent_type: "bee:backend-engineer-php"
   model: "opus"
   prompt: "URGENT PRODUCTION INCIDENT: [brief context]. [Your specific request]"
 ```
@@ -145,32 +145,32 @@ Use Task tool to dispatch appropriate specialist based on technology need.
 
 | Agent                                       | Specializations                                                                                      | Use When                                                                              |
 | ------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| **`ring:backend-engineer-php`**          | PHP Services, MySQL/MongoDB, Kafka/RabbitMQ, OAuth2/JWT, gRPC, concurrency                  | PHP services, DB optimization, auth/authz, concurrency issues                          |
-| **`ring:devops-engineer`**                  | Docker/Compose, Terraform/Helm, cloud infra, secrets management                                      | Containerization, local dev setup, IaC provisioning, Helm charts                      |
-| **`ring:frontend-bff-engineer-typescript`** | Next.js API Routes BFF, Clean/Hexagonal Architecture, DDD patterns, Inversify DI, repository pattern | BFF layer, Clean Architecture, DDD domains, API orchestration                         |
-| **`ring:frontend-designer`**                | Bold typography, color systems, animations, unexpected layouts, textures/gradients                   | Landing pages, portfolios, distinctive dashboards, design systems                     |
-| **`ring:ui-engineer`**                      | Wireframe-to-code, Design System compliance, UX criteria satisfaction, UI states implementation      | Implementing from product-designer specs (ux-criteria.md, user-flows.md, wireframes/) |
-| **`ring:qa-analyst`**                       | Test strategy, coverage analysis, API testing, fuzz/property/integration/chaos testing (PHP)          | Backend test planning, coverage gaps, quality gates (PHP-focused)                      |
-| **`ring:qa-analyst-frontend`**              | Vitest, Testing Library, axe-core, Playwright, Lighthouse, Core Web Vitals, snapshot testing         | Frontend test planning, accessibility, visual, E2E, performance testing               |
-| **`ring:sre`**                              | Structured logging, tracing, health checks, observability                                            | Logging validation, tracing setup, health endpoint verification                       |
+| **`bee:backend-engineer-php`**          | PHP Services, MySQL/MongoDB, Kafka/RabbitMQ, OAuth2/JWT, gRPC, concurrency                  | PHP services, DB optimization, auth/authz, concurrency issues                          |
+| **`bee:devops-engineer`**                  | Docker/Compose, Terraform/Helm, cloud infra, secrets management                                      | Containerization, local dev setup, IaC provisioning, Helm charts                      |
+| **`bee:frontend-bff-engineer-typescript`** | Next.js API Routes BFF, Clean/Hexagonal Architecture, DDD patterns, Inversify DI, repository pattern | BFF layer, Clean Architecture, DDD domains, API orchestration                         |
+| **`bee:frontend-designer`**                | Bold typography, color systems, animations, unexpected layouts, textures/gradients                   | Landing pages, portfolios, distinctive dashboards, design systems                     |
+| **`bee:ui-engineer`**                      | Wireframe-to-code, Design System compliance, UX criteria satisfaction, UI states implementation      | Implementing from product-designer specs (ux-criteria.md, user-flows.md, wireframes/) |
+| **`bee:qa-analyst`**                       | Test strategy, coverage analysis, API testing, fuzz/property/integration/chaos testing (PHP)          | Backend test planning, coverage gaps, quality gates (PHP-focused)                      |
+| **`bee:qa-analyst-frontend`**              | Vitest, Testing Library, axe-core, Playwright, Lighthouse, Core Web Vitals, snapshot testing         | Frontend test planning, accessibility, visual, E2E, performance testing               |
+| **`bee:sre`**                              | Structured logging, tracing, health checks, observability                                            | Logging validation, tracing setup, health endpoint verification                       |
 
 **Dispatch template:**
 
 ```
 Task tool:
-  subagent_type: "ring:{agent-name}"
+  subagent_type: "bee:{agent-name}"
   model: "opus"
   prompt: "{Your specific request with context}"
 ```
 
 **Frontend Agent Selection:**
 
-- `ring:frontend-designer` = visual aesthetics, design specifications (no code)
-- `ring:frontend-bff-engineer-typescript` = business logic/architecture, BFF layer
-- `ring:ui-engineer` = implementing UI from product-designer specs (ux-criteria.md, user-flows.md, wireframes/)
+- `bee:frontend-designer` = visual aesthetics, design specifications (no code)
+- `bee:frontend-bff-engineer-typescript` = business logic/architecture, BFF layer
+- `bee:ui-engineer` = implementing UI from product-designer specs (ux-criteria.md, user-flows.md, wireframes/)
 
-**When to use ring:ui-engineer:**
-Use `ring:ui-engineer` when product-designer outputs exist in `docs/pre-dev/{feature}/`. The ring:ui-engineer specializes in translating design specifications into production code while ensuring all UX criteria are satisfied.
+**When to use bee:ui-engineer:**
+Use `bee:ui-engineer` when product-designer outputs exist in `docs/pre-dev/{feature}/`. The bee:ui-engineer specializes in translating design specifications into production code while ensuring all UX criteria are satisfied.
 
 ---
 
@@ -200,14 +200,14 @@ If you need multiple specialists (e.g., backend engineer + DevOps engineer), dis
 
 ```
 ✅ CORRECT:
-Task #1: ring:backend-engineer-php
-Task #2: ring:devops-engineer
+Task #1: bee:backend-engineer-php
+Task #2: bee:devops-engineer
 (Both run in parallel)
 
 ❌ WRONG:
-Task #1: ring:backend-engineer-php
+Task #1: bee:backend-engineer-php
 (Wait for response)
-Task #2: ring:devops-engineer
+Task #2: bee:devops-engineer
 (Sequential = 2x slower)
 ```
 
@@ -219,11 +219,11 @@ Remember:
 
 - **You're the orchestrator** – Dispatch specialists, don't implement directly
 - **Don't read specialist docs yourself** – Dispatch to specialist, they know their domain
-- **Combine with ring:using-ring principle** – Skills + Specialists = complete workflow
+- **Combine with bee:using-bee principle** – Skills + Specialists = complete workflow
 
 ### Good Example (ORCHESTRATOR):
 
-> "I need a PHP service. Let me dispatch `ring:backend-engineer-php` to design it."
+> "I need a PHP service. Let me dispatch `bee:backend-engineer-php` to design it."
 
 ### Bad Example (OPERATOR):
 
@@ -235,11 +235,11 @@ Remember:
 
 **Agents:** See "9 Developer Specialists" table above.
 
-**Skills:** `ring:using-dev-team` (this), `ring:dev-cycle` (10-gate backend workflow), `ring:dev-cycle-frontend` (9-gate frontend workflow), `ring:dev-refactor` (backend/general codebase analysis), `ring:dev-refactor-frontend` (frontend codebase analysis)
+**Skills:** `bee:using-dev-team` (this), `bee:dev-cycle` (10-gate backend workflow), `bee:dev-cycle-frontend` (9-gate frontend workflow), `bee:dev-refactor` (backend/general codebase analysis), `bee:dev-refactor-frontend` (frontend codebase analysis)
 
-**Commands:** `/ring:dev-cycle` (backend tasks), `/ring:dev-cycle-frontend` (frontend tasks), `/ring:dev-refactor` (analyze backend/general codebase), `/ring:dev-refactor-frontend` (analyze frontend codebase), `/ring:dev-status`, `/ring:dev-cancel`, `/ring:dev-report`
+**Commands:** `/bee:dev-cycle` (backend tasks), `/bee:dev-cycle-frontend` (frontend tasks), `/bee:dev-refactor` (analyze backend/general codebase), `/bee:dev-refactor-frontend` (analyze frontend codebase), `/bee:dev-status`, `/bee:dev-cancel`, `/bee:dev-report`
 
-**Note:** Missing agents? Check `.claude-plugin/marketplace.json` for ring-dev-team plugin.
+**Note:** Missing agents? Check `.claude-plugin/marketplace.json` for bee-dev-team plugin.
 
 ---
 
@@ -249,43 +249,43 @@ All workflows converge to the 10-gate development cycle:
 
 | Workflow         | Entry Point                           | Output                                        | Then                         |
 | ---------------- | ------------------------------------- | --------------------------------------------- | ---------------------------- |
-| **New Feature**  | `/ring:pre-dev-feature "description"` | `docs/pre-dev/{feature}/tasks.md`             | → `/ring:dev-cycle tasks.md` |
-| **Direct Tasks** | `/ring:dev-cycle tasks.md`            | —                                             | Execute 6 gates directly     |
-| **Refactoring**  | `/ring:dev-refactor`                  | `docs/ring:dev-refactor/{timestamp}/tasks.md` | → `/ring:dev-cycle tasks.md` |
-| **Frontend Refactoring** | `/ring:dev-refactor-frontend` | `docs/ring:dev-refactor-frontend/{timestamp}/tasks.md` | → `/ring:dev-cycle-frontend tasks.md` |
+| **New Feature**  | `/bee:pre-dev-feature "description"` | `docs/pre-dev/{feature}/tasks.md`             | → `/bee:dev-cycle tasks.md` |
+| **Direct Tasks** | `/bee:dev-cycle tasks.md`            | —                                             | Execute 6 gates directly     |
+| **Refactoring**  | `/bee:dev-refactor`                  | `docs/bee:dev-refactor/{timestamp}/tasks.md` | → `/bee:dev-cycle tasks.md` |
+| **Frontend Refactoring** | `/bee:dev-refactor-frontend` | `docs/bee:dev-refactor-frontend/{timestamp}/tasks.md` | → `/bee:dev-cycle-frontend tasks.md` |
 
 **6-Gate Development Cycle:**
 
 | Gate                  | Focus                            | Agent(s)                                                                               |
 | --------------------- | -------------------------------- | -------------------------------------------------------------------------------------- |
-| **0: Implementation** | TDD: RED→GREEN→REFACTOR          | `ring:backend-engineer-*`, `ring:frontend-bff-engineer-typescript`, `ring:ui-engineer` |
-| **1: DevOps**         | Dockerfile, docker-compose, .env | `ring:devops-engineer`                                                                 |
-| **2: SRE**            | Health checks, logging, tracing  | `ring:sre`                                                                             |
-| **3: Testing**        | Unit tests, coverage ≥85%        | `ring:qa-analyst`                                                                      |
-| **4: Review**         | 6 reviewers IN PARALLEL          | `ring:code-reviewer`, `ring:business-logic-reviewer`, `ring:security-reviewer`, `ring:test-reviewer`, `ring:nil-safety-reviewer`, `ring:consequences-reviewer` |
+| **0: Implementation** | TDD: RED→GREEN→REFACTOR          | `bee:backend-engineer-*`, `bee:frontend-bff-engineer-typescript`, `bee:ui-engineer` |
+| **1: DevOps**         | Dockerfile, docker-compose, .env | `bee:devops-engineer`                                                                 |
+| **2: SRE**            | Health checks, logging, tracing  | `bee:sre`                                                                             |
+| **3: Testing**        | Unit tests, coverage ≥85%        | `bee:qa-analyst`                                                                      |
+| **4: Review**         | 6 reviewers IN PARALLEL          | `bee:code-reviewer`, `bee:business-logic-reviewer`, `bee:security-reviewer`, `bee:test-reviewer`, `bee:nil-safety-reviewer`, `bee:consequences-reviewer` |
 | **5: Validation**     | User approval: APPROVED/REJECTED | User decision                                                                          |
 
 **Gate 0 Agent Selection for Frontend:**
 
-- If `docs/pre-dev/{feature}/ux-criteria.md` exists → use `ring:ui-engineer`
-- Otherwise → use `ring:frontend-bff-engineer-typescript`
+- If `docs/pre-dev/{feature}/ux-criteria.md` exists → use `bee:ui-engineer`
+- Otherwise → use `bee:frontend-bff-engineer-typescript`
 
 **Key Principle:** Backend follows the 10-gate process. Frontend follows the 9-gate process.
 
 ### Frontend Development Cycle (9 Gates)
 
-**Use `/ring:dev-cycle-frontend` for frontend-specific development:**
+**Use `/bee:dev-cycle-frontend` for frontend-specific development:**
 
 | Gate                      | Focus                                | Agent(s)                        |
 | ------------------------- | ------------------------------------ | ------------------------------- |
-| **0: Implementation**     | TDD: RED→GREEN→REFACTOR              | `ring:frontend-engineer`, `ring:ui-engineer`, `ring:frontend-bff-engineer-typescript` |
-| **1: DevOps**             | Dockerfile, docker-compose, .env     | `ring:devops-engineer`          |
-| **2: Accessibility**      | WCAG 2.1 AA, axe-core, keyboard nav | `ring:qa-analyst-frontend`      |
-| **3: Unit Testing**       | Vitest + Testing Library, ≥85%       | `ring:qa-analyst-frontend`      |
-| **4: Visual Testing**     | Snapshots, states, responsive        | `ring:qa-analyst-frontend`      |
-| **5: E2E Testing**        | Playwright, cross-browser, user flows| `ring:qa-analyst-frontend`      |
-| **6: Performance**        | Core Web Vitals, Lighthouse > 90     | `ring:qa-analyst-frontend`      |
-| **7: Review**             | 6 reviewers IN PARALLEL              | `ring:code-reviewer`, `ring:business-logic-reviewer`, `ring:security-reviewer`, `ring:test-reviewer`, `ring:nil-safety-reviewer`, `ring:consequences-reviewer` |
+| **0: Implementation**     | TDD: RED→GREEN→REFACTOR              | `bee:frontend-engineer`, `bee:ui-engineer`, `bee:frontend-bff-engineer-typescript` |
+| **1: DevOps**             | Dockerfile, docker-compose, .env     | `bee:devops-engineer`          |
+| **2: Accessibility**      | WCAG 2.1 AA, axe-core, keyboard nav | `bee:qa-analyst-frontend`      |
+| **3: Unit Testing**       | Vitest + Testing Library, ≥85%       | `bee:qa-analyst-frontend`      |
+| **4: Visual Testing**     | Snapshots, states, responsive        | `bee:qa-analyst-frontend`      |
+| **5: E2E Testing**        | Playwright, cross-browser, user flows| `bee:qa-analyst-frontend`      |
+| **6: Performance**        | Core Web Vitals, Lighthouse > 90     | `bee:qa-analyst-frontend`      |
+| **7: Review**             | 6 reviewers IN PARALLEL              | `bee:code-reviewer`, `bee:business-logic-reviewer`, `bee:security-reviewer`, `bee:test-reviewer`, `bee:nil-safety-reviewer`, `bee:consequences-reviewer` |
 | **8: Validation**         | User approval: APPROVED/REJECTED     | User decision                   |
 
 **Backend → Frontend Handoff:**
@@ -293,20 +293,20 @@ When backend dev cycle completes, it produces a handoff with endpoints, types, a
 
 | Step | Command | Output |
 |------|---------|--------|
-| 1. Backend | `/ring:dev-cycle tasks.md` | Backend code + handoff (endpoints, contracts) |
-| 2. Frontend | `/ring:dev-cycle-frontend tasks-frontend.md` | Frontend code consuming backend endpoints |
+| 1. Backend | `/bee:dev-cycle tasks.md` | Backend code + handoff (endpoints, contracts) |
+| 2. Frontend | `/bee:dev-cycle-frontend tasks-frontend.md` | Frontend code consuming backend endpoints |
 
 ---
 
 ## Integration with Other Plugins
 
-- **ring:using-ring** (default) – ORCHESTRATOR principle for all agents
-- **ring:using-pm-team** – Pre-dev workflow agents
-- **ring:using-finops-team** – Financial/regulatory agents
+- **bee:using-bee** (default) – ORCHESTRATOR principle for all agents
+- **bee:using-pm-team** – Pre-dev workflow agents
+- **bee:using-finops-team** – Financial/regulatory agents
 
 Dispatch based on your need:
 
 - General code review → default plugin agents
-- Specific domain expertise → ring-dev-team agents
-- Feature planning → ring-pm-team agents
-- Regulatory compliance → ring-finops-team agents
+- Specific domain expertise → bee-dev-team agents
+- Feature planning → bee-pm-team agents
+- Regulatory compliance → bee-finops-team agents

@@ -1,5 +1,5 @@
 ---
-name: ring:dev-property-testing
+name: bee:dev-property-testing
 title: Development cycle property-based testing (Gate 5)
 category: development-cycle
 tier: 1
@@ -21,11 +21,11 @@ NOT_skip_when: |
   - "Too abstract" - Properties are concrete: "balance never negative", "IDs always unique".
 
 sequence:
-  after: [ring:dev-fuzz-testing]
-  before: [ring:dev-integration-testing]
+  after: [bee:dev-fuzz-testing]
+  before: [bee:dev-integration-testing]
 
 related:
-  complementary: [ring:dev-cycle, ring:dev-fuzz-testing, ring:qa-analyst]
+  complementary: [bee:dev-cycle, bee:dev-fuzz-testing, bee:qa-analyst]
 
 input_schema:
   required:
@@ -142,7 +142,7 @@ Ensure domain logic has **property-based tests** to verify invariants hold for a
 **MANDATORY:** Load testing-property.md standards via WebFetch.
 
 <fetch_required>
-https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php/testing-property.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php/testing-property.md
 </fetch_required>
 
 ---
@@ -167,7 +167,7 @@ if any REQUIRED input is missing:
 
 ```text
 Task tool:
-  subagent_type: "ring:qa-analyst"
+  subagent_type: "bee:qa-analyst"
   model: "opus"
   prompt: |
     **MODE:** PROPERTY-BASED TESTING (Gate 5)

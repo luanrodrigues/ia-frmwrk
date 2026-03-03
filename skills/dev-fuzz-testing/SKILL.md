@@ -1,5 +1,5 @@
 ---
-name: ring:dev-fuzz-testing
+name: bee:dev-fuzz-testing
 title: Development cycle fuzz testing (Gate 4)
 category: development-cycle
 tier: 1
@@ -21,11 +21,11 @@ NOT_skip_when: |
   - "Code is simple" - Simple code can still crash on unexpected input.
 
 sequence:
-  after: [ring:dev-unit-testing]
-  before: [ring:dev-property-testing]
+  after: [bee:dev-unit-testing]
+  before: [bee:dev-property-testing]
 
 related:
-  complementary: [ring:dev-cycle, ring:dev-unit-testing, ring:qa-analyst]
+  complementary: [bee:dev-cycle, bee:dev-unit-testing, bee:qa-analyst]
 
 input_schema:
   required:
@@ -135,7 +135,7 @@ Ensure critical parsing and input handling code has **mutation tests** (via Infe
 **MANDATORY:** Load testing-mutation.md standards via WebFetch.
 
 <fetch_required>
-https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php/testing-mutation.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php/testing-mutation.md
 </fetch_required>
 
 ---
@@ -162,7 +162,7 @@ if language != "php":
 
 ```text
 Task tool:
-  subagent_type: "ring:qa-analyst"
+  subagent_type: "bee:qa-analyst"
   model: "opus"
   prompt: |
     **MODE:** MUTATION TESTING (Gate 4)

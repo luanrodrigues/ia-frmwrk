@@ -1,5 +1,5 @@
 ---
-name: ring:dev-integration-testing
+name: bee:dev-integration-testing
 title: Development cycle integration testing (Gate 6)
 category: development-cycle
 tier: 1
@@ -21,11 +21,11 @@ NOT_skip_when: |
   - "CI doesn't support Docker" - Fix CI. Docker is baseline infrastructure.
 
 sequence:
-  after: [ring:dev-property-testing]
-  before: [ring:dev-chaos-testing]
+  after: [bee:dev-property-testing]
+  before: [bee:dev-chaos-testing]
 
 related:
-  complementary: [ring:dev-cycle, ring:dev-testing, ring:qa-analyst]
+  complementary: [bee:dev-cycle, bee:dev-testing, bee:qa-analyst]
 
 input_schema:
   required:
@@ -204,7 +204,7 @@ PM team task files often omit external_dependencies. If the codebase uses postgr
 ## Step 1: Validate Input
 
 ```text
-REQUIRED INPUT (from ring:dev-cycle orchestrator):
+REQUIRED INPUT (from bee:dev-cycle orchestrator):
 <verify_before_proceed>
 - unit_id exists
 - language is valid (php|typescript)
@@ -279,13 +279,13 @@ integration_state = {
 
 ## Step 4: Dispatch QA Analyst Agent (Integration Mode)
 
-<dispatch_required agent="ring:qa-analyst">
+<dispatch_required agent="bee:qa-analyst">
 Write integration tests for all scenarios using Docker Compose + RefreshDatabase.
 </dispatch_required>
 
 ```yaml
 Task:
-  subagent_type: "ring:qa-analyst"
+  subagent_type: "bee:qa-analyst"
   description: "Integration testing for [unit_id]"
   prompt: |
     **test_mode: integration**
@@ -301,7 +301,7 @@ Task:
     [list external_dependencies with container requirements]
 
     ## Standards Reference
-    WebFetch: https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php/testing-integration.md
+    WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php/testing-integration.md
 
     Focus on: All sections, especially @group annotation, RefreshDatabase trait, Docker Compose services
 

@@ -1,5 +1,5 @@
 ---
-name: ring:dev-feedback-loop
+name: bee:dev-feedback-loop
 description: |
   Development cycle feedback system - calculates assertiveness scores, analyzes prompt
   quality for all agents executed, aggregates cycle metrics, performs root cause analysis
@@ -20,17 +20,17 @@ NOT_skip_when: |
   - "Just experimenting" → Experiments need metrics to measure success. No exceptions.
 
 sequence:
-  after: [ring:dev-validation]
+  after: [bee:dev-validation]
 
 related:
-  complementary: [ring:dev-cycle, ring:dev-validation]
+  complementary: [bee:dev-cycle, bee:dev-validation]
 ---
 
 # Dev Feedback Loop
 
 ## Overview
 
-See [CLAUDE.md](https://raw.githubusercontent.com/LerianStudio/ring/main/CLAUDE.md) for canonical validation and gate requirements. This skill collects metrics and generates improvement reports.
+See [CLAUDE.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/CLAUDE.md) for canonical validation and gate requirements. This skill collects metrics and generates improvement reports.
 
 Continuous improvement system that tracks development cycle effectiveness through assertiveness scores, identifies recurring failure patterns, and generates actionable improvement suggestions.
 
@@ -52,7 +52,7 @@ Continuous improvement system that tracks development cycle effectiveness throug
 TodoWrite tool:
   todos:
     - id: "feedback-loop-execution"
-      content: "Execute ring:dev-feedback-loop: collect metrics, calculate scores, write report"
+      content: "Execute bee:dev-feedback-loop: collect metrics, calculate scores, write report"
       status: "in_progress"
       priority: "high"
 ```
@@ -69,7 +69,7 @@ TodoWrite tool:
 TodoWrite tool:
   todos:
     - id: "feedback-loop-execution"
-      content: "Execute ring:dev-feedback-loop: collect metrics, calculate scores, write report"
+      content: "Execute bee:dev-feedback-loop: collect metrics, calculate scores, write report"
       status: "completed"
       priority: "high"
 ```
@@ -268,7 +268,7 @@ The state file now contains structured error/issue data for direct analysis:
 |------|-------------------|---------|
 | Gate 0 | `implementation.standards_compliance`, `implementation.iterations` | Implementation standards patterns |
 | Gate 1 | `devops.standards_compliance`, `devops.verification_errors[]` | DevOps standards + build/deploy failures |
-| Gate 2 | `ring:sre.standards_compliance`, `ring:sre.validation_errors[]` | SRE standards + observability gaps |
+| Gate 2 | `bee:sre.standards_compliance`, `bee:sre.validation_errors[]` | SRE standards + observability gaps |
 | Gate 3 | `testing.standards_compliance`, `testing.failures[]`, `testing.uncovered_criteria[]` | Testing standards + test failures + coverage |
 | Gate 4 | `review.{reviewer}.standards_compliance`, `review.{reviewer}.issues[]` | Review standards + issues by category/severity |
 
@@ -283,7 +283,7 @@ The state file now contains structured error/issue data for direct analysis:
 all_standards_gaps = [
   ...agent_outputs.implementation.standards_compliance.gaps,
   ...agent_outputs.devops.standards_compliance.gaps,
-  ...agent_outputs.ring:sre.standards_compliance.gaps,
+  ...agent_outputs.bee:sre.standards_compliance.gaps,
   ...agent_outputs.testing.standards_compliance.gaps,
   ...agent_outputs.review.code_reviewer.standards_compliance.gaps,
   ...agent_outputs.review.business_logic_reviewer.standards_compliance.gaps,
@@ -292,7 +292,7 @@ all_standards_gaps = [
 
 # Gate-specific errors/issues:
 devops_errors = agent_outputs.devops.verification_errors
-sre_errors = agent_outputs.ring:sre.validation_errors
+sre_errors = agent_outputs.bee:sre.validation_errors
 test_failures = agent_outputs.testing.failures
 uncovered_acs = agent_outputs.testing.uncovered_criteria
 review_issues = [
@@ -314,7 +314,7 @@ overall_compliance_rate = total_compliant / total_standards_sections * 100
 extra_iterations = (
   max(0, implementation.iterations - 1) +
   max(0, devops.iterations - 1) +
-  max(0, ring:sre.iterations - 1) +
+  max(0, bee:sre.iterations - 1) +
   max(0, testing.iterations - 1) +
   max(0, review.iterations - 1)
 )
@@ -330,15 +330,15 @@ After calculating assertiveness, analyze prompt quality for all **agents** that 
 
 ### 3.1 Load Agent Outputs
 
-Read `agent_outputs` from state file (`docs/ring:dev-cycle/current-cycle.json` or `docs/ring:dev-refactor/current-cycle.json`):
+Read `agent_outputs` from state file (`docs/bee:dev-cycle/current-cycle.json` or `docs/bee:dev-refactor/current-cycle.json`):
 
 ```text
 Agents to analyze (if executed, not null):
-  - implementation: ring:backend-engineer-php
-  - devops: ring:devops-engineer
-  - ring:sre: ring:sre
-  - testing: ring:qa-analyst
-  - review: ring:code-reviewer, ring:business-logic-reviewer, ring:security-reviewer
+  - implementation: bee:backend-engineer-php
+  - devops: bee:devops-engineer
+  - bee:sre: bee:sre
+  - testing: bee:qa-analyst
+  - review: bee:code-reviewer, bee:business-logic-reviewer, bee:security-reviewer
 ```
 
 ### 3.2 Dispatch Prompt Quality Reviewer
@@ -349,7 +349,7 @@ Analyze prompt quality for all agents executed in this task.
 
 ```text
 Task tool:
-  subagent_type: "ring:prompt-quality-reviewer"
+  subagent_type: "bee:prompt-quality-reviewer"
   prompt: |
     Analyze prompt quality for agents in task [task_id].
 
@@ -557,7 +557,7 @@ If correlation > 0.5:
 TodoWrite tool:
   todos:
     - id: "feedback-loop-execution"
-      content: "Execute ring:dev-feedback-loop: collect metrics, calculate scores, write report"
+      content: "Execute bee:dev-feedback-loop: collect metrics, calculate scores, write report"
       status: "completed"
       priority: "high"
 ```

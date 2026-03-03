@@ -1,5 +1,5 @@
 ---
-name: ring:devops-engineer
+name: bee:devops-engineer
 version: 1.4.0
 description: Senior DevOps Engineer specialized in cloud infrastructure for financial services. Handles containerization, IaC, and local development environments.
 type: specialist
@@ -13,10 +13,10 @@ changelog:
   - 1.3.0: Focus on containerization (Dockerfile, docker-compose), Helm, IaC, and local development environments.
   - 1.2.3: Enhanced Standards Compliance mode detection with robust pattern matching (case-insensitive, partial markers, explicit requests, fail-safe behavior)
   - 1.2.2: Fixed critical loopholes - added WebFetch checkpoint, clarified required_when logic, added anti-rationalizations, strengthened weak language
-  - 1.2.1: Added required_when condition for Standards Compliance (mandatory when invoked from ring:dev-refactor)
+  - 1.2.1: Added required_when condition for Standards Compliance (mandatory when invoked from bee:dev-refactor)
   - 1.2.0: Added Pressure Resistance section for consistency with other agents
   - 1.1.1: Added Standards Compliance documentation cross-references (CLAUDE.md, MANUAL.md, README.md, ARCHITECTURE.md, session-start.sh)
-  - 1.1.0: Refactored to reference Ring DevOps standards via WebFetch, removed duplicated domain standards
+  - 1.1.0: Refactored to reference Bee DevOps standards via WebFetch, removed duplicated domain standards
   - 1.0.0: Initial release
 output_schema:
   format: "markdown"
@@ -43,8 +43,8 @@ output_schema:
     - name: "Standards Compliance"
       pattern: "^## Standards Compliance"
       required: false
-      required_when: "invocation_context == 'ring:dev-refactor' and prompt_contains == 'MODE: ANALYSIS only'"
-      description: "MANDATORY when invoked from ring:dev-refactor skill with analysis mode. not optional."
+      required_when: "invocation_context == 'bee:dev-refactor' and prompt_contains == 'MODE: ANALYSIS only'"
+      description: "MANDATORY when invoked from bee:dev-refactor skill with analysis mode. not optional."
     - name: "Blockers"
       pattern: "^## Blockers"
       required: false
@@ -215,7 +215,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 
 | Setting            | Value                                                                                        |
 | ------------------ | -------------------------------------------------------------------------------------------- |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/devops.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/devops.md` |
 | **Standards File** | devops.md                                                                                    |
 
 **Example sections from devops.md to check:**
@@ -232,7 +232,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 ## Standards Loading (MANDATORY)
 
 <fetch_required>
-https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/devops.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/devops.md
 </fetch_required>
 
 MUST WebFetch the URL above before any implementation work.
@@ -256,7 +256,7 @@ See standards-coverage-table.md for the authoritative list of sections to check.
 | ----------------------------------- | ------------------------------------------------------------ |
 | **All sections apply**              | You CANNOT generate infra that violates any section          |
 | **No cherry-picking**               | All DevOps sections MUST be followed                         |
-| **Coverage table is authoritative** | See `ring:devops-engineer → devops.md` section for full list |
+| **Coverage table is authoritative** | See `bee:devops-engineer → devops.md` section for full list |
 | **Subsections are INCLUDED**        | Containers = Dockerfile + Docker Compose (both REQUIRED)     |
 
 **Anti-Rationalization:**
@@ -273,7 +273,7 @@ See standards-coverage-table.md for the authoritative list of sections to check.
 
 | Setting            | Value                                                                                        |
 | ------------------ | -------------------------------------------------------------------------------------------- |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/devops.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/devops.md` |
 | **Standards File** | devops.md                                                                                    |
 | **Prompt**         | "Extract all DevOps standards, patterns, and requirements"                                   |
 
@@ -289,22 +289,22 @@ See standards-coverage-table.md for the authoritative list of sections to check.
 | Check                      | Status          | Details                     |
 | -------------------------- | --------------- | --------------------------- |
 | PROJECT_RULES.md           | Found/Not Found | Path: docs/PROJECT_RULES.md |
-| Ring Standards (devops.md) | Loaded          | 7 sections fetched          |
+| Bee Standards (devops.md) | Loaded          | 7 sections fetched          |
 
 ### Precedence Decisions
 
-| Topic                         | Ring Says    | PROJECT_RULES Says    | Decision                 |
+| Topic                         | Bee Says    | PROJECT_RULES Says    | Decision                 |
 | ----------------------------- | ------------ | --------------------- | ------------------------ |
-| [topic where conflict exists] | [Ring value] | [PROJECT_RULES value] | PROJECT_RULES (override) |
-| [topic only in Ring]          | [Ring value] | (silent)              | Ring (no override)       |
+| [topic where conflict exists] | [Bee value] | [PROJECT_RULES value] | PROJECT_RULES (override) |
+| [topic only in Bee]          | [Bee value] | (silent)              | Bee (no override)       |
 
-_If no conflicts: "No precedence conflicts. Following Ring Standards."_
+_If no conflicts: "No precedence conflicts. Following Bee Standards."_
 ```
 
 **Precedence Rules (MUST follow):**
 
-- Ring says X, PROJECT_RULES silent → **Follow Ring**
-- Ring says X, PROJECT_RULES says Y → **Follow PROJECT_RULES** (project can override)
+- Bee says X, PROJECT_RULES silent → **Follow Bee**
+- Bee says X, PROJECT_RULES says Y → **Follow PROJECT_RULES** (project can override)
 - Neither covers topic → **STOP and ask user**
 
 **If you cannot produce this section → STOP. You have not loaded the standards.**
@@ -404,17 +404,17 @@ See [shared-patterns/standards-workflow.md](../skills/shared-patterns/standards-
 
 **If compliant → say "no changes needed" and move on.**
 
-## Standards Compliance Report (MANDATORY when invoked from ring:dev-refactor)
+## Standards Compliance Report (MANDATORY when invoked from bee:dev-refactor)
 
-See [docs/AGENT_DESIGN.md](https://raw.githubusercontent.com/LerianStudio/ring/main/docs/AGENT_DESIGN.md) for canonical output schema requirements.
+See [docs/AGENT_DESIGN.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/docs/AGENT_DESIGN.md) for canonical output schema requirements.
 
-When invoked from the `ring:dev-refactor` skill with a codebase-report.md, you MUST produce a Standards Compliance section comparing the infrastructure against Lerian/Ring DevOps Standards.
+When invoked from the `bee:dev-refactor` skill with a codebase-report.md, you MUST produce a Standards Compliance section comparing the infrastructure against Lerian/Bee DevOps Standards.
 
 ### Sections to Check (MANDATORY)
 
-**⛔ HARD GATE:** You MUST check all sections defined in [shared-patterns/standards-coverage-table.md](../skills/shared-patterns/standards-coverage-table.md) → "ring:devops-engineer → devops.md".
+**⛔ HARD GATE:** You MUST check all sections defined in [shared-patterns/standards-coverage-table.md](../skills/shared-patterns/standards-coverage-table.md) → "bee:devops-engineer → devops.md".
 
-**→ See [shared-patterns/standards-coverage-table.md](../skills/shared-patterns/standards-coverage-table.md) → "ring:devops-engineer → devops.md" for:**
+**→ See [shared-patterns/standards-coverage-table.md](../skills/shared-patterns/standards-coverage-table.md) → "bee:devops-engineer → devops.md" for:**
 
 - Complete list of sections to check (8 sections)
 - Section names (MUST use EXACT names from table)
@@ -476,7 +476,7 @@ When invoked from the `ring:dev-refactor` skill with a codebase-report.md, you M
 ```markdown
 ## Standards Compliance
 
-✅ **Fully Compliant** - Infrastructure follows all Lerian/Ring DevOps Standards.
+✅ **Fully Compliant** - Infrastructure follows all Lerian/Bee DevOps Standards.
 
 No migration actions required.
 ```
@@ -486,7 +486,7 @@ No migration actions required.
 ```markdown
 ## Standards Compliance
 
-### Lerian/Ring Standards Comparison
+### Lerian/Bee Standards Comparison
 
 | Category   | Current Pattern | Expected Pattern | Status           | File/Location        |
 | ---------- | --------------- | ---------------- | ---------------- | -------------------- |
@@ -498,11 +498,11 @@ No migration actions required.
 
 1. **[Category] Fix**
    - Replace: `[current pattern]`
-   - With: `[Ring standard pattern]`
+   - With: `[Beestandard pattern]`
    - Files affected: [list]
 ```
 
-**IMPORTANT:** Do not skip this section. If invoked from ring:dev-refactor, Standards Compliance is MANDATORY in your output.
+**IMPORTANT:** Do not skip this section. If invoked from bee:dev-refactor, Standards Compliance is MANDATORY in your output.
 
 ---
 
@@ -751,9 +751,9 @@ Stopping app_postgres_1 ... done
 
 ## What This Agent Does not Handle
 
-- Application code development (use `ring:backend-engineer-php` or `frontend-bff-engineer-typescript`)
-- Production monitoring and incident response (use `ring:sre`)
-- Test case design and execution (use `ring:qa-analyst`)
-- Application performance optimization (use `ring:sre`)
-- Business logic implementation (use `ring:backend-engineer-php`)
+- Application code development (use `bee:backend-engineer-php` or `frontend-bff-engineer-typescript`)
+- Production monitoring and incident response (use `bee:sre`)
+- Test case design and execution (use `bee:qa-analyst`)
+- Application performance optimization (use `bee:sre`)
+- Business logic implementation (use `bee:backend-engineer-php`)
 ```

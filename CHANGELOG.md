@@ -1,4 +1,4 @@
-# Ring-Dev-Team Changelog
+# Bee-Dev-Team Changelog
 
 ## 2.0.0 (2026-03-02)
 

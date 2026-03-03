@@ -1,10 +1,10 @@
 ---
-name: ring:dev-refactor-frontend
-description: Analyze existing frontend codebase against standards and execute refactoring through ring:dev-cycle-frontend
+name: bee:dev-refactor-frontend
+description: Analyze existing frontend codebase against standards and execute refactoring through bee:dev-cycle-frontend
 argument-hint: "[path] [options] [prompt]"
 ---
 
-Analyze existing frontend codebase against standards and execute refactoring through ring:dev-cycle-frontend.
+Analyze existing frontend codebase against standards and execute refactoring through bee:dev-cycle-frontend.
 
 ## PRE-EXECUTION CHECK (EXECUTE FIRST)
 
@@ -12,7 +12,7 @@ Analyze existing frontend codebase against standards and execute refactoring thr
 
 ```
 Does docs/PROJECT_RULES.md exist in the target project?
-+-- YES -> Load skill: ring:dev-refactor-frontend
++-- YES -> Load skill: bee:dev-refactor-frontend
 +-- NO  -> Output blocker below and STOP
 ```
 
@@ -30,7 +30,7 @@ Create `docs/PROJECT_RULES.md` with your project's:
 - Testing requirements
 - DevOps standards
 
-Then re-run `/ring:dev-refactor-frontend`.
+Then re-run `/bee:dev-refactor-frontend`.
 ```
 
 **DO NOT:**
@@ -44,8 +44,8 @@ Then re-run `/ring:dev-refactor-frontend`.
 ## Usage
 
 ```
-/ring:dev-refactor-frontend [path] [options] [prompt]
-/ring:dev-refactor-frontend [prompt]
+/bee:dev-refactor-frontend [path] [options] [prompt]
+/bee:dev-refactor-frontend [prompt]
 ```
 
 ## Arguments
@@ -68,35 +68,35 @@ Then re-run `/ring:dev-refactor-frontend`.
 
 ```bash
 # Direct prompt - focus refactoring on specific area
-/ring:dev-refactor-frontend Focus on accessibility compliance and WCAG AA violations
+/bee:dev-refactor-frontend Focus on accessibility compliance and WCAG AA violations
 
 # Direct prompt - another example
-/ring:dev-refactor-frontend Check component patterns against sindarian-ui and remove shadcn duplicates
+/bee:dev-refactor-frontend Check component patterns against sindarian-ui and remove shadcn duplicates
 
 # Analyze entire frontend project and refactor
-/ring:dev-refactor-frontend
+/bee:dev-refactor-frontend
 
 # Analyze specific directory
-/ring:dev-refactor-frontend src/components
+/bee:dev-refactor-frontend src/components
 
 # Analyze with performance focus
-/ring:dev-refactor-frontend src/ Focus on Core Web Vitals and bundle size optimization
+/bee:dev-refactor-frontend src/ Focus on Core Web Vitals and bundle size optimization
 
 # Analysis only (no execution)
-/ring:dev-refactor-frontend --analyze-only
+/bee:dev-refactor-frontend --analyze-only
 
 # Only fix critical issues
-/ring:dev-refactor-frontend --critical-only
+/bee:dev-refactor-frontend --critical-only
 
 # Use custom standards with focus
-/ring:dev-refactor-frontend --standards docs/team-standards.md Prioritize testing gaps
+/bee:dev-refactor-frontend --standards docs/team-standards.md Prioritize testing gaps
 ```
 
 ## Workflow
 
-**See skill `ring:dev-refactor-frontend` for the complete workflow with TodoWrite template.**
+**See skill `bee:dev-refactor-frontend` for the complete workflow with TodoWrite template.**
 
-The skill defines all steps including: frontend stack detection, UI library mode detection, ring:codebase-explorer dispatch, individual agent reports, finding mapping, gate escape detection, and artifact generation.
+The skill defines all steps including: frontend stack detection, UI library mode detection, bee:codebase-explorer dispatch, individual agent reports, finding mapping, gate escape detection, and artifact generation.
 
 ## Analysis Dimensions
 
@@ -116,27 +116,27 @@ The skill defines all steps including: frontend stack detection, UI library mode
 - **Analysis (always):** All seven dimensions analyzed, all severities (Critical, High, Medium, Low) tracked
 - **Execution (filterable):** `--critical-only` limits execution/prioritization to Critical and High severity issues
 
-Example: `/ring:dev-refactor-frontend --critical-only` analyzes all issues but only executes fixes for Critical and High.
+Example: `/bee:dev-refactor-frontend --critical-only` analyzes all issues but only executes fixes for Critical and High.
 
 ## Output
 
 **Timestamp format:** `{timestamp}` = `YYYY-MM-DDTHH:MM:SS` (e.g., `2026-02-10T15:30:00`)
 
-**Codebase Report** (`docs/ring:dev-refactor-frontend/{timestamp}/codebase-report.md`):
+**Codebase Report** (`docs/bee:dev-refactor-frontend/{timestamp}/codebase-report.md`):
 - Project architecture and structure analysis
 - Component patterns and library usage
 
-**Agent Reports** (`docs/ring:dev-refactor-frontend/{timestamp}/reports/`):
+**Agent Reports** (`docs/bee:dev-refactor-frontend/{timestamp}/reports/`):
 - Individual analysis from each dispatched agent (5-7 agents)
 - Standards Coverage Tables per agent
 
-**Findings** (`docs/ring:dev-refactor-frontend/{timestamp}/findings.md`):
+**Findings** (`docs/bee:dev-refactor-frontend/{timestamp}/findings.md`):
 - All findings with severity, category, file:line references
 - Gate escape detection (maps to 9-gate frontend cycle)
 
-**Tasks File** (`docs/ring:dev-refactor-frontend/{timestamp}/tasks.md`):
+**Tasks File** (`docs/bee:dev-refactor-frontend/{timestamp}/tasks.md`):
 - 1:1 mapped REFACTOR-XXX tasks from findings
-- Compatible with ring:dev-cycle-frontend execution
+- Compatible with bee:dev-cycle-frontend execution
 
 ## Severity Levels (all ARE MANDATORY)
 
@@ -152,21 +152,21 @@ Example: `/ring:dev-refactor-frontend --critical-only` analyzes all issues but o
 ## Prerequisites
 
 1. **PROJECT_RULES.md (MANDATORY)**: `docs/PROJECT_RULES.md` MUST exist - no defaults, no fallback
-2. **Frontend project**: `package.json` with React/Next.js in dependencies (redirects to `ring:dev-refactor` otherwise)
+2. **Frontend project**: `package.json` with React/Next.js in dependencies (redirects to `bee:dev-refactor` otherwise)
 3. **Git repository**: Project should be under version control
 4. **Readable codebase**: Access to source files
 
 **If PROJECT_RULES.md does not exist:** This command will output a blocker message and terminate.
-**If not a frontend project:** This command will redirect to `/ring:dev-refactor`.
+**If not a frontend project:** This command will redirect to `/bee:dev-refactor`.
 
 ## Related Commands
 
 | Command | Description |
 |---------|-------------|
-| `/ring:dev-cycle-frontend` | Execute frontend development cycle (used after analysis) |
-| `/ring:dev-refactor` | Analyze backend/general codebase (use for non-frontend) |
-| `/ring:pre-dev-feature` | Plan new features (use instead for greenfield) |
-| `/ring:codereview` | Manual code review (ring:dev-cycle-frontend includes this) |
+| `/bee:dev-cycle-frontend` | Execute frontend development cycle (used after analysis) |
+| `/bee:dev-refactor` | Analyze backend/general codebase (use for non-frontend) |
+| `/bee:pre-dev-feature` | Plan new features (use instead for greenfield) |
+| `/bee:codereview` | Manual code review (bee:dev-cycle-frontend includes this) |
 
 ---
 
@@ -175,17 +175,17 @@ Example: `/ring:dev-refactor-frontend --critical-only` analyzes all issues but o
 **After PROJECT_RULES.md check passes, load the skill:**
 
 ```
-Use Skill tool: ring:dev-refactor-frontend
+Use Skill tool: bee:dev-refactor-frontend
 ```
 
 The skill contains the complete analysis workflow with:
 - Anti-rationalization tables for codebase exploration
-- Mandatory use of `ring:codebase-explorer` (not Bash/Explore)
+- Mandatory use of `bee:codebase-explorer` (not Bash/Explore)
 - Standards coverage table requirements
 - Frontend-specific gate escape detection (9-gate cycle)
 - Finding -> Task mapping gates
 - Full agent dispatch prompts with `**MODE: ANALYSIS only**`
-- Handoff to `ring:dev-cycle-frontend` (not `ring:dev-cycle`)
+- Handoff to `bee:dev-cycle-frontend` (not `bee:dev-cycle`)
 
 ## Execution Context
 
@@ -196,7 +196,7 @@ Pass the following context to the skill:
 | `path` | First argument if it's a directory path (default: project root) |
 | `prompt` | Remaining text after path and options (direct instruction for focus) |
 | `--standards` | If provided, custom standards file path |
-| `--analyze-only` | If provided, skip ring:dev-cycle-frontend execution |
+| `--analyze-only` | If provided, skip bee:dev-cycle-frontend execution |
 | `--critical-only` | If provided, filter to Critical/High only |
 | `--dry-run` | If provided, show what would be analyzed |
 
@@ -207,7 +207,7 @@ Pass the following context to the skill:
 
 ## User Approval (MANDATORY)
 
-**Before executing ring:dev-cycle-frontend, you MUST ask:**
+**Before executing bee:dev-cycle-frontend, you MUST ask:**
 
 ```yaml
 AskUserQuestion:
@@ -216,7 +216,7 @@ AskUserQuestion:
       header: "Approval"
       options:
         - label: "Approve all"
-          description: "Proceed to ring:dev-cycle-frontend execution"
+          description: "Proceed to bee:dev-cycle-frontend execution"
         - label: "Critical only"
           description: "Execute only Critical/High tasks"
         - label: "Cancel"
@@ -225,11 +225,11 @@ AskUserQuestion:
 
 ## Quick Reference
 
-See skill `ring:dev-refactor-frontend` for full details. Key rules:
+See skill `bee:dev-refactor-frontend` for full details. Key rules:
 
 - **All agents dispatch in parallel** - Single message, multiple Task calls
 - **Specify model: "opus"** - All agents need opus for comprehensive analysis
 - **MODE: ANALYSIS only** - Agents analyze, they DO NOT implement
-- **Save artifacts** to `docs/ring:dev-refactor-frontend/{timestamp}/`
-- **Get user approval** before executing ring:dev-cycle-frontend
-- **Handoff**: `ring:dev-cycle-frontend docs/ring:dev-refactor-frontend/{timestamp}/tasks.md`
+- **Save artifacts** to `docs/bee:dev-refactor-frontend/{timestamp}/`
+- **Get user approval** before executing bee:dev-cycle-frontend
+- **Handoff**: `bee:dev-cycle-frontend docs/bee:dev-refactor-frontend/{timestamp}/tasks.md`

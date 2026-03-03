@@ -1,5 +1,5 @@
 ---
-name: ring:dev-cycle-frontend
+name: bee:dev-cycle-frontend
 description: Execute the frontend development cycle for tasks in a markdown file
 argument-hint: "[tasks-file] [options] [prompt]"
 ---
@@ -9,8 +9,8 @@ Execute the frontend development cycle for tasks in a markdown file or from a di
 ## Usage
 
 ```
-/ring:dev-cycle-frontend [tasks-file] [options] [prompt]
-/ring:dev-cycle-frontend [prompt]
+/bee:dev-cycle-frontend [tasks-file] [options] [prompt]
+/bee:dev-cycle-frontend [prompt]
 ```
 
 ## Arguments
@@ -35,7 +35,7 @@ Execute the frontend development cycle for tasks in a markdown file or from a di
 
 ### Direct Prompt (No Tasks File)
 
-When a prompt is provided **without a tasks file**, ring:dev-cycle-frontend enters prompt-only mode:
+When a prompt is provided **without a tasks file**, bee:dev-cycle-frontend enters prompt-only mode:
 
 1. **Analyzes the prompt** to understand what needs to be done
 2. **Generates tasks internally** (similar to pre-dev but streamlined)
@@ -43,20 +43,20 @@ When a prompt is provided **without a tasks file**, ring:dev-cycle-frontend ente
 
 ```bash
 # Direct prompt - no tasks file needed
-/ring:dev-cycle-frontend Implement dashboard with transaction list, charts, and filters
+/bee:dev-cycle-frontend Implement dashboard with transaction list, charts, and filters
 
 # Another example
-/ring:dev-cycle-frontend Add settings page with user profile, preferences, and notification controls
+/bee:dev-cycle-frontend Add settings page with user profile, preferences, and notification controls
 ```
 
 ### With Tasks File + Additional Context
 
 ```bash
 # Tasks file with additional context
-/ring:dev-cycle-frontend docs/tasks/sprint-001-frontend.md Focus on accessibility
+/bee:dev-cycle-frontend docs/tasks/sprint-001-frontend.md Focus on accessibility
 
 # Tasks file with specific guidance
-/ring:dev-cycle-frontend docs/tasks/sprint-001-frontend.md Use sindarian-ui DataTable for transaction list
+/bee:dev-cycle-frontend docs/tasks/sprint-001-frontend.md Use sindarian-ui DataTable for transaction list
 ```
 
 ### Prompt Behavior (with tasks file)
@@ -64,7 +64,7 @@ When a prompt is provided **without a tasks file**, ring:dev-cycle-frontend ente
 CANNOT override CRITICAL gates. Provides custom context to agents.
 
 **Persistence:**
-- **Stored:** `custom_prompt` field in `docs/ring:dev-cycle-frontend/current-cycle.json`
+- **Stored:** `custom_prompt` field in `docs/bee:dev-cycle-frontend/current-cycle.json`
 - **Resume:** Survives interrupts; editable by modifying state file before `--resume`
 - **Reports:** Included in execution reports under "Custom Context Used"
 
@@ -85,36 +85,36 @@ CRITICAL: Gates 2, 3, 6, 7, 8 enforce mandatory requirements:
 
 **View/modify persisted prompt:**
 ```bash
-jq '.custom_prompt' docs/ring:dev-cycle-frontend/current-cycle.json  # View
-# Edit state file, then: /ring:dev-cycle-frontend --resume
+jq '.custom_prompt' docs/bee:dev-cycle-frontend/current-cycle.json  # View
+# Edit state file, then: /bee:dev-cycle-frontend --resume
 ```
 
 ## Examples
 
 ```bash
 # Direct prompt - implement frontend feature
-/ring:dev-cycle-frontend Implement dashboard with transaction list and real-time charts
+/bee:dev-cycle-frontend Implement dashboard with transaction list and real-time charts
 
 # Direct prompt - another example
-/ring:dev-cycle-frontend Add user settings page with profile, preferences, and notifications
+/bee:dev-cycle-frontend Add user settings page with profile, preferences, and notifications
 
 # Execute all tasks from a file
-/ring:dev-cycle-frontend docs/tasks/sprint-001-frontend.md
+/bee:dev-cycle-frontend docs/tasks/sprint-001-frontend.md
 
 # Execute single task
-/ring:dev-cycle-frontend docs/tasks/sprint-001-frontend.md --task FE-001
+/bee:dev-cycle-frontend docs/tasks/sprint-001-frontend.md --task FE-001
 
 # Skip DevOps setup (infrastructure already exists)
-/ring:dev-cycle-frontend docs/tasks/sprint-001-frontend.md --skip-gates devops
+/bee:dev-cycle-frontend docs/tasks/sprint-001-frontend.md --skip-gates devops
 
 # Validate tasks without executing
-/ring:dev-cycle-frontend docs/tasks/sprint-001-frontend.md --dry-run
+/bee:dev-cycle-frontend docs/tasks/sprint-001-frontend.md --dry-run
 
 # Resume interrupted cycle
-/ring:dev-cycle-frontend --resume
+/bee:dev-cycle-frontend --resume
 
 # Tasks file with additional context
-/ring:dev-cycle-frontend docs/tasks/sprint-001-frontend.md Prioritize accessibility and use DataTable from sindarian-ui
+/bee:dev-cycle-frontend docs/tasks/sprint-001-frontend.md Prioritize accessibility and use DataTable from sindarian-ui
 ```
 
 ## Prerequisites
@@ -128,33 +128,33 @@ jq '.custom_prompt' docs/ring:dev-cycle-frontend/current-cycle.json  # View
 
 | Gate | Skill | Description |
 |------|-------|-------------|
-| 0 | `ring:dev-implementation` | Implement code (TDD) |
-| 1 | `ring:dev-devops` | Create Docker/compose |
-| 2 | `ring:dev-frontend-accessibility` | WCAG 2.1 AA compliance (axe-core) |
-| 3 | `ring:dev-unit-testing` | Unit tests with 85%+ coverage (Vitest + Testing Library) |
-| 4 | `ring:dev-frontend-visual` | Visual/snapshot testing (all states, responsive) |
-| 5 | `ring:dev-frontend-e2e` | E2E tests with Playwright (cross-browser, responsive) |
-| 6 | `ring:dev-frontend-performance` | Core Web Vitals + Lighthouse > 90 |
-| 7 | `ring:requesting-code-review` | Code review (5 reviewers in parallel) |
-| 8 | `ring:dev-validation` | Final validation |
+| 0 | `bee:dev-implementation` | Implement code (TDD) |
+| 1 | `bee:dev-devops` | Create Docker/compose |
+| 2 | `bee:dev-frontend-accessibility` | WCAG 2.1 AA compliance (axe-core) |
+| 3 | `bee:dev-unit-testing` | Unit tests with 85%+ coverage (Vitest + Testing Library) |
+| 4 | `bee:dev-frontend-visual` | Visual/snapshot testing (all states, responsive) |
+| 5 | `bee:dev-frontend-e2e` | E2E tests with Playwright (cross-browser, responsive) |
+| 6 | `bee:dev-frontend-performance` | Core Web Vitals + Lighthouse > 90 |
+| 7 | `bee:requesting-code-review` | Code review (5 reviewers in parallel) |
+| 8 | `bee:dev-validation` | Final validation |
 
 **Note:** Tasks are loaded at initialization, not as a separate gate. All 9 gates are MANDATORY.
 
-After all tasks: `ring:dev-feedback-loop` generates metrics report.
+After all tasks: `bee:dev-feedback-loop` generates metrics report.
 
 ## Output
 
-- **State file**: `docs/ring:dev-cycle-frontend/current-cycle.json`
+- **State file**: `docs/bee:dev-cycle-frontend/current-cycle.json`
 - **Feedback report**: `docs/dev-team/feedback/cycle-frontend-YYYY-MM-DD.md`
 
 ## Related Commands
 
 | Command | Description |
 |---------|-------------|
-| `/ring:dev-cycle` | Backend development cycle (10 gates) |
-| `/ring:dev-status` | Check current cycle status |
-| `/ring:dev-cancel` | Cancel running cycle |
-| `/ring:dev-report` | View feedback report |
+| `/bee:dev-cycle` | Backend development cycle (10 gates) |
+| `/bee:dev-status` | Check current cycle status |
+| `/bee:dev-cancel` | Cancel running cycle |
+| `/bee:dev-report` | View feedback report |
 
 ---
 
@@ -163,7 +163,7 @@ After all tasks: `ring:dev-feedback-loop` generates metrics report.
 **This command MUST load the skill for complete workflow execution.**
 
 ```
-Use Skill tool: ring:dev-cycle-frontend
+Use Skill tool: bee:dev-cycle-frontend
 ```
 
 The skill contains the complete 9-gate workflow with:
@@ -215,7 +215,7 @@ AskUserQuestion:
 
 ## Quick Reference
 
-See skill `ring:dev-cycle-frontend` for full details. Key rules:
+See skill `bee:dev-cycle-frontend` for full details. Key rules:
 
 - **All 9 gates execute** - Checkpoints affect pauses, not gates
 - **Gates execute in order** - 0 → 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8

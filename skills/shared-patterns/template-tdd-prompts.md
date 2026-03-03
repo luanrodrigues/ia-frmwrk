@@ -1,35 +1,35 @@
 # TDD Prompt Templates
 
-Canonical source for TDD dispatch prompts used by ring:dev-cycle and ring:dev-implementation skills.
+Canonical source for TDD dispatch prompts used by bee:dev-cycle and bee:dev-implementation skills.
 
 ## Standards Loading (MANDATORY - Before TDD)
 
 **Before dispatching any TDD phase, the agent MUST load:**
 
-1. **Ring Standards** (MANDATORY) → Base technical patterns (architecture, error handling, logging, testing)
-2. **PROJECT_RULES.md** (COMPLEMENTARY) → Project-specific info not in Ring Standards
+1. **Bee Standards** (MANDATORY) → Base technical patterns (architecture, error handling, logging, testing)
+2. **PROJECT_RULES.md** (COMPLEMENTARY) → Project-specific info not in Bee Standards
 
-**Priority:** Ring Standards define HOW to implement. PROJECT_RULES.md defines project-specific context only.
+**Priority:** Bee Standards define HOW to implement. PROJECT_RULES.md defines project-specific context only.
 
-**Anti-Duplication Check:** Before accepting PROJECT_RULES.md content, verify entries (tech stack, external integrations, domain terminology) do not overlap or contradict Ring Standards; reject duplicates.
+**Anti-Duplication Check:** Before accepting PROJECT_RULES.md content, verify entries (tech stack, external integrations, domain terminology) do not overlap or contradict Bee Standards; reject duplicates.
 
-See [standards-workflow.md](https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/skills/shared-patterns/standards-workflow.md) for the complete loading process.
+See [standards-workflow.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/skills/shared-patterns/standards-workflow.md) for the complete loading process.
 
 ### What Each Source Provides (no OVERLAP)
 
 | Source | Provides | Examples |
 |--------|----------|----------|
-| **Ring Standards** | Technical patterns | Error handling, logging, testing, architecture, lib-commons, API structure |
-| **PROJECT_RULES.md** | Project-specific only | External APIs, non-standard dirs, domain terminology, tech not in Ring |
+| **Bee Standards** | Technical patterns | Error handling, logging, testing, architecture, lib-commons, API structure |
+| **PROJECT_RULES.md** | Project-specific only | External APIs, non-standard dirs, domain terminology, tech not in Bee |
 
-**⛔ PROJECT_RULES.md MUST not duplicate Ring Standards content.**
+**⛔ PROJECT_RULES.md MUST not duplicate Bee Standards content.**
 
 ## TDD-RED Phase Prompt Template
 
 ```markdown
 **TDD-RED PHASE only** for: [unit_id] - [title]
 
-**MANDATORY:** WebFetch Ring Standards for your language FIRST (see standards-workflow.md)
+**MANDATORY:** WebFetch Bee Standards for your language FIRST (see standards-workflow.md)
 
 **Requirements:**
 [requirements from task/subtask file]
@@ -41,7 +41,7 @@ See [standards-workflow.md](https://raw.githubusercontent.com/LerianStudio/ring/
 [Insert relevant project-specific info: tech stack, internal libs, conventions]
 
 **INSTRUCTIONS (TDD-RED):**
-1. Follow Ring Standards for test structure and patterns
+1. Follow Bee Standards for test structure and patterns
 2. Write a failing test that captures the expected behavior
 3. Run the test
 4. **CAPTURE THE FAILURE OUTPUT** - this is MANDATORY
@@ -66,7 +66,7 @@ at tests/Feature/AuthenticationTest.php:15
 ```markdown
 **TDD-GREEN PHASE** for: [unit_id] - [title]
 
-**MANDATORY:** WebFetch Ring Standards for your language FIRST (see standards-workflow.md)
+**MANDATORY:** WebFetch Bee Standards for your language FIRST (see standards-workflow.md)
 
 **CONTEXT FROM TDD-RED:**
 - Test file: [tdd_red.test_file]
@@ -75,16 +75,16 @@ at tests/Feature/AuthenticationTest.php:15
 **PROJECT CONTEXT (if PROJECT_RULES.md exists):**
 [Insert relevant project-specific info: tech stack, internal libs, conventions]
 
-## ⛔ CRITICAL: all Ring Standards Apply from Task 1 (no DEFERRAL)
+## ⛔ CRITICAL: all Bee Standards Apply from Task 1 (no DEFERRAL)
 
-**See [shared-anti-rationalization.md](https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/skills/shared-patterns/shared-anti-rationalization.md) → "Standards Deferral Anti-Rationalizations" section.**
+**See [shared-anti-rationalization.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/skills/shared-patterns/shared-anti-rationalization.md) → "Standards Deferral Anti-Rationalizations" section.**
 
-**Summary:** Ring Standards are not phased. They apply IMMEDIATELY to every task. PM defines WHAT, Ring Standards define HOW.
+**Summary:** Bee Standards are not phased. They apply IMMEDIATELY to every task. PM defines WHAT, Bee Standards define HOW.
 
-**⛔ HARD GATE:** If you output "DEFERRED" regarding any Ring Standard → Implementation is INCOMPLETE. Fix before proceeding.
+**⛔ HARD GATE:** If you output "DEFERRED" regarding any Bee Standard → Implementation is INCOMPLETE. Fix before proceeding.
 
 **INSTRUCTIONS (TDD-GREEN):**
-1. Follow Ring Standards for architecture, error handling, and patterns
+1. Follow Bee Standards for architecture, error handling, and patterns
 2. Write MINIMAL code to make the test pass
 3. Apply project-specific conventions from PROJECT_RULES.md (if exists)
 4. Run the test
@@ -93,22 +93,22 @@ at tests/Feature/AuthenticationTest.php:15
 7. **VERIFY STANDARDS COMPLIANCE** - Complete the checklist below
 8. Commit
 
-**⛔ RING STANDARDS REQUIREMENTS (MANDATORY - all MUST BE IMPLEMENTED):**
+**⛔ BEE STANDARDS REQUIREMENTS (MANDATORY - all MUST BE IMPLEMENTED):**
 
-**You MUST WebFetch and implement all sections from Ring Standards for your language:**
-- **PHP:** `https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php.md`
-- **TypeScript (BFF):** `https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/typescript.md`
+**You MUST WebFetch and implement all sections from Bee Standards for your language:**
+- **PHP:** `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php.md`
+- **TypeScript (BFF):** `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/typescript.md`
 
-**⛔ HARD GATE: You MUST implement all sections listed in [standards-coverage-table.md](https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/skills/shared-patterns/standards-coverage-table.md).**
+**⛔ HARD GATE: You MUST implement all sections listed in [standards-coverage-table.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/skills/shared-patterns/standards-coverage-table.md).**
 
-- **PHP projects:** See `ring:backend-engineer-php → php.md` section index (46 sections)
-- **TypeScript BFF projects:** See `ring:frontend-bff-engineer-typescript → typescript.md` section index (21 sections)
+- **PHP projects:** See `bee:backend-engineer-php → php.md` section index (46 sections)
+- **TypeScript BFF projects:** See `bee:frontend-bff-engineer-typescript → typescript.md` section index (21 sections)
 
 **You CANNOT skip any section. Mark N/A only with explicit justification.**
 
 **PROJECT-SPECIFIC (from PROJECT_RULES.md, if exists):**
 - Use internal libraries referenced in PROJECT_RULES.md
-- Follow project-specific naming conventions (if different from Ring Standards)
+- Follow project-specific naming conventions (if different from Bee Standards)
 - Use tech stack choices defined in PROJECT_RULES.md (database, frameworks, etc.)
 
 **⛔ REQUIRED OUTPUT (HARD GATE - all SECTIONS MANDATORY):**
@@ -126,7 +126,7 @@ at tests/Feature/AuthenticationTest.php:15
 
 ## Standards Coverage Table
 
-**You MUST output a Standards Coverage Table per [standards-coverage-table.md](https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/skills/shared-patterns/standards-coverage-table.md).**
+**You MUST output a Standards Coverage Table per [standards-coverage-table.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/skills/shared-patterns/standards-coverage-table.md).**
 
 **Format:**
 ```markdown
@@ -203,9 +203,9 @@ if "all STANDARDS MET" = no:
 │      Task tool:                                                             │
 │        subagent_type: "[same agent that did TDD-GREEN]"                     │
 │        model: "opus"                                                        │
-│        description: "Fix missing Ring Standards for [unit_id]"              │
+│        description: "Fix missing Bee Standards for [unit_id]"              │
 │        prompt: |                                                            │
-│          ⛔ FIX REQUIRED - Ring Standards Not Implemented                   │
+│          ⛔ FIX REQUIRED - Bee Standards Not Implemented                   │
 │                                                                             │
 │          Your Standards Coverage Table shows these sections as ❌:          │
 │          [list ❌ sections from table]                                       │
@@ -224,7 +224,7 @@ if "all STANDARDS MET" = no:
 
 ### Anti-Rationalization for Standards Compliance
 
-See [standards-coverage-table.md](https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/skills/shared-patterns/standards-coverage-table.md) for the complete anti-rationalization table.
+See [standards-coverage-table.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/skills/shared-patterns/standards-coverage-table.md) for the complete anti-rationalization table.
 
 **Key rules:**
 - all sections from standards-coverage-table.md MUST be checked
@@ -236,7 +236,7 @@ See [standards-coverage-table.md](https://raw.githubusercontent.com/LerianStudio
 
 ## ⛔ Orchestrator Enforcement (HARD GATE)
 
-**This section defines what the ORCHESTRATOR (ring:dev-cycle, ring:dev-implementation) MUST do after receiving agent output.**
+**This section defines what the ORCHESTRATOR (bee:dev-cycle, bee:dev-implementation) MUST do after receiving agent output.**
 
 ### Verification Process
 
@@ -301,9 +301,9 @@ See [standards-coverage-table.md](https://raw.githubusercontent.com/LerianStudio
 | Gate | Agent | Orchestrator Verifies |
 |------|-------|----------------------|
 | Gate 0 (Implementation) | backend-engineer-*, frontend-* | Standards Coverage Table from TDD-GREEN |
-| Gate 1 (DevOps) | ring:devops-engineer | Standards Coverage Table from artifacts |
-| Gate 2 (SRE) | ring:sre | Standards Coverage Table from validation |
-| Gate 3 (Testing) | ring:qa-analyst | Standards Coverage Table from test analysis |
+| Gate 1 (DevOps) | bee:devops-engineer | Standards Coverage Table from artifacts |
+| Gate 2 (SRE) | bee:sre | Standards Coverage Table from validation |
+| Gate 3 (Testing) | bee:qa-analyst | Standards Coverage Table from test analysis |
 
 ### State Update After Verification
 
@@ -337,34 +337,34 @@ See [standards-coverage-table.md](https://raw.githubusercontent.com/LerianStudio
 
 ## Standards Priority Summary
 
-### Ring Standards (MANDATORY - Base patterns)
+### Bee Standards (MANDATORY - Base patterns)
 
 | What | Source | Defines |
 |------|--------|---------|
-| **Architecture patterns** | Ring Standards | Hexagonal, Clean Architecture, DDD |
-| **Error handling** | Ring Standards | No panic, wrap with context |
-| **Logging** | Ring Standards | Structured JSON (Monolog or pino/winston) |
-| **Tracing** | Ring Standards | OpenTelemetry spans, trace_id propagation |
-| **Testing patterns** | Ring Standards | Table-driven tests, mocking |
+| **Architecture patterns** | Bee Standards | Hexagonal, Clean Architecture, DDD |
+| **Error handling** | Bee Standards | No panic, wrap with context |
+| **Logging** | Bee Standards | Structured JSON (Monolog or pino/winston) |
+| **Tracing** | Bee Standards | OpenTelemetry spans, trace_id propagation |
+| **Testing patterns** | Bee Standards | Table-driven tests, mocking |
 
-### PROJECT_RULES.md (COMPLEMENTARY - only What Ring Does not Cover)
+### PROJECT_RULES.md (COMPLEMENTARY - only What Bee Does not Cover)
 
 | What | Source | Defines |
 |------|--------|---------|
-| **Tech stack not in Ring** | PROJECT_RULES.md | Specific message broker, cache, DB if not PostgreSQL |
+| **Tech stack not in Bee** | PROJECT_RULES.md | Specific message broker, cache, DB if not PostgreSQL |
 | **Non-standard directories** | PROJECT_RULES.md | Workers, consumers, polling (not standard API structure) |
 | **External integrations** | PROJECT_RULES.md | Third-party APIs, webhooks, external services |
 | **Domain terminology** | PROJECT_RULES.md | Technical names of entities/classes in this codebase |
 
 **⛔ PROJECT_RULES.md MUST not contain:**
-- Error handling patterns (Ring covers this)
-- Logging standards (Ring covers this)
-- Testing patterns (Ring covers this)
-- Architecture patterns (Ring covers this)
-- lib-commons usage (Ring covers this)
+- Error handling patterns (Bee covers this)
+- Logging standards (Bee covers this)
+- Testing patterns (Bee covers this)
+- Architecture patterns (Bee covers this)
+- lib-commons usage (Bee covers this)
 - Business rules (belongs in PRD/product docs)
 
-**Priority:** Ring Standards > PROJECT_RULES.md (project adds context, not patterns)
+**Priority:** Bee Standards > PROJECT_RULES.md (project adds context, not patterns)
 
 **Gate 0 implements standards + observability. Gate 2 (SRE) validates observability.**
 

@@ -1,5 +1,5 @@
 ---
-name: ring:dev-frontend-e2e
+name: bee:dev-frontend-e2e
 title: Frontend development cycle E2E testing (Gate 5)
 category: development-cycle-frontend
 tier: 1
@@ -21,11 +21,11 @@ NOT_skip_when: |
   - "Happy path is enough" - Error handling MUST be tested.
 
 sequence:
-  after: [ring:dev-frontend-visual]
-  before: [ring:dev-frontend-performance]
+  after: [bee:dev-frontend-visual]
+  before: [bee:dev-frontend-performance]
 
 related:
-  complementary: [ring:dev-cycle-frontend, ring:dev-frontend-visual, ring:qa-analyst-frontend]
+  complementary: [bee:dev-cycle-frontend, bee:dev-frontend-visual, bee:qa-analyst-frontend]
 
 input_schema:
   required:
@@ -116,7 +116,7 @@ examples:
 
 ## Overview
 
-Ensure all user flows from `ring:product-designer` have passing **Playwright E2E tests** across Chromium, Firefox, and WebKit with responsive viewport coverage.
+Ensure all user flows from `bee:product-designer` have passing **Playwright E2E tests** across Chromium, Firefox, and WebKit with responsive viewport coverage.
 
 **Core principle:** If the product-designer defined a user flow, it must have an E2E test. If the user can encounter an error, it must be tested.
 
@@ -143,7 +143,7 @@ Ensure all user flows from `ring:product-designer` have passing **Playwright E2E
 **MANDATORY:** Load testing-e2e.md standards via WebFetch.
 
 <fetch_required>
-https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/frontend/testing-e2e.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/frontend/testing-e2e.md
 </fetch_required>
 
 ---
@@ -176,7 +176,7 @@ if backend_handoff provided:
 
 ```text
 Task tool:
-  subagent_type: "ring:qa-analyst-frontend"
+  subagent_type: "bee:qa-analyst-frontend"
   model: "opus"
   prompt: |
     **MODE:** E2E TESTING (Gate 5)

@@ -1,8 +1,8 @@
 ---
-name: ring:dev-refactor-frontend
+name: bee:dev-refactor-frontend
 description: |
-  Analyzes frontend codebase against Ring standards and generates refactoring tasks
-  for ring:dev-cycle-frontend. Dispatches frontend-specific agents in ANALYSIS mode.
+  Analyzes frontend codebase against Bee standards and generates refactoring tasks
+  for bee:dev-cycle-frontend. Dispatches frontend-specific agents in ANALYSIS mode.
 
 trigger: |
   - User wants to refactor existing frontend project to follow standards
@@ -10,15 +10,15 @@ trigger: |
   - Frontend project audit requested
 
 skip_when: |
-  - Greenfield project -> Use /ring:pre-dev-* instead
-  - Single file fix -> Use ring:dev-cycle-frontend directly
-  - Backend-only project -> Use ring:dev-refactor instead
+  - Greenfield project -> Use /bee:pre-dev-* instead
+  - Single file fix -> Use bee:dev-cycle-frontend directly
+  - Backend-only project -> Use bee:dev-refactor instead
 
 sequence:
-  before: [ring:dev-cycle-frontend]
+  before: [bee:dev-cycle-frontend]
 
 related:
-  complementary: [ring:dev-refactor, ring:dev-cycle-frontend, ring:using-dev-team]
+  complementary: [bee:dev-refactor, bee:dev-cycle-frontend, bee:using-dev-team]
 
 input_schema:
   required: []
@@ -31,10 +31,10 @@ input_schema:
       description: "Direct instruction for refactoring focus"
     - name: standards_path
       type: string
-      description: "Custom standards file path (default: Ring standards via WebFetch)"
+      description: "Custom standards file path (default: Bee standards via WebFetch)"
     - name: analyze_only
       type: boolean
-      description: "Generate report without executing ring:dev-cycle-frontend"
+      description: "Generate report without executing bee:dev-cycle-frontend"
     - name: critical_only
       type: boolean
       description: "Limit execution to Critical and High severity (analysis still tracks all)"
@@ -46,7 +46,7 @@ output_schema:
   format: markdown
   artifacts:
     - name: "codebase-report.md"
-      description: "Codebase analysis from ring:codebase-explorer"
+      description: "Codebase analysis from bee:codebase-explorer"
     - name: "reports/{agent-name}-report.md"
       description: "Individual agent analysis reports"
     - name: "findings.md"
@@ -54,19 +54,19 @@ output_schema:
     - name: "tasks.md"
       description: "1:1 mapped REFACTOR-XXX tasks from findings"
     - name: "change-report.html"
-      description: "Visual HTML change report from ring:visual-explainer"
-  traceability: "Ring Standard -> Agent Report -> FINDING-XXX -> REFACTOR-XXX -> Implementation"
+      description: "Visual HTML change report from bee:visual-explainer"
+  traceability: "Bee Standard -> Agent Report -> FINDING-XXX -> REFACTOR-XXX -> Implementation"
 ---
 
 # Dev Refactor Frontend Skill
 
-Analyzes existing frontend codebase against Ring/Lerian standards and generates refactoring tasks compatible with ring:dev-cycle-frontend.
+Analyzes existing frontend codebase against Bee/Lerian standards and generates refactoring tasks compatible with bee:dev-cycle-frontend.
 
 ---
 
 ## Standards Loading (MANDATORY)
 
-**Before any step execution, you MUST load Ring standards.**
+**Before any step execution, you MUST load Bee standards.**
 
 ### Standards Source Resolution
 
@@ -76,14 +76,14 @@ if standards_path is provided:
   → If file not found or empty: STOP and report blocker
   → Use loaded content as frontend standards
 else:
-  → WebFetch the default Ring standards (see URLs below)
+  → WebFetch the default Bee standards (see URLs below)
 ```
 
 **Default URLs (used when `standards_path` is not provided):**
 
 <fetch_required>
-https://raw.githubusercontent.com/LerianStudio/ring/main/CLAUDE.md
-https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/frontend.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/CLAUDE.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/frontend.md
 </fetch_required>
 
 Fetch URLs above and extract: Agent Modification Verification requirements, Anti-Rationalization Tables requirements, Critical Rules, and Frontend Standards.
@@ -94,13 +94,13 @@ Fetch URLs above and extract: Agent Modification Verification requirements, Anti
 - CLAUDE.md not accessible
 </block_condition>
 
-If any condition is true, STOP and report blocker. Cannot proceed without Ring standards.
+If any condition is true, STOP and report blocker. Cannot proceed without Bee standards.
 
 ---
 
 ## MANDATORY GAP PRINCIPLE (NON-NEGOTIABLE)
 
-**any divergence from Ring standards = MANDATORY gap to implement.**
+**any divergence from Bee standards = MANDATORY gap to implement.**
 
 <cannot_skip>
 - All divergences are gaps - Every difference MUST be tracked as FINDING-XXX
@@ -184,7 +184,7 @@ TodoWrite:
     - content: "Read PROJECT_RULES.md for context"
       status: "pending"
       activeForm: "Reading PROJECT_RULES.md"
-    - content: "Generate codebase report via ring:codebase-explorer"
+    - content: "Generate codebase report via bee:codebase-explorer"
       status: "pending"
       activeForm: "Generating codebase report"
     - content: "Dispatch frontend specialist agents in parallel"
@@ -214,9 +214,9 @@ TodoWrite:
     - content: "Save all artifacts"
       status: "pending"
       activeForm: "Saving artifacts"
-    - content: "Handoff to ring:dev-cycle-frontend"
+    - content: "Handoff to bee:dev-cycle-frontend"
       status: "pending"
-      activeForm: "Handing off to ring:dev-cycle-frontend"
+      activeForm: "Handing off to bee:dev-cycle-frontend"
 ```
 
 **This is NON-NEGOTIABLE. Do not skip creating the todo list.**
@@ -230,12 +230,12 @@ if dry_run == true:
   → Execute Step 1 (Validate PROJECT_RULES.md) and Step 1b (Detect Frontend Stack)
   → Output dry-run summary:
       - Project path: {project_path or current directory}
-      - Standards source: {standards_path or "Ring defaults via WebFetch"}
+      - Standards source: {standards_path or "Bee defaults via WebFetch"}
       - Frontend stack detected: {React/Next.js version}
       - UI library mode: {sindarian-ui / fallback-only}
       - Agents that would be dispatched: {list of 5-7 agents}
       - Conditional agents: {BFF if detected, UI Engineer if ux-criteria.md exists}
-      - Artifact path: docs/ring:dev-refactor-frontend/{timestamp}/
+      - Artifact path: docs/bee:dev-refactor-frontend/{timestamp}/
   → Mark all remaining todos as `completed` (skipped - dry run)
   → TERMINATE with "Dry run complete. Re-run without --dry-run to execute."
 ```
@@ -287,9 +287,9 @@ Re-run after file exists.
 
 **TodoWrite:** Mark "Detect frontend stack and UI library mode" as `in_progress`
 
-**⛔ SCOPE: FRONTEND AND BFF CODE ONLY.** This skill analyzes frontend code (React, Next.js) and BFF layers exclusively. MUST use `ring:dev-refactor` for backend code (Go, pure TypeScript backend with Express/Fastify/NestJS without React).
+**⛔ SCOPE: FRONTEND AND BFF CODE ONLY.** This skill analyzes frontend code (React, Next.js) and BFF layers exclusively. MUST use `bee:dev-refactor` for backend code (Go, pure TypeScript backend with Express/Fastify/NestJS without React).
 
-**⛔ FORBIDDEN:** Dispatching `ring:backend-engineer-php` from this skill. Backend agents belong to `ring:dev-refactor`.
+**⛔ FORBIDDEN:** Dispatching `bee:backend-engineer-php` from this skill. Backend agents belong to `bee:dev-refactor`.
 
 **MANDATORY: Verify this is a frontend project. If not, redirect.**
 
@@ -300,18 +300,18 @@ Check for frontend indicators:
 | `package.json` exists | Glob for `package.json` | Required |
 | React/Next.js in deps | `react`, `next` in dependencies | Required for frontend |
 | `@lerianstudio/sindarian-ui` in deps | Check dependencies/devDependencies | Store `ui_library_mode` |
-| BFF layer detected | `/api/` routes, Express/Fastify in deps | Add `ring:frontend-bff-engineer-typescript` |
-| `ux-criteria.md` exists | `docs/pre-dev/*/ux-criteria.md` | Add `ring:ui-engineer` |
+| BFF layer detected | `/api/` routes, Express/Fastify in deps | Add `bee:frontend-bff-engineer-typescript` |
+| `ux-criteria.md` exists | `docs/pre-dev/*/ux-criteria.md` | Add `bee:ui-engineer` |
 
 **Detection Logic:**
 
 ```text
 1. package.json exists?
-   NO  -> STOP: "Not a Node.js project. Use ring:dev-refactor instead."
+   NO  -> STOP: "Not a Node.js project. Use bee:dev-refactor instead."
    YES -> Continue
 
 2. React or Next.js in dependencies?
-   NO  -> STOP: "Not a frontend project. Use ring:dev-refactor instead."
+   NO  -> STOP: "Not a frontend project. Use bee:dev-refactor instead."
    YES -> Continue
 
 3. @lerianstudio/sindarian-ui in dependencies?
@@ -347,11 +347,11 @@ Extract project-specific conventions for agent context.
 
 ## Step 3: Generate Codebase Report
 
-**TodoWrite:** Mark "Generate codebase report via ring:codebase-explorer" as `in_progress`
+**TodoWrite:** Mark "Generate codebase report via bee:codebase-explorer" as `in_progress`
 
-### MANDATORY: Use Task Tool with ring:codebase-explorer
+### MANDATORY: Use Task Tool with bee:codebase-explorer
 
-<dispatch_required agent="ring:codebase-explorer">
+<dispatch_required agent="bee:codebase-explorer">
 Generate a comprehensive frontend codebase report describing WHAT EXISTS.
 
 Include:
@@ -388,7 +388,7 @@ Do not complete without outputting full report in the format above.
 
 ### Anti-Rationalization Table for Step 3
 
-See [shared-patterns/anti-rationalization-codebase-explorer.md](../shared-patterns/anti-rationalization-codebase-explorer.md) for the ring:codebase-explorer dispatch anti-rationalization table.
+See [shared-patterns/anti-rationalization-codebase-explorer.md](../shared-patterns/anti-rationalization-codebase-explorer.md) for the bee:codebase-explorer dispatch anti-rationalization table.
 
 ### FORBIDDEN Actions for Step 3
 
@@ -406,7 +406,7 @@ Any of these = IMMEDIATE SKILL FAILURE.
 ### REQUIRED Action for Step 3
 
 ```
-Task(subagent_type="ring:codebase-explorer", ...)
+Task(subagent_type="bee:codebase-explorer", ...)
 ```
 
 **Timestamp format:** `{timestamp}` = `YYYY-MM-DDTHH:MM:SS` (e.g., `2026-02-10T15:30:00`). Generate once at start, reuse for all artifacts.
@@ -415,11 +415,11 @@ Task(subagent_type="ring:codebase-explorer", ...)
 
 ```
 Write tool:
-  file_path: "docs/ring:dev-refactor-frontend/{timestamp}/codebase-report.md"
+  file_path: "docs/bee:dev-refactor-frontend/{timestamp}/codebase-report.md"
   content: [Task output]
 ```
 
-**TodoWrite:** Mark "Generate codebase report via ring:codebase-explorer" as `completed`
+**TodoWrite:** Mark "Generate codebase report via bee:codebase-explorer" as `completed`
 
 ---
 
@@ -432,11 +432,11 @@ Write tool:
 **BEFORE dispatching any specialist agent, verify:**
 
 ```
-Check 1: Does docs/ring:dev-refactor-frontend/{timestamp}/codebase-report.md exist?
+Check 1: Does docs/bee:dev-refactor-frontend/{timestamp}/codebase-report.md exist?
   - YES -> Continue to dispatch agents
   - NO  -> STOP. Go back to Step 3.
 
-Check 2: Was codebase-report.md created by ring:codebase-explorer?
+Check 2: Was codebase-report.md created by bee:codebase-explorer?
   - YES -> Continue
   - NO (created by Bash output) -> DELETE IT. Go back to Step 3. Use correct agent.
 ```
@@ -461,7 +461,7 @@ Check 2: Was codebase-report.md created by ring:codebase-explorer?
 
 ```yaml
 Task tool 1:
-  subagent_type: "ring:frontend-engineer"
+  subagent_type: "bee:frontend-engineer"
   description: "Frontend standards analysis"
   model: "opus"
   prompt: |
@@ -481,9 +481,9 @@ Task tool 1:
     UI Library Mode: {ui_library_mode}
 
     Input:
-    - Ring Standards: Load via WebFetch (frontend.md)
-    - Section Index: See shared-patterns/standards-coverage-table.md -> "ring:frontend-engineer"
-    - Codebase Report: docs/ring:dev-refactor-frontend/{timestamp}/codebase-report.md
+    - Bee Standards: Load via WebFetch (frontend.md)
+    - Section Index: See shared-patterns/standards-coverage-table.md -> "bee:frontend-engineer"
+    - Codebase Report: docs/bee:dev-refactor-frontend/{timestamp}/codebase-report.md
     - Project Rules: docs/PROJECT_RULES.md
 
     Output:
@@ -491,13 +491,13 @@ Task tool 1:
     2. ISSUE-XXX for each non-compliant finding with: Pattern name, Severity, file:line, Current Code, Expected Code
 
 Task tool 2:
-  subagent_type: "ring:qa-analyst-frontend"
+  subagent_type: "bee:qa-analyst-frontend"
   description: "Frontend testing analysis"
   model: "opus"
   prompt: |
     **MODE: ANALYSIS only**
 
-    MANDATORY: Check all 19 testing sections per shared-patterns/standards-coverage-table.md -> "ring:qa-analyst-frontend"
+    MANDATORY: Check all 19 testing sections per shared-patterns/standards-coverage-table.md -> "bee:qa-analyst-frontend"
 
     Analyze ALL testing dimensions:
     - Accessibility (ACC-1 to ACC-5): axe-core, semantic HTML, keyboard nav, focus, color contrast
@@ -508,9 +508,9 @@ Task tool 2:
     UI Library Mode: {ui_library_mode}
 
     Input:
-    - Ring Standards: Load via WebFetch (frontend/testing-accessibility.md, testing-visual.md, testing-e2e.md, testing-performance.md)
-    - Section Index: See shared-patterns/standards-coverage-table.md -> "ring:qa-analyst-frontend"
-    - Codebase Report: docs/ring:dev-refactor-frontend/{timestamp}/codebase-report.md
+    - Bee Standards: Load via WebFetch (frontend/testing-accessibility.md, testing-visual.md, testing-e2e.md, testing-performance.md)
+    - Section Index: See shared-patterns/standards-coverage-table.md -> "bee:qa-analyst-frontend"
+    - Codebase Report: docs/bee:dev-refactor-frontend/{timestamp}/codebase-report.md
     - Project Rules: docs/PROJECT_RULES.md
 
     Output:
@@ -518,13 +518,13 @@ Task tool 2:
     2. ISSUE-XXX for each non-compliant finding
 
 Task tool 3:
-  subagent_type: "ring:frontend-designer"
+  subagent_type: "bee:frontend-designer"
   description: "Frontend design analysis"
   model: "opus"
   prompt: |
     **MODE: ANALYSIS only**
 
-    MANDATORY: Check all 19 sections in frontend.md per shared-patterns/standards-coverage-table.md -> "ring:frontend-designer"
+    MANDATORY: Check all 19 sections in frontend.md per shared-patterns/standards-coverage-table.md -> "bee:frontend-designer"
 
     Focus on design perspective:
     - Typography standards (font selection, pairing, hierarchy)
@@ -536,9 +536,9 @@ Task tool 3:
     UI Library Mode: {ui_library_mode}
 
     Input:
-    - Ring Standards: Load via WebFetch (frontend.md)
-    - Section Index: See shared-patterns/standards-coverage-table.md -> "ring:frontend-designer"
-    - Codebase Report: docs/ring:dev-refactor-frontend/{timestamp}/codebase-report.md
+    - Bee Standards: Load via WebFetch (frontend.md)
+    - Section Index: See shared-patterns/standards-coverage-table.md -> "bee:frontend-designer"
+    - Codebase Report: docs/bee:dev-refactor-frontend/{timestamp}/codebase-report.md
     - Project Rules: docs/PROJECT_RULES.md
 
     Output:
@@ -546,12 +546,12 @@ Task tool 3:
     2. ISSUE-XXX for each non-compliant finding
 
 Task tool 4:
-  subagent_type: "ring:devops-engineer"
+  subagent_type: "bee:devops-engineer"
   description: "DevOps analysis"
   model: "opus"
   prompt: |
     **MODE: ANALYSIS only**
-    Check all 8 sections per shared-patterns/standards-coverage-table.md -> "ring:devops-engineer"
+    Check all 8 sections per shared-patterns/standards-coverage-table.md -> "bee:devops-engineer"
 
     Frontend-specific DevOps focus:
     - Dockerfile for SSR/SSG Next.js app
@@ -565,19 +565,19 @@ Task tool 4:
     "Makefile Standards" means all required commands
 
     Input:
-    - Ring Standards: Load via WebFetch (devops.md)
-    - Codebase Report: docs/ring:dev-refactor-frontend/{timestamp}/codebase-report.md
+    - Bee Standards: Load via WebFetch (devops.md)
+    - Codebase Report: docs/bee:dev-refactor-frontend/{timestamp}/codebase-report.md
     - Project Rules: docs/PROJECT_RULES.md
 
     Output: Standards Coverage Table + ISSUE-XXX for gaps
 
 Task tool 5:
-  subagent_type: "ring:sre"
+  subagent_type: "bee:sre"
   description: "Observability analysis"
   model: "opus"
   prompt: |
     **MODE: ANALYSIS only**
-    Check all 6 sections per shared-patterns/standards-coverage-table.md -> "ring:sre"
+    Check all 6 sections per shared-patterns/standards-coverage-table.md -> "bee:sre"
 
     Frontend-specific observability focus:
     - Error tracking (error boundaries, global error handlers)
@@ -587,8 +587,8 @@ Task tool 5:
     - Distributed tracing for BFF/API calls
 
     Input:
-    - Ring Standards: Load via WebFetch (sre.md)
-    - Codebase Report: docs/ring:dev-refactor-frontend/{timestamp}/codebase-report.md
+    - Bee Standards: Load via WebFetch (sre.md)
+    - Codebase Report: docs/bee:dev-refactor-frontend/{timestamp}/codebase-report.md
     - Project Rules: docs/PROJECT_RULES.md
 
     Output: Standards Coverage Table + ISSUE-XXX for gaps
@@ -600,7 +600,7 @@ Task tool 5:
 
 ```yaml
 Task tool 6 (if dispatch_bff == true):
-  subagent_type: "ring:frontend-bff-engineer-typescript"
+  subagent_type: "bee:frontend-bff-engineer-typescript"
   description: "BFF TypeScript standards analysis"
   model: "opus"
   prompt: |
@@ -620,9 +620,9 @@ Task tool 6 (if dispatch_bff == true):
     UI Library Mode: {ui_library_mode}
 
     Input:
-    - Ring Standards: Load via WebFetch (typescript.md)
+    - Bee Standards: Load via WebFetch (typescript.md)
     - Section Index: See shared-patterns/standards-coverage-table.md -> "frontend-bff-engineer-typescript"
-    - Codebase Report: docs/ring:dev-refactor-frontend/{timestamp}/codebase-report.md
+    - Codebase Report: docs/bee:dev-refactor-frontend/{timestamp}/codebase-report.md
     - Project Rules: docs/PROJECT_RULES.md
 
     Output:
@@ -630,13 +630,13 @@ Task tool 6 (if dispatch_bff == true):
     2. ISSUE-XXX for each non-compliant finding
 
 Task tool 7 (if dispatch_ui_engineer == true):
-  subagent_type: "ring:ui-engineer"
+  subagent_type: "bee:ui-engineer"
   description: "UI engineer standards analysis"
   model: "opus"
   prompt: |
     **MODE: ANALYSIS only**
 
-    MANDATORY: Check all 19 sections in frontend.md per shared-patterns/standards-coverage-table.md -> "ring:ui-engineer"
+    MANDATORY: Check all 19 sections in frontend.md per shared-patterns/standards-coverage-table.md -> "bee:ui-engineer"
 
     Additionally verify against product-designer outputs:
     - UX criteria compliance (ux-criteria.md)
@@ -647,10 +647,10 @@ Task tool 7 (if dispatch_ui_engineer == true):
     UI Library Mode: {ui_library_mode}
 
     Input:
-    - Ring Standards: Load via WebFetch (frontend.md)
-    - Section Index: See shared-patterns/standards-coverage-table.md -> "ring:ui-engineer"
+    - Bee Standards: Load via WebFetch (frontend.md)
+    - Section Index: See shared-patterns/standards-coverage-table.md -> "bee:ui-engineer"
     - UX Criteria: docs/pre-dev/{feature}/ux-criteria.md
-    - Codebase Report: docs/ring:dev-refactor-frontend/{timestamp}/codebase-report.md
+    - Codebase Report: docs/bee:dev-refactor-frontend/{timestamp}/codebase-report.md
     - Project Rules: docs/PROJECT_RULES.md
 
     Output:
@@ -679,8 +679,8 @@ Task tool 7 (if dispatch_ui_engineer == true):
 
 | Agent Report | Action |
 |--------------|--------|
-| Any difference between current code and Ring standard | -> Create FINDING-XXX |
-| Any missing pattern from Ring standards | -> Create FINDING-XXX |
+| Any difference between current code and Bee standard | -> Create FINDING-XXX |
+| Any missing pattern from Bee standards | -> Create FINDING-XXX |
 | Any deprecated pattern usage | -> Create FINDING-XXX |
 | Any accessibility gap | -> Create FINDING-XXX |
 | Any testing gap | -> Create FINDING-XXX |
@@ -723,7 +723,7 @@ Count findings in Step 5 MUST equal total issues from all agent reports
 
 ### MANDATORY GAP RULE FOR STEP 4.5
 
-**Per the Mandatory Gap Principle (see top of skill): any divergence from Ring standards = FINDING-XXX.**
+**Per the Mandatory Gap Principle (see top of skill): any divergence from Bee standards = FINDING-XXX.**
 
 This means:
 - Compliant items in Standards Coverage Table = No finding needed
@@ -806,14 +806,14 @@ This means:
 After all parallel agent tasks complete, save each agent's output to a separate file:
 
 ```
-docs/ring:dev-refactor-frontend/{timestamp}/reports/
-+-- ring:frontend-engineer-report.md           (always)
-+-- ring:qa-analyst-frontend-report.md         (always)
-+-- ring:frontend-designer-report.md           (always)
-+-- ring:devops-engineer-report.md             (always)
-+-- ring:sre-report.md                         (always)
-+-- ring:frontend-bff-engineer-typescript-report.md       (if BFF detected)
-+-- ring:ui-engineer-report.md                 (if ux-criteria.md exists)
+docs/bee:dev-refactor-frontend/{timestamp}/reports/
++-- bee:frontend-engineer-report.md           (always)
++-- bee:qa-analyst-frontend-report.md         (always)
++-- bee:frontend-designer-report.md           (always)
++-- bee:devops-engineer-report.md             (always)
++-- bee:sre-report.md                         (always)
++-- bee:frontend-bff-engineer-typescript-report.md       (if BFF detected)
++-- bee:ui-engineer-report.md                 (if ux-criteria.md exists)
 ```
 
 ### Report File Format
@@ -844,7 +844,7 @@ docs/ring:dev-refactor-frontend/{timestamp}/reports/
 - **Low:** {count}
 
 ---
-*Report generated by ring:dev-refactor-frontend skill*
+*Report generated by bee:dev-refactor-frontend skill*
 ```
 
 ### Anti-Rationalization Table for Step 4.6
@@ -860,7 +860,7 @@ docs/ring:dev-refactor-frontend/{timestamp}/reports/
 
 ```
 Write tool:
-  file_path: "docs/ring:dev-refactor-frontend/{timestamp}/reports/{agent-name}-report.md"
+  file_path: "docs/bee:dev-refactor-frontend/{timestamp}/reports/{agent-name}-report.md"
   content: [Agent Task output formatted per template above]
 ```
 
@@ -895,7 +895,7 @@ Generating findings.md without reading all agent reports   -> SKILL FAILURE
 ```
 Every FINDING-XXX includes: Severity, Category, Agent, Standard reference
 Every FINDING-XXX includes: Current Code with exact file:line
-Every FINDING-XXX includes: Ring Standard Reference with URL
+Every FINDING-XXX includes: Bee Standard Reference with URL
 Every FINDING-XXX includes: Required Changes as numbered actions
 Every FINDING-XXX includes: Why This Matters with Problem/Standard/Impact
 Total finding count MUST match total issues from Step 4.5
@@ -925,7 +925,7 @@ Total finding count MUST match total issues from Step 4.5
 
 ## Mandatory Gap Principle Applied
 
-**all divergences from Ring standards are tracked below. No filtering applied.**
+**all divergences from Bee standards are tracked below. No filtering applied.**
 
 | Metric | Count |
 |--------|-------|
@@ -956,10 +956,10 @@ Total finding count MUST match total issues from Step 4.5
 {actual code}
 ```
 
-### Ring Standard Reference
+### Bee Standard Reference
 **Standard:** {standards-file}.md -> Section: {section-name}
 **Pattern:** {pattern-name}
-**URL:** https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/{file}.md
+**URL:** https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/{file}.md
 
 ### Required Changes
 1. {action item 1 - what to change}
@@ -968,7 +968,7 @@ Total finding count MUST match total issues from Step 4.5
 
 ### Why This Matters
 - **Problem:** {what is wrong with current code}
-- **Standard Violated:** {specific section from Ring standards}
+- **Standard Violated:** {specific section from Bee standards}
 - **Impact:** {business/technical impact if not fixed}
 
 ---
@@ -993,7 +993,7 @@ Each finding becomes its own task. This prevents findings from being lost inside
 - FINDING-002 -> REFACTOR-002
 - FINDING-NNN -> REFACTOR-NNN
 
-**Ordering:** Sort tasks by severity (Critical first), then by dependency order.
+**Ordebee:** Sort tasks by severity (Critical first), then by dependency order.
 
 **Mapping Verification:**
 ```
@@ -1012,7 +1012,7 @@ Before proceeding to Step 7, verify:
 |-----------------|----------------|-----------------|
 | "These findings are in the same file, I'll group them" | Grouping hides findings. One fix may be done, others forgotten. | **One finding = One task. No exceptions.** |
 | "Grouping reduces task count and is easier to manage" | Fewer tasks = less visibility. Each finding needs independent tracking. | **Create one REFACTOR-XXX per FINDING-XXX** |
-| "These are related and should be fixed together" | Related is not same task. ring:dev-cycle-frontend can execute them sequentially. | **Separate tasks, use Dependencies field to link** |
+| "These are related and should be fixed together" | Related is not same task. bee:dev-cycle-frontend can execute them sequentially. | **Separate tasks, use Dependencies field to link** |
 | "Too many tasks will overwhelm the developer" | Missing fixes overwhelms production. Completeness > convenience. | **Create all tasks. Priority handles ordering.** |
 
 **TodoWrite:** Mark "Map findings 1:1 to REFACTOR-XXX tasks" as `completed`
@@ -1065,10 +1065,10 @@ Before proceeding to Step 7, verify:
 {actual code from FINDING-001}
 ```
 
-### Ring Standard Reference
+### Bee Standard Reference
 | Standard File | Section | URL |
 |---------------|---------|-----|
-| {file}.md | {section} | [Link](https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/{file}.md) |
+| {file}.md | {section} | [Link](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/{file}.md) |
 
 ### Required Actions
 1. [ ] {action 1 - specific change to make}
@@ -1090,7 +1090,7 @@ Before proceeding to Step 7, verify:
 
 **MANDATORY: Generate a visual HTML report before user approval.**
 
-Invokes `Skill("ring:visual-explainer")` to produce a self-contained HTML page showing all planned frontend refactoring changes. This replaces reading raw findings.md / tasks.md markdown for approval decisions.
+Invokes `Skill("bee:visual-explainer")` to produce a self-contained HTML page showing all planned frontend refactoring changes. This replaces reading raw findings.md / tasks.md markdown for approval decisions.
 
 **Read the code-diff template first:** Read `default/skills/visual-explainer/templates/code-diff.html` to absorb the patterns before generating.
 
@@ -1106,18 +1106,18 @@ Invokes `Skill("ring:visual-explainer")` to produce a self-contained HTML page s
 For each FINDING-XXX in findings.md:
 - **Header:** Finding ID, severity badge, category, agent that reported it
 - **Before panel:** Current Code block from findings.md (with file:line reference, syntax highlighted via Highlight.js)
-- **After panel:** Ring Standard pattern from Required Changes section (syntax highlighted)
+- **After panel:** Bee Standard pattern from Required Changes section (syntax highlighted)
 - **Collapsible "Why This Matters":** Problem / Standard Violated / Impact from findings.md
 
 ### 3. Task Mapping Table
 Table showing: FINDING-XXX → REFACTOR-XXX → Severity → Category → Estimated Effort
 
-**Output:** Save to `docs/ring:dev-refactor-frontend/{timestamp}/change-report.html`
+**Output:** Save to `docs/bee:dev-refactor-frontend/{timestamp}/change-report.html`
 
 **Open in browser:**
 ```text
-macOS: open docs/ring:dev-refactor-frontend/{timestamp}/change-report.html
-Linux: xdg-open docs/ring:dev-refactor-frontend/{timestamp}/change-report.html
+macOS: open docs/bee:dev-refactor-frontend/{timestamp}/change-report.html
+Linux: xdg-open docs/bee:dev-refactor-frontend/{timestamp}/change-report.html
 ```
 
 **Tell the user** the file path. The report opens before the approval question so the user can review changes visually.
@@ -1137,7 +1137,7 @@ See [shared-patterns/anti-rationalization-visual-report.md](../shared-patterns/a
 ```text
 if analyze_only == true:
   → Auto-select "Cancel" (analysis complete, skip execution)
-  → Output: "analyze_only=true — analysis artifacts saved, skipping ring:dev-cycle-frontend."
+  → Output: "analyze_only=true — analysis artifacts saved, skipping bee:dev-cycle-frontend."
   → Skip to Step 9 (Save Artifacts), then TERMINATE after Step 9.
 
 if critical_only == true:
@@ -1160,7 +1160,7 @@ AskUserQuestion:
       header: "Approval"
       options:
         - label: "Approve all"
-          description: "Proceed to ring:dev-cycle-frontend execution"
+          description: "Proceed to bee:dev-cycle-frontend execution"
         - label: "Critical only"
           description: "Execute only Critical/High tasks"
         - label: "Cancel"
@@ -1178,16 +1178,16 @@ CANNOT proceed without explicit user selection (or an auto-resolution flag).
 **TodoWrite:** Mark "Save all artifacts" as `in_progress`
 
 ```
-docs/ring:dev-refactor-frontend/{timestamp}/
+docs/bee:dev-refactor-frontend/{timestamp}/
 +-- codebase-report.md  (Step 3)
 +-- reports/            (Step 4.6)
-|   +-- ring:frontend-engineer-report.md
-|   +-- ring:qa-analyst-frontend-report.md
-|   +-- ring:frontend-designer-report.md
-|   +-- ring:devops-engineer-report.md
-|   +-- ring:sre-report.md
-|   +-- ring:frontend-bff-engineer-typescript-report.md    (conditional)
-|   +-- ring:ui-engineer-report.md              (conditional)
+|   +-- bee:frontend-engineer-report.md
+|   +-- bee:qa-analyst-frontend-report.md
+|   +-- bee:frontend-designer-report.md
+|   +-- bee:devops-engineer-report.md
+|   +-- bee:sre-report.md
+|   +-- bee:frontend-bff-engineer-typescript-report.md    (conditional)
+|   +-- bee:ui-engineer-report.md              (conditional)
 +-- findings.md         (Step 5)
 +-- tasks.md           (Step 7)
 +-- change-report.html (Step 7.5)
@@ -1197,15 +1197,15 @@ docs/ring:dev-refactor-frontend/{timestamp}/
 
 ---
 
-## Step 10: Handoff to ring:dev-cycle-frontend
+## Step 10: Handoff to bee:dev-cycle-frontend
 
-**TodoWrite:** Mark "Handoff to ring:dev-cycle-frontend" as `in_progress`
+**TodoWrite:** Mark "Handoff to bee:dev-cycle-frontend" as `in_progress`
 
 ### Skip Conditions
 
 ```text
 if analyze_only == true:
-  → Output: "analyze_only=true — skipping handoff. Artifacts saved at docs/ring:dev-refactor-frontend/{timestamp}/."
+  → Output: "analyze_only=true — skipping handoff. Artifacts saved at docs/bee:dev-refactor-frontend/{timestamp}/."
   → Mark todo as `completed`
   → TERMINATE.
 
@@ -1213,28 +1213,28 @@ if dry_run == true:
   → This step is unreachable (dry_run exits after Step 1b).
 
 if user selected "Cancel" in Step 8:
-  → Output: "User cancelled execution. Artifacts saved at docs/ring:dev-refactor-frontend/{timestamp}/."
+  → Output: "User cancelled execution. Artifacts saved at docs/bee:dev-refactor-frontend/{timestamp}/."
   → Mark todo as `completed`
   → TERMINATE.
 ```
 
 ### Execution (when user approved or critical_only resolved)
 
-**Use Skill tool to invoke ring:dev-cycle-frontend directly:**
+**Use Skill tool to invoke bee:dev-cycle-frontend directly:**
 
 ```yaml
 Skill tool:
-  skill: "ring:dev-cycle-frontend"
+  skill: "bee:dev-cycle-frontend"
 ```
 
 **CRITICAL: Pass tasks file path in context:**
 
 After invoking the skill, provide:
-- Tasks file: `docs/ring:dev-refactor-frontend/{timestamp}/tasks.md`
+- Tasks file: `docs/bee:dev-refactor-frontend/{timestamp}/tasks.md`
 
 ```yaml
-Context for ring:dev-cycle-frontend:
-  tasks-file: "docs/ring:dev-refactor-frontend/{timestamp}/tasks.md"
+Context for bee:dev-cycle-frontend:
+  tasks-file: "docs/bee:dev-refactor-frontend/{timestamp}/tasks.md"
 ```
 
 Where `{timestamp}` format is `YYYY-MM-DDTHH:MM:SS`. Use the same timestamp across all artifacts in a single run.
@@ -1244,24 +1244,24 @@ Where `{timestamp}` format is `YYYY-MM-DDTHH:MM:SS`. Use the same timestamp acro
 | Rationalization | Why It's WRONG | Required Action |
 |-----------------|----------------|-----------------|
 | "SlashCommand is equivalent to Skill tool" | SlashCommand is a hint; Skill tool guarantees skill loading | **Use Skill tool, not SlashCommand** |
-| "User can run /ring:dev-cycle-frontend manually" | Manual run risks skill not being loaded | **Invoke Skill tool directly** |
-| "ring:dev-cycle-frontend will auto-discover tasks" | Explicit path ensures correct file is used | **Pass explicit tasks path** |
-| "User approved, I can skip ring:dev-cycle-frontend" | Approval = permission to proceed, not skip execution | **Invoke Skill tool** |
+| "User can run /bee:dev-cycle-frontend manually" | Manual run risks skill not being loaded | **Invoke Skill tool directly** |
+| "bee:dev-cycle-frontend will auto-discover tasks" | Explicit path ensures correct file is used | **Pass explicit tasks path** |
+| "User approved, I can skip bee:dev-cycle-frontend" | Approval = permission to proceed, not skip execution | **Invoke Skill tool** |
 | "Tasks are saved, job is done" | Saved tasks without execution = incomplete workflow | **Invoke Skill tool** |
 | "analyze_only was not set but I'll skip anyway" | Only analyze_only, dry_run, or user "Cancel" can skip this step | **Invoke Skill tool** |
 
-**HARD GATE: When execution is approved (user selected "Approve all" or "Critical only", or critical_only auto-resolved), you CANNOT complete ring:dev-refactor-frontend without invoking `Skill tool: ring:dev-cycle-frontend`.**
+**HARD GATE: When execution is approved (user selected "Approve all" or "Critical only", or critical_only auto-resolved), you CANNOT complete bee:dev-refactor-frontend without invoking `Skill tool: bee:dev-cycle-frontend`.**
 
 If execution is approved, you MUST:
-1. Invoke `Skill tool: ring:dev-cycle-frontend`
-2. Pass tasks file path: `docs/ring:dev-refactor-frontend/{timestamp}/tasks.md`
-3. Wait for ring:dev-cycle-frontend to complete all 9 gates
+1. Invoke `Skill tool: bee:dev-cycle-frontend`
+2. Pass tasks file path: `docs/bee:dev-refactor-frontend/{timestamp}/tasks.md`
+3. Wait for bee:dev-cycle-frontend to complete all 9 gates
 
 **Skipping this step when execution is approved = SKILL FAILURE.**
 
-ring:dev-cycle-frontend executes each REFACTOR-XXX task through the 9-gate frontend process.
+bee:dev-cycle-frontend executes each REFACTOR-XXX task through the 9-gate frontend process.
 
-**TodoWrite:** Mark "Handoff to ring:dev-cycle-frontend" as `completed`
+**TodoWrite:** Mark "Handoff to bee:dev-cycle-frontend" as `completed`
 
 ---
 
@@ -1283,7 +1283,7 @@ Base metrics per [shared-patterns/output-execution-report.md](../shared-patterns
 | Findings Generated | N |
 | Tasks Created | N |
 | Gate Escapes Detected | N |
-| Artifacts Location | docs/ring:dev-refactor-frontend/{timestamp}/ |
+| Artifacts Location | docs/bee:dev-refactor-frontend/{timestamp}/ |
 
 ## Output Schema
 
@@ -1296,5 +1296,5 @@ artifacts:
   - change-report.html (Step 7.5)
 
 traceability:
-  Ring Standard -> Agent Report -> FINDING-XXX -> REFACTOR-XXX -> Implementation
+  Bee Standard -> Agent Report -> FINDING-XXX -> REFACTOR-XXX -> Implementation
 ```

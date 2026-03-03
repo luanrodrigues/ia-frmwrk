@@ -1,5 +1,5 @@
 ---
-name: ring:dev-cancel
+name: bee:dev-cancel
 description: Cancel the current development cycle
 argument-hint: "[--force]"
 ---
@@ -9,7 +9,7 @@ Cancel the current development cycle.
 ## Usage
 
 ```
-/ring:dev-cancel [--force]
+/bee:dev-cancel [--force]
 ```
 
 ## Options
@@ -50,11 +50,11 @@ Cycle ID: 2024-01-15-143000
 Status: cancelled
 Completed: 3/5 tasks
 
-State saved to: docs/ring:dev-cycle/current-cycle.json (or docs/ring:dev-refactor/current-cycle.json)
+State saved to: docs/bee:dev-cycle/current-cycle.json (or docs/bee:dev-refactor/current-cycle.json)
 Partial report: docs/dev-team/feedback/cycle-2024-01-15-partial.md
 
 To resume later:
-  /ring:dev-cycle --resume
+  /bee:dev-cycle --resume
 ```
 
 ## When No Cycle is Running
@@ -63,19 +63,19 @@ To resume later:
 ℹ️ No development cycle to cancel.
 
 Check status with:
-  /ring:dev-status
+  /bee:dev-status
 ```
 
 ## Related Commands
 
 | Command | Description |
 |---------|-------------|
-| `/ring:dev-cycle` | Start or resume cycle |
-| `/ring:dev-status` | Check current status |
-| `/ring:dev-report` | View feedback report |
+| `/bee:dev-cycle` | Start or resume cycle |
+| `/bee:dev-status` | Check current status |
+| `/bee:dev-report` | View feedback report |
 
 ---
 
 Now checking for active cycle to cancel...
 
-Read state from: `docs/ring:dev-cycle/current-cycle.json` or `docs/ring:dev-refactor/current-cycle.json`
+Read state from: `docs/bee:dev-cycle/current-cycle.json` or `docs/bee:dev-refactor/current-cycle.json`

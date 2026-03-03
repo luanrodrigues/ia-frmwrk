@@ -1,5 +1,5 @@
 ---
-name: ring:dev-frontend-visual
+name: bee:dev-frontend-visual
 title: Frontend development cycle visual/snapshot testing (Gate 4)
 category: development-cycle-frontend
 tier: 1
@@ -21,11 +21,11 @@ skip_when: |
   - "Only default state matters" - Users see error, loading, and empty states too.
 
 sequence:
-  after: [ring:dev-unit-testing]
-  before: [ring:dev-frontend-e2e]
+  after: [bee:dev-unit-testing]
+  before: [bee:dev-frontend-e2e]
 
 related:
-  complementary: [ring:dev-cycle-frontend, ring:dev-unit-testing, ring:qa-analyst-frontend]
+  complementary: [bee:dev-cycle-frontend, bee:dev-unit-testing, bee:qa-analyst-frontend]
 
 input_schema:
   required:
@@ -141,7 +141,7 @@ Ensure all frontend components have **snapshot tests** covering all states, resp
 **MANDATORY:** Load testing-visual.md standards via WebFetch.
 
 <fetch_required>
-https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/frontend/testing-visual.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/frontend/testing-visual.md
 </fetch_required>
 
 ---
@@ -165,7 +165,7 @@ if any REQUIRED input is missing:
 
 ```text
 Task tool:
-  subagent_type: "ring:qa-analyst-frontend"
+  subagent_type: "bee:qa-analyst-frontend"
   model: "opus"
   prompt: |
     **MODE:** VISUAL TESTING (Gate 4)

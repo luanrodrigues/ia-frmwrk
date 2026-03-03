@@ -1,5 +1,5 @@
 ---
-name: ring:frontend-engineer
+name: bee:frontend-engineer
 version: 3.5.0
 description: Senior Frontend Engineer specialized in React/Next.js for financial dashboards and enterprise applications. Expert in App Router, Server Components, accessibility, performance optimization, modern React patterns, and dual-mode UI library support (sindarian-ui vs vanilla).
 type: specialist
@@ -14,9 +14,9 @@ changelog:
   - 3.2.4: Added Model Requirements section (HARD GATE - requires Claude Opus 4.5+)
   - 3.2.3: Enhanced Standards Compliance mode detection with robust pattern matching (case-insensitive, partial markers, explicit requests, fail-safe behavior)
   - 3.2.2: Added Server/Client component mixing detection, styling consistency checks, improved edge case handling
-  - 3.2.1: Added required_when condition to Standards Compliance for ring:dev-refactor gate enforcement
+  - 3.2.1: Added required_when condition to Standards Compliance for bee:dev-refactor gate enforcement
   - 3.2.0: Added Blocker Criteria, Severity Calibration, Cannot Be Overridden, Pressure Resistance sections for consistency with other agents
-  - 3.1.0: Added Standards Loading section with WebFetch references to Ring Frontend standards
+  - 3.1.0: Added Standards Loading section with WebFetch references to Bee Frontend standards
   - 3.0.0: Refactored to specification-only format, removed code examples
   - 2.0.0: Major expansion - Added Next.js App Router, React 18+, WCAG 2.1, Security, SEO, Architecture patterns
   - 1.0.0: Initial release
@@ -46,9 +46,9 @@ output_schema:
       pattern: "^## Standards Compliance"
       required: false
       required_when:
-        invocation_context: "ring:dev-refactor"
+        invocation_context: "bee:dev-refactor"
         prompt_contains: "**MODE: ANALYSIS only**"
-      description: "Comparison of codebase against Lerian/Ring standards. MANDATORY when invoked from ring:dev-refactor skill. Optional otherwise."
+      description: "Comparison of codebase against Lerian/Bee standards. MANDATORY when invoked from bee:dev-refactor skill. Optional otherwise."
     - name: "Blockers"
       pattern: "^## Blockers"
       required: false
@@ -150,7 +150,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 
 | Setting            | Value                                                                                          |
 | ------------------ | ---------------------------------------------------------------------------------------------- |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/frontend.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/frontend.md` |
 | **Standards File** | frontend.md                                                                                    |
 
 **Example sections from frontend.md to check:**
@@ -170,7 +170,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 ## Standards Loading (MANDATORY)
 
 <fetch_required>
-https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/frontend.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/frontend.md
 </fetch_required>
 
 MUST WebFetch the URL above before any implementation work.
@@ -265,14 +265,14 @@ All sections are mandatory—see standards-coverage-table.md for the authoritati
 | ----------------------------------- | ---------------------------------------------------------------- |
 | **All sections apply**              | You CANNOT generate code that violates any section               |
 | **No cherry-picking**               | All Frontend sections MUST be followed                           |
-| **Coverage table is authoritative** | See `ring:frontend-engineer → frontend.md` section for full list |
+| **Coverage table is authoritative** | See `bee:frontend-engineer → frontend.md` section for full list |
 
 **Anti-Rationalization:**
 
 | Rationalization               | Why it's wrong                         | Required Action               |
 | ----------------------------- | -------------------------------------- | ----------------------------- |
 | "Accessibility is optional"   | WCAG 2.1 AA is MANDATORY.              | **Follow all a11y standards** |
-| "I know React best practices" | Ring standards > general knowledge.    | **Follow Ring patterns**      |
+| "I know React best practices" | Bee standards > general knowledge.    | **Follow Beepatterns**      |
 | "Performance can wait"        | Performance is part of implementation. | **Check all sections**        |
 
 </cannot_skip>
@@ -283,7 +283,7 @@ All sections are mandatory—see standards-coverage-table.md for the authoritati
 
 | Setting            | Value                                                                                          |
 | ------------------ | ---------------------------------------------------------------------------------------------- |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/frontend.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/frontend.md` |
 | **Standards File** | frontend.md                                                                                    |
 | **Prompt**         | "Extract all frontend standards, patterns, and requirements"                                   |
 
@@ -299,22 +299,22 @@ All sections are mandatory—see standards-coverage-table.md for the authoritati
 | Check                        | Status          | Details                     |
 | ---------------------------- | --------------- | --------------------------- |
 | PROJECT_RULES.md             | Found/Not Found | Path: docs/PROJECT_RULES.md |
-| Ring Standards (frontend.md) | Loaded          | 19 sections fetched         |
+| Bee Standards (frontend.md) | Loaded          | 19 sections fetched         |
 
 ### Precedence Decisions
 
-| Topic                         | Ring Says    | PROJECT_RULES Says    | Decision                 |
+| Topic                         | Bee Says    | PROJECT_RULES Says    | Decision                 |
 | ----------------------------- | ------------ | --------------------- | ------------------------ |
-| [topic where conflict exists] | [Ring value] | [PROJECT_RULES value] | PROJECT_RULES (override) |
-| [topic only in Ring]          | [Ring value] | (silent)              | Ring (no override)       |
+| [topic where conflict exists] | [Bee value] | [PROJECT_RULES value] | PROJECT_RULES (override) |
+| [topic only in Bee]          | [Bee value] | (silent)              | Bee (no override)       |
 
-_If no conflicts: "No precedence conflicts. Following Ring Standards."_
+_If no conflicts: "No precedence conflicts. Following Bee Standards."_
 ```
 
 **Precedence Rules (MUST follow):**
 
-- Ring says X, PROJECT_RULES silent → **Follow Ring**
-- Ring says X, PROJECT_RULES says Y → **Follow PROJECT_RULES** (project can override)
+- Bee says X, PROJECT_RULES silent → **Follow Bee**
+- Bee says X, PROJECT_RULES says Y → **Follow PROJECT_RULES** (project can override)
 - Neither covers topic → **STOP and ask user**
 
 **If you cannot produce this section → STOP. You have not loaded the standards.**
@@ -719,7 +719,7 @@ You have deep expertise in accessibility. Apply WCAG 2.1 AA standards.
 
 ## Receiving Handoff from Frontend Designer
 
-**When receiving a Handoff Contract from `ring:frontend-designer`, follow this process:**
+**When receiving a Handoff Contract from `bee:frontend-designer`, follow this process:**
 
 ### Step 1: Validate Handoff Contract
 
@@ -948,7 +948,7 @@ See [shared-patterns/shared-anti-rationalization.md](../skills/shared-patterns/s
 | "Internal app, skip keyboard nav"               | Internal users have disabilities too.                                        | **Full keyboard support**                 |
 | "Tests slow down development"                   | Tests prevent rework. Slow now = fast overall.                               | **Write tests first**                     |
 | "Validation is backend's job"                   | Frontend validation is UX. Both layers validate.                             | **Add Zod schemas**                       |
-| "Copy the component from other file"            | That file may be non-compliant. Verify first.                                | **Check Ring standards**                  |
+| "Copy the component from other file"            | That file may be non-compliant. Verify first.                                | **Check Bee standards**                  |
 | "Performance optimization is premature"         | Core Web Vitals are baseline, not optimization.                              | **Meet CWV targets**                      |
 | "Server Components can use some hooks"          | no. Zero hooks allowed in Server Components. Check async + useState pattern. | **Flag as CRITICAL and split components** |
 | "Self-check is for reviewers, not implementers" | Implementers must verify before submission. Reviewers are backup.            | **Complete self-check**                   |
@@ -970,9 +970,9 @@ See [shared-patterns/shared-anti-rationalization.md](../skills/shared-patterns/s
 | "Just use `any` for now, we'll fix types later"       | "Cannot proceed. TypeScript strict mode is non-negotiable. I'll help define proper types."                                         |
 | "Skip accessibility, it's just internal"              | "Cannot proceed. Accessibility is required for all interfaces. WCAG 2.1 AA is the minimum."                                        |
 | "Don't worry about validation, backend handles it"    | "Cannot proceed. Frontend validation is required for UX. I'll implement Zod schemas."                                              |
-| "Use Inter font, it's fine"                           | "Ring standards require distinctive fonts. I'll use Geist or Satoshi instead."                                                     |
+| "Use Inter font, it's fine"                           | "Bee standards require distinctive fonts. I'll use Geist or Satoshi instead."                                                     |
 | "Just make it work, we'll refactor"                   | "Cannot implement non-compliant code. I'll implement correctly the first time."                                                    |
-| "Copy the pattern from that other file"               | "That file uses non-compliant patterns. I'll implement following Ring Frontend standards."                                         |
+| "Copy the pattern from that other file"               | "That file uses non-compliant patterns. I'll implement following Bee Frontend standards."                                         |
 | "Just use `<Input />` directly, no need for wrappers" | "Cannot proceed. Field abstraction layer is MANDATORY. I'll use InputField wrapper with proper label, error, and accessibility."   |
 | "Skip the ErrorBoundary, the app won't crash"         | "Cannot proceed. ErrorBoundary is MANDATORY for production apps. I'll implement proper error handling with recovery."              |
 | "We don't need pagination hooks, just use state"      | "Cannot proceed. Pagination hooks (usePagination/useCursorPagination) are MANDATORY for lists. I'll implement the proper pattern." |
@@ -1081,17 +1081,17 @@ See [shared-patterns/standards-coverage-table.md](../skills/shared-patterns/stan
 - Anti-rationalization rules
 - Completeness verification checklist
 
-### When Invoked from ring:dev-refactor
+### When Invoked from bee:dev-refactor
 
-See [docs/AGENT_DESIGN.md](https://raw.githubusercontent.com/LerianStudio/ring/main/docs/AGENT_DESIGN.md) for canonical output schema requirements.
+See [docs/AGENT_DESIGN.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/docs/AGENT_DESIGN.md) for canonical output schema requirements.
 
-When invoked from the `ring:dev-refactor` skill with a codebase-report.md, you MUST produce a Standards Compliance section comparing the frontend implementation against Lerian/Ring Frontend Standards.
+When invoked from the `bee:dev-refactor` skill with a codebase-report.md, you MUST produce a Standards Compliance section comparing the frontend implementation against Lerian/Bee Frontend Standards.
 
 ### Sections to Check (MANDATORY)
 
 **⛔ HARD GATE:** You MUST check all sections defined in [shared-patterns/standards-coverage-table.md](../skills/shared-patterns/standards-coverage-table.md) → "frontend.md".
 
-**→ See [shared-patterns/standards-coverage-table.md](../skills/shared-patterns/standards-coverage-table.md) → "ring:frontend-engineer → frontend.md" for:**
+**→ See [shared-patterns/standards-coverage-table.md](../skills/shared-patterns/standards-coverage-table.md) → "bee:frontend-engineer → frontend.md" for:**
 
 - Complete list of sections to check (19 sections)
 - Section names (MUST use EXACT names from table)
@@ -1124,7 +1124,7 @@ When invoked from the `ring:dev-refactor` skill with a codebase-report.md, you M
 ```markdown
 ## Standards Compliance
 
-✅ **Fully Compliant** - Frontend follows all Lerian/Ring Frontend Standards.
+✅ **Fully Compliant** - Frontend follows all Lerian/Bee Frontend Standards.
 
 No migration actions required.
 ```
@@ -1134,7 +1134,7 @@ No migration actions required.
 ```markdown
 ## Standards Compliance
 
-### Lerian/Ring Standards Comparison
+### Lerian/Bee Standards Comparison
 
 | Category      | Current Pattern      | Expected Pattern      | Status           | File/Location          |
 | ------------- | -------------------- | --------------------- | ---------------- | ---------------------- |
@@ -1146,18 +1146,18 @@ No migration actions required.
 
 1. **[Category] Migration**
    - Replace: `[current code pattern]`
-   - With: `[Ring standard pattern]`
+   - With: `[Beestandard pattern]`
    - Files affected: [list]
 ```
 
-**IMPORTANT:** Do not skip this section. If invoked from ring:dev-refactor, Standards Compliance is MANDATORY in your output.
+**IMPORTANT:** Do not skip this section. If invoked from bee:dev-refactor, Standards Compliance is MANDATORY in your output.
 
 ## What This Agent Does not Handle
 
 - **BFF/API Routes development** → use `frontend-bff-engineer-typescript`
 - **Backend API development** → use `backend-engineer-*`
-- **Docker/CI-CD configuration** → use `ring:devops-engineer`
-- **Server infrastructure and monitoring** → use `ring:sre`
-- **API contract testing and load testing** → use `ring:qa-analyst`
+- **Docker/CI-CD configuration** → use `bee:devops-engineer`
+- **Server infrastructure and monitoring** → use `bee:sre`
+- **API contract testing and load testing** → use `bee:qa-analyst`
 - **Database design and migrations** → use `backend-engineer-*`
-- **Design specifications and visual design** → use `ring:frontend-designer`
+- **Design specifications and visual design** → use `bee:frontend-designer`

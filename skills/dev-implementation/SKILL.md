@@ -1,5 +1,5 @@
 ---
-name: ring:dev-implementation
+name: bee:dev-implementation
 description: |
   Gate 0 of the development cycle. Executes code implementation using the appropriate
   specialized agent based on task content and project language. Handles TDD workflow
@@ -15,16 +15,16 @@ tdd_policy:
     - "Code already exists" → DELETE it. TDD is test-first.
     - "Simple feature" → Simple ≠ exempt. TDD for all behavioral components.
     - "Time pressure" → TDD saves time. No shortcuts.
-    - "PROJECT_RULES.md doesn't require" → Ring always requires TDD.
+    - "PROJECT_RULES.md doesn't require" → Bee always requires TDD.
   exempt_when: |
     - Visual/presentational components (layout, styling, animations, static display) are exempt from TDD-RED and deferred to Gate 4 snapshots.
     - Behavioral components (hooks, forms, state, conditional rendering, API) still require TDD.
 
 sequence:
-  before: [ring:dev-devops]
+  before: [bee:dev-devops]
 
 related:
-  complementary: [ring:dev-cycle, ring:test-driven-development, ring:requesting-code-review]
+  complementary: [bee:dev-cycle, bee:test-driven-development, bee:requesting-code-review]
 
 input_schema:
   required:
@@ -93,10 +93,10 @@ agent_selection:
   criteria:
     - pattern: "*.php"
       keywords: ["composer.json", "laravel", "PHP"]
-      agent: "ring:backend-engineer-php"
+      agent: "bee:backend-engineer-php"
     - pattern: "*.php"
       keywords: ["laravel", "symfony", "backend", "api", "server"]
-      agent: "ring:backend-engineer-php"
+      agent: "bee:backend-engineer-php"
     - pattern: "*.tsx"
       keywords: ["react", "next", "frontend", "component", "page"]
       agent: "frontend-bff-engineer-typescript"
@@ -106,7 +106,7 @@ agent_selection:
       agent: "ui-engineer"
     - pattern: "*.css|*.scss"
       keywords: ["design", "visual", "aesthetic", "styling", "ui"]
-      agent: "ring:frontend-designer"
+      agent: "bee:frontend-designer"
   fallback: "ASK_USER"
 
 verification:
@@ -131,7 +131,7 @@ examples:
     expected_output: |
       ## Implementation Summary
       **Status:** PASS
-      **Agent:** ring:backend-engineer-php
+      **Agent:** bee:backend-engineer-php
 
       ## TDD Results
       | Phase | Status | Output |
@@ -180,7 +180,7 @@ This skill executes the implementation phase of the development cycle:
 </verify_before_proceed>
 
 ```text
-REQUIRED INPUT (from ring:dev-cycle orchestrator):
+REQUIRED INPUT (from bee:dev-cycle orchestrator):
 - unit_id: [task/subtask being implemented]
 - requirements: [acceptance criteria or task description]
 - language: [php|typescript|python]
@@ -216,7 +216,7 @@ If condition is true, STOP and return error to orchestrator.
    
    | Language | Service Type | Agent |
    |----------|--------------|-------|
-   | php | api, worker, batch, cli | ring:backend-engineer-php |
+   | php | api, worker, batch, cli | bee:backend-engineer-php |
    | typescript | frontend, bff | frontend-bff-engineer-typescript |
    
    Store: selected_agent = [agent name]
@@ -252,7 +252,7 @@ Write failing test for unit_id following TDD-RED methodology.
 
 ```yaml
 Task:
-  subagent_type: "[selected_agent]"  # e.g., "ring:backend-engineer-php"
+  subagent_type: "[selected_agent]"  # e.g., "bee:backend-engineer-php"
   description: "TDD-RED: Write failing test for [unit_id]"
   prompt: |
     ⛔ TDD-RED PHASE: Write a FAILING Test
@@ -266,9 +266,9 @@ Task:
     ## Project Standards
     Read and follow: [project_rules_path]
 
-    ## Ring Standards Reference
-    For PHP: https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php.md
-    For TS: https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/typescript.md
+    ## Bee Standards Reference
+    For PHP: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php.md
+    For TS: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/typescript.md
 
     ## Frontend TDD Policy (React/Next.js only)
     If the component is purely visual/presentational (layout, styling, animations,
@@ -371,22 +371,22 @@ Task:
     ## Project Standards
     Read and follow: [project_rules_path]
 
-    ## Ring Standards Reference
-    For PHP: https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php.md
-    For TS: https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/typescript.md
+    ## Bee Standards Reference
+    For PHP: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php.md
+    For TS: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/typescript.md
 
-    ## ⛔ CRITICAL: all Ring Standards Apply (no DEFERRAL)
-    See Ring Standards for mandatory requirements:
+    ## ⛔ CRITICAL: all Bee Standards Apply (no DEFERRAL)
+    See Bee Standards for mandatory requirements:
     - Structured JSON logging with trace_id correlation
     - OpenTelemetry instrumentation (spans in every function)
     - Error handling (no panic, wrap with context)
     - Context propagation
 
-    **⛔ HARD GATE:** If you output "DEFERRED" for any Ring Standard → Implementation is INCOMPLETE.
+    **⛔ HARD GATE:** If you output "DEFERRED" for any Bee Standard → Implementation is INCOMPLETE.
 
     ## Your Task
     1. Write MINIMAL code to make the test pass
-    2. Follow all Ring Standards (logging, tracing, error handling)
+    2. Follow all Bee Standards (logging, tracing, error handling)
     3. **Instrument all code with telemetry** (100% of handlers, services, repositories)
     4. Run the test and capture the PASS output
 
@@ -582,13 +582,13 @@ See [shared-patterns/shared-anti-rationalization.md](../shared-patterns/shared-a
 
 | Language | Service Type | Condition | Agent |
 |----------|--------------|-----------|-------|
-| PHP | API, Worker, Batch, CLI | - | `ring:backend-engineer-php` |
-| TypeScript | Frontend, BFF | No product-designer outputs | `ring:frontend-bff-engineer-typescript` |
-| TypeScript | Frontend | ux-criteria.md exists | `ring:ui-engineer` |
-| React/CSS | Design, Styling | - | `ring:frontend-designer` |
+| PHP | API, Worker, Batch, CLI | - | `bee:backend-engineer-php` |
+| TypeScript | Frontend, BFF | No product-designer outputs | `bee:frontend-bff-engineer-typescript` |
+| TypeScript | Frontend | ux-criteria.md exists | `bee:ui-engineer` |
+| React/CSS | Design, Styling | - | `bee:frontend-designer` |
 
 **ui-engineer Selection:**
-When implementing frontend features with product-designer outputs (ux-criteria.md, user-flows.md, wireframes/), use `ring:ui-engineer` instead of `ring:frontend-bff-engineer-typescript`. The ui-engineer specializes in translating design specifications into production code while ensuring all UX criteria are satisfied.
+When implementing frontend features with product-designer outputs (ux-criteria.md, user-flows.md, wireframes/), use `bee:ui-engineer` instead of `bee:frontend-bff-engineer-typescript`. The ui-engineer specializes in translating design specifications into production code while ensuring all UX criteria are satisfied.
 
 ---
 

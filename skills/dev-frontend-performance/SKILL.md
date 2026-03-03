@@ -1,5 +1,5 @@
 ---
-name: ring:dev-frontend-performance
+name: bee:dev-frontend-performance
 title: Frontend development cycle performance testing (Gate 6)
 category: development-cycle-frontend
 tier: 1
@@ -21,11 +21,11 @@ NOT_skip_when: |
   - "It's a small change" - Small changes can cause big regressions.
 
 sequence:
-  after: [ring:dev-frontend-e2e]
-  before: [ring:requesting-code-review]
+  after: [bee:dev-frontend-e2e]
+  before: [bee:requesting-code-review]
 
 related:
-  complementary: [ring:dev-cycle-frontend, ring:dev-frontend-e2e, ring:qa-analyst-frontend]
+  complementary: [bee:dev-cycle-frontend, bee:dev-frontend-e2e, bee:qa-analyst-frontend]
 
 input_schema:
   required:
@@ -143,7 +143,7 @@ Ensure all frontend pages meet **Core Web Vitals** thresholds, achieve **Lightho
 **MANDATORY:** Load testing-performance.md standards via WebFetch.
 
 <fetch_required>
-https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/frontend/testing-performance.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/frontend/testing-performance.md
 </fetch_required>
 
 ---
@@ -167,7 +167,7 @@ if any REQUIRED input is missing:
 
 ```text
 Task tool:
-  subagent_type: "ring:qa-analyst-frontend"
+  subagent_type: "bee:qa-analyst-frontend"
   model: "opus"
   prompt: |
     **MODE:** PERFORMANCE TESTING (Gate 6)
@@ -203,7 +203,7 @@ if "Status: PASS" in output:
   → Return success with metrics
 
 if "Status: FAIL" in output:
-  → Dispatch fix to implementation agent (ring:frontend-engineer)
+  → Dispatch fix to implementation agent (bee:frontend-engineer)
   → Re-run performance tests (max 3 iterations)
   → If still failing: ESCALATE to user
 ```

@@ -1,5 +1,5 @@
 ---
-name: ring:dev-sre
+name: bee:dev-sre
 description: |
   Gate 2 of the development cycle. VALIDATES that observability was correctly implemented
   by developers. Does not implement observability code - only validates it.
@@ -16,11 +16,11 @@ NOT_skip_when: |
   - "MVP doesn't need observability" → MVP without observability = blind MVP. No exceptions.
 
 sequence:
-  after: [ring:dev-devops]
-  before: [ring:dev-unit-testing]
+  after: [bee:dev-devops]
+  before: [bee:dev-unit-testing]
 
 related:
-  complementary: [ring:dev-cycle, ring:dev-devops, ring:dev-unit-testing]
+  complementary: [bee:dev-cycle, bee:dev-devops, bee:dev-unit-testing]
 
 input_schema:
   required:
@@ -37,7 +37,7 @@ input_schema:
       description: "Type of service being validated"
     - name: implementation_agent
       type: string
-      description: "Agent that performed Gate 0 (e.g., ring:backend-engineer-php)"
+      description: "Agent that performed Gate 0 (e.g., bee:backend-engineer-php)"
     - name: implementation_files
       type: array
       items: string
@@ -100,7 +100,7 @@ examples:
       unit_id: "task-001"
       language: "php"
       service_type: "api"
-      implementation_agent: "ring:backend-engineer-php"
+      implementation_agent: "bee:backend-engineer-php"
       implementation_files: ["app/Http/Controllers/UserController.php", "app/Services/UserService.php"]
     expected_output: |
       ## Validation Result
@@ -138,7 +138,7 @@ This skill VALIDATES that observability was correctly implemented by developers:
 
 | Who | Responsibility |
 |-----|----------------|
-| **Developers** (Gate 0) | IMPLEMENT observability following Ring Standards |
+| **Developers** (Gate 0) | IMPLEMENT observability following Bee Standards |
 | **SRE Agent** (Gate 2) | VALIDATE that observability is correctly implemented |
 | **Implementation Agent** | FIX issues found by SRE (if any) |
 
@@ -161,7 +161,7 @@ This skill VALIDATES that observability was correctly implemented by developers:
 </verify_before_proceed>
 
 ```text
-REQUIRED INPUT (from ring:dev-cycle orchestrator):
+REQUIRED INPUT (from bee:dev-cycle orchestrator):
 - unit_id: [task/subtask being validated]
 - language: [php|typescript|python]
 - service_type: [api|worker|batch|cli|library]
@@ -192,13 +192,13 @@ validation_state = {
 
 ## Step 3: Dispatch SRE Agent for Validation
 
-<dispatch_required agent="ring:sre">
+<dispatch_required agent="bee:sre">
 Validate observability implementation for unit_id.
 </dispatch_required>
 
 ```yaml
 Task:
-  subagent_type: "ring:sre"
+  subagent_type: "bee:sre"
   description: "Validate observability for [unit_id]"
   prompt: |
     ⛔ VALIDATE Observability Implementation
@@ -212,7 +212,7 @@ Task:
     - **External Dependencies:** [external_dependencies or "None"]
 
     ## Standards Reference
-    WebFetch: https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/sre.md
+    WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/sre.md
 
     ## Your Role
     - VALIDATE that observability is implemented correctly
@@ -367,7 +367,7 @@ if validation_state.iteration >= validation_state.max_iterations:
 
 ```yaml
 Task:
-  subagent_type: "[implementation_agent from input]"  # e.g., "ring:backend-engineer-php"
+  subagent_type: "[implementation_agent from input]"  # e.g., "bee:backend-engineer-php"
   description: "Fix observability issues for [unit_id]"
   prompt: |
     ⛔ FIX REQUIRED - Observability Issues Found
@@ -386,8 +386,8 @@ Task:
     **Current:** [validation_state.sre_result.instrumentation_coverage]%
 
     ## Standards Reference
-    For PHP: https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/php.md
-    For TS: https://raw.githubusercontent.com/LerianStudio/ring/main/dev-team/docs/standards/typescript.md
+    For PHP: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php.md
+    For TS: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/typescript.md
 
     Focus on: Telemetry & Observability section
 
@@ -529,7 +529,7 @@ See [shared-patterns/shared-pressure-resistance.md](../shared-patterns/shared-pr
 | User Says | Your Response |
 |-----------|---------------|
 | "Skip SRE validation" | "Observability is MANDATORY. Dispatching SRE agent now." |
-| "90% coverage is too high" | "90% is the Ring Standard minimum. Cannot lower." |
+| "90% coverage is too high" | "90% is the Bee Standard minimum. Cannot lower." |
 | "Will add instrumentation later" | "Instrumentation is part of implementation. Fix now." |
 
 ---

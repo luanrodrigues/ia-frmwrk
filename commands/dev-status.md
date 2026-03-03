@@ -1,5 +1,5 @@
 ---
-name: ring:dev-status
+name: bee:dev-status
 description: Check the status of the current development cycle
 argument-hint: ""
 ---
@@ -9,7 +9,7 @@ Check the status of the current development cycle.
 ## Usage
 
 ```
-/ring:dev-status
+/bee:dev-status
 ```
 
 ## Output
@@ -37,14 +37,14 @@ Tasks:
 
 Current:
   Task: AUTH-003 - Implementar refresh token
-  Gate: 3/10 (ring:dev-unit-testing)
+  Gate: 3/10 (bee:dev-unit-testing)
   Iterations: 1
 
 Metrics (completed tasks):
   Average Assertiveness: 89%
   Total Duration: 1h 45m
 
-State file: docs/ring:dev-cycle/current-cycle.json (or docs/ring:dev-refactor/current-cycle.json)
+State file: docs/bee:dev-cycle/current-cycle.json (or docs/bee:dev-refactor/current-cycle.json)
 ```
 
 ## When No Cycle is Running
@@ -53,22 +53,22 @@ State file: docs/ring:dev-cycle/current-cycle.json (or docs/ring:dev-refactor/cu
 ℹ️ No development cycle in progress.
 
 Start a new cycle with:
-  /ring:dev-cycle docs/tasks/your-tasks.md
+  /bee:dev-cycle docs/tasks/your-tasks.md
 
 Or resume an interrupted cycle:
-  /ring:dev-cycle --resume
+  /bee:dev-cycle --resume
 ```
 
 ## Related Commands
 
 | Command | Description |
 |---------|-------------|
-| `/ring:dev-cycle` | Start or resume cycle |
-| `/ring:dev-cancel` | Cancel running cycle |
-| `/ring:dev-report` | View feedback report |
+| `/bee:dev-cycle` | Start or resume cycle |
+| `/bee:dev-cancel` | Cancel running cycle |
+| `/bee:dev-report` | View feedback report |
 
 ---
 
 Now checking cycle status...
 
-Read state from: `docs/ring:dev-cycle/current-cycle.json` or `docs/ring:dev-refactor/current-cycle.json`
+Read state from: `docs/bee:dev-cycle/current-cycle.json` or `docs/bee:dev-refactor/current-cycle.json`
