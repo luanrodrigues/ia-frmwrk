@@ -690,6 +690,94 @@ In addition to the standard Coverage Table, bee:ui-engineer-vuejs MUST output:
 
 ---
 
+### bee:frontend-engineer-react-native → frontend-react-native.md
+
+| #   | Section to Check                | Anchor                             | Key Subsections                                                              |
+| --- | ------------------------------- | ---------------------------------- | ---------------------------------------------------------------------------- |
+| 1   | Framework                       | `#framework`                       | React Native + Expo (version policy)                                         |
+| 2   | Libraries & Tools               | `#libraries--tools`                | Core, state, forms, UI, styling (NativeWind), testing                        |
+| 3   | State Management Patterns       | `#state-management-patterns`       | Zustand, TanStack Query, AsyncStorage                                        |
+| 4   | Form Patterns                   | `#form-patterns`                   | React Hook Form + Zod                                                        |
+| 5   | Styling Standards               | `#styling-standards`               | NativeWind, StyleSheet, platform-aware styles                                |
+| 6   | Typography Standards            | `#typography-standards`            | Font selection, scaling, platform defaults                                   |
+| 7   | Animation Standards             | `#animation-standards`             | Reanimated 3, Animated API, Moti                                             |
+| 8   | Component Patterns              | `#component-patterns`              | Compound components, error boundaries, platform splitting                    |
+| 9   | File Organization               | `#file-organization-mandatory`     | File-level SRP, max 200 lines per component                                  |
+| 10  | Accessibility                   | `#accessibility`                   | WCAG 2.1 AA, accessible labels, focus management                             |
+| 11  | Performance                     | `#performance`                     | JS thread, FlatList optimization, image caching, bundle size                 |
+| 12  | Directory Structure             | `#directory-structure`             | Expo Router / React Navigation layout                                        |
+| 13  | Forbidden Patterns              | `#forbidden-patterns`              | Anti-patterns to avoid                                                       |
+| 14  | Standards Compliance Categories | `#standards-compliance-categories` | Categories for bee:dev-refactor-frontend-react-native                        |
+| 15  | Navigation Patterns             | `#navigation-patterns`             | Expo Router / React Navigation, deep linking, typed routes                   |
+| 16  | Native Module Integration       | `#native-module-integration`       | Expo modules, bare workflow bridging, community modules                      |
+| 17  | Platform-Specific Code          | `#platform-specific-code`          | `Platform.select`, `.ios.tsx` / `.android.tsx` splits, web fallbacks         |
+| 18  | Testing Standards               | `#testing-standards`               | Jest + React Native Testing Library, Detox/Maestro E2E, ≥85% coverage       |
+| 19  | Security Standards              | `#security-standards`              | Secure storage (expo-secure-store), certificate pinning, deep link validation |
+| 20  | Build & Deploy                  | `#build--deploy`                   | EAS Build, OTA updates (expo-updates), environment channels                  |
+
+**⛔ HARD GATES for Frontend Engineer (React Native):**
+
+- Section 15: Navigation MUST use Expo Router or React Navigation — direct linking FORBIDDEN
+- Section 17: Platform-specific code MUST use `Platform.select` or file extensions — `if (Platform.OS === ...)` inline FORBIDDEN for complex branching
+- Section 19: Sensitive data MUST use `expo-secure-store` — AsyncStorage for secrets FORBIDDEN
+
+---
+
+### bee:ui-engineer-react-native → frontend-react-native.md
+
+**Same sections as bee:frontend-engineer-react-native (20 sections).** See above.
+
+**Additional ui-engineer-react-native requirements:**
+The bee:ui-engineer-react-native MUST also validate against product-designer outputs:
+
+| #   | Additional Check         | Source              | Required                       |
+| --- | ------------------------ | ------------------- | ------------------------------ |
+| 1   | UX Criteria Compliance   | `ux-criteria.md`    | All criteria satisfied         |
+| 2   | User Flow Implementation | `user-flows.md`     | All flows implemented          |
+| 3   | Wireframe Adherence      | `wireframes/*.yaml` | All specs implemented          |
+| 4   | UI States Coverage       | `ux-criteria.md`    | Loading, error, empty, success |
+
+**Output Format for bee:ui-engineer-react-native:**
+In addition to the standard Coverage Table, bee:ui-engineer-react-native MUST output:
+
+```markdown
+## UX Criteria Compliance
+
+| Criterion             | Status | Evidence  |
+| --------------------- | ------ | --------- |
+| [From ux-criteria.md] | ✅/❌  | file:line |
+```
+
+---
+
+### bee:qa-analyst-frontend-react-native → frontend-react-native/testing-*.md
+
+**Mode Detection:** `test_mode` parameter determines which standards to load.
+
+| # | Section to Check | Mode | File |
+|---|------------------|------|------|
+| ACC-1 | Accessible Labels & Roles | accessibility | testing-accessibility.md |
+| ACC-2 | Focus Management | accessibility | testing-accessibility.md |
+| ACC-3 | Color Contrast | accessibility | testing-accessibility.md |
+| ACC-4 | Screen Reader Compatibility | accessibility | testing-accessibility.md |
+| ACC-5 | Touch Target Size | accessibility | testing-accessibility.md |
+| VIS-1 | Snapshot Testing Patterns | visual | testing-visual.md |
+| VIS-2 | States Coverage | visual | testing-visual.md |
+| VIS-3 | Platform Snapshots (iOS/Android) | visual | testing-visual.md |
+| VIS-4 | Component Duplication Check | visual | testing-visual.md |
+| E2E-1 | User Flow Consumption | e2e | testing-e2e.md |
+| E2E-2 | Error Path Testing | e2e | testing-e2e.md |
+| E2E-3 | Device Coverage (iOS/Android) | e2e | testing-e2e.md |
+| E2E-4 | Deep Link Testing | e2e | testing-e2e.md |
+| E2E-5 | Selector Strategy | e2e | testing-e2e.md |
+| PERF-1 | JS Thread Performance | performance | testing-performance.md |
+| PERF-2 | App Startup Time | performance | testing-performance.md |
+| PERF-3 | Bundle Size Analysis | performance | testing-performance.md |
+| PERF-4 | FlatList / Scroll Performance | performance | testing-performance.md |
+| PERF-5 | Anti-Pattern Detection | performance | testing-performance.md |
+
+---
+
 ## Maintenance Instructions
 
 **When you add/modify a section in a standards file:**
