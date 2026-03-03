@@ -596,6 +596,100 @@ In addition to the standard Coverage Table, bee:ui-engineer MUST output:
 
 ---
 
+### bee:frontend-engineer-vuejs → frontend-vuejs.md
+
+| #   | Section to Check                | Anchor                             | Key Subsections                                                         |
+| --- | ------------------------------- | ---------------------------------- | ----------------------------------------------------------------------- |
+| 1   | Framework                       | `#framework`                       | Vue 3 + Nuxt 3 (version policy)                                         |
+| 2   | Libraries & Tools               | `#libraries--tools`                | Core, state (Pinia), forms, UI (shadcn-vue), styling, testing           |
+| 3   | State Management Patterns       | `#state-management-patterns`       | Pinia (`defineStore`, `storeToRefs`), `useAsyncData`, `useFetch`        |
+| 4   | Form Patterns                   | `#form-patterns`                   | VeeValidate (`useForm`, `useField`) + Zod (`toTypedSchema`)             |
+| 5   | Styling Standards               | `#styling-standards`               | TailwindCSS, CSS variables, scoped `<style>`                            |
+| 6   | Typography Standards            | `#typography-standards`            | Font selection and pairing                                              |
+| 7   | Animation Standards             | `#animation-standards`             | CSS transitions, `<Transition>`, GSAP / Motion One                     |
+| 8   | Component Patterns              | `#component-patterns`              | Composables, `<NuxtErrorBoundary>`, `<script setup>`                    |
+| 9   | File Organization               | `#file-organization-mandatory`     | File-level SRP, max 200 lines per component                            |
+| 10  | Accessibility                   | `#accessibility`                   | WCAG 2.1 AA compliance, Radix Vue primitives                            |
+| 11  | Performance                     | `#performance`                     | Nuxt lazy loading, `<NuxtImg>`, code splitting                          |
+| 12  | Directory Structure             | `#directory-structure`             | Nuxt 3 file-based routing layout                                        |
+| 13  | Forbidden Patterns              | `#forbidden-patterns`              | Anti-patterns to avoid (Options API, `v-html`, etc.)                   |
+| 14  | Standards Compliance Categories | `#standards-compliance-categories` | Categories for bee:dev-refactor-frontend-vuejs                          |
+| 15  | Form Field Abstraction Layer    | `#form-field-abstraction-layer`    | **HARD GATE:** Field wrappers, dual-mode (sindarian-vue vs vanilla)     |
+| 16  | Plugin Composition Pattern      | `#plugin-composition-pattern`      | Nuxt plugins, app-level provide/inject                                  |
+| 17  | Composable Patterns             | `#composable-patterns`             | **HARD GATE:** usePagination, useCursorPagination, useSheet, useStepper |
+| 18  | Fetcher Utilities Pattern       | `#fetcher-utilities-pattern`       | `$fetch` wrappers, `useFetch`, `useAsyncData`                           |
+| 19  | Client-Side Error Handling      | `#client-side-error-handling`      | **HARD GATE:** NuxtErrorBoundary, error.vue, API error helpers, toast   |
+| 20  | Data Table Pattern              | `#data-table-pattern`              | TanStack Table (Vue adapter), server-side pagination, column definitions |
+
+**⛔ HARD GATES for Frontend Engineer (Vue.js):**
+
+- Section 15: Form field abstraction is MANDATORY, direct input usage FORBIDDEN
+- Section 17: Composable patterns MANDATORY for pagination and CRUD sheets
+- Section 19: NuxtErrorBoundary and API error handling MANDATORY
+
+---
+
+### bee:frontend-designer → frontend-vuejs.md (Vue.js projects)
+
+**Same sections as bee:frontend-engineer-vuejs (20 sections).** See above.
+
+---
+
+### bee:ui-engineer-vuejs → frontend-vuejs.md
+
+**Same sections as bee:frontend-engineer-vuejs (20 sections).** See above.
+
+**Additional ui-engineer-vuejs requirements:**
+The bee:ui-engineer-vuejs MUST also validate against product-designer outputs:
+
+| #   | Additional Check         | Source              | Required                       |
+| --- | ------------------------ | ------------------- | ------------------------------ |
+| 1   | UX Criteria Compliance   | `ux-criteria.md`    | All criteria satisfied         |
+| 2   | User Flow Implementation | `user-flows.md`     | All flows implemented          |
+| 3   | Wireframe Adherence      | `wireframes/*.yaml` | All specs implemented          |
+| 4   | UI States Coverage       | `ux-criteria.md`    | Loading, error, empty, success |
+
+**Output Format for bee:ui-engineer-vuejs:**
+In addition to the standard Coverage Table, bee:ui-engineer-vuejs MUST output:
+
+```markdown
+## UX Criteria Compliance
+
+| Criterion             | Status | Evidence  |
+| --------------------- | ------ | --------- |
+| [From ux-criteria.md] | ✅/❌  | file:line |
+```
+
+---
+
+### bee:qa-analyst-frontend-vuejs → frontend-vuejs/testing-*.md
+
+**Mode Detection:** `test_mode` parameter determines which standards to load.
+
+| # | Section to Check | Mode | File |
+|---|------------------|------|------|
+| ACC-1 | axe-core Integration | accessibility | testing-accessibility.md |
+| ACC-2 | Semantic HTML Verification | accessibility | testing-accessibility.md |
+| ACC-3 | Keyboard Navigation | accessibility | testing-accessibility.md |
+| ACC-4 | Focus Management | accessibility | testing-accessibility.md |
+| ACC-5 | Color Contrast | accessibility | testing-accessibility.md |
+| VIS-1 | Snapshot Testing Patterns | visual | testing-visual.md |
+| VIS-2 | States Coverage | visual | testing-visual.md |
+| VIS-3 | Responsive Snapshots | visual | testing-visual.md |
+| VIS-4 | Component Duplication Check | visual | testing-visual.md |
+| E2E-1 | User Flow Consumption | e2e | testing-e2e.md |
+| E2E-2 | Error Path Testing | e2e | testing-e2e.md |
+| E2E-3 | Cross-Browser Testing | e2e | testing-e2e.md |
+| E2E-4 | Responsive E2E | e2e | testing-e2e.md |
+| E2E-5 | Selector Strategy | e2e | testing-e2e.md |
+| PERF-1 | Core Web Vitals | performance | testing-performance.md |
+| PERF-2 | Lighthouse Score | performance | testing-performance.md |
+| PERF-3 | Bundle Analysis | performance | testing-performance.md |
+| PERF-4 | Server Component Audit | performance | testing-performance.md |
+| PERF-5 | Anti-Pattern Detection | performance | testing-performance.md |
+
+---
+
 ## Maintenance Instructions
 
 **When you add/modify a section in a standards file:**

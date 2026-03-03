@@ -1,13 +1,13 @@
 # Bee Dev Team
 
-> A Claude AI plugin that provides **10 specialized developer agents**, **19 development skills**, and **7 slash commands** for enterprise-grade software development workflows.
+> A Claude AI plugin that provides **13 specialized developer agents**, **21 development skills**, and **9 slash commands** for enterprise-grade software development workflows.
 
 [![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ## Overview
 
-Bee Dev Team orchestrates a complete development team through Claude AI. It enforces quality through **gate-based development cycles** — 10 gates for backend (PHP/Laravel) and 9 gates for frontend (React/Next.js) — with mandatory standards compliance, automated testing strategies, and anti-rationalization safeguards.
+Bee Dev Team orchestrates a complete development team through Claude AI. It enforces quality through **gate-based development cycles** — 10 gates for backend (PHP/Laravel) and 9 gates for frontend (React/Next.js and Vue.js/Nuxt 3) — with mandatory standards compliance, automated testing strategies, and anti-rationalization safeguards.
 
 ## Agents
 
@@ -15,13 +15,16 @@ Bee Dev Team orchestrates a complete development team through Claude AI. It enfo
 |-------|-----------|
 | **Backend Engineer** | PHP 8.2+ / Laravel 11+ — APIs, microservices, Eloquent, queues |
 | **Frontend Engineer** | React 18+ / Next.js — components, state management, performance |
+| **Frontend Engineer (Vue.js)** | Vue 3 / Nuxt 3 — Composition API, Pinia, VeeValidate, shadcn-vue |
 | **BFF Engineer** | TypeScript — API aggregation layer, type-safe data transformation |
 | **Frontend Designer** | UX research, information architecture, visual design specs |
-| **UI Engineer** | Design-to-code implementation, component libraries |
+| **UI Engineer** | Design-to-code (React), component libraries, UX criteria satisfaction |
+| **UI Engineer (Vue.js)** | Design-to-code (Vue 3/Nuxt 3), shadcn-vue, UX criteria satisfaction |
 | **DevOps Engineer** | Docker, Terraform, Kubernetes, Helm, CI/CD |
 | **SRE** | Observability, health checks, structured logging, tracing |
 | **QA Analyst (Backend)** | Pest/PHPUnit, integration, chaos, fuzz, property testing |
-| **QA Analyst (Frontend)** | Vitest, Playwright, accessibility, visual regression |
+| **QA Analyst (Frontend)** | Vitest, Playwright, accessibility, visual regression (React) |
+| **QA Analyst (Frontend Vue.js)** | Vitest, Vue Testing Library, Playwright, accessibility, visual regression (Vue.js/Nuxt 3) |
 | **Prompt Quality Reviewer** | Agent quality evaluation and improvement |
 
 ## Development Cycles
@@ -41,7 +44,7 @@ Gate 8  Code Review        →  Peer review
 Gate 9  Validation         →  Final quality gates
 ```
 
-### Frontend — 9 Gates
+### Frontend — 9 Gates (React/Next.js)
 
 ```
 Gate 0  Implementation       →  React/Next.js code
@@ -55,14 +58,30 @@ Gate 7  Validation           →  Final quality gates
 Gate 8  Deployment           →  Frontend deployment
 ```
 
+### Frontend — 9 Gates (Vue.js/Nuxt 3)
+
+```
+Gate 0  Implementation       →  Vue 3/Nuxt 3 code (Composition API, Pinia)
+Gate 1  Unit Testing         →  Vitest + Vue Testing Library
+Gate 2  Accessibility        →  WCAG 2.1 AA compliance (axe-core, Radix Vue)
+Gate 3  Visual Testing       →  Visual regression (snapshots, Storybook)
+Gate 4  E2E Testing          →  Playwright (Nuxt 3 flows)
+Gate 5  Performance          →  Core Web Vitals, Nuxt performance
+Gate 6  Code Review          →  Peer review
+Gate 7  Validation           →  Final quality gates
+Gate 8  Deployment           →  Frontend deployment
+```
+
 ## Commands
 
 | Command | Description |
 |---------|-------------|
 | `/bee:dev-cycle [tasks] [prompt]` | Execute backend development cycle (10 gates) |
-| `/bee:dev-cycle-frontend [tasks] [prompt]` | Execute frontend development cycle (9 gates) |
+| `/bee:dev-cycle-frontend [tasks] [prompt]` | Execute React/Next.js frontend development cycle (9 gates) |
+| `/bee:dev-cycle-frontend-vuejs [tasks] [prompt]` | Execute Vue.js/Nuxt 3 frontend development cycle (9 gates) |
 | `/bee:dev-refactor [path] [prompt]` | Analyze and refactor backend code |
-| `/bee:dev-refactor-frontend [path] [prompt]` | Analyze and refactor frontend code |
+| `/bee:dev-refactor-frontend [path] [prompt]` | Analyze and refactor React/Next.js frontend code |
+| `/bee:dev-refactor-frontend-vuejs [path] [prompt]` | Analyze and refactor Vue.js/Nuxt 3 frontend code |
 | `/bee:dev-status` | Show current cycle status |
 | `/bee:dev-cancel` | Cancel current development cycle |
 | `/bee:dev-report` | Generate execution report |
@@ -77,13 +96,21 @@ Gate 8  Deployment           →  Frontend deployment
 - **Infection PHP** — mutation testing
 - **Redis / RabbitMQ** — caching & messaging
 
-### Frontend
+### Frontend (React)
 - **React 18+** / **Next.js**
 - **TypeScript 5+**
 - **TailwindCSS** / **shadcn/ui** / **Radix UI**
 - **TanStack Query** / **Zustand** — state management
 - **React Hook Form + Zod** — forms & validation
 - **Vitest** / **Playwright** / **axe-core** — testing
+
+### Frontend (Vue.js)
+- **Vue 3** (Composition API, `<script setup>`) / **Nuxt 3**
+- **TypeScript 5+** (strict mode)
+- **TailwindCSS** / **shadcn-vue** / **Radix Vue**
+- **Pinia** — state management
+- **VeeValidate + Zod** — forms & validation
+- **Vitest** / **Vue Testing Library** / **Playwright** / **axe-core** — testing
 
 ### Infrastructure
 - **Docker** / **Kubernetes** / **Helm**
@@ -95,11 +122,11 @@ Gate 8  Deployment           →  Frontend deployment
 
 ```
 bee-dev-team/
-├── agents/                 # 10 specialized agent definitions
-├── skills/                 # 19 development workflow skills
+├── agents/                 # 13 specialized agent definitions
+├── skills/                 # 21 development workflow skills
 │   └── shared-patterns/    # Reusable patterns & anti-rationalization
-├── commands/               # 7 slash command definitions
-├── docs/standards/         # Standards (PHP, Frontend, DevOps, SRE)
+├── commands/               # 9 slash command definitions
+├── docs/standards/         # Standards (PHP, Frontend React, Frontend Vue.js, DevOps, SRE)
 ├── hooks/                  # Session lifecycle hooks
 └── .claude-plugin/         # Plugin metadata
 ```
@@ -150,17 +177,26 @@ Use `/bee:dev-cycle` to run a full 10-gate backend cycle. You can pass a tasks f
 
 ### Starting a Frontend Development Cycle
 
-Use `/bee:dev-cycle-frontend` for the 9-gate frontend cycle. Same syntax:
+Use `/bee:dev-cycle-frontend` for the React/Next.js 9-gate frontend cycle, or `/bee:dev-cycle-frontend-vuejs` for Vue.js/Nuxt 3. Same syntax:
 
 ```bash
-# Direct prompt
+# Direct prompt (React)
 /bee:dev-cycle-frontend Implement dashboard with transaction list, charts, and filters
 
-# From a tasks file
+# From a tasks file (React)
 /bee:dev-cycle-frontend docs/tasks/sprint-001-frontend.md
 
-# Resume
+# Resume (React)
 /bee:dev-cycle-frontend --resume
+
+# Direct prompt (Vue.js/Nuxt 3)
+/bee:dev-cycle-frontend-vuejs Implement dashboard with transaction list, charts, and filters
+
+# From a tasks file (Vue.js/Nuxt 3)
+/bee:dev-cycle-frontend-vuejs docs/tasks/sprint-001-frontend.md
+
+# Resume (Vue.js/Nuxt 3)
+/bee:dev-cycle-frontend-vuejs --resume
 ```
 
 ### Refactoring Existing Code
@@ -187,7 +223,7 @@ Use `/bee:dev-refactor` to analyze your codebase against standards and generate 
 /bee:dev-refactor --standards docs/team-standards.md
 ```
 
-For frontend refactoring, use `/bee:dev-refactor-frontend` with the same options.
+For React/Next.js frontend refactoring, use `/bee:dev-refactor-frontend` with the same options. For Vue.js/Nuxt 3 frontend refactoring, use `/bee:dev-refactor-frontend-vuejs`.
 
 ### Monitoring and Control
 
@@ -237,7 +273,8 @@ The plugin enforces comprehensive standards loaded at runtime:
 | Domain | Sections | Covers |
 |--------|----------|--------|
 | **PHP/Laravel** | 46 | Versions, DB, Eloquent, HTTP, testing, architecture, multi-tenant |
-| **Frontend** | 20 | React, state, forms, styling, accessibility, performance |
+| **Frontend (React)** | 20 | React, state, forms, styling, accessibility, performance |
+| **Frontend (Vue.js)** | 20 | Vue 3/Nuxt 3, Pinia, VeeValidate, shadcn-vue, accessibility, performance |
 | **DevOps** | 8 | Cloud, Terraform, containers, Helm, security, CI/CD |
 | **SRE** | 6 | Health checks, logging, tracing, monitoring |
 
