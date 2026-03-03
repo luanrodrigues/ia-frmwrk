@@ -258,7 +258,7 @@ Task:
     - .env.example: [EXISTS/MISSING]
 
     ## Standards Reference
-    WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/devops.md
+    WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/devops.md
 
     You MUST implement all sections from devops.md.
 
@@ -357,7 +357,7 @@ Task:
     [list ❌ sections and FAIL verifications]
 
     ## Standards Reference
-    WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/devops.md
+    WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/devops.md
 
     Fix all issues and re-run verification commands.
     Return updated Standards Coverage Table with all ✅.

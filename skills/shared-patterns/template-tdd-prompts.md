@@ -96,8 +96,8 @@ at tests/Feature/AuthenticationTest.php:15
 **⛔ BEE STANDARDS REQUIREMENTS (MANDATORY - all MUST BE IMPLEMENTED):**
 
 **You MUST WebFetch and implement all sections from Bee Standards for your language:**
-- **PHP:** `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php.md`
-- **TypeScript (BFF):** `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/typescript.md`
+- **PHP:** `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php.md`
+- **TypeScript (BFF):** `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/typescript.md`
 
 **⛔ HARD GATE: You MUST implement all sections listed in [standards-coverage-table.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/skills/shared-patterns/standards-coverage-table.md).**
 

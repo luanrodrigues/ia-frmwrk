@@ -99,7 +99,7 @@ Multi-tenant isolation is 100% based on `tenantId` from JWT → Laravel tenant m
 
 **Standards reference:** All code examples and implementation patterns are in [multi-tenant.md](../../docs/standards/php/multi-tenant.md). MUST load via WebFetch before implementing any gate.
 
-**WebFetch URL:** `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php/multi-tenant.md`
+**WebFetch URL:** `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php/multi-tenant.md`
 
 ### MANDATORY: Canonical Environment Variables
 
@@ -145,7 +145,7 @@ HARD GATE: A client without circuit breaker can cascade failures across all tena
 
 MUST include these instructions in every dispatch to `bee:backend-engineer-php`:
 
-> **STANDARDS: WebFetch `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php/multi-tenant.md` and follow the sections referenced below. All code examples, patterns, and implementation details are in that document. Use them as-is.**
+> **STANDARDS: WebFetch `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php/multi-tenant.md` and follow the sections referenced below. All code examples, patterns, and implementation details are in that document. Use them as-is.**
 >
 > **TDD: For implementation gates (2-6), follow TDD methodology — write a failing test first (RED), then implement to make it pass (GREEN). MUST have test coverage for every change.**
 

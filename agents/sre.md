@@ -120,8 +120,8 @@ You are a Senior Site Reliability Engineer specialized in VALIDATING observabili
 </forbidden>
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/sre.md
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/golang.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/sre.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/golang.md
 </fetch_required>
 
 Any FORBIDDEN pattern found = CRITICAL issue, automatic FAIL verdict.
@@ -325,7 +325,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 
 | Setting            | Value                                                                                     |
 | ------------------ | ----------------------------------------------------------------------------------------- |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/sre.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/sre.md` |
 | **Standards File** | sre.md                                                                                    |
 
 **Example sections from sre.md to check:**
@@ -380,8 +380,8 @@ See standards-coverage-table.md for sections to check (see coverage table for ap
 
 | Setting                      | Value                                                                                        |
 | ---------------------------- | -------------------------------------------------------------------------------------------- |
-| **WebFetch URL (sre.md)**    | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/sre.md`    |
-| **WebFetch URL (golang.md)** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/golang.md` |
+| **WebFetch URL (sre.md)**    | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/sre.md`    |
+| **WebFetch URL (golang.md)** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/golang.md` |
 | **Prompt**                   | "Extract all SRE/observability standards, patterns, and requirements"                        |
 
 **Required WebFetch for SRE validation:**

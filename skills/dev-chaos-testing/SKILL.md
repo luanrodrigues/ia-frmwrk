@@ -141,7 +141,7 @@ Ensure code handles **failure conditions gracefully** by injecting faults using 
 **MANDATORY:** Load testing-chaos.md standards via WebFetch.
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php/testing-chaos.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php/testing-chaos.md
 </fetch_required>
 
 ---

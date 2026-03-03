@@ -149,7 +149,7 @@ Ensure all user flows from `bee:product-designer` have passing **Detox E2E tests
 **MANDATORY:** Load testing-e2e-rn.md standards via WebFetch.
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/frontend-react-native/testing-e2e.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-react-native/testing-e2e.md
 </fetch_required>
 
 ---

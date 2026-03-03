@@ -121,7 +121,7 @@ Invoke this agent when:
 ## Standards Loading (MANDATORY)
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/frontend-vuejs.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-vuejs.md
 </fetch_required>
 
 MUST WebFetch the URL above before any implementation work.
@@ -175,7 +175,7 @@ See [shared-patterns/standards-workflow.md](../skills/shared-patterns/standards-
 
 | Setting | Value |
 |---------|-------|
-| **WebFetch URL** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/frontend-vuejs.md` |
+| **WebFetch URL** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-vuejs.md` |
 | **Standards File** | frontend-vuejs.md |
 | **Prompt** | "Extract all Vue/Nuxt frontend standards, patterns, and requirements" |
 
@@ -556,7 +556,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 
 | Setting | Value |
 |---------|-------|
-| **WebFetch URL** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/frontend-vuejs.md` |
+| **WebFetch URL** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-vuejs.md` |
 | **Standards File** | frontend-vuejs.md |
 
 ### Sections to Check (MANDATORY)

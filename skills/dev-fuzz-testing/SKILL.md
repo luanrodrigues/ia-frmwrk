@@ -135,7 +135,7 @@ Ensure critical parsing and input handling code has **mutation tests** (via Infe
 **MANDATORY:** Load testing-mutation.md standards via WebFetch.
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php/testing-mutation.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php/testing-mutation.md
 </fetch_required>
 
 ---

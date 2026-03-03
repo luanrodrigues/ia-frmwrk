@@ -301,7 +301,7 @@ Task:
     [list external_dependencies with container requirements]
 
     ## Standards Reference
-    WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php/testing-integration.md
+    WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php/testing-integration.md
 
     Focus on: All sections, especially @group annotation, RefreshDatabase trait, Docker Compose services
 

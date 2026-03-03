@@ -161,7 +161,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 
 | Setting            | Value                                                                                                                   |
 | ------------------ | ----------------------------------------------------------------------------------------------------------------------- |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/frontend-react-native.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-react-native.md` |
 | **Standards File** | frontend-react-native.md                                                                                                |
 
 **Example sections from frontend-react-native.md to check:**
@@ -181,7 +181,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 ## Standards Loading (MANDATORY)
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/frontend-react-native.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-react-native.md
 </fetch_required>
 
 MUST WebFetch the URL above before any implementation work.
@@ -297,7 +297,7 @@ All sections are mandatory—see standards-coverage-table.md for the authoritati
 
 | Setting            | Value                                                                                                                   |
 | ------------------ | ----------------------------------------------------------------------------------------------------------------------- |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/frontend-react-native.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-react-native.md` |
 | **Standards File** | frontend-react-native.md                                                                                                |
 | **Prompt**         | "Extract all React Native/Expo frontend standards, patterns, and requirements"                                          |
 

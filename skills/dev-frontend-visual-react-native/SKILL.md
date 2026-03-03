@@ -143,7 +143,7 @@ Ensure all React Native frontend components have **Jest snapshot tests** coverin
 **MANDATORY:** Load testing-visual-rn.md standards via WebFetch.
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/frontend-react-native/testing-visual.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-react-native/testing-visual.md
 </fetch_required>
 
 ---

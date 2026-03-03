@@ -144,7 +144,7 @@ Ensure all Vue.js / Nuxt 3 frontend pages meet **Core Web Vitals** thresholds, a
 **MANDATORY:** Load testing-performance.md standards via WebFetch.
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/frontend-vuejs/testing-performance.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-vuejs/testing-performance.md
 </fetch_required>
 
 ---

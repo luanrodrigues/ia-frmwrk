@@ -1460,8 +1460,8 @@ Create tool:
     > Generated from PM documents (PRD/TRD/Feature Map).
     >
     > Bee Standards URLs:
-    > - PHP: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php.md
-    > - TypeScript: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/typescript.md
+    > - PHP: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php.md
+    > - TypeScript: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/typescript.md
 
     ## What Bee Standards Cover (DO not DUPLICATE HERE)
 

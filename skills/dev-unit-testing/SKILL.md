@@ -218,8 +218,8 @@ Task:
     [list implementation_files]
 
     ## Standards Reference
-    For PHP: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/php.md
-    For TS: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/typescript.md
+    For PHP: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/php.md
+    For TS: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/typescript.md
 
     Focus on: Testing Patterns section
 

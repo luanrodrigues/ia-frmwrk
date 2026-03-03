@@ -725,7 +725,7 @@ If counts don't match → STOP. Go back to Step 4.1. Map missing issues.
 ### Bee Standard Reference
 **Standard:** {standards-file}.md → Section: {section-name}
 **Pattern:** {pattern-name}
-**URL:** https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/{file}.md
+**URL:** https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/{file}.md
 
 ### Required Changes
 1. {action item 1 - what to change}
@@ -833,7 +833,7 @@ Before proceeding to Step 7, verify:
 ### Bee Standard Reference
 | Standard File | Section | URL |
 |---------------|---------|-----|
-| {file}.md | {section} | [Link](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/{file}.md) |
+| {file}.md | {section} | [Link](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/{file}.md) |
 
 ### Required Actions
 1. [ ] {action 1 - specific change to make}

@@ -148,7 +148,7 @@ Ensure all React Native frontend screens and components meet **mobile performanc
 **MANDATORY:** Load testing-performance-rn.md standards via WebFetch.
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/frontend-react-native/testing-performance.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend-react-native/testing-performance.md
 </fetch_required>
 
 ---

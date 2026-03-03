@@ -215,7 +215,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 
 | Setting            | Value                                                                                        |
 | ------------------ | -------------------------------------------------------------------------------------------- |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/devops.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/devops.md` |
 | **Standards File** | devops.md                                                                                    |
 
 **Example sections from devops.md to check:**
@@ -232,7 +232,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 ## Standards Loading (MANDATORY)
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/devops.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/devops.md
 </fetch_required>
 
 MUST WebFetch the URL above before any implementation work.
@@ -273,7 +273,7 @@ See standards-coverage-table.md for the authoritative list of sections to check.
 
 | Setting            | Value                                                                                        |
 | ------------------ | -------------------------------------------------------------------------------------------- |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/devops.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/devops.md` |
 | **Standards File** | devops.md                                                                                    |
 | **Prompt**         | "Extract all DevOps standards, patterns, and requirements"                                   |
 

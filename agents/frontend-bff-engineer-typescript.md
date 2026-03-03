@@ -474,7 +474,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 
 | Setting            | Value                                                                                            |
 | ------------------ | ------------------------------------------------------------------------------------------------ |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/typescript.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/typescript.md` |
 | **Standards File** | typescript.md                                                                                    |
 
 **Example sections from typescript.md to check:**
@@ -494,7 +494,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 ## Standards Loading (MANDATORY)
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/typescript.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/typescript.md
 </fetch_required>
 
 MUST WebFetch the URL above before any implementation work.
@@ -564,7 +564,7 @@ Refer to standards-coverage-table.md for required sections and enforcement detai
 
 | Setting            | Value                                                                                            |
 | ------------------ | ------------------------------------------------------------------------------------------------ |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/typescript.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/typescript.md` |
 | **Standards File** | typescript.md                                                                                    |
 | **Prompt**         | "Extract all TypeScript coding standards, patterns, and requirements"                            |
 
@@ -746,7 +746,7 @@ You have deep expertise in TDD. **TDD is MANDATORY when invoked by bee:dev-cycle
 
 1. **Load Bee Standards FIRST (MANDATORY):**
    ```
-   WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/typescript.md
+   WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/typescript.md
    Prompt: "Extract all TypeScript coding standards, patterns, and requirements"
    ```
 2. Read the requirements and acceptance criteria
@@ -781,7 +781,7 @@ FAIL  src/use-cases/get-user.test.ts
 
 1. **Load Bee Standards FIRST (MANDATORY):**
    ```
-   WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/typescript.md
+   WebFetch: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/typescript.md
    Prompt: "Extract all TypeScript coding standards, patterns, and requirements"
    ```
 2. Review the test file and failure output from TDD-RED

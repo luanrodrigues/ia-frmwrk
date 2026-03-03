@@ -150,7 +150,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 
 | Setting            | Value                                                                                          |
 | ------------------ | ---------------------------------------------------------------------------------------------- |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/frontend.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend.md` |
 | **Standards File** | frontend.md                                                                                    |
 
 **Example sections from frontend.md to check:**
@@ -170,7 +170,7 @@ See [shared-patterns/standards-compliance-detection.md](../skills/shared-pattern
 ## Standards Loading (MANDATORY)
 
 <fetch_required>
-https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/frontend.md
+https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend.md
 </fetch_required>
 
 MUST WebFetch the URL above before any implementation work.
@@ -283,7 +283,7 @@ All sections are mandatory—see standards-coverage-table.md for the authoritati
 
 | Setting            | Value                                                                                          |
 | ------------------ | ---------------------------------------------------------------------------------------------- |
-| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/main/dev-team/docs/standards/frontend.md` |
+| **WebFetch URL**   | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/docs/standards/frontend.md` |
 | **Standards File** | frontend.md                                                                                    |
 | **Prompt**         | "Extract all frontend standards, patterns, and requirements"                                   |
 
