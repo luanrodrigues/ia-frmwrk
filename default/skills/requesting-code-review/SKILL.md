@@ -60,6 +60,14 @@ input_schema:
       type: integer
       default: 300000
       description: "Timeout for pre-analysis pipeline in milliseconds (default: 5 minutes)"
+    - name: skip_opencode
+      type: boolean
+      default: false
+      description: "Skip OpenCode external review (only valid if OpenCode CLI is not installed)"
+    - name: opencode_model
+      type: string
+      default: "bailian-coding-plan/qwen3-max-2026-01-23"
+      description: "Model to use for OpenCode review (e.g., bailian-coding-plan/qwen3-coder-plus, opencode/gpt-5-nano)"
 
 output_schema:
   format: markdown
@@ -75,6 +83,9 @@ output_schema:
       required: true
     - name: "CodeRabbit External Review"
       pattern: "^## CodeRabbit External Review"
+      required: false
+    - name: "OpenCode External Review"
+      pattern: "^## OpenCode External Review"
       required: false
     - name: "Handoff to Next Gate"
       pattern: "^## Handoff to Next Gate"
@@ -112,6 +123,16 @@ output_schema:
     - name: coderabbit_issues
       type: integer
       description: "Total number of issues found by CodeRabbit across all units (0 if skipped)"
+    - name: opencode_status
+      type: enum
+      values: [PASS, ISSUES_FOUND, SKIPPED, NOT_INSTALLED]
+      description: "OpenCode external review status"
+    - name: opencode_model
+      type: string
+      description: "Model used for OpenCode review"
+    - name: opencode_issues
+      type: integer
+      description: "Total number of issues found by OpenCode (0 if skipped)"
 
 examples:
   - name: "Feature review"
@@ -1741,9 +1762,162 @@ IF CodeRabbit found no issues:
 
 ---
 
+## Step 7.6: OpenCode External Review
+
+**⛔ OpenCode provides a second AI perspective using a different model via [OpenCode CLI](https://github.com/opencode-ai/opencode).**
+
+**REQUIRED SUB-SKILL:** See [bee:opencode-review](../opencode-review/SKILL.md) for full details.
+
+### OpenCode Integration Overview
+
+```text
+┌─────────────────────────────────────────────────────────────────┐
+│ OPENCODE EXTERNAL REVIEW FLOW                                    │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│ 1. Check if OpenCode CLI is installed (which opencode)          │
+│ 2. Collect diff: git diff [base_sha]..[head_sha]               │
+│ 3. Send to external model via: opencode run -m [model] -f diff  │
+│ 4. Parse response for verdict + issues                          │
+│ 5. Present findings (advisory, not hard gate)                   │
+│                                                                 │
+│ DIFFERENCE FROM CODERABBIT:                                      │
+│   • OpenCode = advisory (user decides to act)                    │
+│   • CodeRabbit = mandatory when installed                        │
+│   • OpenCode CRITICAL findings MUST be presented to user        │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+#### Step 7.6.1: Check OpenCode Installation
+
+```bash
+which opencode
+```
+
+| Result | Action |
+|--------|--------|
+| Found | Proceed to Step 7.6.2 |
+| Not found | Record `opencode_status = NOT_INSTALLED`, skip to Step 8 |
+
+**If `skip_opencode` input is `true`:** Record `opencode_status = SKIPPED`, skip to Step 8.
+
+#### Step 7.6.2: Collect Diff and Execute Review
+
+```bash
+# Collect diff
+BASE_SHA="[base_sha from review_state]"
+HEAD_SHA="[head_sha from review_state]"
+git diff "$BASE_SHA".."$HEAD_SHA" > /tmp/bee-opencode-review-diff.txt
+
+# Execute OpenCode review (instructions from docs/opencode-instructions.md)
+opencode run \
+  -m "[opencode_model input or default: bailian-coding-plan/qwen3-max-2026-01-23]" \
+  -f docs/opencode-instructions.md \
+  -f /tmp/bee-opencode-review-diff.txt \
+  --format json \
+  "Review the attached code diff following the instructions provided. Output your review as markdown."
+```
+
+**Model Selection (use `opencode_model` input or default):**
+
+| Model | When to Use |
+|-------|-------------|
+| `bailian-coding-plan/qwen3-max-2026-01-23` | Default - strong general review |
+| `bailian-coding-plan/qwen3-coder-plus` | Code-focused review |
+| `opencode/gpt-5-nano` | Fast lightweight review |
+
+**Timeout:** 120 seconds. If OpenCode times out, record `opencode_status = SKIPPED` with reason and proceed.
+
+#### Step 7.6.3: Parse and Handle Results
+
+Parse the JSON output from OpenCode and extract the assistant's review.
+
+```text
+opencode_result = {
+  model: "[model used]",
+  verdict: "[PASS|FAIL|NEEDS_DISCUSSION]",
+  issues: {
+    critical: [N],
+    high: [N],
+    medium: [N],
+    low: [N]
+  },
+  raw_output: "[full review text]"
+}
+```
+
+| OpenCode Verdict | opencode_status | Action |
+|-----------------|-----------------|--------|
+| PASS | PASS | Record in summary, proceed to Step 8 |
+| FAIL (CRITICAL/HIGH) | ISSUES_FOUND | Present to user, ask: fix or acknowledge |
+| NEEDS_DISCUSSION | ISSUES_FOUND | Present findings, ask user for decision |
+| Error/Timeout | SKIPPED | Log error, proceed to Step 8 |
+
+#### Step 7.6.4: Handle OpenCode Findings
+
+```text
+IF opencode_result.verdict == "FAIL" AND (critical > 0 OR high > 0):
+
+  ┌─────────────────────────────────────────────────────────────────┐
+  │ ⚠️  OPENCODE FOUND CRITICAL/HIGH ISSUES                         │
+  ├─────────────────────────────────────────────────────────────────┤
+  │                                                                 │
+  │ Model: [model used]                                             │
+  │ Issues: [N] Critical, [N] High, [N] Medium, [N] Low            │
+  │                                                                 │
+  │ [detailed issue list from OpenCode]                             │
+  │                                                                 │
+  │ OpenCode review is advisory. What would you like to do?        │
+  │                                                                 │
+  │   (a) Fix issues - dispatch implementation agent                │
+  │   (b) Acknowledge and proceed (issues documented)              │
+  │                                                                 │
+  └─────────────────────────────────────────────────────────────────┘
+
+  IF user selects (a):
+    → Dispatch implementation agent with OpenCode findings
+    → After fixes, re-run OpenCode review (max 1 re-run)
+    → After OpenCode re-run, MUST re-run Bee reviewers (Step 3)
+
+  IF user selects (b):
+    → Record: "OpenCode issues acknowledged by user"
+    → Proceed to Step 8
+
+IF opencode_result.verdict == "PASS" OR only MEDIUM/LOW issues:
+  → Record findings in summary
+  → Proceed to Step 8
+```
+
+#### Step 7.6.5: Cleanup
+
+```bash
+rm -f /tmp/bee-opencode-review-diff.txt
+```
+
+### OpenCode Skip Scenarios (VALID PATHS)
+
+| Scenario | Record As | Next Step |
+|----------|-----------|-----------|
+| CLI not installed | `NOT_INSTALLED` | Step 8 |
+| `skip_opencode` = true | `SKIPPED` | Step 8 |
+| Execution timeout/error | `SKIPPED (error)` | Step 8 |
+| User declines fixes, acknowledges issues | `ISSUES_FOUND (acknowledged)` | Step 8 |
+
+### Anti-Rationalization for OpenCode Execution
+
+| Rationalization | Why It's WRONG | Required Action |
+|-----------------|----------------|-----------------|
+| "Bee reviewers already covered everything" | Different models catch different issues - shared biases exist | **Run OpenCode review if installed** |
+| "OpenCode model is weaker" | Model strength is irrelevant - diversity of perspective matters | **Run OpenCode review if installed** |
+| "Results will duplicate Bee findings" | Unique findings are common across different models | **Run OpenCode review if installed** |
+| "Too much review overhead" | One extra minute for a fresh perspective is minimal | **Run OpenCode review if installed** |
+
+---
+
 ## Step 8: Display Accumulated Findings & Prepare Success Output
 
-**⛔ BEFORE generating success output, MUST display accumulated CodeRabbit findings.**
+**⛔ BEFORE generating success output, MUST display accumulated CodeRabbit and OpenCode findings.**
 
 ### Step 8.1: Display Accumulated CodeRabbit Findings
 
@@ -1928,6 +2102,10 @@ Invokes `Skill("bee:visual-explainer")` to produce a self-contained HTML page sh
 - Separate section showing CodeRabbit-specific issues
 - Status per unit validated
 
+**4b. OpenCode Findings** (if applicable)
+- Model used, verdict, and issue count
+- Side-by-side comparison with Bee reviewer findings (unique vs overlapping)
+
 **5. Fix Iteration Timeline** (if iterations > 0)
 - Visual timeline showing: Iteration 1 → Issues found → Fixes applied → Iteration 2 → ...
 
@@ -1982,11 +2160,19 @@ Generate skill output:
 **Issues Acknowledged:** [N]
 **Status:** [ALL_FIXED | ACKNOWLEDGED | NO_ISSUES]
 
+## OpenCode External Review
+**Model:** [model used]
+**Status:** [PASS | ISSUES_FOUND | SKIPPED | NOT_INSTALLED]
+**Issues Found:** [N]
+**Issues Fixed:** [N]
+**Issues Acknowledged:** [N]
+
 ## Handoff to Next Gate
 - Review status: COMPLETE
 - All blocking issues: RESOLVED
 - Reviewers passed: 6/6
 - CodeRabbit findings: [status]
+- OpenCode findings: [status]
 - Ready for Gate 5 (Validation): YES
 ```
 
@@ -2049,6 +2235,7 @@ The following requirements CANNOT be waived:
 - CANNOT edit source files directly - MUST dispatch implementation agent for fixes
 - MUST re-run ALL 6 reviewers after any fix (no cherry-picking reviewers)
 - CANNOT skip CodeRabbit if installed and authenticated
+- MUST present OpenCode CRITICAL findings to user when OpenCode is installed
 - MUST fix Critical, High, and Medium severity issues before Gate 5
 
 ## Severity Calibration
@@ -2138,10 +2325,17 @@ See [dev-team/skills/shared-patterns/shared-anti-rationalization.md](../../dev-t
 | subtask-2 | 1 | CRITICAL | Race condition | Mutex added | ✅ RESOLVED | Test passes |
 | subtask-2 | 2 | HIGH | Unchecked error | Error handling added | ✅ RESOLVED | Test passes |
 
+## OpenCode External Review (Advisory)
+**Model:** [model used]
+**Status:** [PASS|ISSUES_FOUND|SKIPPED|NOT_INSTALLED]
+**Issues Found:** [N]
+**Issues Fixed:** [N]
+**Issues Acknowledged:** [N]
+
 ## Handoff to Next Gate
 - Review status: [COMPLETE|FAILED]
 - Blocking issues: [resolved|N remaining]
 - CodeRabbit: [PASS|SKIPPED|N issues acknowledged]
-- CodeRabbit validation: [N]/[N] units passed
+- OpenCode: [PASS|SKIPPED|N issues acknowledged]
 - Ready for Gate 5: [YES|NO]
 ```

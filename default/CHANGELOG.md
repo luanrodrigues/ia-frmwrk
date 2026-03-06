@@ -1,5 +1,24 @@
 # bee-default Changelog
 
+## [2.1.0] - 2026-03-06
+
+### Added
+
+- **`bee:opencode-review` skill** - External code review via OpenCode CLI, sends diff to a second AI model (e.g., Qwen3-Max) for independent review
+- **`docs/opencode-instructions.md`** - Comprehensive review instructions sent to the external model (TypeScript, PHP/Laravel focus)
+- **Step 7.6 in `requesting-code-review`** - OpenCode integrated as advisory external reviewer alongside CodeRabbit
+- Input parameters `skip_opencode` and `opencode_model` in `requesting-code-review` skill
+- Output metrics `opencode_status`, `opencode_model`, `opencode_issues` in review reports
+- OpenCode section in visual HTML review report
+
+### Changed
+
+- Skill count: 26 to 27
+- Marketplace version: 2.0.0 to 2.1.0
+- Updated CLAUDE.md, README.md with new skill counts and Code Review documentation
+
+---
+
 ## [1.12.2](https://github.com/luanrodrigues/ia-frmwrk/releases/tag/bee-default@1.12.2)
 
 - Refactor: Replace codereview binaries and overhaul diff visualization.

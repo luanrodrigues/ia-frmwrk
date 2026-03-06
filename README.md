@@ -266,6 +266,86 @@ and revocation support.
 5. **Report** — View results with `/bee:dev-report`
 6. **Iterate** — Use `/bee:dev-refactor` to find and fix remaining gaps against standards
 
+## Code Review
+
+The code review pipeline runs at **Gate 8** (backend) or **Gate 6** (frontend) and combines three review layers for maximum coverage:
+
+### Review Layers
+
+| Layer | Tool | Role | Mandatory? |
+|-------|------|------|------------|
+| **Bee Reviewers** | 6 internal agents | Primary review (code, business logic, security, tests, nil safety, consequences) | Yes - all 6 must pass |
+| **CodeRabbit** | CodeRabbit CLI | External AI review with semantic diff analysis | Yes if installed |
+| **OpenCode** | OpenCode CLI | Second AI opinion from a different model (e.g., Qwen3-Max) | Advisory |
+
+### How to Trigger
+
+**Automatic (within a development cycle):**
+
+Code review runs automatically as part of the dev cycle gates:
+
+```bash
+# Backend — review runs at Gate 8
+/bee:dev-cycle "Implement user authentication"
+
+# Frontend — review runs at Gate 6
+/bee:dev-cycle-frontend "Implement dashboard"
+```
+
+**Standalone (outside a development cycle):**
+
+```bash
+# Trigger code review on current branch changes
+/bee:codereview
+
+# The skill auto-detects:
+# - Base SHA (via git merge-base HEAD main)
+# - Changed files (via git diff)
+# - Commit messages for context
+```
+
+### What Happens During Review
+
+```
+1. Pre-Analysis    →  Static analysis + AST extraction (Mithril)
+2. Bee Reviewers   →  6 agents dispatched in parallel
+3. Fix Cycle       →  Issues found → implementation agent fixes → re-review (max 3 iterations)
+4. CodeRabbit      →  External review per subtask (if installed)
+5. OpenCode        →  Second AI model review (if installed)
+6. Visual Report   →  HTML report generated and opened in browser
+```
+
+### OpenCode Integration
+
+OpenCode sends the diff to a different AI model for an independent review:
+
+```bash
+# Requires OpenCode CLI installed
+# https://github.com/opencode-ai/opencode
+
+# Default model: Qwen3-Max
+# Configurable via opencode_model parameter
+```
+
+Available models for review:
+
+| Model | Use Case |
+|-------|----------|
+| `bailian-coding-plan/qwen3-max-2026-01-23` | Default - strong general review |
+| `bailian-coding-plan/qwen3-coder-plus` | Code-focused review |
+| `opencode/gpt-5-nano` | Fast lightweight review |
+
+OpenCode findings are **advisory** — CRITICAL issues are presented to the user, who decides whether to fix or acknowledge them. See [docs/opencode-instructions.md](docs/opencode-instructions.md) for the review instructions sent to the external model.
+
+### Review Output
+
+Each review produces:
+- **Reviewer Verdicts** — PASS/FAIL per reviewer with issue counts
+- **Issues by Severity** — CRITICAL, HIGH, MEDIUM, LOW breakdown
+- **CodeRabbit Findings** — External review results (if applicable)
+- **OpenCode Findings** — Second model review results (if applicable)
+- **Visual HTML Report** — Interactive report at `docs/codereview/review-report-{unit_id}.html`
+
 ## Standards
 
 The plugin enforces comprehensive standards loaded at runtime:

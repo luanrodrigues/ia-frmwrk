@@ -418,16 +418,16 @@ Bee is a comprehensive skills library and workflow system for AI agents that enf
 
 **Active Plugins:**
 
-- **bee-default**: 26 core skills, 13 slash commands, 8 specialized agents
+- **bee-default**: 27 core skills, 13 slash commands, 8 specialized agents
 - **bee-dev-team**: 21 development skills, 7 slash commands, 16 developer agents (Backend PHP, Backend TypeScript, DevOps, Frontend Designer, Frontend Engineer, Frontend Engineer Vue.js, Frontend Engineer React Native, Frontend BFF TypeScript, QA Backend, QA Frontend, QA Frontend Vue.js, QA Frontend React Native, SRE, UI Engineer, UI Engineer Vue.js, UI Engineer React Native)
 - **bee-pm-team**: 13 product management skills, 4 research agents, 3 slash commands (includes delivery planning + status tracking + Product Designer)
 - **bee-pmo-team**: 9 PMO skills, 4 slash commands, 6 PMO agents (Portfolio Manager, Resource Planner, Risk Analyst, Governance Specialist, Executive Reporter, Delivery Reporter)
 - **bee-finops-team**: 7 regulatory skills, 3 FinOps agents (Analyzer, Automation, Infrastructure Cost Estimator)
 - **bee-tw-team**: 7 technical writing skills, 3 slash commands, 3 documentation agents (Functional Writer, API Writer, Docs Reviewer)
 
-**Note:** Plugin versions are managed in `.claude-plugin/marketplace.json` (current marketplace version: `2.0.0`)
+**Note:** Plugin versions are managed in `.claude-plugin/marketplace.json` (current marketplace version: `2.1.0`)
 
-**Total: 83 skills (26 + 21 + 13 + 9 + 7 + 7) across 6 plugins**
+**Total: 84 skills (27 + 21 + 13 + 9 + 7 + 7) across 6 plugins**
 **Total: 40 agents (8 + 16 + 4 + 6 + 3 + 3) across 6 plugins**
 **Total: 30 commands (13 + 7 + 3 + 4 + 0 + 3) across 6 plugins**
 
@@ -449,7 +449,7 @@ See [README.md](README.md#installation) for detailed installation instructions.
 
 | Plugin           | Path           | Contents                         |
 | ---------------- | -------------- | -------------------------------- |
-| bee-default     | `default/`     | 26 skills, 8 agents, 13 commands |
+| bee-default     | `default/`     | 27 skills, 8 agents, 13 commands |
 | bee-dev-team    | `dev-team/`    | 21 skills, 16 agents, 7 commands |
 | bee-pm-team     | `pm-team/`     | 13 skills, 4 agents, 3 commands  |
 | bee-pmo-team    | `pmo-team/`    | 9 skills, 6 agents, 4 commands   |
@@ -589,7 +589,7 @@ The system loads at SessionStart (from `default/` plugin):
 - Repository: Monorepo marketplace with multiple plugin collections
 - Active plugins: 6 (`bee-default`, `bee-dev-team`, `bee-pm-team`, `bee-pmo-team`, `bee-finops-team`, `bee-tw-team`)
 - Plugin versions: See `.claude-plugin/marketplace.json`
-- Core plugin: `default/` (26 skills, 8 agents, 13 commands)
+- Core plugin: `default/` (27 skills, 8 agents, 13 commands)
 - Developer agents: `dev-team/` (21 skills, 16 agents, 7 commands)
 - Product planning: `pm-team/` (13 skills, 4 agents, 3 commands)
 - PMO specialists: `pmo-team/` (9 skills, 6 agents, 4 commands)

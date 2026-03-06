@@ -8,8 +8,8 @@
   "plugins": [
     {
       "name": "bee-default",
-      "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques. Features parallel 6-reviewer code review system, systematic debugging, and workflow orchestration. 26 essential skills for software engineering excellence.",
-      "version": "2.0.0",
+      "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques. Features parallel 6-reviewer code review system with OpenCode external AI review, systematic debugging, and workflow orchestration. 27 essential skills for software engineering excellence.",
+      "version": "2.1.0",
       "source": "./default",
       "homepage": "https://github.com/luanrodrigues/ia-frmwrk/tree/master",
       "repository": "https://github.com/luanrodrigues/ia-frmwrk/tree/master",
@@ -24,7 +24,8 @@
         "orchestration",
         "validation",
         "code-review",
-        "parallel-review"
+        "parallel-review",
+        "opencode"
       ]
     },
     {
@@ -142,5 +143,5 @@
       ]
     }
   ],
-  "version": "2.0.0"
+  "version": "2.1.0"
 }

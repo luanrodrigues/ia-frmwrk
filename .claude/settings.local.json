@@ -9,7 +9,8 @@
       "Bash(find /Users/luanrodrigues/Desktop/bee-dev-team/installer -name \"*.py\" -exec perl -pi -e 's/\\\\bRing\\\\b/Bee/g' {} +)",
       "Bash(find /Users/luanrodrigues/Desktop/bee-dev-team/installer -name \"*.py\" -exec sed -i '' 's/ring_path/bee_path/g' {} +)",
       "Bash(git -C /Users/luanrodrigues/Desktop/bee-dev-team diff --stat | tail -5)",
-      "Bash(find /Users/luanrodrigues/Desktop/bee-dev-team/installer -name \"*.py\" -exec sed -i '' 's/ring_contexts/bee_contexts/g' {} +)"
+      "Bash(find /Users/luanrodrigues/Desktop/bee-dev-team/installer -name \"*.py\" -exec sed -i '' 's/ring_contexts/bee_contexts/g' {} +)",
+      "Bash(opencode:*)"
     ]
   }
 }

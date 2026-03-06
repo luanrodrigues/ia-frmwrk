@@ -1,5 +1,21 @@
 # Bee-Dev-Team Changelog
 
+## 2.1.0 (2026-03-06)
+
+### Added
+
+- **OpenCode external review** - Integrated OpenCode CLI as advisory reviewer in code review pipeline (Step 7.6)
+- **`docs/opencode-instructions.md`** - Review instructions for external AI model (TypeScript, PHP/Laravel)
+- **Code Review section in README** - Documents three review layers (Bee, CodeRabbit, OpenCode) and how to trigger
+- **`bee:opencode-review` skill** in bee-default plugin (27 skills total)
+
+### Changed
+
+- Marketplace version: 2.0.0 to 2.1.0
+- bee-default version: 2.0.0 to 2.1.0
+
+---
+
 ## 2.0.0 (2026-03-02)
 
 ### Breaking Changes
