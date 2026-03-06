@@ -6,8 +6,8 @@ set -euo pipefail
 export LC_ALL=C
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-RING_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-export PYTHONPATH="$RING_ROOT/installer${PYTHONPATH:+:$PYTHONPATH}"
+BEE_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+export PYTHONPATH="$BEE_ROOT/installer${PYTHONPATH:+:$PYTHONPATH}"
 
 echo "================================================"
 echo "Bee Multi-Platform Installer"
@@ -63,15 +63,15 @@ if [ $# -gt 0 ]; then
     done
 
     # Verify module exists before exec
-    if [ ! -f "$RING_ROOT/installer/bee_installer/__main__.py" ]; then
-        echo "${RED}Error: bee_installer module not found at $RING_ROOT/installer/bee_installer${RESET}"
+    if [ ! -f "$BEE_ROOT/installer/bee_installer/__main__.py" ]; then
+        echo "${RED}Error: bee_installer module not found at $BEE_ROOT/installer/bee_installer${RESET}"
         exit 1
     fi
 
     # Optional integrity check for marketplace.json when checksum provided
     if [ -n "${MARKETPLACE_JSON_SHA256:-}" ]; then
-        if [ -f "$RING_ROOT/.claude-plugin/marketplace.json" ]; then
-            ACTUAL_HASH=$(openssl dgst -sha256 "$RING_ROOT/.claude-plugin/marketplace.json" | awk '{print $2}')
+        if [ -f "$BEE_ROOT/.claude-plugin/marketplace.json" ]; then
+            ACTUAL_HASH=$(openssl dgst -sha256 "$BEE_ROOT/.claude-plugin/marketplace.json" | awk '{print $2}')
             if [ "$ACTUAL_HASH" != "$MARKETPLACE_JSON_SHA256" ]; then
                 echo "${RED}marketplace.json integrity check failed${RESET}"
                 exit 1
@@ -80,7 +80,7 @@ if [ $# -gt 0 ]; then
     fi
 
     # Direct passthrough to Python module
-    cd "$RING_ROOT"
+    cd "$BEE_ROOT"
     exec "$PYTHON_CMD" -m installer.bee_installer "$@"
 fi
 
@@ -168,7 +168,7 @@ fi
 if [[ "$dry_run" =~ ^[Yy]$ ]]; then
     echo ""
     echo "${YELLOW}=== Dry Run ===${RESET}"
-    cd "$RING_ROOT"
+    cd "$BEE_ROOT"
     "$PYTHON_CMD" -m installer.bee_installer install --platforms "$PLATFORMS" --dry-run "${EXTRA_ARGS[@]}"
     echo ""
     read -p "Proceed with actual installation? (Y/n): " proceed
@@ -181,7 +181,7 @@ fi
 # Run actual installation
 echo ""
 echo "${GREEN}=== Installing ===${RESET}"
-cd "$RING_ROOT"
+cd "$BEE_ROOT"
 "$PYTHON_CMD" -m installer.bee_installer install --platforms "$PLATFORMS" "${EXTRA_ARGS[@]}"
 
 echo ""

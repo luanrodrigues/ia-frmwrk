@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${RING_PLUGIN_ROOT}/hooks/session-start.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/session-start.sh"
           }
         ]
       }
@@ -16,7 +16,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${RING_PLUGIN_ROOT}/hooks/prompt-submit.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/prompt-submit.sh"
           }
         ]
       }
@@ -27,7 +27,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${RING_PLUGIN_ROOT}/hooks/post-edit.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/post-edit.sh"
           }
         ]
       }
@@ -37,7 +37,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${RING_PLUGIN_ROOT}/hooks/stop.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/stop.sh"
           }
         ]
       }

@@ -701,7 +701,7 @@ class FactoryAdapter(PlatformAdapter):
             for i, (start, end) in enumerate(merged):
                 parts.append(text[last:start])
                 placeholders.append(text[start:end])
-                parts.append(f"\x00RING_PROTECTED_{i}\x00")
+                parts.append(f"\x00BEE_PROTECTED_{i}\x00")
                 last = end
             parts.append(text[last:])
             masked = "".join(parts)
@@ -745,7 +745,7 @@ class FactoryAdapter(PlatformAdapter):
 
         # Restore protected regions
         for i, original in enumerate(placeholders):
-            result = result.replace(f"\x00RING_PROTECTED_{i}\x00", original)
+            result = result.replace(f"\x00BEE_PROTECTED_{i}\x00", original)
 
         return result
 

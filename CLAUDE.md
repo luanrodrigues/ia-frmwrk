@@ -425,7 +425,7 @@ Bee is a comprehensive skills library and workflow system for AI agents that enf
 - **bee-finops-team**: 7 regulatory skills, 3 FinOps agents (Analyzer, Automation, Infrastructure Cost Estimator)
 - **bee-tw-team**: 7 technical writing skills, 3 slash commands, 3 documentation agents (Functional Writer, API Writer, Docs Reviewer)
 
-**Note:** Plugin versions are managed in `.claude-plugin/marketplace.json` (current marketplace version: `0.256.0`)
+**Note:** Plugin versions are managed in `.claude-plugin/marketplace.json` (current marketplace version: `2.0.0`)
 
 **Total: 83 skills (26 + 21 + 13 + 9 + 7 + 7) across 6 plugins**
 **Total: 40 agents (8 + 16 + 4 + 6 + 3 + 3) across 6 plugins**

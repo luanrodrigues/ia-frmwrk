@@ -14,8 +14,8 @@ ORIGINAL_CWD="$PWD"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
 PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
-# Debug logging (enable with RING_DEBUG=true)
-debug_log() { [[ "${RING_DEBUG:-false}" == "true" ]] && echo "[$(date '+%H:%M:%S')] $*" >> /tmp/bee-hook-debug.log || true; }
+# Debug logging (enable with BEE_DEBUG=true)
+debug_log() { [[ "${BEE_DEBUG:-false}" == "true" ]] && echo "[$(date '+%H:%M:%S')] $*" >> /tmp/bee-hook-debug.log || true; }
 debug_log "Hook started: PWD=$PWD ORIGINAL_CWD=$ORIGINAL_CWD PLUGIN_ROOT=$PLUGIN_ROOT CLAUDE_PROJECT_DIR=${CLAUDE_PROJECT_DIR:-unset} CLAUDE_PLUGIN_ROOT=${CLAUDE_PLUGIN_ROOT:-<not set>}"
 
 # Validate CLAUDE_PLUGIN_ROOT is set and reasonable (when used via hooks)
@@ -28,8 +28,8 @@ if [[ -n "${CLAUDE_PLUGIN_ROOT:-}" ]]; then
 fi
 
 # Auto-install PyYAML if Python is available but PyYAML is not
-# Set RING_AUTO_INSTALL_DEPS=false to disable automatic dependency installation
-if [[ "${RING_AUTO_INSTALL_DEPS:-true}" == "true" ]]; then
+# Set BEE_AUTO_INSTALL_DEPS=false to disable automatic dependency installation
+if [[ "${BEE_AUTO_INSTALL_DEPS:-true}" == "true" ]]; then
     if command -v python3 &> /dev/null; then
         if ! python3 -c "import yaml" &> /dev/null 2>&1; then
             # PyYAML not installed, try to install it

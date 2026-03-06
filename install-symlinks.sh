@@ -29,7 +29,7 @@ NC='\033[0m' # No Color
 # --- Globals ---
 CLAUDE_DIR="$HOME/.claude"
 FACTORY_DIR="$HOME/.factory"
-RING_DIR=""
+BEE_DIR=""
 INSTALL_CLAUDE=true
 INSTALL_FACTORY=false
 CREATED=0
@@ -55,21 +55,21 @@ log_section() { echo -e "\n  ${BOLD}${CYAN}── $1 ──${NC}\n"; }
 
 resolve_bee_dir() {
   if [[ -n "${1:-}" && "$1" != "--remove" && "$1" != "--factory" && "$1" != "--all" && "$1" != "--claude" ]]; then
-    RING_DIR="$(cd "$1" && pwd)"
+    BEE_DIR="$(cd "$1" && pwd)"
   else
     # Auto-detect from script location
-    RING_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    BEE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
   fi
 
   # Validate Bee repo
-  if [[ ! -f "$RING_DIR/CLAUDE.md" ]]; then
-    log_error "Not a Bee repository: $RING_DIR"
+  if [[ ! -f "$BEE_DIR/CLAUDE.md" ]]; then
+    log_error "Not a Bee repository: $BEE_DIR"
     log_error "CLAUDE.md not found. Please provide the correct path."
     exit 1
   fi
 
-  if [[ ! -d "$RING_DIR/default/agents" ]]; then
-    log_error "Missing default/agents directory in: $RING_DIR"
+  if [[ ! -d "$BEE_DIR/default/agents" ]]; then
+    log_error "Missing default/agents directory in: $BEE_DIR"
     exit 1
   fi
 }
@@ -131,7 +131,7 @@ create_symlink() {
 link_agents() {
   local plugin="$1"
   local target_dir="$2"
-  local agents_dir="$RING_DIR/$plugin/agents"
+  local agents_dir="$BEE_DIR/$plugin/agents"
 
   [[ ! -d "$agents_dir" ]] && return
 
@@ -146,7 +146,7 @@ link_agents() {
 link_commands() {
   local plugin="$1"
   local target_dir="$2"
-  local commands_dir="$RING_DIR/$plugin/commands"
+  local commands_dir="$BEE_DIR/$plugin/commands"
 
   [[ ! -d "$commands_dir" ]] && return
 
@@ -161,7 +161,7 @@ link_commands() {
 link_skills() {
   local plugin="$1"
   local target_dir="$2"
-  local skills_dir="$RING_DIR/$plugin/skills"
+  local skills_dir="$BEE_DIR/$plugin/skills"
 
   [[ ! -d "$skills_dir" ]] && return
 
@@ -227,7 +227,7 @@ print_summary() {
   fi
   echo -e "  ${BOLD}════════════════════════════════════════${NC}"
   echo ""
-  echo -e "  ${CYAN}Bee repo:${NC}   $RING_DIR"
+  echo -e "  ${CYAN}Bee repo:${NC}   $BEE_DIR"
   [[ "$INSTALL_CLAUDE" == true ]] && echo -e "  ${CYAN}Claude dir:${NC}  $CLAUDE_DIR"
   [[ "$INSTALL_FACTORY" == true ]] && echo -e "  ${CYAN}Factory dir:${NC} $FACTORY_DIR"
   echo ""
@@ -281,7 +281,7 @@ fi
 
 resolve_bee_dir "${1:-}"
 
-log_info "Bee repo: $RING_DIR"
+log_info "Bee repo: $BEE_DIR"
 [[ "$INSTALL_CLAUDE" == true ]] && log_info "Claude dir: $CLAUDE_DIR"
 [[ "$INSTALL_FACTORY" == true ]] && log_info "Factory dir: $FACTORY_DIR"
 

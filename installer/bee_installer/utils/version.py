@@ -56,7 +56,7 @@ class Version:
         match = re.match(pattern, version_str)
 
         if not match:
-            raise ValueError(f"Invalid version stbee: '{version_str}'")
+            raise ValueError(f"Invalid version string: '{version_str}'")
 
         return cls(
             major=int(match.group(1)),
