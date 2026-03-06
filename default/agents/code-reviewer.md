@@ -2,6 +2,7 @@
 name: bee:code-reviewer
 version: 4.4.0
 description: "Foundation Review: Reviews code quality, architecture, design patterns, algorithmic flow, and maintainability. Runs in parallel with bee:business-logic-reviewer, bee:security-reviewer, bee:test-reviewer, bee:nil-safety-reviewer, and bee:consequences-reviewer for fast feedback."
+model: qwen/Qwen3-Max-2026-01-23
 type: reviewer
 last_updated: 2026-02-12
 changelog:
