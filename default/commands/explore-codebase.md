@@ -66,7 +66,7 @@ Target: "account creation"
 
 ## Process Details
 
-This command invokes the `bee:explobee-codebase` skill which handles:
+This command invokes the `bee:explore-codebase` skill which handles:
 
 ### Phase 1: Discovery Pass (3-4 parallel agents)
 
@@ -258,7 +258,7 @@ Recommendations based on your goal (implementation, debugging, or learning)
 | `/bee:brainstorm` | Use bee:explore-codebase in Phase 1 for context |
 | `/bee:write-plan` | Use bee:explore-codebase before planning implementation |
 | `/bee:execute-plan` | Use if plan execution reveals gaps in understanding |
-| `bee:explobee-codebase` | Underlying skill with full logic and prompts |
+| `bee:explore-codebase` | Underlying skill with full logic and prompts |
 | `bee:dispatching-parallel-agents` | Pattern used twice (discovery + deep dive) |
 | `bee:systematic-debugging` | Use bee:explore-codebase before debugging |
 
@@ -406,7 +406,7 @@ Ready to refine design? Use /bee:brainstorm
 **This command MUST load the skill for complete workflow execution.**
 
 ```
-Use Skill tool: bee:explobee-codebase
+Use Skill tool: bee:explore-codebase
 ```
 
 The skill contains the complete workflow with:

@@ -1,5 +1,5 @@
 ---
-name: bee:explobee-codebase
+name: bee:explore-codebase
 description: |
   Autonomous two-phase codebase exploration - first discovers natural perspectives
   (layers, components, boundaries), then dispatches adaptive deep-dive explorers
@@ -39,7 +39,7 @@ Traditional exploration assumes structure upfront or explores sequentially. This
 
 **MANDATORY ANNOUNCEMENT at start:**
 
-"I'm using the bee:explobee-codebase skill to autonomously discover and explore the codebase structure.
+"I'm using the bee:explore-codebase skill to autonomously discover and explore the codebase structure.
 
 Before proceeding, I've checked the Red Flags table and confirmed:
 - [X] Production pressure makes me WANT to skip discovery → Using skill anyway
@@ -1093,10 +1093,10 @@ Based on autonomous exploration:
 
 | Skill | When to use together |
 |-------|----------------------|
-| **bee:brainstorming** | Use bee:explobee-codebase in Phase 1 (Understanding) to gather context |
-| **bee:writing-plans** | Use bee:explobee-codebase before creating implementation plans |
-| **bee:executing-plans** | Use bee:explobee-codebase if plan execution reveals gaps |
-| **bee:systematic-debugging** | Use bee:explobee-codebase to understand system before debugging |
+| **bee:brainstorming** | Use bee:explore-codebase in Phase 1 (Understanding) to gather context |
+| **bee:writing-plans** | Use bee:explore-codebase before creating implementation plans |
+| **bee:executing-plans** | Use bee:explore-codebase if plan execution reveals gaps |
+| **bee:systematic-debugging** | Use bee:explore-codebase to understand system before debugging |
 | **bee:dispatching-parallel-agents** | This skill is built on that pattern (twice!) |
 
 ## Output Format
