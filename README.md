@@ -1,6 +1,6 @@
 # Bee Dev Team
 
-> A Claude AI plugin that provides **13 specialized developer agents**, **21 development skills**, and **9 slash commands** for enterprise-grade software development workflows.
+> A Claude AI plugin that provides **14 specialized developer agents**, **21 development skills**, and **9 slash commands** for enterprise-grade software development workflows.
 
 [![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
@@ -14,6 +14,7 @@ Bee Dev Team orchestrates a complete development team through Claude AI. It enfo
 | Agent | Specialty |
 |-------|-----------|
 | **Backend Engineer** | PHP 8.2+ / Laravel 11+ — APIs, microservices, Eloquent, queues |
+| **Database Engineer** | PostgreSQL, MySQL, MongoDB, Redis — schema design, indexing, migration safety, query optimization, replication, sharding |
 | **Frontend Engineer** | React 18+ / Next.js — components, state management, performance |
 | **Frontend Engineer (Vue.js)** | Vue 3 / Nuxt 3 — Composition API, Pinia, VeeValidate, shadcn-vue |
 | **BFF Engineer** | TypeScript — API aggregation layer, type-safe data transformation |
@@ -122,7 +123,7 @@ Gate 8  Deployment           →  Frontend deployment
 
 ```
 bee-dev-team/
-├── agents/                 # 13 specialized agent definitions
+├── agents/                 # 14 specialized agent definitions
 ├── skills/                 # 21 development workflow skills
 │   └── shared-patterns/    # Reusable patterns & anti-rationalization
 ├── commands/               # 9 slash command definitions

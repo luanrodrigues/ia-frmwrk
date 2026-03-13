@@ -1,6 +1,6 @@
 # Bee Marketplace Manual
 
-Quick reference guide for the Bee skills library and workflow system. This monorepo provides 6 plugins with 83 skills, 35 agents, and 30 slash commands for enforcing proven software engineering practices across the entire software delivery value chain.
+Quick reference guide for the Bee skills library and workflow system. This monorepo provides 6 plugins with 84 skills, 41 agents, and 30 slash commands for enforcing proven software engineering practices across the entire software delivery value chain.
 
 ---
 
@@ -14,7 +14,7 @@ Quick reference guide for the Bee skills library and workflow system. This monor
 │  ┌───────────────┐  ┌───────────────┐  ┌───────────────┐  ┌───────────────┐      │
 │  │ bee-default  │  │ bee-dev-team │  │ bee-pm-team  │  │bee-finops-   │      │
 │  │  Skills(26)   │  │  Skills(21)   │  │  Skills(13)   │  │  team         │      │
-│  │  Agents(8)    │  │  Agents(11)   │  │  Agents(4)    │  │  Skills(7)    │      │
+│  │  Agents(8)    │  │  Agents(17)   │  │  Agents(4)    │  │  Skills(7)    │      │
 │  │  Cmds(13)     │  │  Cmds(7)      │  │  Cmds(3)      │  │  Agents(3)    │      │
 │  └───────────────┘  └───────────────┘  └───────────────┘  └───────────────┘      │
 │  ┌───────────────┐  ┌───────────────┐                                            │
@@ -200,6 +200,7 @@ Use when you need expert depth in specific domains:
 | Agent                                   | Specialization               | Technologies                                       |
 | --------------------------------------- | ---------------------------- | -------------------------------------------------- |
 | `bee:backend-engineer-typescript`      | TypeScript/Node.js backend   | Express, NestJS, Prisma, TypeORM, GraphQL          |
+| `bee:database-engineer`                | Database engineering         | PostgreSQL, MySQL, MongoDB, Redis, schema design, indexing, migration safety |
 | `bee:devops-engineer`                  | Infrastructure & CI/CD       | Docker, Kubernetes, Terraform, GitHub Actions      |
 | `bee:frontend-bff-engineer-typescript` | BFF & React/Next.js frontend | Next.js API Routes, Clean Architecture, DDD, React |
 | `bee:frontend-designer`                | Visual design & aesthetics   | Typography, motion, CSS, distinctive UI            |
@@ -353,6 +354,7 @@ These enforce quality standards:
 | Implementation planning           | `bee:write-plan`                           |
 | Deep codebase analysis            | `bee:codebase-explorer`                    |
 | TypeScript/Node.js backend        | `bee:backend-engineer-typescript`          |
+| Database design & optimization    | `bee:database-engineer`                    |
 | Infrastructure/DevOps             | `bee:devops-engineer`                      |
 | React/Next.js frontend & BFF      | `bee:frontend-bff-engineer-typescript`     |
 | General frontend development      | `bee:frontend-engineer`                    |

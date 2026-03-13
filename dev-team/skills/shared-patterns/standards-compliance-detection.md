@@ -32,6 +32,7 @@ Canonical source for Standards Compliance detection logic used by all dev-team a
 | `bee:devops-engineer` | devops.md | any artifact creation |
 | `bee:sre` | sre.md | any validation task |
 | `bee:qa-analyst` | php.md | any testing task |
+| `bee:database-engineer` | database.md | any database task |
 
 **⛔ HARD GATE:** If agent does not output Standards Coverage Table → Output is INCOMPLETE → Orchestrator MUST re-dispatch.
 

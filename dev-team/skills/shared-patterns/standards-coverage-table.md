@@ -778,6 +778,33 @@ In addition to the standard Coverage Table, bee:ui-engineer-react-native MUST ou
 
 ---
 
+### bee:database-engineer → database.md
+
+| #   | Section to Check                      | Anchor                                     |
+| --- | ------------------------------------- | ------------------------------------------ |
+| 1   | Schema Design Principles              | `#schema-design-principles`                |
+| 2   | Data Types and Constraints            | `#data-types-and-constraints`              |
+| 3   | Primary Key Strategy                  | `#primary-key-strategy`                    |
+| 4   | Foreign Key and Referential Integrity | `#foreign-key-and-referential-integrity`   |
+| 5   | Indexing Strategy                     | `#indexing-strategy`                       |
+| 6   | Migration Safety                      | `#migration-safety`                        |
+| 7   | Query Optimization                    | `#query-optimization`                      |
+| 8   | Connection Pooling                    | `#connection-pooling`                      |
+| 9   | Transaction Isolation and Concurrency | `#transaction-isolation-and-concurrency`   |
+| 10  | Replication Topology                  | `#replication-topology`                    |
+| 11  | Sharding and Partitioning             | `#sharding-and-partitioning`               |
+| 12  | Performance Tuning                    | `#performance-tuning`                      |
+| 13  | Database Security                     | `#database-security`                       |
+| 14  | Backup and Recovery                   | `#backup-and-recovery`                     |
+| 15  | Monitoring and Alerting               | `#monitoring-and-alerting`                 |
+| 16  | MongoDB Patterns                      | `#mongodb-patterns`                        |
+| 17  | Redis Patterns                        | `#redis-patterns`                          |
+| 18  | Multi-Tenant Data Isolation           | `#multi-tenant-data-isolation`             |
+| 19  | Data Migration and ETL                | `#data-migration-and-etl`                  |
+| 20  | Anti-Patterns                         | `#anti-patterns`                           |
+
+---
+
 ## Maintenance Instructions
 
 **When you add/modify a section in a standards file:**

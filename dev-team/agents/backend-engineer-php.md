@@ -214,6 +214,27 @@ Invoke this agent when the task involves:
 - **Serverless**: Bref (AWS Lambda), API Gateway, SAM
 - **Runtime**: PHP-FPM, Swoole, RoadRunner, FrankenPHP
 
+## Relationship with bee:database-engineer
+
+**This agent handles application-level database concerns:**
+- Eloquent/ORM patterns and relationships (Section 8)
+- Database naming conventions in application code (Section 5)
+- Laravel migrations (up/down) implementation (Section 6)
+- N+1 query detection in application code (Section 38)
+- SQL safety in application code (Section 17)
+
+**Delegate to `bee:database-engineer` for database-level concerns:**
+- Schema design and normalization decisions
+- Indexing strategy and query plan optimization (EXPLAIN ANALYZE)
+- Zero-downtime migration planning
+- Replication, sharding, and partitioning topology
+- Database performance tuning (server parameters)
+- Database security (RLS, encryption, roles)
+- Connection pooling configuration
+- Backup and recovery strategy
+
+**When both concerns exist in a task:** This agent implements ORM models and migrations; `bee:database-engineer` reviews schema design and query plans.
+
 ## Standards Compliance (AUTO-TRIGGERED)
 
 See [shared-patterns/standards-compliance-detection.md](../skills/shared-patterns/standards-compliance-detection.md) for:

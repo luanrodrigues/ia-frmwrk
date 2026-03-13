@@ -40,7 +40,7 @@ input_schema:
       description: "Programming language for implementation"
     - name: service_type
       type: string
-      enum: [api, worker, batch, cli, frontend, bff]
+      enum: [api, worker, batch, cli, frontend, bff, database]
       description: "Type of service being implemented"
   optional:
     - name: technical_design
@@ -104,6 +104,9 @@ agent_selection:
       keywords: ["ux-criteria", "wireframe", "user-flow", "design-spec", "product-designer"]
       precondition: "docs/pre-dev/{feature}/ux-criteria.md exists"
       agent: "ui-engineer"
+    - pattern: "*.sql|*.md"
+      keywords: ["migration strategy", "schema design", "index strategy", "query optimization", "database design", "sharding", "replication", "partitioning", "EXPLAIN", "connection pooling", "database security"]
+      agent: "bee:database-engineer"
     - pattern: "*.css|*.scss"
       keywords: ["design", "visual", "aesthetic", "styling", "ui"]
       agent: "bee:frontend-designer"
@@ -217,6 +220,7 @@ If condition is true, STOP and return error to orchestrator.
    | Language | Service Type | Agent |
    |----------|--------------|-------|
    | php | api, worker, batch, cli | bee:backend-engineer-php |
+   | any | database | bee:database-engineer |
    | typescript | frontend, bff | frontend-bff-engineer-typescript |
    
    Store: selected_agent = [agent name]
@@ -585,6 +589,7 @@ See [shared-patterns/shared-anti-rationalization.md](../shared-patterns/shared-a
 | PHP | API, Worker, Batch, CLI | - | `bee:backend-engineer-php` |
 | TypeScript | Frontend, BFF | No product-designer outputs | `bee:frontend-bff-engineer-typescript` |
 | TypeScript | Frontend | ux-criteria.md exists | `bee:ui-engineer` |
+| Any | Database | DB design/optimization keywords | `bee:database-engineer` |
 | React/CSS | Design, Styling | - | `bee:frontend-designer` |
 
 **ui-engineer Selection:**

@@ -1,7 +1,7 @@
 ---
 name: bee:using-dev-team
 description: |
-  15 specialist developer agents for backend (PHP), DevOps, frontend (React + Vue.js + React Native/Expo),
+  16 specialist developer agents for backend (PHP), database, DevOps, frontend (React + Vue.js + React Native/Expo),
   design, UI implementation, QA (backend + frontend), and SRE. Dispatch when you need deep technology expertise.
 
 trigger: |
@@ -14,6 +14,7 @@ trigger: |
   - Frontend from product-designer specs (React Native) → bee:ui-engineer-react-native
   - React Native/Expo mobile development → bee:frontend-engineer-react-native
   - Frontend test strategy (React Native) → bee:qa-analyst-frontend-react-native
+  - Database schema design / optimization → bee:database-engineer
   - Backend test strategy → bee:qa-analyst
   - Frontend test strategy (React) → bee:qa-analyst-frontend
   - Frontend test strategy (Vue.js) → bee:qa-analyst-frontend-vuejs
@@ -30,7 +31,7 @@ related:
 
 # Using Bee Developer Specialists
 
-The bee-dev-team plugin provides 9 specialized developer agents. Use them via `Task tool with subagent_type:`.
+The bee-dev-team plugin provides 16 specialized developer agents. Use them via `Task tool with subagent_type:`.
 
 See [CLAUDE.md](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/CLAUDE.md) and [bee:using-bee](https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/default/skills/using-bee/SKILL.md) for canonical workflow requirements and ORCHESTRATOR principle. This skill introduces dev-team-specific agents.
 
@@ -69,7 +70,7 @@ See [shared-patterns/shared-anti-rationalization.md](../shared-patterns/shared-a
 
 **Self-sufficiency bias check:** If you're tempted to implement directly, ask:
 
-1. Is there a specialist for this? (Check the 15 specialists below)
+1. Is there a specialist for this? (Check the 16 specialists below)
 2. Would a specialist follow standards I might miss?
 3. Am I avoiding dispatch because it feels like "overhead"?
 
@@ -143,7 +144,7 @@ See [shared-patterns/shared-pressure-resistance.md](../shared-patterns/shared-pr
 
 ---
 
-## 15 Developer Specialists
+## 16 Developer Specialists
 
 <dispatch_required agent="{specialist}">
 Use Task tool to dispatch appropriate specialist based on technology need.
@@ -151,7 +152,8 @@ Use Task tool to dispatch appropriate specialist based on technology need.
 
 | Agent                                       | Specializations                                                                                      | Use When                                                                              |
 | ------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| **`bee:backend-engineer-php`**          | PHP Services, MySQL/MongoDB, Kafka/RabbitMQ, OAuth2/JWT, gRPC, concurrency                  | PHP services, DB optimization, auth/authz, concurrency issues                          |
+| **`bee:backend-engineer-php`**          | PHP Services, MySQL/MongoDB, Kafka/RabbitMQ, OAuth2/JWT, gRPC, concurrency                  | PHP services, ORM patterns, auth/authz, concurrency issues                              |
+| **`bee:database-engineer`**            | Schema design, indexing, query optimization, migration safety, replication, sharding, tuning | DB schema design, index strategy, migration planning, query optimization, scaling       |
 | **`bee:devops-engineer`**                  | Docker/Compose, Terraform/Helm, cloud infra, secrets management                                      | Containerization, local dev setup, IaC provisioning, Helm charts                      |
 | **`bee:frontend-bff-engineer-typescript`** | Next.js API Routes BFF, Clean/Hexagonal Architecture, DDD patterns, Inversify DI, repository pattern | BFF layer, Clean Architecture, DDD domains, API orchestration                         |
 | **`bee:frontend-designer`**                | Bold typography, color systems, animations, unexpected layouts, textures/gradients                   | Landing pages, portfolios, distinctive dashboards, design systems                     |
@@ -249,7 +251,7 @@ Remember:
 
 ## Available in This Plugin
 
-**Agents:** See "15 Developer Specialists" table above.
+**Agents:** See "16 Developer Specialists" table above.
 
 **Skills:** `bee:using-dev-team` (this), `bee:dev-cycle` (10-gate backend workflow), `bee:dev-cycle-frontend` (9-gate React frontend workflow), `bee:dev-cycle-frontend-vuejs` (9-gate Vue.js/Nuxt 3 frontend workflow), `bee:dev-cycle-frontend-react-native` (9-gate React Native/Expo frontend workflow), `bee:dev-refactor` (backend/general codebase analysis), `bee:dev-refactor-frontend` (React frontend codebase analysis), `bee:dev-refactor-frontend-vuejs` (Vue.js/Nuxt 3 frontend codebase analysis), `bee:dev-refactor-frontend-react-native` (React Native/Expo codebase analysis)
 

@@ -3,10 +3,11 @@
 set -euo pipefail
 # Session start hook for bee-dev-team plugin
 # Dynamically generates quick reference for developer specialist agents
-# Agents: backend-engineer-php, devops-engineer, frontend-bff-engineer-typescript,
-#         frontend-designer, ui-engineer, qa-analyst, qa-analyst-frontend, sre,
-#         frontend-engineer-vuejs, ui-engineer-vuejs, qa-analyst-frontend-vuejs,
-#         frontend-engineer-react-native, ui-engineer-react-native, qa-analyst-frontend-react-native
+# Agents: backend-engineer-php, database-engineer, devops-engineer,
+#         frontend-bff-engineer-typescript, frontend-designer, ui-engineer,
+#         qa-analyst, qa-analyst-frontend, sre, frontend-engineer-vuejs,
+#         ui-engineer-vuejs, qa-analyst-frontend-vuejs, frontend-engineer-react-native,
+#         ui-engineer-react-native, qa-analyst-frontend-react-native
 
 # Validate CLAUDE_PLUGIN_ROOT is set and reasonable (when used via hooks)
 if [[ -n "${CLAUDE_PLUGIN_ROOT:-}" ]]; then
@@ -108,7 +109,7 @@ else
 {
   "hookSpecificOutput": {
     "hookEventName": "SessionStart",
-    "additionalContext": "<bee-dev-team-system>\n**Developer Specialists Available (16 agents)**\n\nReact/Next.js: bee:frontend-engineer, bee:ui-engineer, bee:qa-analyst-frontend\nVue.js/Nuxt 3: bee:frontend-engineer-vuejs, bee:ui-engineer-vuejs, bee:qa-analyst-frontend-vuejs\nReact Native/Expo: bee:frontend-engineer-react-native, bee:ui-engineer-react-native, bee:qa-analyst-frontend-react-native\nBackend: bee:backend-engineer-php, bee:frontend-bff-engineer-typescript\nPlatform: bee:devops-engineer, bee:sre, bee:frontend-designer, bee:qa-analyst\n\n**Standards Compliance Output (Conditional Requirement):**\n- **Optional** for direct invocations or dev-cycle\n- **MANDATORY** when invoked from `bee-dev-team:dev-refactor` skill\n- Detection: Prompt contains `**MODE: ANALYSIS ONLY**`\n\nWhen MANDATORY: Agent loads Bee standards via WebFetch and outputs comparison tables.\n\nFor full list: Skill tool with \"bee-dev-team:using-dev-team\"\n</bee-dev-team-system>"
+    "additionalContext": "<bee-dev-team-system>\n**Developer Specialists Available (17 agents)**\n\nReact/Next.js: bee:frontend-engineer, bee:ui-engineer, bee:qa-analyst-frontend\nVue.js/Nuxt 3: bee:frontend-engineer-vuejs, bee:ui-engineer-vuejs, bee:qa-analyst-frontend-vuejs\nReact Native/Expo: bee:frontend-engineer-react-native, bee:ui-engineer-react-native, bee:qa-analyst-frontend-react-native\nBackend: bee:backend-engineer-php, bee:frontend-bff-engineer-typescript\nDatabase: bee:database-engineer\nPlatform: bee:devops-engineer, bee:sre, bee:frontend-designer, bee:qa-analyst\n\n**Standards Compliance Output (Conditional Requirement):**\n- **Optional** for direct invocations or dev-cycle\n- **MANDATORY** when invoked from `bee-dev-team:dev-refactor` skill\n- Detection: Prompt contains `**MODE: ANALYSIS ONLY**`\n\nWhen MANDATORY: Agent loads Bee standards via WebFetch and outputs comparison tables.\n\nFor full list: Skill tool with \"bee-dev-team:using-dev-team\"\n</bee-dev-team-system>"
   }
 }
 EOF

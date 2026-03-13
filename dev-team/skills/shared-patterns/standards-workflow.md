@@ -106,6 +106,7 @@ Read docs/PROJECT_RULES.md
 | `bee:frontend-designer` | frontend.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md` |
 | `bee:devops-engineer` | devops.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/devops.md` |
 | `bee:sre` | sre.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/sre.md` |
+| `bee:database-engineer` | database.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/database.md` |
 | `bee:qa-analyst` | php.md | Based on project language (check PROJECT_RULES.md first) |
 | `prompt-quality-reviewer` | N/A | Domain-independent (no standards WebFetch required) |
 
