@@ -1,6 +1,6 @@
 ---
 name: bee:docs-reviewer
-version: 0.3.0
+version: 0.3.1
 description: Documentation Quality Reviewer specialized in checking voice, tone, structure, completeness, and technical accuracy of documentation.
 type: reviewer
 last_updated: 2026-02-12

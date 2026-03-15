@@ -1,6 +1,6 @@
 ---
 name: bee:infrastructure-cost-estimator
-version: 7.3.0
+version: 7.3.1
 description: Infrastructure Cost Calculator with per-component sharing model, environment-specific calculations (Homolog vs Production), dynamic Helm chart data from LerianStudio/helm, TPS capacity analysis, networking architecture, and service-component dependency mapping. RECEIVES complete data (read at runtime from LerianStudio/helm) and CALCULATES detailed cost attribution, capacity planning, and profitability.
 type: calculator
 last_updated: 2026-02-12

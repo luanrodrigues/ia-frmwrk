@@ -54,7 +54,7 @@ Repository structure affects how docs are organized and how tasks are distribute
 
 | Indicator | Likely Structure |
 |-----------|------------------|
-| Single `package.json` or `go.mod` at root | `single-repo` |
+| Single `package.json` or `composer.json` at root | `single-repo` |
 | `packages/`, `apps/`, `libs/` directories | `monorepo` |
 | User specifies external path | `multi-repo` |
 
@@ -74,7 +74,7 @@ topology:
   modules:
     backend:
       path: string          # Relative path (monorepo) or absolute path (multi-repo)
-      language: golang | typescript | php
+      language: typescript | php
     frontend:
       path: string          # Relative path (monorepo) or absolute path (multi-repo)
       framework: nextjs | react | vue | angular
@@ -100,7 +100,7 @@ topology:
   modules:
     backend:
       path: packages/api
-      language: golang
+      language: php
     frontend:
       path: packages/web
       framework: nextjs
@@ -272,14 +272,14 @@ Root PROJECT_RULES.md:
   - All code must have tests
 
 Backend PROJECT_RULES.md:
-  - Use Go 1.22+
-  - Tests use testify
+  - Use PHP 8.3+
+  - Tests use PHPUnit
 
 Result for backend tasks:
   - Use conventional commits (from root)
   - All code must have tests (from root)
-  - Use Go 1.22+ (from module)
-  - Tests use testify (from module)
+  - Use PHP 8.3+ (from module)
+  - Tests use PHPUnit (from module)
 ```
 
 ### Conflict Resolution

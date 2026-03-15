@@ -1,6 +1,6 @@
 ---
 name: bee:frontend-designer
-version: 1.6.0
+version: 1.6.1
 description: Senior UI/UX Designer with full design team capabilities - UX research, information architecture, visual design, content design, accessibility, mobile/touch, i18n, data visualization, and prototyping. Produces specifications, not code. Includes UI Library Mode detection for handoff.
 type: specialist
 model: opus

@@ -32,7 +32,7 @@ output_schema:
       pattern: "^## VERSION CONSIDERATIONS$"
       required: true
 
-version: 1.2.0
+version: 1.2.1
 last_updated: 2026-02-12
 changelog:
   - 1.2.0: Add Standards Compliance Report section (N/A for research agents)

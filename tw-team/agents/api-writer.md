@@ -1,6 +1,6 @@
 ---
 name: bee:api-writer
-version: 0.3.0
+version: 0.3.1
 description: Senior Technical Writer specialized in API reference documentation including endpoint descriptions, request/response schemas, and error documentation.
 type: specialist
 last_updated: 2026-02-12

@@ -1,6 +1,6 @@
 ---
 name: bee:devops-engineer
-version: 1.4.0
+version: 1.4.1
 description: Senior DevOps Engineer specialized in cloud infrastructure for financial services. Handles containerization, IaC, and local development environments.
 type: specialist
 model: opus
@@ -159,7 +159,6 @@ Invoke this agent when the task involves:
 
 ### Build & Release
 
-- GoReleaser configuration for Go binaries
 - npm/yarn build optimization
 - Semantic release automation
 - Changelog generation
@@ -197,7 +196,7 @@ Invoke this agent when the task involves:
 - **IaC**: Terraform (advanced), Terragrunt, Pulumi, CloudFormation, Ansible
 - **Cloud**: AWS, GCP, Azure, DigitalOcean
 - **Registries**: Docker Hub, ECR, GCR, Harbor
-- **Release**: GoReleaser, semantic-release, changesets
+- **Release**: semantic-release, changesets
 - **Scripting**: Bash, Python, Make
 - **Multi-Tenancy**: Tenant isolation, tenant provisioning, resource management
 
@@ -682,7 +681,7 @@ terraform providers lock -platform=linux_amd64
 | --------------------- | ------------------------ | ------- | -------------------------------------------- |
 | Resource naming       | `terraform/main.tf`      | L15-20  | Follows `{env}-{service}-{resource}` pattern |
 | Helm values structure | `charts/app/values.yaml` | L1-50   | Matches nested structure                     |
-| Docker base image     | `Dockerfile`             | L1      | Uses same `golang:1.21-alpine` pattern       |
+| Docker base image     | `Dockerfile`             | L1      | Uses same `php:8.3-fpm-alpine` pattern       |
 ```
 
 #### Completeness Check

@@ -123,8 +123,8 @@ For multi-repo, ask via follow-up prompts:
 # Monorepo detection
 ls packages/ apps/ libs/ 2>/dev/null | head -10
 
-# Look for package.json or go.mod in subdirectories
-find . -maxdepth 3 -name "package.json" -o -name "go.mod" | head -10
+# Look for package.json or composer.json in subdirectories
+find . -maxdepth 3 -name "package.json" -o -name "composer.json" | head -10
 ```
 
 ### Q4: Doc Organization
@@ -246,7 +246,7 @@ topology:
   modules:
     backend:
       path: packages/api        # From Q3
-      language: golang | typescript | php   # Auto-detected or asked
+      language: typescript | php   # Auto-detected or asked
     frontend:
       path: packages/web        # From Q3
       framework: nextjs         # Auto-detected or asked
@@ -285,11 +285,6 @@ if [ -f "composer.json" ] || [ -f "{backend_path}/composer.json" ]; then
   if grep -q '"laravel/framework"' composer.json 2>/dev/null; then
     language="php"
   fi
-fi
-
-# Check for Go
-if [ -f "go.mod" ] || [ -f "{backend_path}/go.mod" ]; then
-  language="golang"
 fi
 
 # Check for TypeScript/Node
@@ -507,4 +502,4 @@ mkdir -p "{backend_path}" "{frontend_path}"
 | Invalid path provided | Re-prompt with validation hint |
 | Path doesn't exist (multi-repo) | Warn but allow (might be created later) |
 | Cannot auto-detect language/framework | Ask user explicitly |
-| Conflicting detection (e.g., both Go and TS) | Ask user to clarify |
+| Conflicting detection (e.g., both PHP and TS) | Ask user to clarify |

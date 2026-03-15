@@ -62,7 +62,7 @@ git worktree add "$path" -b "$BRANCH_NAME" && cd "$path"
 [ -f Cargo.toml ] && cargo build
 [ -f requirements.txt ] && pip install -r requirements.txt
 [ -f pyproject.toml ] && poetry install
-[ -f go.mod ] && go mod download
+[ -f composer.json ] && composer install
 
 # 4. Verify clean baseline (npm test / cargo test / pytest / go test ./...)
 ```

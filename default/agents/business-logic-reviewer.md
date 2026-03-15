@@ -1,6 +1,6 @@
 ---
 name: bee:business-logic-reviewer
-version: 6.4.0
+version: 6.4.1
 description: "Correctness Review: reviews domain correctness, business rules, edge cases, and requirements. Uses mental execution to trace code paths and analyzes full file context, not just changes. Runs in parallel with bee:code-reviewer, bee:security-reviewer, bee:test-reviewer, bee:nil-safety-reviewer, and bee:consequences-reviewer for fast feedback."
 type: reviewer
 last_updated: 2026-02-12

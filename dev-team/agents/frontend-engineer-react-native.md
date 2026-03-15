@@ -1,6 +1,6 @@
 ---
 name: bee:frontend-engineer-react-native
-version: 1.0.0
+version: 1.0.1
 description: Senior Frontend Engineer specialized in React Native/Expo for mobile applications. Expert in React Native components, Expo Router file-based navigation, Zustand state management, TanStack Query, React Hook Form + Zod validation, NativeWind styling, MMKV storage, and react-native-reanimated animations.
 type: specialist
 model: opus

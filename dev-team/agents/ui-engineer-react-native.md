@@ -1,6 +1,6 @@
 ---
 name: bee:ui-engineer-react-native
-version: 1.0.0
+version: 1.0.1
 description: UI Implementation Engineer specialized in translating product-designer outputs (ux-criteria.md, user-flows.md, wireframes/) into production-ready React Native/Expo components with Design System compliance, NativeWind styling, platform-specific UI (iOS/Android), accessibility standards, and react-native-reanimated animations.
 type: specialist
 model: opus

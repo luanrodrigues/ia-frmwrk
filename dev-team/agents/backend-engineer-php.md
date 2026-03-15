@@ -1,6 +1,6 @@
 ---
 name: bee:backend-engineer-php
-version: 2.0.0
+version: 2.0.1
 description: Senior Backend Engineer specialized in PHP/Laravel. Handles API development, microservices, databases, message queues, and business logic implementation with hexagonal architecture.
 type: specialist
 model: opus

@@ -1,6 +1,6 @@
 ---
 name: bee:prompt-quality-reviewer
-version: 2.0.1
+version: 2.0.2
 description: |
   Expert Agent Quality Analyst specialized in evaluating AI agent executions against best practices,
   identifying prompt deficiencies, calculating quality scores, and generating precise improvement

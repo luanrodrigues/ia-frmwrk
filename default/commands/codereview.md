@@ -8,51 +8,6 @@ Dispatch all 6 specialized code reviewers in parallel, collect their reports, an
 
 ## Review Process
 
-### Step 0: Run Pre-Analysis Pipeline (MANDATORY)
-
-**MANDATORY:** Before dispatching reviewers, run the pre-analysis pipeline to generate static analysis context.
-
-```bash
-# ⚠️ SYNC NOTE: This Mithril install logic is also in default/skills/requesting-code-review/SKILL.md (Step 2.5.1).
-# If you change the install pattern or CLI flags, update both locations.
-# Check if mithril is available
-if ! command -v mithril &> /dev/null; then
-    echo "mithril not found. Installing via go install..."
-    if command -v go &> /dev/null; then
-        go install github.com/luanrodrigues/mithril@latest
-        GOPATH_DIR="$(go env GOPATH)"
-        [[ -n "$GOPATH_DIR" ]] && export PATH="$PATH:$GOPATH_DIR/bin"
-    else
-        echo "WARNING: Go is required to install mithril."
-        echo "  Install Go from https://go.dev/dl/"
-        echo "DEGRADED MODE: Proceeding without pre-analysis"
-    fi
-fi
-
-# Run pre-analysis pipeline
-if command -v mithril &> /dev/null; then
-    BASE_REF=$(git merge-base HEAD main 2>/dev/null || echo "main")
-    if mithril --base="$BASE_REF" --head=HEAD --output=docs/codereview --verbose; then
-        echo "Pre-analysis pipeline completed successfully"
-    else
-        echo "WARNING: Pre-analysis pipeline failed"
-        echo "DEGRADED MODE: Proceeding without pre-analysis"
-    fi
-fi
-```
-
-**Output:** Creates 6 context files in `docs/codereview/`:
-- `context-code-reviewer.md`
-- `context-security-reviewer.md`
-- `context-business-logic-reviewer.md`
-- `context-test-reviewer.md`
-- `context-nil-safety-reviewer.md`
-- `context-consequences-reviewer.md`
-
-⚠️ **DEGRADED MODE:** If mithril is not available, display warning and continue. Reviewers will work without pre-analysis context.
-
----
-
 ### Step 1: Dispatch All Six Reviewers in Parallel
 
 **CRITICAL: Use a single message with 6 Task tool calls to launch all reviewers simultaneously.**
@@ -389,41 +344,6 @@ Signs that a reviewer produced incomplete output:
 6. **Provide clear action guidance** - Tell user exactly what to fix vs. document
 7. **Overall FAIL if any reviewer fails** - One failure means work needs fixes
 8. **Retry failed reviewers once** - Don't give up on first failure
-
----
-
-## Mithril Installation
-
-Bee's pre-analysis pipeline requires [Mithril](https://github.com/LerianStudio/mithril), an external code analysis tool.
-
-### Prerequisites
-
-- [Go 1.22+](https://go.dev/dl/)
-
-### Install via `go install`
-
-```bash
-go install github.com/luanrodrigues/mithril@latest
-```
-
-Verify the installation:
-
-```bash
-mithril version
-mithril --help
-```
-
-If `mithril` is not in your PATH after installation, add `$(go env GOPATH)/bin` to your shell's `PATH`.
-
-## Security Model
-
-Mithril is installed via `go install`, which uses Go's [module proxy](https://proxy.golang.org/) and [checksum database](https://sum.golang.org/) for integrity verification. This provides:
-
-- **Transparency-log-based verification** of module contents
-- **Automatic checksum validation** against the Go checksum database
-- **Tamper detection** if module contents change after initial publication
-
-Do NOT set `GONOSUMCHECK` or `GONOSUMDB` environment variables, as these disable integrity verification.
 
 ---
 

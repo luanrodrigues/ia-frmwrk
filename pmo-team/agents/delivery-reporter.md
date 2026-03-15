@@ -1,6 +1,6 @@
 ---
 name: delivery-reporter
-version: 1.1.0
+version: 1.1.1
 description: Delivery Reporting Specialist for analyzing Git repositories and creating visual executive presentations of squad deliveries. Extracts business value from technical changes (releases, PRs, commits) and generates HTML slide presentations with customizable visual identity.
 type: specialist
 model: opus

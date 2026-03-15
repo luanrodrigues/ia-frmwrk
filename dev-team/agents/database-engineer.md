@@ -1,6 +1,6 @@
 ---
 name: bee:database-engineer
-version: 1.0.0
+version: 1.0.1
 description: Senior Database Engineer specialized in schema design, query optimization, indexing strategy, migration safety, replication, sharding, and performance tuning. Language-agnostic with deep expertise in PostgreSQL, MySQL, MongoDB, and Redis.
 type: specialist
 model: opus

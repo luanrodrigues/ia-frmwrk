@@ -1,6 +1,6 @@
 ---
 name: bee:qa-analyst-frontend-vuejs
-version: 1.0.0
+version: 1.0.1
 description: Senior Frontend QA Analyst specialized in Vue 3/Nuxt 3 testing. 5 modes - unit (Vitest + Vue Testing Library), accessibility (axe-core, WCAG 2.1 AA), visual (snapshots, Storybook), e2e (Playwright), performance (Core Web Vitals, Lighthouse).
 type: specialist
 model: opus

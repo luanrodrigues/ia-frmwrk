@@ -1,6 +1,6 @@
 ---
 name: bee:resource-planner
-version: 1.1.0
+version: 1.1.1
 description: Resource Planning Specialist for capacity planning, allocation optimization, skills management, and conflict resolution across portfolio projects.
 type: specialist
 last_updated: 2026-02-12

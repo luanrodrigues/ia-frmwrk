@@ -1,6 +1,6 @@
 ---
 name: bee:security-reviewer
-version: 4.2.0
+version: 4.2.1
 description: "Safety Review: Reviews vulnerabilities, authentication, input validation, and OWASP risks. Runs in parallel with bee:code-reviewer, bee:business-logic-reviewer, bee:test-reviewer, bee:nil-safety-reviewer, and bee:consequences-reviewer for fast feedback."
 type: reviewer
 last_updated: 2026-02-12

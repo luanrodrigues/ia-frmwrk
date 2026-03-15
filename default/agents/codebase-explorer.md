@@ -1,6 +1,6 @@
 ---
 name: bee:codebase-explorer
-version: 1.5.0
+version: 1.5.1
 description: "Deep codebase exploration agent for architecture understanding, pattern discovery, and comprehensive code analysis. Uses Opus for thorough analysis vs built-in Explore's Haiku speed-focus."
 type: exploration
 last_updated: 2026-02-12

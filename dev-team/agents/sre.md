@@ -1,6 +1,6 @@
 ---
 name: bee:sre
-version: 1.5.0
+version: 1.5.1
 description: Senior Site Reliability Engineer specialized in VALIDATING observability implementations for high-availability financial systems. Does not implement observability code - validates that developers implemented it correctly following Bee Standards.
 type: specialist
 model: opus

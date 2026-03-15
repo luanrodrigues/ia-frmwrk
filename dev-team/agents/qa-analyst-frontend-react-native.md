@@ -1,6 +1,6 @@
 ---
 name: bee:qa-analyst-frontend-react-native
-version: 1.0.0
+version: 1.0.1
 description: Senior Frontend QA Analyst specialized in React Native/Expo testing. 5 modes - unit (React Native Testing Library + Jest + jest-expo), accessibility (React Native a11y API, VoiceOver/TalkBack), visual (snapshots, Storybook), e2e (Detox), performance (JS/UI thread FPS, startup time, memory).
 type: specialist
 model: opus

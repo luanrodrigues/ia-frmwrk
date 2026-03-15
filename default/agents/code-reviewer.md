@@ -1,6 +1,6 @@
 ---
 name: bee:code-reviewer
-version: 4.4.0
+version: 4.4.1
 description: "Foundation Review: Reviews code quality, architecture, design patterns, algorithmic flow, and maintainability. Runs in parallel with bee:business-logic-reviewer, bee:security-reviewer, bee:test-reviewer, bee:nil-safety-reviewer, and bee:consequences-reviewer for fast feedback."
 model: qwen/Qwen3-Max-2026-01-23
 type: reviewer
@@ -356,7 +356,6 @@ async function fulfillOrder(orderId: string) {
 |----------|-------|
 | **TypeScript** | `npx eslint src/`, `npx tsc --noEmit` |
 | **Python** | `black --check .`, `mypy .` |
-| **Go** | `golangci-lint run` |
 
 ---
 

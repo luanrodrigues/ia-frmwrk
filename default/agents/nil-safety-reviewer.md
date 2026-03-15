@@ -1,6 +1,6 @@
 ---
 name: bee:nil-safety-reviewer
-version: 1.1.0
+version: 1.1.1
 description: "Nil/Null Safety Review: Traces nil/null pointer risks from git diff changes through the codebase. Identifies missing guards, unsafe dereferences, panic paths, and API response consistency in Go and TypeScript. Runs in parallel with bee:code-reviewer, bee:business-logic-reviewer, bee:security-reviewer, bee:test-reviewer, and bee:consequences-reviewer."
 type: reviewer
 last_updated: 2026-02-10

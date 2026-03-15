@@ -1,6 +1,6 @@
 ---
 name: bee:portfolio-manager
-version: 1.2.0
+version: 1.2.1
 description: Senior Portfolio Manager specialized in multi-project coordination, strategic alignment assessment, and portfolio optimization. Handles portfolio-level planning, prioritization, and health monitoring.
 type: specialist
 last_updated: 2026-02-12

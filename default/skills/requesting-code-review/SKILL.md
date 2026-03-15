@@ -273,67 +273,6 @@ review_state = {
 }
 ```
 
-## Step 2.5: Run Pre-Analysis Pipeline (MANDATORY)
-
-**MANDATORY:** Run static analysis, AST extraction, and call graph analysis BEFORE dispatching reviewers. This provides critical context that significantly improves review quality.
-
-**Skip Override:** The `skip_preanalysis` parameter allows bypassing this step ONLY when explicitly requested by the user. This is NOT recommended.
-
-### Step 2.5.1: Install and Run Mithril
-
-```bash
-# ⚠️ SYNC NOTE: This Mithril install logic is also in default/commands/codereview.md (Step 0).
-# If you change the install pattern or CLI flags, update both locations.
-# Check if mithril is available
-if ! command -v mithril &> /dev/null; then
-    echo "mithril not found. Installing..."
-    if command -v go &> /dev/null; then
-        go install github.com/luanrodrigues/mithril@latest
-        GOPATH_DIR="$(go env GOPATH)"
-        [[ -n "$GOPATH_DIR" ]] && export PATH="$PATH:$GOPATH_DIR/bin"
-    else
-        echo "Go is required to install mithril. Install Go from https://go.dev/dl/"
-        echo "DEGRADED MODE: Proceeding without pre-analysis"
-    fi
-fi
-
-# Run pre-analysis pipeline
-if command -v mithril &> /dev/null; then
-    if [[ -z "$BASE_SHA" || -z "$HEAD_SHA" ]]; then
-        echo "WARNING: BASE_SHA or HEAD_SHA not set"
-        echo "DEGRADED MODE: Proceeding without pre-analysis"
-    elif mithril --base="$BASE_SHA" --head="$HEAD_SHA" --output=docs/codereview --verbose; then
-        echo "Pre-analysis pipeline completed successfully"
-    else
-        echo "WARNING: Pre-analysis pipeline failed"
-        echo "DEGRADED MODE: Proceeding without pre-analysis"
-    fi
-else
-    echo "WARNING: mithril not available"
-    echo "DEGRADED MODE: Reviewers will proceed WITHOUT static analysis context."
-fi
-```
-
-- Timeout: Use `preanalysis_timeout` input (default 5 minutes)
-- On success: Set `preanalysis_state.success = true`
-- On failure: Display warning, set `preanalysis_state.success = false`, continue to Step 3
-
-### Step 2.5.2: Read Context Files
-
-If pipeline succeeded, read the 6 context files:
-
-| Reviewer | Context File |
-|----------|--------------|
-| `bee:code-reviewer` | `docs/codereview/context-code-reviewer.md` |
-| `bee:security-reviewer` | `docs/codereview/context-security-reviewer.md` |
-| `bee:business-logic-reviewer` | `docs/codereview/context-business-logic-reviewer.md` |
-| `bee:test-reviewer` | `docs/codereview/context-test-reviewer.md` |
-| `bee:nil-safety-reviewer` | `docs/codereview/context-nil-safety-reviewer.md` |
-| `bee:consequences-reviewer` | `docs/codereview/context-consequences-reviewer.md` |
-
-Store each file's content in `preanalysis_state.context[reviewer_name]`.
-
-If a context file is missing or empty, log warning and continue (reviewer will work without context).
 
 ```text
 preanalysis_state = {
@@ -2225,7 +2164,6 @@ STOP and report if:
 | Missing git context | Cannot determine base_sha or head_sha | STOP and request valid git context |
 | No files changed | git diff returns empty between refs | STOP and verify implementation exists |
 | Max iterations exceeded | 3 fix iterations completed but issues remain | STOP and escalate to user for manual resolution |
-| Pre-analysis pipeline fails | Mithril installation fails or execution returns error | Report and proceed in DEGRADED MODE |
 | All reviewers fail to dispatch | Task tool unavailable or errors | STOP and report infrastructure issue |
 
 ### Cannot Be Overridden

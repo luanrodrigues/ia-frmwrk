@@ -1,6 +1,6 @@
 ---
 name: bee:executive-reporter
-version: 1.3.0
+version: 1.3.1
 description: Executive Reporting Specialist for creating dashboards, status summaries, board packages, and stakeholder communications. Focuses on actionable insights for leadership.
 type: specialist
 last_updated: 2026-02-12

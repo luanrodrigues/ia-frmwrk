@@ -45,7 +45,7 @@ output_schema:
       pattern: "^## RECOMMENDATIONS$"
       required: true
 
-version: 1.0.0
+version: 1.0.1
 last_updated: 2025-01-19
 changelog:
   - 1.0.0: Initial version with CLAUDE.md compliance

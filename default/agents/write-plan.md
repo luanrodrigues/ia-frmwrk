@@ -1,6 +1,6 @@
 ---
 name: bee:write-plan
-version: 1.1.0
+version: 1.1.1
 description: "Implementation Planning: Creates comprehensive plans for engineers with zero codebase context. Plans are executable by developers unfamiliar with the codebase, with bite-sized tasks (2-5 min each) and code review checkpoints."
 type: planning
 last_updated: 2025-12-14

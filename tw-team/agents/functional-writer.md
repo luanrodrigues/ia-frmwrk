@@ -1,6 +1,6 @@
 ---
 name: bee:functional-writer
-version: 0.3.0
+version: 0.3.1
 description: Senior Technical Writer specialized in functional documentation including guides, conceptual explanations, tutorials, and best practices.
 type: specialist
 last_updated: 2026-02-12

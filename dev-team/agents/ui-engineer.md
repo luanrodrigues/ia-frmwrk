@@ -1,6 +1,6 @@
 ---
 name: bee:ui-engineer
-version: 1.1.0
+version: 1.1.1
 description: UI Implementation Engineer specialized in translating product-designer outputs (ux-criteria.md, user-flows.md, wireframes/) into production-ready React/Next.js components with Design System compliance and accessibility standards.
 type: specialist
 model: opus

@@ -85,7 +85,7 @@ Using TRD `project_technologies[]`, create `docs/PROJECT_RULES.md` with: deploym
 ## Explicit Rules
 
 ### ✅ DO Include
-Exact package names with versions (`go.uber.org/zap@v1.27.0`), tech stack with constraints (`Go 1.24+, PostgreSQL 16`), infrastructure specs (`Valkey 8, MinIO`), external SDKs, dev tools, security deps, monitoring tools, compatibility matrices, license summary, cost analysis
+Exact package names with versions (`laravel/framework@^11.0`), tech stack with constraints (`PHP 8.3+, PostgreSQL 16`), infrastructure specs (`Valkey 8, MinIO`), external SDKs, dev tools, security deps, monitoring tools, compatibility matrices, license summary, cost analysis
 
 ### ❌ NEVER Include
 Implementation code, how to use dependencies, task breakdowns, setup instructions, architectural patterns (TRD), business requirements (PRD)
@@ -93,7 +93,7 @@ Implementation code, how to use dependencies, task breakdowns, setup instruction
 ### Version Rules
 1. **Explicit**: `@v1.27.0` not `@latest` or `^1.0.0`
 2. **Justified ranges**: If using `>=`, document why
-3. **Lock file referenced**: `go.mod`, `package-lock.json`, etc.
+3. **Lock file referenced**: `composer.lock`, `package-lock.json`, etc.
 4. **Upgrade constraints**: Document why locked/capped
 5. **Compatibility**: Document known conflicts
 
@@ -144,15 +144,15 @@ If you catch yourself writing any of these in a Dependency Map, **STOP**:
 
 | Violation | Wrong | Correct |
 |-----------|-------|---------|
-| **Vague Versions** | `Fiber (latest), PostgreSQL (current), Zap (newest stable)` | `gofiber/fiber/v2@v2.52.0` with purpose, alternatives considered, trade-offs; `lib/pq@v1.10.9` with constraint; `go.uber.org/zap@v1.27.0` with rationale |
-| **Missing Security** | `JWT Library: golang-jwt/jwt@v5.0.0` (no analysis) | Package + purpose + security (CVE check date, OWASP compliance, update history) + alternatives |
+| **Vague Versions** | `laravel/framework (latest), PostgreSQL (current), monolog (newest stable)` | `laravel/framework@^11.0` with purpose, alternatives considered, trade-offs; `doctrine/dbal@^3.6` with constraint; `monolog/monolog@^3.5` with rationale |
+| **Missing Security** | `JWT Library: firebase/php-jwt@^6.0` (no analysis) | Package + purpose + security (CVE check date, OWASP compliance, update history) + alternatives |
 | **Undefined Infrastructure** | `Some database (probably Postgres), Cache (Redis or Valkey), Storage for files` | Per component: product + version + rationale + configuration + cost (managed vs self-hosted) |
 
 ## Dependency Resolution Patterns
 
 ### Standards-Driven Validation
 
-If language cannot be auto-detected, use AskUserQuestion with tech stack options (Go Backend, TypeScript Backend, TypeScript Frontend, Full-Stack TypeScript).
+If language cannot be auto-detected, use AskUserQuestion with tech stack options (PHP Backend, TypeScript Backend, TypeScript Frontend, Full-Stack TypeScript).
 
 | Selection | Standards to Load |
 |-----------|-------------------|
@@ -211,7 +211,7 @@ If language cannot be auto-detected, use AskUserQuestion with tech stack options
 **Output to:** `docs/pre-dev/{feature-name}/dependency-map.md`
 
 1. ✅ Lock all versions - update only with documented justification
-2. 🎯 Create lock files (go.mod, package-lock.json, etc.)
+2. 🎯 Create lock files (composer.lock, package-lock.json, etc.)
 3. 🔒 Set up Dependabot or equivalent for security updates
 4. 📋 Proceed to task breakdown with full stack context
 

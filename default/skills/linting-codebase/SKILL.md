@@ -41,7 +41,7 @@ These constraints are NON-NEGOTIABLE and must be communicated to ALL dispatched 
 
 ### Step 1.1: Detect Lint Command
 
-Priority: `make lint` → `npm run lint` → `yarn lint` → `pnpm lint` → `golangci-lint run` → `cargo clippy` → `ruff check .` → `eslint .`
+Priority: `make lint` → `npm run lint` → `yarn lint` → `pnpm lint` → `cargo clippy` → `ruff check .` → `eslint .`
 
 ### Step 1.2: Run Lint
 

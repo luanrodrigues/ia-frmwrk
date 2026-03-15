@@ -64,7 +64,7 @@ See [shared-patterns/topology-discovery.md](../skills/shared-patterns/topology-d
   - Use absolute paths: `/home/user/projects/backend-api`
 - **Auto-detection hints:**
   - Run `ls packages/ apps/ libs/ 2>/dev/null` to suggest common monorepo paths
-  - Check for `go.mod` or `package.json` in subdirectories
+  - Check for `composer.json` or `package.json` in subdirectories
 
 **Question 1.4 (if scope=fullstack):** "How should pre-dev docs be organized?"
 - Header: "Docs"
@@ -97,7 +97,7 @@ Topology Configuration:
 ---
 
 **Question 2 (CONDITIONAL):** "Does this feature require authentication or authorization?"
-- **Auto-detection:** Before asking, check if `go.mod` contains `github.com/LerianStudio/lib-auth`
+- **Auto-detection:** Before asking, check if `composer.json` contains `lerian/lib-auth` or `package.json` contains the auth library
   - If **found** → Skip this question. Auth is already integrated at project level.
   - If **not found** → Ask this question (new project or project without auth)
 - Header: "Auth Requirements"
@@ -110,7 +110,7 @@ Topology Configuration:
 - **Note:** For services requiring auth, reference the appropriate language standards → Access Manager Integration section during TRD creation (Gate 2)
 
 **Question 3 (CONDITIONAL):** "Is this a licensed product/plugin?"
-- **Auto-detection:** Before asking, check if `go.mod` contains `github.com/LerianStudio/lib-license-go`
+- **Auto-detection:** Before asking, check if `composer.json` contains `lerian/lib-license` or `package.json` contains the license library
   - If **found** → Skip this question. Licensing is already integrated at project level.
   - If **not found** → Ask this question (new project or project without licensing)
 - Header: "License Requirements"
@@ -434,7 +434,7 @@ Even small features benefit from quick research:
 2. Load TRD from `docs/pre-dev/<feature-name>/trd.md`
 3. Note: No Feature Map, API Design, Data Model, or Dependency Map exist (small track)
 4. Run AI-assisted time estimation:
-   - Auto-detect tech stack from repository files (go.mod, package.json, composer.json, pyproject.toml, etc.)
+   - Auto-detect tech stack from repository files (package.json, composer.json, pyproject.toml, etc.)
    - Note: Small Track has no Dependency Map, so inspect repo directly
    - Dispatch specialized agent based on detected stack:
      - PHP/Laravel (composer.json + laravel) → bee:backend-engineer-php

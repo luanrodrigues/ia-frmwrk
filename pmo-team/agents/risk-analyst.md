@@ -1,6 +1,6 @@
 ---
 name: bee:risk-analyst
-version: 1.1.0
+version: 1.1.1
 description: Portfolio Risk Analyst specialized in risk identification, assessment, correlation analysis, and mitigation planning across portfolio projects. Manages RAID logs and portfolio risk exposure.
 type: specialist
 last_updated: 2026-02-12

@@ -1,6 +1,6 @@
 ---
 name: bee:qa-analyst
-version: 2.0.0
+version: 2.0.1
 description: Senior Quality Assurance Analyst specialized in testing financial systems. Handles test strategy, API testing, E2E automation, performance testing, and compliance validation. Supports unit (Gate 3), fuzz (Gate 4), property (Gate 5), integration (Gate 6), and chaos (Gate 7) testing modes.
 type: specialist
 model: opus

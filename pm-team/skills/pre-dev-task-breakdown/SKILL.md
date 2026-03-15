@@ -139,7 +139,7 @@ After defining task scope and success criteria, the system automatically estimat
 - PostgreSQL database configured
 - bee:dev-cycle will execute implementation
 
-**Team Type:** Backend Engineer (Go)
+**Team Type:** Backend Engineer (PHP)
 ```
 
 ## Rationalization Table
@@ -205,7 +205,7 @@ topology:
   modules:
     backend:
       path: packages/api
-      language: golang
+      language: php
     frontend:
       path: packages/web
       framework: nextjs

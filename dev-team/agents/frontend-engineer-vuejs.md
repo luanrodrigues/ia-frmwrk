@@ -1,6 +1,6 @@
 ---
 name: bee:frontend-engineer-vuejs
-version: 1.0.0
+version: 1.0.1
 description: Senior Frontend Engineer specialized in Vue 3/Nuxt 3 for financial dashboards and enterprise applications. Expert in Composition API, file-based routing, Pinia state management, VeeValidate forms, accessibility, performance optimization, and shadcn-vue component library.
 type: specialist
 model: opus

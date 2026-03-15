@@ -1,6 +1,6 @@
 ---
 name: bee:finops-automation
-version: 1.2.0
+version: 1.2.1
 description: Senior Template Implementation Engineer specializing in .tpl template creation for Brazilian regulatory compliance (Gate 3). Expert in Reporter platform with XML, HTML and TXT template formats.
 type: specialist
 color: green

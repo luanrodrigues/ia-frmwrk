@@ -1,6 +1,6 @@
 ---
 name: bee:governance-specialist
-version: 1.2.0
+version: 1.2.1
 description: Project Governance Specialist for gate reviews, process compliance, audit readiness, and governance framework implementation across portfolio projects.
 type: specialist
 last_updated: 2026-02-12

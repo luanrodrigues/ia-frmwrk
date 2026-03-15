@@ -131,7 +131,6 @@ Before running any explorers, detect the project stack to determine which Bee st
 
 | Check | Flag | Standards to Load |
 |-------|------|-------------------|
-| `**/go.mod` exists | GO=true | (Go detected - no golang standards currently) |
 | `**/package.json` + React/Next.js deps | FRONTEND=true | (future enrichment) |
 | `**/package.json` + Express/Fastify deps | TS_BACKEND=true | (future enrichment) |
 | `**/Dockerfile*` exists | DOCKER=true | devops.md |
@@ -141,7 +140,6 @@ Before running any explorers, detect the project stack to determine which Bee st
 
 **Detection Logic:**
 ```
-Glob("**/go.mod") → if found: GO=true
 Glob("**/package.json") → Read for React/Next.js → if found: FRONTEND=true
 Glob("**/package.json") → Read for Express/Fastify → if found: TS_BACKEND=true
 Glob("**/Dockerfile*") → if found: DOCKER=true
@@ -6625,7 +6623,7 @@ STOP and report if:
 
 | Decision Type | Blocker Condition | Required Action |
 |---|---|---|
-| Stack Detection | Cannot detect project stack (no go.mod, package.json, etc.) | STOP and ask user to specify stack |
+| Stack Detection | Cannot detect project stack (no package.json, composer.json, etc.) | STOP and ask user to specify stack |
 | Standards Loading | WebFetch fails for critical Bee standards | STOP and report - audit requires standards as source of truth |
 | Batch Failure | Entire batch of agents fails to complete | STOP and report - investigate infrastructure issue |
 | Report File | Cannot write to docs/audits/ directory | STOP and report - ensure directory exists and is writable |

@@ -1,6 +1,6 @@
 ---
 name: bee:qa-analyst-frontend
-version: 1.0.0
+version: 1.0.1
 description: Senior Frontend QA Analyst specialized in React/Next.js testing. 5 modes - unit (Vitest + Testing Library), accessibility (axe-core, WCAG 2.1 AA), visual (snapshots, Storybook), e2e (Playwright), performance (Core Web Vitals, Lighthouse).
 type: specialist
 model: opus
