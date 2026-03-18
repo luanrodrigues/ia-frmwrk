@@ -1,11 +1,11 @@
 ---
 name: bee:dev-unit-testing
 description: |
-  Gate 3 of development cycle - ensures unit test coverage meets threshold (85%+)
+  Gate 1 of development cycle - ensures unit test coverage meets threshold (85%+)
   for all acceptance criteria using TDD methodology.
 
 trigger: |
-  - After implementation and SRE complete (Gate 0/1/2)
+  - After implementation complete (Gate 0)
   - Task has acceptance criteria requiring test coverage
   - Need to verify implementation meets requirements
 
@@ -15,7 +15,7 @@ NOT_skip_when: |
   - "Coverage is close to 85%" → Close enough is not passing. Meet exact threshold.
 
 sequence:
-  after: [bee:dev-implementation, bee:dev-devops, bee:dev-bee:sre]
+  after: [bee:dev-implementation]
   before: [bee:requesting-code-review]
 
 related:
@@ -118,10 +118,10 @@ examples:
       | AC-2 | TestAuthService_Login_InvalidPassword | ✅ |
       
       ## Handoff to Next Gate
-      - Ready for Gate 4: YES
+      - Ready for Gate 2: YES
 ---
 
-# Dev Unit Testing (Gate 3)
+# Dev Unit Testing (Gate 1)
 
 ## Overview
 
@@ -398,7 +398,7 @@ Generate skill output:
 - Testing status: COMPLETE
 - Coverage: [coverage_actual]% (threshold: [coverage_threshold]%)
 - All criteria tested: ✅
-- Ready for Gate 4 (Review): YES
+- Ready for Gate 2 (Fuzz Testing): YES
 ```
 
 ## Step 7: Escalate - Max Iterations Reached
@@ -450,7 +450,7 @@ See [shared-patterns/shared-pressure-resistance.md](../shared-patterns/shared-pr
 
 See [shared-patterns/shared-anti-rationalization.md](../shared-patterns/shared-anti-rationalization.md) for universal anti-rationalizations.
 
-### Gate 3-Specific Anti-Rationalizations
+### Gate 1-Specific Anti-Rationalizations
 
 | Rationalization | Why It's WRONG | Required Action |
 |-----------------|----------------|-----------------|
@@ -493,5 +493,5 @@ See [shared-patterns/shared-anti-rationalization.md](../shared-patterns/shared-a
 ## Handoff to Next Gate
 - Testing status: [COMPLETE|FAILED]
 - Coverage: [X%]
-- Ready for Gate 4: [YES|no]
+- Ready for Gate 2: [YES|no]
 ```

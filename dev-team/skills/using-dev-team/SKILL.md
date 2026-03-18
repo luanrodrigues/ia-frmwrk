@@ -89,10 +89,10 @@ See [shared-patterns/shared-anti-rationalization.md](../shared-patterns/shared-a
 <cannot_skip>
 
 - Dispatch to specialist (standards loading required)
-- 10-gate development cycle (quality gates)
+- 8-gate development cycle (quality gates)
 - Parallel reviewer dispatch (not sequential)
 - TDD in Gate 0 (test-first)
-- User approval in Gate 9
+- User approval in Gate 7
   </cannot_skip>
 
 **These requirements are NON-NEGOTIABLE:**
@@ -100,10 +100,10 @@ See [shared-patterns/shared-anti-rationalization.md](../shared-patterns/shared-a
 | Requirement                    | Why It Cannot Be Waived                       |
 | ------------------------------ | --------------------------------------------- |
 | **Dispatch to specialist**     | Specialists have standards loading, you don't |
-| **10-gate development cycle**  | Gates prevent quality regressions             |
+| **8-gate development cycle**  | Gates prevent quality regressions             |
 | **Parallel reviewer dispatch** | Sequential review = 3x slower, same cost      |
 | **TDD in Gate 0**              | Test-first ensures testability                |
-| **User approval in Gate 9**    | Only users can approve completion             |
+| **User approval in Gate 7**    | Only users can approve completion             |
 
 **User cannot override these. Time pressure cannot override these. "Simple task" cannot override these.**
 
@@ -253,7 +253,7 @@ Remember:
 
 **Agents:** See "16 Developer Specialists" table above.
 
-**Skills:** `bee:using-dev-team` (this), `bee:dev-cycle` (10-gate backend workflow), `bee:dev-cycle-frontend` (9-gate React frontend workflow), `bee:dev-cycle-frontend-vuejs` (9-gate Vue.js/Nuxt 3 frontend workflow), `bee:dev-cycle-frontend-react-native` (9-gate React Native/Expo frontend workflow), `bee:dev-refactor` (backend/general codebase analysis), `bee:dev-refactor-frontend` (React frontend codebase analysis), `bee:dev-refactor-frontend-vuejs` (Vue.js/Nuxt 3 frontend codebase analysis), `bee:dev-refactor-frontend-react-native` (React Native/Expo codebase analysis)
+**Skills:** `bee:using-dev-team` (this), `bee:dev-cycle` (8-gate backend workflow), `bee:dev-cycle-frontend` (9-gate React frontend workflow), `bee:dev-cycle-frontend-vuejs` (9-gate Vue.js/Nuxt 3 frontend workflow), `bee:dev-cycle-frontend-react-native` (9-gate React Native/Expo frontend workflow), `bee:dev-refactor` (backend/general codebase analysis), `bee:dev-refactor-frontend` (React frontend codebase analysis), `bee:dev-refactor-frontend-vuejs` (Vue.js/Nuxt 3 frontend codebase analysis), `bee:dev-refactor-frontend-react-native` (React Native/Expo codebase analysis)
 
 **Commands:** `/bee:dev-cycle` (backend tasks), `/bee:dev-cycle-frontend` (React frontend tasks), `/bee:dev-cycle-frontend-vuejs` (Vue.js frontend tasks), `/bee:dev-cycle-frontend-react-native` (React Native/Expo tasks), `/bee:dev-refactor` (analyze backend/general codebase), `/bee:dev-refactor-frontend` (analyze React frontend codebase), `/bee:dev-refactor-frontend-vuejs` (analyze Vue.js/Nuxt 3 frontend codebase), `/bee:dev-refactor-frontend-react-native` (analyze React Native/Expo codebase), `/bee:dev-status`, `/bee:dev-cancel`, `/bee:dev-report`
 
@@ -263,7 +263,7 @@ Remember:
 
 ## Development Workflows
 
-All workflows converge to the 10-gate development cycle:
+All workflows converge to the 8-gate development cycle:
 
 | Workflow         | Entry Point                           | Output                                        | Then                         |
 | ---------------- | ------------------------------------- | --------------------------------------------- | ---------------------------- |
@@ -274,16 +274,19 @@ All workflows converge to the 10-gate development cycle:
 | **Vue.js Refactoring** | `/bee:dev-refactor-frontend-vuejs` | `docs/bee:dev-refactor-frontend-vuejs/{timestamp}/tasks.md` | → `/bee:dev-cycle-frontend-vuejs tasks.md` |
 | **React Native Refactoring** | `/bee:dev-refactor-frontend-react-native` | `docs/bee:dev-refactor-frontend-react-native/{timestamp}/tasks.md` | → `/bee:dev-cycle-frontend-react-native tasks.md` |
 
-**6-Gate Development Cycle:**
+**8-Gate Development Cycle:**
 
 | Gate                  | Focus                            | Agent(s)                                                                               |
 | --------------------- | -------------------------------- | -------------------------------------------------------------------------------------- |
 | **0: Implementation** | TDD: RED→GREEN→REFACTOR          | `bee:backend-engineer-*`, `bee:frontend-bff-engineer-typescript`, `bee:ui-engineer`, `bee:ui-engineer-vuejs`, `bee:ui-engineer-react-native` |
-| **1: DevOps**         | Dockerfile, docker-compose, .env | `bee:devops-engineer`                                                                 |
-| **2: SRE**            | Health checks, logging, tracing  | `bee:sre`                                                                             |
-| **3: Testing**        | Unit tests, coverage ≥85%        | `bee:qa-analyst`                                                                      |
-| **4: Review**         | 6 reviewers IN PARALLEL          | `bee:code-reviewer`, `bee:business-logic-reviewer`, `bee:security-reviewer`, `bee:test-reviewer`, `bee:nil-safety-reviewer`, `bee:consequences-reviewer` |
-| **5: Validation**     | User approval: APPROVED/REJECTED | User decision                                                                          |
+| **0 (pre): DevOps**   | Dockerfile, docker-compose, .env | `bee:devops-engineer`                                                                 |
+| **1: Unit Testing**   | Unit tests, coverage ≥85%        | `bee:qa-analyst`                                                                      |
+| **2: Fuzz Testing**   | Input mutation, edge cases       | `bee:qa-analyst`                                                                      |
+| **3: Property Testing** | Invariant testing              | `bee:qa-analyst`                                                                      |
+| **4: Integration Testing** | External dependencies       | `bee:qa-analyst`                                                                      |
+| **5: Chaos Testing**  | Failure injection                | `bee:qa-analyst`                                                                      |
+| **6: Review**         | 6 reviewers IN PARALLEL          | `bee:code-reviewer`, `bee:business-logic-reviewer`, `bee:security-reviewer`, `bee:test-reviewer`, `bee:nil-safety-reviewer`, `bee:consequences-reviewer` |
+| **7: Validation**     | User approval: APPROVED/REJECTED | User decision                                                                          |
 
 **Gate 0 Agent Selection for Frontend:**
 
@@ -294,7 +297,7 @@ All workflows converge to the 10-gate development cycle:
 - Otherwise (Vue.js) → use `bee:frontend-engineer-vuejs`
 - Otherwise (React Native) → use `bee:frontend-engineer-react-native`
 
-**Key Principle:** Backend follows the 10-gate process. Frontend (React, Vue.js, and React Native) follows the 9-gate process.
+**Key Principle:** Backend follows the 8-gate process. Frontend (React, Vue.js, and React Native) follows the 9-gate process.
 
 ### Frontend Development Cycle — React (9 Gates)
 

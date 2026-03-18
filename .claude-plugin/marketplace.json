@@ -9,7 +9,7 @@
     {
       "name": "bee-default",
       "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques. Features parallel 6-reviewer code review system with OpenCode external AI review, systematic debugging, and workflow orchestration. 27 essential skills for software engineering excellence.",
-      "version": "2.1.1",
+      "version": "2.2.0",
       "source": "./default",
       "homepage": "https://github.com/luanrodrigues/ia-frmwrk/tree/master",
       "repository": "https://github.com/luanrodrigues/ia-frmwrk/tree/master",
@@ -30,8 +30,8 @@
     },
     {
       "name": "bee-dev-team",
-      "description": "17 specialized developer agents + 21 development skills + 7 slash commands: Backend 10-gate dev cycle + Frontend 9-gate dev cycle (accessibility, visual, E2E, performance) + Frontend refactoring. PHP/Laravel Backend specialist, Database Engineer, TypeScript Backend specialist, DevOps Engineer, Frontend TypeScript specialist, Frontend Designer, Vue.js/Nuxt 3 specialist, React Native/Expo specialist, QA Backend Analyst, QA Frontend Analyst, and SRE. Complete development team coverage with TDD, observability, and security best practices.",
-      "version": "2.1.0",
+      "description": "15 specialized developer agents + 19 development skills + 7 slash commands: Backend 8-gate dev cycle + Frontend 7-gate dev cycle (accessibility, visual, E2E, performance) + Frontend refactoring. PHP/Laravel Backend specialist, Database Engineer, TypeScript Backend specialist, Frontend TypeScript specialist, Frontend Designer, Vue.js/Nuxt 3 specialist, React Native/Expo specialist, QA Backend Analyst, QA Frontend Analyst. Complete development team coverage with TDD and security best practices.",
+      "version": "2.2.0",
       "source": "./dev-team",
       "homepage": "https://github.com/luanrodrigues/ia-frmwrk/tree/master",
       "repository": "https://github.com/luanrodrigues/ia-frmwrk/tree/master",
@@ -43,7 +43,6 @@
         "laravel",
         "typescript",
         "backend",
-        "devops",
         "frontend",
         "react",
         "nextjs",
@@ -61,9 +60,6 @@
         "e2e",
         "playwright",
         "performance",
-        "sre",
-        "reliability",
-        "infrastructure",
         "refactoring"
       ]
     },
@@ -147,5 +143,5 @@
       ]
     }
   ],
-  "version": "2.1.1"
+  "version": "2.2.0"
 }

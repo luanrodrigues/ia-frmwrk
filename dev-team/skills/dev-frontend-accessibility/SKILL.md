@@ -1,17 +1,17 @@
 ---
 name: bee:dev-frontend-accessibility
-title: Frontend development cycle accessibility testing (Gate 2)
+title: Frontend development cycle accessibility testing (Gate 1)
 category: development-cycle-frontend
 tier: 1
 when_to_use: |
-  Use after DevOps setup (Gate 1) is complete in the frontend dev cycle.
+  Use after implementation (Gate 0) is complete in the frontend dev cycle.
   MANDATORY for all frontend development tasks - ensures WCAG 2.1 AA compliance.
 description: |
-  Gate 2 of frontend development cycle - ensures all components pass axe-core
+  Gate 1 of frontend development cycle - ensures all components pass axe-core
   automated accessibility scans with zero WCAG 2.1 AA violations.
 
 trigger: |
-  - After DevOps setup complete (Gate 1)
+  - After implementation complete (Gate 0)
   - MANDATORY for all frontend development tasks
   - Validates WCAG 2.1 AA compliance
 
@@ -21,11 +21,11 @@ NOT_skip_when: |
   - "We'll add accessibility later" - Retrofitting costs 10x more.
 
 sequence:
-  after: [bee:dev-devops]
+  after: [bee:dev-implementation]
   before: [bee:dev-unit-testing]
 
 related:
-  complementary: [bee:dev-cycle-frontend, bee:dev-devops, bee:qa-analyst-frontend]
+  complementary: [bee:dev-cycle-frontend, bee:qa-analyst-frontend]
 
 input_schema:
   required:
@@ -40,11 +40,6 @@ input_schema:
       type: string
       enum: [typescript]
       description: "Programming language (TypeScript only)"
-  optional:
-    - name: gate1_handoff
-      type: object
-      description: "Full handoff from Gate 1 (DevOps)"
-
 output_schema:
   format: markdown
   required_sections:
@@ -102,10 +97,10 @@ examples:
       | LoginForm | 0 | PASS |
 
       ## Handoff to Next Gate
-      - Ready for Gate 3 (Unit Testing): YES
+      - Ready for Gate 2 (Unit Testing): YES
 ---
 
-# Dev Frontend Accessibility Testing (Gate 2)
+# Dev Frontend Accessibility Testing (Gate 1)
 
 ## Overview
 
@@ -148,9 +143,6 @@ REQUIRED INPUT:
 - implementation_files: [files from Gate 0]
 - language: [typescript only]
 
-OPTIONAL INPUT:
-- gate1_handoff: [full Gate 1 output]
-
 if any REQUIRED input is missing:
   → STOP and report: "Missing required input: [field]"
 
@@ -165,7 +157,7 @@ Task tool:
   subagent_type: "bee:qa-analyst-frontend"
   model: "opus"
   prompt: |
-    **MODE:** ACCESSIBILITY TESTING (Gate 2)
+    **MODE:** ACCESSIBILITY TESTING (Gate 1)
 
     **Standards:** Load testing-accessibility.md
 
@@ -194,7 +186,7 @@ Task tool:
 Parse agent output:
 
 if "Status: PASS" in output:
-  → Gate 2 PASSED
+  → Gate 1 PASSED
   → Return success with metrics
 
 if "Status: FAIL" in output:
@@ -219,7 +211,7 @@ if "Status: FAIL" in output:
 | {component} | {states} | {count} | {PASS|FAIL} |
 
 ## Handoff to Next Gate
-- Ready for Gate 3 (Unit Testing): {YES|NO}
+- Ready for Gate 2 (Unit Testing): {YES|NO}
 - Iterations: {count}
 ```
 

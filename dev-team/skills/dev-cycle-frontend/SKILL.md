@@ -1,8 +1,8 @@
 ---
 name: bee:dev-cycle-frontend
 description: |
-  Frontend development cycle orchestrator with 9 gates. Loads tasks from PM team output
-  or backend handoff and executes through implementation → devops → accessibility →
+  Frontend development cycle orchestrator with 8 gates. Loads tasks from PM team output
+  or backend handoff and executes through implementation → accessibility →
   unit testing → visual testing → E2E testing → performance testing → review → validation.
 
 trigger: |
@@ -41,7 +41,7 @@ examples:
       2. Detect UI library mode (sindarian-ui or fallback)
       3. Load backend handoff if available
       4. Ask user for execution mode
-      5. Execute Gate 0→1→2→3→4→5→6→7→8 for each task
+      5. Execute Gate 0→1→2→3→4→5→6→7 for each task
       6. Generate feedback report
   - name: "Resume interrupted frontend cycle"
     invocation: "/bee:dev-cycle-frontend --resume"
@@ -72,14 +72,14 @@ If any condition is true, STOP and report blocker. Cannot proceed without Bee st
 
 ## Overview
 
-The frontend development cycle orchestrator loads tasks/subtasks from PM team output (or manual task files) and executes through 9 gates (Gate 0-8) with **all gates executing per unit** (no deferred execution):
+The frontend development cycle orchestrator loads tasks/subtasks from PM team output (or manual task files) and executes through 8 gates (Gate 0-7) with **all gates executing per unit** (no deferred execution):
 
-- **Gates 0-8 (per unit):** Write code + run tests/checks per task/subtask
-- **All 9 gates are sequential and mandatory**
+- **Gates 0-7 (per unit):** Write code + run tests/checks per task/subtask
+- **All 8 gates are sequential and mandatory**
 
 Unlike the backend `bee:dev-cycle` (which defers integration/chaos test execution), the frontend cycle executes all gates fully per unit. Frontend testing tools (Playwright, Storybook, Lighthouse) do not require heavy container infrastructure.
 
-**MUST announce at start:** "I'm using the bee:dev-cycle-frontend skill to orchestrate frontend task execution through 9 gates (Gate 0-8). All gates execute per unit."
+**MUST announce at start:** "I'm using the bee:dev-cycle-frontend skill to orchestrate frontend task execution through 8 gates (Gate 0-7). All gates execute per unit."
 
 ## CRITICAL: Specialized Agents Perform All Tasks
 
@@ -219,14 +219,13 @@ Check: Does docs/bee:dev-cycle/handoff-frontend.json exist?
 
 <cannot_skip>
 - Gate 0: `Skill("bee:dev-implementation")` → then `Task(subagent_type="bee:frontend-engineer" or "bee:ui-engineer" or "bee:frontend-bff-engineer-typescript")`
-- Gate 1: `Skill("bee:dev-devops")` → then `Task(subagent_type="bee:devops-engineer")`
-- Gate 2: `Skill("bee:dev-frontend-accessibility")` → then `Task(subagent_type="bee:qa-analyst-frontend", test_mode="accessibility")`
-- Gate 3: `Skill("bee:dev-unit-testing")` → then `Task(subagent_type="bee:qa-analyst-frontend", test_mode="unit")`
-- Gate 4: `Skill("bee:dev-frontend-visual")` → then `Task(subagent_type="bee:qa-analyst-frontend", test_mode="visual")`
-- Gate 5: `Skill("bee:dev-frontend-e2e")` → then `Task(subagent_type="bee:qa-analyst-frontend", test_mode="e2e")`
-- Gate 6: `Skill("bee:dev-frontend-performance")` → then `Task(subagent_type="bee:qa-analyst-frontend", test_mode="performance")`
-- Gate 7: `Skill("bee:requesting-code-review")` → then 5x `Task(...)` in parallel
-- Gate 8: `Skill("bee:dev-validation")` → N/A (verification only)
+- Gate 1: `Skill("bee:dev-frontend-accessibility")` → then `Task(subagent_type="bee:qa-analyst-frontend", test_mode="accessibility")`
+- Gate 2: `Skill("bee:dev-unit-testing")` → then `Task(subagent_type="bee:qa-analyst-frontend", test_mode="unit")`
+- Gate 3: `Skill("bee:dev-frontend-visual")` → then `Task(subagent_type="bee:qa-analyst-frontend", test_mode="visual")`
+- Gate 4: `Skill("bee:dev-frontend-e2e")` → then `Task(subagent_type="bee:qa-analyst-frontend", test_mode="e2e")`
+- Gate 5: `Skill("bee:dev-frontend-performance")` → then `Task(subagent_type="bee:qa-analyst-frontend", test_mode="performance")`
+- Gate 6: `Skill("bee:requesting-code-review")` → then 5x `Task(...)` in parallel
+- Gate 7: `Skill("bee:dev-validation")` → N/A (verification only)
 </cannot_skip>
 
 Between "WebFetch standards" and "Task(agent)" there MUST be "Skill(sub-skill)".
@@ -273,7 +272,7 @@ Task tool:
 | "Use dark mode as default theme" | Agents implement dark mode first, light as secondary |
 | "Focus on mobile-first responsive design" | Gate 4 visual tests prioritize mobile breakpoints |
 | "Integrate with existing auth context from backend" | Gate 0 uses backend handoff auth pattern |
-| "Prioritize accessibility over animations" | Gate 2 gets more attention, animations simplified |
+| "Prioritize accessibility over animations" | Gate 1 gets more attention, animations simplified |
 
 ### Anti-Rationalization for Skipping Sub-Skills
 
@@ -356,10 +355,10 @@ You CANNOT proceed when blocked. Report and wait for resolution.
 ### Cannot Be Overridden
 
 <cannot_skip>
-- All 9 gates must execute (0->1->2->3->4->5->6->7->8) - Each gate catches different issues
-- All testing gates (2-6) are MANDATORY - Comprehensive test coverage ensures quality
-- Gates execute in order (0->1->2->3->4->5->6->7->8) - Dependencies exist between gates
-- Gate 7 requires all 5 reviewers - Different review perspectives are complementary
+- All 8 gates must execute (0->1->2->3->4->5->6->7) - Each gate catches different issues
+- All testing gates (1-5) are MANDATORY - Comprehensive test coverage ensures quality
+- Gates execute in order (0->1->2->3->4->5->6->7) - Dependencies exist between gates
+- Gate 6 requires all 5 reviewers - Different review perspectives are complementary
 - Unit test coverage threshold >= 85% - Industry standard for quality code
 - WCAG 2.1 AA compliance is non-negotiable - Accessibility is a legal requirement
 - Core Web Vitals thresholds are non-negotiable - Performance affects user experience
@@ -383,7 +382,7 @@ Report all severities. Let user prioritize.
 
 ### Reviewer Verdicts Are Final
 
-**MEDIUM issues found in Gate 7 MUST be fixed. No exceptions.**
+**MEDIUM issues found in Gate 6 MUST be fixed. No exceptions.**
 
 | Request | Why It's WRONG | Required Action |
 |---------|----------------|-----------------|
@@ -392,7 +391,7 @@ Report all severities. Let user prioritize.
 | "Request exception for business reasons" | Reviewers know business context. Verdict is final. | **Fix the issue, re-run reviewers** |
 
 **Severity mapping is absolute:**
-- CRITICAL/HIGH/MEDIUM -> Fix NOW, re-run all 5 reviewers
+- CRITICAL/HIGH/MEDIUM -> Fix NOW, re-run all 5 reviewers (Gate 6)
 - LOW -> Add TODO(review): comment
 - Cosmetic -> Add FIXME(nitpick): comment
 
@@ -400,19 +399,18 @@ No negotiation. No exceptions. No "special cases".
 
 ---
 
-## The 9 Gates
+## The 8 Gates
 
 | Gate | Skill | Purpose | Agent | Standards Module |
 |------|-------|---------|-------|------------------|
 | 0 | bee:dev-implementation | Write code following TDD | bee:frontend-engineer / bee:ui-engineer / bee:frontend-bff-engineer-typescript | frontend.md |
-| 1 | bee:dev-devops | Docker/compose/Nginx setup | bee:devops-engineer | devops.md |
-| 2 | bee:dev-frontend-accessibility | WCAG 2.1 AA compliance | bee:qa-analyst-frontend (test_mode: accessibility) | testing-accessibility.md |
-| 3 | bee:dev-unit-testing | Unit tests 85%+ coverage | bee:qa-analyst-frontend (test_mode: unit) | frontend.md |
-| 4 | bee:dev-frontend-visual | Snapshot/visual regression tests | bee:qa-analyst-frontend (test_mode: visual) | testing-visual.md |
-| 5 | bee:dev-frontend-e2e | E2E tests with Playwright | bee:qa-analyst-frontend (test_mode: e2e) | testing-e2e.md |
-| 6 | bee:dev-frontend-performance | Core Web Vitals + Lighthouse | bee:qa-analyst-frontend (test_mode: performance) | testing-performance.md |
-| 7 | bee:requesting-code-review | Parallel code review (5 reviewers) | bee:code-reviewer, bee:business-logic-reviewer, bee:security-reviewer, bee:test-reviewer, bee:frontend-engineer (review mode) | N/A |
-| 8 | bee:dev-validation | Final acceptance validation | N/A (verification) | N/A |
+| 1 | bee:dev-frontend-accessibility | WCAG 2.1 AA compliance | bee:qa-analyst-frontend (test_mode: accessibility) | testing-accessibility.md |
+| 2 | bee:dev-unit-testing | Unit tests 85%+ coverage | bee:qa-analyst-frontend (test_mode: unit) | frontend.md |
+| 3 | bee:dev-frontend-visual | Snapshot/visual regression tests | bee:qa-analyst-frontend (test_mode: visual) | testing-visual.md |
+| 4 | bee:dev-frontend-e2e | E2E tests with Playwright | bee:qa-analyst-frontend (test_mode: e2e) | testing-e2e.md |
+| 5 | bee:dev-frontend-performance | Core Web Vitals + Lighthouse | bee:qa-analyst-frontend (test_mode: performance) | testing-performance.md |
+| 6 | bee:requesting-code-review | Parallel code review (5 reviewers) | bee:code-reviewer, bee:business-logic-reviewer, bee:security-reviewer, bee:test-reviewer, bee:frontend-engineer (review mode) | N/A |
+| 7 | bee:dev-validation | Final acceptance validation | N/A (verification) | N/A |
 
 **All gates are MANDATORY. No exceptions. No skip reasons.**
 
@@ -493,48 +491,46 @@ Task 5: { subagent_type: "bee:frontend-engineer", prompt: "REVIEW MODE: Review a
 |------|---------------------|----------------|
 | 0.1 | TDD-RED: Failing test written + failure output captured (behavioral components only - see [Frontend TDD Policy](#gate-0-frontend-tdd-policy)) | Test exists but no failure output = FAIL. Visual-only components skip to 0.2 |
 | 0.2 | TDD-GREEN: Implementation passes test (behavioral) OR implementation complete (visual) | Code exists but test fails = FAIL |
-| 0 | Both 0.1 and 0.2 complete (behavioral) OR 0.2 complete (visual - snapshots deferred to Gate 4) | 0.1 done without 0.2 = FAIL |
-| 1 | Dockerfile + docker-compose/nginx + .env.example | Missing any = FAIL |
-| 2 | 0 WCAG AA violations + keyboard navigation tested + screen reader tested | Any violation = FAIL |
-| 3 | Unit test coverage >= 85% + all AC tested | 84% = FAIL |
-| 4 | All state snapshots pass + responsive breakpoints covered | Missing snapshots = FAIL |
-| 5 | All user flows tested + cross-browser (Chromium, Firefox, WebKit) + 3x stable pass | Flaky = FAIL |
-| 6 | LCP < 2.5s + CLS < 0.1 + INP < 200ms + Lighthouse >= 90 | Any threshold missed = FAIL |
-| 7 | All 5 reviewers PASS | 4/5 reviewers = FAIL |
-| 8 | Explicit "APPROVED" from user | "Looks good" = not approved |
+| 0 | Both 0.1 and 0.2 complete (behavioral) OR 0.2 complete (visual - snapshots deferred to Gate 3) | 0.1 done without 0.2 = FAIL |
+| 1 | 0 WCAG AA violations + keyboard navigation tested + screen reader tested | Any violation = FAIL |
+| 2 | Unit test coverage >= 85% + all AC tested | 84% = FAIL |
+| 3 | All state snapshots pass + responsive breakpoints covered | Missing snapshots = FAIL |
+| 4 | All user flows tested + cross-browser (Chromium, Firefox, WebKit) + 3x stable pass | Flaky = FAIL |
+| 5 | LCP < 2.5s + CLS < 0.1 + INP < 200ms + Lighthouse >= 90 | Any threshold missed = FAIL |
+| 6 | All 5 reviewers PASS | 4/5 reviewers = FAIL |
+| 7 | Explicit "APPROVED" from user | "Looks good" = not approved |
 
-**CRITICAL for Gate 7:** Running 4 of 5 reviewers is not a partial pass - it's a FAIL. Re-run all 5 reviewers.
+**CRITICAL for Gate 6:** Running 4 of 5 reviewers is not a partial pass - it's a FAIL. Re-run all 5 reviewers.
 
 **Anti-Rationalization for Partial Gates:**
 
 | Rationalization | Why It's WRONG | Required Action |
 |-----------------|----------------|-----------------|
-| "4 of 5 reviewers passed" | Gate 7 requires all 5. 4/5 = 0/5. | **Re-run all 5 reviewers** |
+| "4 of 5 reviewers passed" | Gate 6 requires all 5. 4/5 = 0/5. | **Re-run all 5 reviewers** |
 | "Gate mostly complete" | Mostly ≠ complete. Binary: done or not done. | **Complete all components** |
 | "Can finish remaining in next cycle" | Gates don't carry over. Complete NOW. | **Finish current gate** |
 | "No component is optional within a gate" | Every component is required. | **Complete all components** |
-| "Accessibility can be fixed later" | WCAG compliance is mandatory NOW. Later = never. | **Fix accessibility in Gate 2** |
-| "Visual tests are flaky, skip them" | Fix flakiness, don't skip verification. | **Stabilize and pass Gate 4** |
+| "Accessibility can be fixed later" | WCAG compliance is mandatory NOW. Later = never. | **Fix accessibility in Gate 1** |
+| "Visual tests are flaky, skip them" | Fix flakiness, don't skip verification. | **Stabilize and pass Gate 3** |
 | "Lighthouse score is 88, close enough" | Close enough ≠ passing. Threshold is >= 90. | **Optimize until threshold met** |
 
 ---
 
 ## Gate Order Enforcement (HARD GATE)
 
-**Gates MUST execute in order: 0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8. All 9 gates are MANDATORY.**
+**Gates MUST execute in order: 0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7. All 8 gates are MANDATORY.**
 
 | Violation | Why It's WRONG | Consequence |
 |-----------|----------------|-------------|
-| Skip Gate 1 (DevOps) | "No infra changes" | App without container = works on my machine only |
-| Skip Gate 2 (Accessibility) | "It's internal tool" | Internal tools MUST be accessible. Legal requirement. |
-| Skip Gate 3 (Unit Testing) | "E2E covers it" | E2E is slow, unit tests catch logic bugs faster |
-| Skip Gate 4 (Visual) | "Snapshots are brittle" | Fix brittleness, don't skip regression detection |
-| Skip Gate 5 (E2E) | "Manual testing done" | Manual testing is not reproducible or automated |
-| Skip Gate 6 (Performance) | "Optimize later" | Later = never. Performance budgets apply NOW |
+| Skip Gate 1 (Accessibility) | "It's internal tool" | Internal tools MUST be accessible. Legal requirement. |
+| Skip Gate 2 (Unit Testing) | "E2E covers it" | E2E is slow, unit tests catch logic bugs faster |
+| Skip Gate 3 (Visual) | "Snapshots are brittle" | Fix brittleness, don't skip regression detection |
+| Skip Gate 4 (E2E) | "Manual testing done" | Manual testing is not reproducible or automated |
+| Skip Gate 5 (Performance) | "Optimize later" | Later = never. Performance budgets apply NOW |
 | Reorder Gates | "Review before test" | Reviewing untested code wastes reviewer time |
-| Parallel Gates | "Run 2 and 3 together" | Dependencies exist. Order is intentional. |
+| Parallel Gates | "Run 1 and 2 together" | Dependencies exist. Order is intentional. |
 
-**All testing gates (2-6) are MANDATORY. No exceptions. No skip reasons.**
+**All testing gates (1-5) are MANDATORY. No exceptions. No skip reasons.**
 
 **Gates are not parallelizable across different gates. Sequential execution is MANDATORY.**
 
@@ -542,14 +538,14 @@ Task 5: { subagent_type: "bee:frontend-engineer", prompt: "REVIEW MODE: Review a
 
 ## Execution Order
 
-**Core Principle:** Each execution unit passes through all 9 gates. All gates execute and complete per unit.
+**Core Principle:** Each execution unit passes through all 8 gates. All gates execute and complete per unit.
 
-**Per-Unit Flow:** Unit -> Gate 0->1->2->3->4->5->6->7->8 -> Unit Checkpoint -> Task Checkpoint -> Next Unit
+**Per-Unit Flow:** Unit -> Gate 0->1->2->3->4->5->6->7 -> Unit Checkpoint -> Task Checkpoint -> Next Unit
 
 | Scenario | Execution Unit | Gates Per Unit |
 |----------|----------------|----------------|
-| Task without subtasks | Task itself | 9 gates |
-| Task with subtasks | Each subtask | 9 gates per subtask |
+| Task without subtasks | Task itself | 8 gates |
+| Task with subtasks | Each subtask | 8 gates per subtask |
 
 ## Commit Timing
 
@@ -557,7 +553,7 @@ Task 5: { subagent_type: "bee:frontend-engineer", prompt: "REVIEW MODE: Review a
 
 | Option | When Commit Happens | Use Case |
 |--------|---------------------|----------|
-| **(a) Per subtask** | After each subtask passes Gate 8 | Fine-grained history, easy rollback per subtask |
+| **(a) Per subtask** | After each subtask passes Gate 7 | Fine-grained history, easy rollback per subtask |
 | **(b) Per task** | After all subtasks of a task complete | Logical grouping, one commit per feature chunk |
 | **(c) At the end** | After entire cycle completes | Single commit with all changes, clean history |
 
@@ -660,7 +656,6 @@ State is persisted to `docs/bee:dev-cycle-frontend/current-cycle.json`:
             "completed_at": "ISO timestamp"
           }
         },
-        "devops": {"status": "pending"},
         "accessibility": {
           "status": "pending|in_progress|completed",
           "wcag_violations": 0,
@@ -708,16 +703,6 @@ State is persisted to `docs/bee:dev-cycle-frontend/current-cycle.json`:
             "non_compliant": 0,
             "gaps": []
           }
-        },
-        "devops": {
-          "agent": "bee:devops-engineer",
-          "output": "## Summary\n...",
-          "timestamp": "ISO timestamp",
-          "duration_ms": 0,
-          "iterations": 1,
-          "artifacts_created": ["Dockerfile", "nginx.conf", ".env.example"],
-          "verification_errors": [],
-          "standards_compliance": {}
         },
         "accessibility": {
           "agent": "bee:qa-analyst-frontend",
@@ -832,13 +817,12 @@ State is persisted to `docs/bee:dev-cycle-frontend/current-cycle.json`:
 | Gate | Fields to Populate |
 |------|-------------------|
 | Gate 0 (Implementation) | `standards_compliance` (total, compliant, gaps[]) |
-| Gate 1 (DevOps) | `standards_compliance` + `verification_errors[]` |
-| Gate 2 (Accessibility) | `wcag_violations` + `keyboard_nav_issues` + `screen_reader_issues` |
-| Gate 3 (Unit Testing) | `standards_compliance` + `coverage_actual` + `failures[]` |
-| Gate 4 (Visual Testing) | `snapshots_total` + `snapshots_passed` + `responsive_breakpoints_covered[]` |
-| Gate 5 (E2E Testing) | `flows_tested` + `browsers_tested[]` + `stability_runs` |
-| Gate 6 (Performance) | `lcp_ms` + `cls` + `inp_ms` + `lighthouse_score` |
-| Gate 7 (Review) | `issues[]` per reviewer + `verdict` per reviewer |
+| Gate 1 (Accessibility) | `wcag_violations` + `keyboard_nav_issues` + `screen_reader_issues` |
+| Gate 2 (Unit Testing) | `standards_compliance` + `coverage_actual` + `failures[]` |
+| Gate 3 (Visual Testing) | `snapshots_total` + `snapshots_passed` + `responsive_breakpoints_covered[]` |
+| Gate 4 (E2E Testing) | `flows_tested` + `browsers_tested[]` + `stability_runs` |
+| Gate 5 (Performance) | `lcp_ms` + `cls` + `inp_ms` + `lighthouse_score` |
+| Gate 6 (Review) | `issues[]` per reviewer + `verdict` per reviewer |
 
 **Empty arrays `[]` indicate no issues found - this is valid data for feedback-loop.**
 
@@ -876,14 +860,13 @@ Read tool:
 |-------|-------------|-----------------|
 | Gate 0.1 (TDD-RED) | `tdd_red.status`, `tdd_red.failure_output` | YES |
 | Gate 0.2 (TDD-GREEN) | `tdd_green.status`, `implementation.status` | YES |
-| Gate 1 (DevOps) | `devops.status`, `agent_outputs.devops` | YES |
-| Gate 2 (Accessibility) | `accessibility.status`, `agent_outputs.accessibility` | YES |
-| Gate 3 (Unit Testing) | `unit_testing.status`, `agent_outputs.unit_testing` | YES |
-| Gate 4 (Visual Testing) | `visual_testing.status`, `agent_outputs.visual_testing` | YES |
-| Gate 5 (E2E Testing) | `e2e_testing.status`, `agent_outputs.e2e_testing` | YES |
-| Gate 6 (Performance) | `performance_testing.status`, `agent_outputs.performance_testing` | YES |
-| Gate 7 (Review) | `review.status`, `agent_outputs.review` | YES |
-| Gate 8 (Validation) | `validation.status`, task `status` | YES |
+| Gate 1 (Accessibility) | `accessibility.status`, `agent_outputs.accessibility` | YES |
+| Gate 2 (Unit Testing) | `unit_testing.status`, `agent_outputs.unit_testing` | YES |
+| Gate 3 (Visual Testing) | `visual_testing.status`, `agent_outputs.visual_testing` | YES |
+| Gate 4 (E2E Testing) | `e2e_testing.status`, `agent_outputs.e2e_testing` | YES |
+| Gate 5 (Performance) | `performance_testing.status`, `agent_outputs.performance_testing` | YES |
+| Gate 6 (Review) | `review.status`, `agent_outputs.review` | YES |
+| Gate 7 (Validation) | `validation.status`, task `status` | YES |
 | Unit Approval | `status = "paused_for_approval"` | YES |
 | Task Approval | `status = "paused_for_task_approval"` | YES |
 
@@ -905,15 +888,15 @@ Read tool:
 
 | Mode | Checkpoint Behavior | Gate Behavior |
 |------|---------------------|---------------|
-| **Manual per subtask** | Pause after each subtask completes all 9 gates | All 9 gates execute without pause |
-| **Manual per task** | Pause after all subtasks of a task complete | All 9 gates execute without pause |
-| **Automatic** | No pauses | All 9 gates execute without pause |
+| **Manual per subtask** | Pause after each subtask completes all 8 gates | All 8 gates execute without pause |
+| **Manual per task** | Pause after all subtasks of a task complete | All 8 gates execute without pause |
+| **Automatic** | No pauses | All 8 gates execute without pause |
 
-**CRITICAL:** Execution mode affects CHECKPOINTS (user approval pauses), not GATES (quality checks). All gates execute regardless of mode.
+**CRITICAL:** Execution mode affects CHECKPOINTS (user approval pauses), not GATES (quality checks). All 8 gates execute regardless of mode.
 
 ### Checkpoint Questions
 
-**Unit Checkpoint (after subtask completes Gate 8):**
+**Unit Checkpoint (after subtask completes Gate 7):**
 
 **VISUAL CHANGE REPORT (MANDATORY - before checkpoint question):**
 - MUST invoke `Skill("bee:visual-explainer")` to generate a code-diff HTML report for this execution unit
@@ -921,8 +904,8 @@ Read tool:
 - Content sourced from state JSON `agent_outputs` for the current unit:
   * **TDD Output:** `tdd_red` (failing test) + `tdd_green` (implementation)
   * **Files Changed:** Per-file before/after diff panels using `git diff` data from the implementation (do not read source files directly — use diff output provided by the implementation agent)
-  * **Frontend-Specific Metrics:** WCAG violations resolved (Gate 2), visual snapshot pass rate (Gate 4), LCP/CLS/INP values (Gate 6), Lighthouse score (Gate 6)
-  * **Review Verdicts:** Summary of all 5 reviewer verdicts from Gate 7
+  * **Frontend-Specific Metrics:** WCAG violations resolved (Gate 1), visual snapshot pass rate (Gate 3), LCP/CLS/INP values (Gate 5), Lighthouse score (Gate 5)
+  * **Review Verdicts:** Summary of all 5 reviewer verdicts from Gate 6
 - Save to: `docs/bee:dev-cycle-frontend/reports/unit-{unit_id}-report.html`
 - Open in browser:
   ```text
@@ -933,7 +916,7 @@ Read tool:
 - See [shared-patterns/anti-rationalization-visual-report.md](../shared-patterns/anti-rationalization-visual-report.md) for anti-rationalization table
 
 ```text
-Subtask {id} complete. All 9 gates passed.
+Subtask {id} complete. All 8 gates passed.
 (a) Continue to next subtask
 (b) Pause cycle (save state for --resume)
 (c) Abort cycle
@@ -1040,7 +1023,7 @@ Check: Does docs/PROJECT_RULES.md exist?
 
 ---
 
-## Step 2-10: Gate Execution (Per Unit)
+## Step 2-9: Gate Execution (Per Unit)
 
 ### Step 2: Gate 0 - Implementation
 
@@ -1048,13 +1031,7 @@ Check: Does docs/PROJECT_RULES.md exist?
 
 Dispatch appropriate frontend agent based on task type. Agent follows TDD (RED then GREEN) with frontend.md standards.
 
-### Step 3: Gate 1 - DevOps
-
-**REQUIRED SUB-SKILL:** `Skill("bee:dev-devops")`
-
-Dispatch `bee:devops-engineer` for Dockerfile, docker-compose, Nginx configuration, and .env.example.
-
-### Step 4: Gate 2 - Accessibility
+### Step 3: Gate 1 - Accessibility
 
 **REQUIRED SUB-SKILL:** `Skill("bee:dev-frontend-accessibility")`
 
@@ -1065,7 +1042,7 @@ Dispatch `bee:qa-analyst-frontend` with `test_mode="accessibility"`. MUST verify
 - Focus management is proper
 - Color contrast ratios meet AA thresholds
 
-### Step 5: Gate 3 - Unit Testing
+### Step 4: Gate 2 - Unit Testing
 
 **REQUIRED SUB-SKILL:** `Skill("bee:dev-unit-testing")`
 
@@ -1075,7 +1052,7 @@ Dispatch `bee:qa-analyst-frontend` with `test_mode="unit"`. MUST verify:
 - Component rendering, state management, and event handlers tested
 - Edge cases covered (empty states, error states, loading states)
 
-### Step 6: Gate 4 - Visual Testing
+### Step 5: Gate 3 - Visual Testing
 
 **REQUIRED SUB-SKILL:** `Skill("bee:dev-frontend-visual")`
 
@@ -1085,7 +1062,7 @@ Dispatch `bee:qa-analyst-frontend` with `test_mode="visual"`. MUST verify:
 - Design system compliance verified
 - Visual regression baseline established
 
-### Step 7: Gate 5 - E2E Testing
+### Step 6: Gate 4 - E2E Testing
 
 **REQUIRED SUB-SKILL:** `Skill("bee:dev-frontend-e2e")`
 
@@ -1095,7 +1072,7 @@ Dispatch `bee:qa-analyst-frontend` with `test_mode="e2e"`. MUST verify:
 - 3x consecutive stable pass (no flakiness)
 - Page object pattern used for maintainability
 
-### Step 8: Gate 6 - Performance Testing
+### Step 7: Gate 5 - Performance Testing
 
 **REQUIRED SUB-SKILL:** `Skill("bee:dev-frontend-performance")`
 
@@ -1106,13 +1083,13 @@ Dispatch `bee:qa-analyst-frontend` with `test_mode="performance"`. MUST verify:
 - Lighthouse Performance score >= 90
 - Bundle size within budget (if defined in PROJECT_RULES.md)
 
-### Step 9: Gate 7 - Code Review
+### Step 8: Gate 6 - Code Review
 
 **REQUIRED SUB-SKILL:** `Skill("bee:requesting-code-review")`
 
-Dispatch all 5 reviewers in parallel (see Gate 7: Code Review Adaptation above).
+Dispatch all 5 reviewers in parallel (see Gate 6: Code Review Adaptation above).
 
-### Step 10: Gate 8 - Validation
+### Step 9: Gate 7 - Validation
 
 **REQUIRED SUB-SKILL:** `Skill("bee:dev-validation")`
 
@@ -1156,10 +1133,10 @@ See [shared-patterns/shared-pressure-resistance.md](../shared-patterns/shared-pr
 
 | Pressure Type | Request | Agent Response |
 |---------------|---------|----------------|
-| **Accessibility** | "Skip accessibility, it's an internal tool" | "FORBIDDEN. Internal tools MUST be accessible. WCAG AA is a legal requirement in many jurisdictions. Gate 2 executes fully." |
+| **Accessibility** | "Skip accessibility, it's an internal tool" | "FORBIDDEN. Internal tools MUST be accessible. WCAG AA is a legal requirement in many jurisdictions. Gate 1 executes fully." |
 | **Browser Coverage** | "Only test Chromium, it's the main browser" | "All 3 browsers (Chromium, Firefox, WebKit) are REQUIRED. Cross-browser issues are the most common production bugs." |
 | **Performance** | "Performance will be optimized later" | "Performance thresholds apply NOW. LCP < 2.5s, CLS < 0.1, INP < 200ms, Lighthouse >= 90. Later = never." |
-| **Visual Tests** | "Snapshots are too brittle to maintain" | "Fix the brittleness (use threshold tolerances), don't skip regression detection. Gate 4 is MANDATORY." |
+| **Visual Tests** | "Snapshots are too brittle to maintain" | "Fix the brittleness (use threshold tolerances), don't skip regression detection. Gate 3 is MANDATORY." |
 | **Design System** | "We'll align with design system later" | "Design system compliance is part of Gate 0. Components MUST use Sindarian UI (or shadcn fallback) from the start." |
 
 **Gate-specific note:** Execution mode selection affects CHECKPOINTS (user approval pauses), not GATES (quality checks). All gates execute regardless of mode.

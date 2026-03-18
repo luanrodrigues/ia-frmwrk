@@ -1,18 +1,18 @@
 ---
 name: bee:dev-frontend-accessibility-react-native
-title: React Native frontend development cycle accessibility testing (Gate 2)
+title: React Native frontend development cycle accessibility testing (Gate 1)
 category: development-cycle-frontend-react-native
 tier: 1
 when_to_use: |
-  Use after DevOps setup (Gate 1) is complete in the React Native frontend dev cycle.
+  Use after implementation (Gate 0) is complete in the React Native frontend dev cycle.
   MANDATORY for all React Native frontend development tasks - ensures VoiceOver/TalkBack compliance.
 description: |
-  Gate 2 of the React Native frontend development cycle - ensures all components pass accessibility
+  Gate 1 of the React Native frontend development cycle - ensures all components pass accessibility
   checks with zero violations: correct accessibilityLabel, accessibilityRole, accessibilityHint,
   VoiceOver (iOS) and TalkBack (Android) compatibility, and minimum touch target sizes.
 
 trigger: |
-  - After DevOps setup complete (Gate 1)
+  - After implementation complete (Gate 0)
   - MANDATORY for all React Native frontend development tasks
   - Validates VoiceOver/TalkBack compliance on iOS and Android
 
@@ -22,11 +22,11 @@ NOT_skip_when: |
   - "We'll add accessibility later" - Retrofitting costs 10x more.
 
 sequence:
-  after: [bee:dev-devops]
+  after: [bee:dev-implementation]
   before: [bee:dev-unit-testing]
 
 related:
-  complementary: [bee:dev-cycle-frontend-react-native, bee:dev-devops, bee:qa-analyst-frontend-react-native]
+  complementary: [bee:dev-cycle-frontend-react-native, bee:qa-analyst-frontend-react-native]
 
 input_schema:
   required:
@@ -42,9 +42,6 @@ input_schema:
       enum: [typescript]
       description: "Programming language (TypeScript only)"
   optional:
-    - name: gate1_handoff
-      type: object
-      description: "Full handoff from Gate 1 (DevOps)"
     - name: platform_targets
       type: array
       items: string
@@ -109,10 +106,10 @@ examples:
       | LoginScreen | 0 | PASS | PASS |
 
       ## Handoff to Next Gate
-      - Ready for Gate 3 (Unit Testing): YES
+      - Ready for Gate 2 (Unit Testing): YES
 ---
 
-# Dev Frontend Accessibility Testing - React Native (Gate 2)
+# Dev Frontend Accessibility Testing - React Native (Gate 1)
 
 ## Overview
 
@@ -157,7 +154,6 @@ REQUIRED INPUT:
 - language: [typescript only]
 
 OPTIONAL INPUT:
-- gate1_handoff: [full Gate 1 output]
 - platform_targets: [ios, android] (default: both)
 
 if any REQUIRED input is missing:
@@ -174,7 +170,7 @@ Task tool:
   subagent_type: "bee:qa-analyst-frontend-react-native"
   model: "opus"
   prompt: |
-    **MODE:** ACCESSIBILITY TESTING (Gate 2)
+    **MODE:** ACCESSIBILITY TESTING (Gate 1)
 
     **Standards:** Load testing-accessibility.md (frontend-react-native)
 
@@ -219,7 +215,7 @@ Task tool:
 Parse agent output:
 
 if "Status: PASS" in output:
-  → Gate 2 PASSED
+  → Gate 1 PASSED
   → Return success with metrics
 
 if "Status: FAIL" in output:
@@ -245,7 +241,7 @@ if "Status: FAIL" in output:
 | {component} | {states} | {count} | {PASS|FAIL} | {PASS|FAIL} |
 
 ## Handoff to Next Gate
-- Ready for Gate 3 (Unit Testing): {YES|NO}
+- Ready for Gate 2 (Unit Testing): {YES|NO}
 - Iterations: {count}
 ```
 

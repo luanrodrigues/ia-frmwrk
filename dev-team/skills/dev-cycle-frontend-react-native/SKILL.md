@@ -1,8 +1,8 @@
 ---
 name: bee:dev-cycle-frontend-react-native
 description: |
-  React Native frontend development cycle orchestrator with 9 gates. Loads tasks from PM team output
-  or backend handoff and executes through implementation → devops → accessibility →
+  React Native frontend development cycle orchestrator with 8 gates. Loads tasks from PM team output
+  or backend handoff and executes through implementation → accessibility →
   unit testing → visual testing → E2E testing → performance testing → review → validation.
 
 trigger: |
@@ -41,7 +41,7 @@ examples:
       2. Detect UI library mode (sindarian-rn or fallback)
       3. Load backend handoff if available
       4. Ask user for execution mode
-      5. Execute Gate 0→1→2→3→4→5→6→7→8 for each task
+      5. Execute Gate 0→1→2→3→4→5→6→7 for each task
       6. Generate feedback report
   - name: "Resume interrupted React Native frontend cycle"
     invocation: "/bee:dev-cycle-frontend-react-native --resume"
@@ -72,14 +72,14 @@ If any condition is true, STOP and report blocker. Cannot proceed without Bee st
 
 ## Overview
 
-The React Native frontend development cycle orchestrator loads tasks/subtasks from PM team output (or manual task files) and executes through 9 gates (Gate 0-8) with **all gates executing per unit** (no deferred execution):
+The React Native frontend development cycle orchestrator loads tasks/subtasks from PM team output (or manual task files) and executes through 8 gates (Gate 0-7) with **all gates executing per unit** (no deferred execution):
 
-- **Gates 0-8 (per unit):** Write code + run tests/checks per task/subtask
-- **All 9 gates are sequential and mandatory**
+- **Gates 0-7 (per unit):** Write code + run tests/checks per task/subtask
+- **All 8 gates are sequential and mandatory**
 
 Unlike the backend `bee:dev-cycle` (which defers integration/chaos test execution), the React Native frontend cycle executes all gates fully per unit. Frontend testing tools (Detox, RNTL, Jest, bundle analyzer) do not require heavy container infrastructure.
 
-**MUST announce at start:** "I'm using the bee:dev-cycle-frontend-react-native skill to orchestrate React Native frontend task execution through 9 gates (Gate 0-8). All gates execute per unit."
+**MUST announce at start:** "I'm using the bee:dev-cycle-frontend-react-native skill to orchestrate React Native frontend task execution through 8 gates (Gate 0-7). All gates execute per unit."
 
 ## CRITICAL: Specialized Agents Perform All Tasks
 
@@ -216,14 +216,13 @@ Check: Does docs/bee:dev-cycle/handoff-frontend.json exist?
 
 <cannot_skip>
 - Gate 0: `Skill("bee:dev-implementation")` → then `Task(subagent_type="bee:frontend-engineer-react-native" or "bee:ui-engineer-react-native")`
-- Gate 1: `Skill("bee:dev-devops")` → then `Task(subagent_type="bee:devops-engineer")`
-- Gate 2: `Skill("bee:dev-frontend-accessibility-react-native")` → then `Task(subagent_type="bee:qa-analyst-frontend-react-native", test_mode="accessibility")`
-- Gate 3: `Skill("bee:dev-unit-testing")` → then `Task(subagent_type="bee:qa-analyst-frontend-react-native", test_mode="unit")`
-- Gate 4: `Skill("bee:dev-frontend-visual-react-native")` → then `Task(subagent_type="bee:qa-analyst-frontend-react-native", test_mode="visual")`
-- Gate 5: `Skill("bee:dev-frontend-e2e-react-native")` → then `Task(subagent_type="bee:qa-analyst-frontend-react-native", test_mode="e2e")`
-- Gate 6: `Skill("bee:dev-frontend-performance-react-native")` → then `Task(subagent_type="bee:qa-analyst-frontend-react-native", test_mode="performance")`
-- Gate 7: `Skill("bee:requesting-code-review")` → then 5x `Task(...)` in parallel
-- Gate 8: `Skill("bee:dev-validation")` → N/A (verification only)
+- Gate 1: `Skill("bee:dev-frontend-accessibility-react-native")` → then `Task(subagent_type="bee:qa-analyst-frontend-react-native", test_mode="accessibility")`
+- Gate 2: `Skill("bee:dev-unit-testing")` → then `Task(subagent_type="bee:qa-analyst-frontend-react-native", test_mode="unit")`
+- Gate 3: `Skill("bee:dev-frontend-visual-react-native")` → then `Task(subagent_type="bee:qa-analyst-frontend-react-native", test_mode="visual")`
+- Gate 4: `Skill("bee:dev-frontend-e2e-react-native")` → then `Task(subagent_type="bee:qa-analyst-frontend-react-native", test_mode="e2e")`
+- Gate 5: `Skill("bee:dev-frontend-performance-react-native")` → then `Task(subagent_type="bee:qa-analyst-frontend-react-native", test_mode="performance")`
+- Gate 6: `Skill("bee:requesting-code-review")` → then 5x `Task(...)` in parallel
+- Gate 7: `Skill("bee:dev-validation")` → N/A (verification only)
 </cannot_skip>
 
 Between "WebFetch standards" and "Task(agent)" there MUST be "Skill(sub-skill)".
@@ -290,10 +289,10 @@ RED FLAG: Standards loaded, but next action is not Task tool
 ### Cannot Be Overridden
 
 <cannot_skip>
-- All 9 gates must execute (0->1->2->3->4->5->6->7->8) - Each gate catches different issues
-- All testing gates (2-6) are MANDATORY - Comprehensive test coverage ensures quality
-- Gates execute in order (0->1->2->3->4->5->6->7->8) - Dependencies exist between gates
-- Gate 7 requires all 5 reviewers - Different review perspectives are complementary
+- All 8 gates must execute (0->1->2->3->4->5->6->7) - Each gate catches different issues
+- All testing gates (1-5) are MANDATORY - Comprehensive test coverage ensures quality
+- Gates execute in order (0->1->2->3->4->5->6->7) - Dependencies exist between gates
+- Gate 6 requires all 5 reviewers - Different review perspectives are complementary
 - Unit test coverage threshold >= 85% - Industry standard for quality code
 - VoiceOver/TalkBack accessibility compliance is non-negotiable - Accessibility is a legal requirement
 - Performance thresholds are non-negotiable - Performance affects user experience on mobile devices
@@ -304,19 +303,18 @@ No exceptions. User cannot override. Time pressure cannot override.
 
 ---
 
-## The 9 Gates
+## The 8 Gates
 
 | Gate | Skill | Purpose | Agent | Standards Module |
 |------|-------|---------|-------|------------------|
 | 0 | bee:dev-implementation | Write code following TDD | bee:frontend-engineer-react-native / bee:ui-engineer-react-native | frontend-react-native.md |
-| 1 | bee:dev-devops | EAS Build / CI pipeline setup | bee:devops-engineer | devops.md |
-| 2 | bee:dev-frontend-accessibility-react-native | VoiceOver/TalkBack compliance | bee:qa-analyst-frontend-react-native (test_mode: accessibility) | testing-accessibility-rn.md |
-| 3 | bee:dev-unit-testing | Unit tests 85%+ coverage (RNTL + Jest) | bee:qa-analyst-frontend-react-native (test_mode: unit) | frontend-react-native.md |
-| 4 | bee:dev-frontend-visual-react-native | Jest snapshot/visual regression tests | bee:qa-analyst-frontend-react-native (test_mode: visual) | testing-visual-rn.md |
-| 5 | bee:dev-frontend-e2e-react-native | E2E tests with Detox (iOS + Android) | bee:qa-analyst-frontend-react-native (test_mode: e2e) | testing-e2e-rn.md |
-| 6 | bee:dev-frontend-performance-react-native | Bundle size + FlatList + Hermes optimizations | bee:qa-analyst-frontend-react-native (test_mode: performance) | testing-performance-rn.md |
-| 7 | bee:requesting-code-review | Parallel code review (5 reviewers) | bee:code-reviewer, bee:business-logic-reviewer, bee:security-reviewer, bee:test-reviewer, bee:frontend-engineer-react-native (review mode) | N/A |
-| 8 | bee:dev-validation | Final acceptance validation | N/A (verification) | N/A |
+| 1 | bee:dev-frontend-accessibility-react-native | VoiceOver/TalkBack compliance | bee:qa-analyst-frontend-react-native (test_mode: accessibility) | testing-accessibility-rn.md |
+| 2 | bee:dev-unit-testing | Unit tests 85%+ coverage (RNTL + Jest) | bee:qa-analyst-frontend-react-native (test_mode: unit) | frontend-react-native.md |
+| 3 | bee:dev-frontend-visual-react-native | Jest snapshot/visual regression tests | bee:qa-analyst-frontend-react-native (test_mode: visual) | testing-visual-rn.md |
+| 4 | bee:dev-frontend-e2e-react-native | E2E tests with Detox (iOS + Android) | bee:qa-analyst-frontend-react-native (test_mode: e2e) | testing-e2e-rn.md |
+| 5 | bee:dev-frontend-performance-react-native | Bundle size + FlatList + Hermes optimizations | bee:qa-analyst-frontend-react-native (test_mode: performance) | testing-performance-rn.md |
+| 6 | bee:requesting-code-review | Parallel code review (5 reviewers) | bee:code-reviewer, bee:business-logic-reviewer, bee:security-reviewer, bee:test-reviewer, bee:frontend-engineer-react-native (review mode) | N/A |
+| 7 | bee:dev-validation | Final acceptance validation | N/A (verification) | N/A |
 
 **All gates are MANDATORY. No exceptions. No skip reasons.**
 
@@ -341,15 +339,15 @@ No exceptions. User cannot override. Time pressure cannot override.
 | Zustand/Redux store slices | YES - TDD RED→GREEN | Gate 0 (implementation) | Test defines state transitions before code |
 | Conditional rendering logic | YES - TDD RED→GREEN | Gate 0 (implementation) | Test defines when elements show/hide |
 | API integration (fetch/axios hooks) | YES - TDD RED→GREEN | Gate 0 (implementation) | Test defines expected request/response |
-| Layout / styling (StyleSheet without logic) | NO - test-after | Gate 4 (visual testing) | Visual output is exploratory; snapshot locks it |
-| Animations (Animated/Reanimated) | NO - test-after | Gate 4 (visual testing) | Motion is iterative; test captures final state |
-| Static presentational components | NO - test-after | Gate 4 (visual testing) | No logic to drive with RED phase |
+| Layout / styling (StyleSheet without logic) | NO - test-after | Gate 3 (visual testing) | Visual output is exploratory; snapshot locks it |
+| Animations (Animated/Reanimated) | NO - test-after | Gate 3 (visual testing) | Motion is iterative; test captures final state |
+| Static presentational components | NO - test-after | Gate 3 (visual testing) | No logic to drive with RED phase |
 
 **Rules:**
 1. **Behavioral hooks and store slices** in Gate 0 MUST produce TDD RED failure output before implementation
-2. **Visual/presentational components** in Gate 0 are implemented without RED phase; Gate 4 creates their snapshot tests
+2. **Visual/presentational components** in Gate 0 are implemented without RED phase; Gate 3 creates their snapshot tests
 3. **Mixed components** (behavior + visual): TDD for the behavioral part, test-after for the visual part
-4. Gate 3 (Unit Testing) coverage threshold (85%) still applies to ALL component types
+4. Gate 2 (Unit Testing) coverage threshold (85%) still applies to ALL component types
 
 **React Native-Specific TDD Anti-Rationalization:**
 
@@ -361,7 +359,7 @@ No exceptions. User cannot override. Time pressure cannot override.
 | "Conditional render is visual" | show/hide conditions are logic, not presentation. | **TDD RED→GREEN for conditional rendering logic** |
 | "useFetch is just a wrapper" | Custom hooks wrapping fetch define caching, error handling contracts. | **TDD for hook behavior** |
 
-### Gate 7: Code Review Adaptation (5 Reviewers)
+### Gate 6: Code Review Adaptation (5 Reviewers)
 
 For the React Native frontend cycle, the 5 parallel reviewers are:
 
@@ -378,7 +376,7 @@ For the React Native frontend cycle, the 5 parallel reviewers are:
 **All 5 reviewers MUST be dispatched in a single message with 5 parallel Task calls.**
 
 ```yaml
-# Gate 7: Dispatch all 5 reviewers in parallel (SINGLE message)
+# Gate 6: Dispatch all 5 reviewers in parallel (SINGLE message)
 Task 1: { subagent_type: "bee:code-reviewer", ... }
 Task 2: { subagent_type: "bee:business-logic-reviewer", ... }
 Task 3: { subagent_type: "bee:security-reviewer", ... }
@@ -396,47 +394,45 @@ Task 5: { subagent_type: "bee:frontend-engineer-react-native", prompt: "REVIEW M
 |------|---------------------|----------------|
 | 0.1 | TDD-RED: Failing test written + failure output captured (behavioral components only - see RN TDD Policy) | Test exists but no failure output = FAIL. Visual-only components skip to 0.2 |
 | 0.2 | TDD-GREEN: Implementation passes test (behavioral) OR implementation complete (visual) | Code exists but test fails = FAIL |
-| 0 | Both 0.1 and 0.2 complete (behavioral) OR 0.2 complete (visual - snapshots deferred to Gate 4) | 0.1 done without 0.2 = FAIL |
-| 1 | EAS Build config + CI pipeline + .env.example | Missing any = FAIL |
-| 2 | 0 VoiceOver/TalkBack violations + accessibilityLabel on all interactive elements + accessibilityRole set | Any violation = FAIL |
-| 3 | Unit test coverage >= 85% + all AC tested | 84% = FAIL |
-| 4 | All state snapshots pass + platform snapshots (iOS + Android) covered | Missing snapshots = FAIL |
-| 5 | All user flows tested on iOS + Android + 3x stable pass (Detox) | Flaky = FAIL |
-| 6 | JS bundle size within budget + FlatList/FlashList used for lists + Hermes enabled + image optimization applied | Any threshold missed = FAIL |
-| 7 | All 5 reviewers PASS | 4/5 reviewers = FAIL |
-| 8 | Explicit "APPROVED" from user | "Looks good" = not approved |
+| 0 | Both 0.1 and 0.2 complete (behavioral) OR 0.2 complete (visual - snapshots deferred to Gate 3) | 0.1 done without 0.2 = FAIL |
+| 1 | 0 VoiceOver/TalkBack violations + accessibilityLabel on all interactive elements + accessibilityRole set | Any violation = FAIL |
+| 2 | Unit test coverage >= 85% + all AC tested | 84% = FAIL |
+| 3 | All state snapshots pass + platform snapshots (iOS + Android) covered | Missing snapshots = FAIL |
+| 4 | All user flows tested on iOS + Android + 3x stable pass (Detox) | Flaky = FAIL |
+| 5 | JS bundle size within budget + FlatList/FlashList used for lists + Hermes enabled + image optimization applied | Any threshold missed = FAIL |
+| 6 | All 5 reviewers PASS | 4/5 reviewers = FAIL |
+| 7 | Explicit "APPROVED" from user | "Looks good" = not approved |
 
-**CRITICAL for Gate 7:** Running 4 of 5 reviewers is not a partial pass - it's a FAIL. Re-run all 5 reviewers.
+**CRITICAL for Gate 6:** Running 4 of 5 reviewers is not a partial pass - it's a FAIL. Re-run all 5 reviewers.
 
 ---
 
 ## Gate Order Enforcement (HARD GATE)
 
-**Gates MUST execute in order: 0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8. All 9 gates are MANDATORY.**
+**Gates MUST execute in order: 0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7. All 8 gates are MANDATORY.**
 
 | Violation | Why It's WRONG | Consequence |
 |-----------|----------------|-------------|
-| Skip Gate 1 (DevOps) | "No infra changes" | App without EAS Build config = works on simulator only |
-| Skip Gate 2 (Accessibility) | "It's internal tool" | Mobile apps MUST be accessible. Legal requirement. |
-| Skip Gate 3 (Unit Testing) | "E2E covers it" | E2E is slow, RNTL unit tests catch logic bugs faster |
-| Skip Gate 4 (Visual) | "Snapshots are brittle" | Fix brittleness, don't skip regression detection |
-| Skip Gate 5 (E2E) | "Manual testing done" | Manual testing is not reproducible or automated |
-| Skip Gate 6 (Performance) | "Optimize later" | Later = never. FlashList, image optimization apply NOW |
+| Skip Gate 1 (Accessibility) | "It's internal tool" | Mobile apps MUST be accessible. Legal requirement. |
+| Skip Gate 2 (Unit Testing) | "E2E covers it" | E2E is slow, RNTL unit tests catch logic bugs faster |
+| Skip Gate 3 (Visual) | "Snapshots are brittle" | Fix brittleness, don't skip regression detection |
+| Skip Gate 4 (E2E) | "Manual testing done" | Manual testing is not reproducible or automated |
+| Skip Gate 5 (Performance) | "Optimize later" | Later = never. FlashList, image optimization apply NOW |
 | Reorder Gates | "Review before test" | Reviewing untested RN code wastes reviewer time |
-| Parallel Gates | "Run 2 and 3 together" | Dependencies exist. Order is intentional. |
+| Parallel Gates | "Run 1 and 2 together" | Dependencies exist. Order is intentional. |
 
 ---
 
 ## Execution Order
 
-**Core Principle:** Each execution unit passes through all 9 gates. All gates execute and complete per unit.
+**Core Principle:** Each execution unit passes through all 8 gates. All gates execute and complete per unit.
 
-**Per-Unit Flow:** Unit -> Gate 0->1->2->3->4->5->6->7->8 -> Unit Checkpoint -> Task Checkpoint -> Next Unit
+**Per-Unit Flow:** Unit -> Gate 0->1->2->3->4->5->6->7 -> Unit Checkpoint -> Task Checkpoint -> Next Unit
 
 | Scenario | Execution Unit | Gates Per Unit |
 |----------|----------------|----------------|
-| Task without subtasks | Task itself | 9 gates |
-| Task with subtasks | Each subtask | 9 gates per subtask |
+| Task without subtasks | Task itself | 8 gates |
+| Task with subtasks | Each subtask | 8 gates per subtask |
 
 ## Commit Timing
 
@@ -444,7 +440,7 @@ Task 5: { subagent_type: "bee:frontend-engineer-react-native", prompt: "REVIEW M
 
 | Option | When Commit Happens | Use Case |
 |--------|---------------------|----------|
-| **(a) Per subtask** | After each subtask passes Gate 8 | Fine-grained history, easy rollback per subtask |
+| **(a) Per subtask** | After each subtask passes Gate 7 | Fine-grained history, easy rollback per subtask |
 | **(b) Per task** | After all subtasks of a task complete | Logical grouping, one commit per feature chunk |
 | **(c) At the end** | After entire cycle completes | Single commit with all changes, clean history |
 
@@ -500,20 +496,6 @@ Task 5: { subagent_type: "bee:frontend-engineer-react-native", prompt: "REVIEW M
   "platform_targets": ["ios", "android"]
 }
 ```
-
----
-
-## EAS Build / DevOps Setup (Gate 1)
-
-Gate 1 for React Native uses EAS Build and CI pipeline rather than Docker/Nginx:
-
-| Artifact | Required | Purpose |
-|----------|----------|---------|
-| `eas.json` | YES | EAS Build profiles (development, preview, production) |
-| `.env.example` | YES | Environment variable template |
-| CI pipeline config | YES | GitHub Actions / Bitrise / CircleCI for build/test |
-| `app.config.ts` or `app.json` | YES | Expo/RN app configuration |
-| Makefile | YES | `make test`, `make e2e`, `make build`, `make lint` |
 
 ---
 

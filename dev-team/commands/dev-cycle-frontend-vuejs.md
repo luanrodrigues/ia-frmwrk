@@ -129,16 +129,15 @@ jq '.custom_prompt' docs/bee:dev-cycle-frontend-vuejs/current-cycle.json  # View
 | Gate | Skill | Description |
 |------|-------|-------------|
 | 0 | `bee:dev-implementation` | Implement code (TDD) |
-| 1 | `bee:dev-devops` | Create Docker/compose |
-| 2 | `bee:dev-frontend-accessibility` | WCAG 2.1 AA compliance (axe-core) |
-| 3 | `bee:dev-unit-testing` | Unit tests with 85%+ coverage (Vitest + Vue Testing Library) |
-| 4 | `bee:dev-frontend-visual` | Visual/snapshot testing (all states, responsive) |
-| 5 | `bee:dev-frontend-e2e` | E2E tests with Playwright (cross-browser, responsive) |
-| 6 | `bee:dev-frontend-performance` | Core Web Vitals + Lighthouse > 90 |
-| 7 | `bee:requesting-code-review` | Code review (5 reviewers in parallel) |
-| 8 | `bee:dev-validation` | Final validation |
+| 1 | `bee:dev-frontend-accessibility-vuejs` | WCAG 2.1 AA compliance (axe-core) |
+| 2 | `bee:dev-unit-testing` | Unit tests with 85%+ coverage (Vitest + Vue Testing Library) |
+| 3 | `bee:dev-frontend-visual-vuejs` | Visual/snapshot testing (all states, responsive) |
+| 4 | `bee:dev-frontend-e2e-vuejs` | E2E tests with Playwright (cross-browser, responsive) |
+| 5 | `bee:dev-frontend-performance-vuejs` | Core Web Vitals + Lighthouse > 90 |
+| 6 | `bee:requesting-code-review` | Code review (5 reviewers in parallel) |
+| 7 | `bee:dev-validation` | Final validation |
 
-**Note:** Tasks are loaded at initialization, not as a separate gate. All 9 gates are MANDATORY.
+**Note:** Tasks are loaded at initialization, not as a separate gate. All 8 gates are MANDATORY.
 
 After all tasks: `bee:dev-feedback-loop` generates metrics report.
 
@@ -151,7 +150,7 @@ After all tasks: `bee:dev-feedback-loop` generates metrics report.
 
 | Command | Description |
 |---------|-------------|
-| `/bee:dev-cycle` | Backend development cycle (10 gates) |
+| `/bee:dev-cycle` | Backend development cycle (8 gates) |
 | `/bee:dev-status` | Check current cycle status |
 | `/bee:dev-cancel` | Cancel running cycle |
 | `/bee:dev-report` | View feedback report |

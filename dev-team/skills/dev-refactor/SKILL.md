@@ -335,8 +335,8 @@ Check 2: Was codebase-report.md created by bee:codebase-explorer?
 
 ### For PHP/Laravel projects:
 
-<parallel_dispatch agents="bee:backend-engineer-php, bee:qa-analyst, bee:devops-engineer, bee:sre">
-All four agents MUST be dispatched in parallel via Task tool.
+<parallel_dispatch agents="bee:backend-engineer-php, bee:qa-analyst, bee:sre">
+All three agents MUST be dispatched in parallel via Task tool.
 Input: codebase-report.md, PROJECT_RULES.md
 </parallel_dispatch>
 
@@ -378,17 +378,6 @@ Task tool 2:
     Output: Standards Coverage Table + ISSUE-XXX for gaps
 
 Task tool 3:
-  subagent_type: "bee:devops-engineer"
-  description: "DevOps analysis"
-  prompt: |
-    **MODE: ANALYSIS only**
-    Check all 8 sections per shared-patterns/standards-coverage-table.md → "bee:devops-engineer"
-    ⛔ "Containers" means BOTH Dockerfile and Docker Compose
-    ⛔ "Makefile Standards" means all required commands: build, lint, test, cover, up, down, etc.
-    Input: codebase-report.md, PROJECT_RULES.md
-    Output: Standards Coverage Table + ISSUE-XXX for gaps
-
-Task tool 4:
   subagent_type: "bee:sre"
   description: "Observability analysis"
   prompt: |
@@ -400,8 +389,8 @@ Task tool 4:
 
 ### For PHP Backend projects (alternative dispatch):
 
-<parallel_dispatch agents="bee:backend-engineer-php, bee:qa-analyst, bee:devops-engineer, bee:sre">
-All four agents MUST be dispatched in parallel via Task tool.
+<parallel_dispatch agents="bee:backend-engineer-php, bee:qa-analyst, bee:sre">
+All three agents MUST be dispatched in parallel via Task tool.
 Input: codebase-report.md, PROJECT_RULES.md
 </parallel_dispatch>
 
@@ -458,7 +447,6 @@ After all parallel agent tasks complete, save each agent's output to a separate 
 docs/bee:dev-refactor/{timestamp}/reports/
 ├── bee:backend-engineer-php-report.md     (if PHP project)
 ├── bee:qa-analyst-report.md                  (always)
-├── bee:devops-engineer-report.md             (always)
 └── bee:sre-report.md                         (always)
 ```
 
@@ -499,7 +487,6 @@ docs/bee:dev-refactor/{timestamp}/reports/
 |------------------|------------------|
 | bee:backend-engineer-php | `bee:backend-engineer-php-report.md` |
 | bee:qa-analyst | `bee:qa-analyst-report.md` |
-| bee:devops-engineer | `bee:devops-engineer-report.md` |
 | bee:sre | `bee:sre-report.md` |
 
 ### Anti-Rationalization Table for Step 4.5
@@ -591,30 +578,29 @@ This means:
 
 | Finding Category | Should Be Caught In | Flag |
 |------------------|---------------------|------|
-| Missing edge case tests | Gate 3 (Testing) | `🚨 GATE 3 ESCAPE` |
-| Test isolation issues | Gate 3 (Testing) | `🚨 GATE 3 ESCAPE` |
-| Skipped/assertion-less tests | Gate 3 (Testing) | `🚨 GATE 3 ESCAPE` |
-| Test naming convention | Gate 3 (Testing) | `🚨 GATE 3 ESCAPE` |
-| Missing test coverage | Gate 3 (Testing) | `🚨 GATE 3 ESCAPE` |
-| TDD RED phase missing | Gate 3 (Testing) | `🚨 GATE 3 ESCAPE` |
+| Missing edge case tests | Gate 2 (Testing) | `🚨 GATE 2 ESCAPE` |
+| Test isolation issues | Gate 2 (Testing) | `🚨 GATE 2 ESCAPE` |
+| Skipped/assertion-less tests | Gate 2 (Testing) | `🚨 GATE 2 ESCAPE` |
+| Test naming convention | Gate 2 (Testing) | `🚨 GATE 2 ESCAPE` |
+| Missing test coverage | Gate 2 (Testing) | `🚨 GATE 2 ESCAPE` |
+| TDD RED phase missing | Gate 2 (Testing) | `🚨 GATE 2 ESCAPE` |
 | Implementation pattern gaps | Gate 0 (Implementation) | Normal finding |
 | Standards compliance gaps | Gate 0 (Implementation) | Normal finding |
-| Observability gaps | Gate 2 (SRE) | `🚨 GATE 2 ESCAPE` |
-| Docker/DevOps gaps | Gate 1 (DevOps) | `🚨 GATE 1 ESCAPE` |
+| Observability gaps | Gate 0 (Implementation) | Normal finding |
 
 **Gate Escape Output Format:**
 
 ```markdown
-### FINDING-XXX: [Issue Title] 🚨 GATE 3 ESCAPE
+### FINDING-XXX: [Issue Title] 🚨 GATE 2 ESCAPE
 
-**Escaped From:** Gate 3 (Testing)
+**Escaped From:** Gate 2 (Testing)
 **Why It Escaped:** [Quality Gate check that should have caught this]
-**Prevention:** [Specific check to add to Gate 3 exit criteria]
+**Prevention:** [Specific check to add to Gate 2 exit criteria]
 
 [Rest of finding format...]
 ```
 
-**Purpose:** Track which issues escape which gates. If many `GATE 3 ESCAPE` findings occur, the Quality Gate checks need strengthening.
+**Purpose:** Track which issues escape which gates. If many `GATE 2 ESCAPE` findings occur, the Quality Gate checks need strengthening.
 
 ---
 
@@ -626,9 +612,7 @@ This means:
 | Gate | Escaped Issues | Most Common Type |
 |------|----------------|------------------|
 | Gate 0 (Implementation) | N | [type] |
-| Gate 1 (DevOps) | N | [type] |
-| Gate 2 (SRE) | N | [type] |
-| Gate 3 (Testing) | N | [type] |
+| Gate 1 (Testing) | N | [type] |
 
 **Action Required:** If any gate has >2 escapes, review that gate's exit criteria.
 ```
@@ -931,7 +915,6 @@ docs/bee:dev-refactor/{timestamp}/
 ├── reports/            (Step 4.5)
 │   ├── bee:backend-engineer-php-report.md
 │   ├── bee:qa-analyst-report.md
-│   ├── bee:devops-engineer-report.md
 │   └── bee:sre-report.md
 ├── findings.md         (Step 5)
 ├── tasks.md           (Step 7)
@@ -980,11 +963,11 @@ Where `{timestamp}` format is `YYYY-MM-DDTHH:MM:SS` (e.g., `2026-02-07T22:30:45`
 If user approved execution, you MUST:
 1. Invoke `Skill tool: bee:dev-cycle`
 2. Pass tasks file path: `docs/bee:dev-refactor/{timestamp}/tasks.md`
-3. Wait for bee:dev-cycle to complete all 10 gates
+3. Wait for bee:dev-cycle to complete all 8 gates
 
 **Skipping this step = SKILL FAILURE.**
 
-bee:dev-cycle executes each REFACTOR-XXX task through 10-gate process.
+bee:dev-cycle executes each REFACTOR-XXX task through 8-gate process.
 
 **TodoWrite:** Mark "Handoff to bee:dev-cycle" as `completed`
 

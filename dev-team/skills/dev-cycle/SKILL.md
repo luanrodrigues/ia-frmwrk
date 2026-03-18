@@ -1,10 +1,10 @@
 ---
 name: bee:dev-cycle
 description: |
-  Main orchestrator for the 10-gate development cycle system. Loads tasks/subtasks
-  from PM team output and executes through implementation → devops → SRE → unit testing → fuzz testing → property testing → integration testing (write) → chaos testing (write) → review → validation
-  gates (Gates 0-9), with state persistence and metrics collection.
-  Gates 6-7 (integration/chaos) write and update test code per unit but only execute tests at end of cycle (deferred execution).
+  Main orchestrator for the 8-gate development cycle system. Loads tasks/subtasks
+  from PM team output and executes through implementation → unit testing → fuzz testing → property testing → integration testing (write) → chaos testing (write) → review → validation
+  gates (Gates 0-7), with state persistence and metrics collection.
+  Gates 4-5 (integration/chaos) write and update test code per unit but only execute tests at end of cycle (deferred execution).
 
 trigger: |
   - Starting a new development cycle with a task file
@@ -26,7 +26,7 @@ sequence:
   before: [bee:dev-feedback-loop]
 
 related:
-  complementary: [bee:dev-implementation, bee:dev-devops, bee:dev-sre, bee:dev-unit-testing, bee:requesting-code-review, bee:dev-validation, bee:dev-feedback-loop]
+  complementary: [bee:dev-implementation, bee:dev-unit-testing, bee:requesting-code-review, bee:dev-validation, bee:dev-feedback-loop]
 
 verification:
   automated:
@@ -46,7 +46,7 @@ examples:
     expected_flow: |
       1. Load tasks with subtasks from tasks.md
       2. Ask user for checkpoint mode (per-task/per-gate/continuous)
-      3. Execute Gate 0→1→2→3→4→5→6→7→8→9 for each task sequentially
+      3. Execute Gate 0→1→2→3→4→5→6→7 for each task sequentially
       4. Generate feedback report after completion
   - name: "Resume interrupted cycle"
     invocation: "/bee:dev-cycle --resume"
@@ -56,7 +56,7 @@ examples:
     expected_flow: |
       1. Execute Gate 0, pause for approval
       2. User approves, execute Gate 1, pause
-      3. Continue until all 10 gates complete
+      3. Continue until all 8 gates complete
   - name: "Execute with custom context for agents"
     invocation: "/bee:dev-cycle tasks.md \"Focus on error handling. Use existing UserRepository.\""
     expected_flow: |
@@ -70,7 +70,7 @@ examples:
       2. Dispatch bee:codebase-explorer to analyze project
       3. Generate tasks internally from prompt + codebase analysis
       4. Present generated tasks for user confirmation
-      5. Execute Gate 0→1→2→3→4→5→6→7→8→9 for each generated task
+      5. Execute Gate 0→1→2→3→4→5→6→7 for each generated task
 ---
 
 # Development Cycle Orchestrator
@@ -94,15 +94,15 @@ If any condition is true, STOP and report blocker. Cannot proceed without Bee st
 
 ## Overview
 
-The development cycle orchestrator loads tasks/subtasks from PM team output (or manual task files) and executes through 10 gates (Gate 0–9) with **deferred execution** for infrastructure-dependent tests:
+The development cycle orchestrator loads tasks/subtasks from PM team output (or manual task files) and executes through 8 gates (Gate 0–7) with **deferred execution** for infrastructure-dependent tests:
 
-- **Gates 0-5, 8-9 (per unit):** Write code + run tests per task/subtask
-- **Gates 6-7 (per unit):** Write/update integration and chaos test code, verify compilation, but do **not execute** tests (no containers)
-- **Gates 6-7 (end of cycle):** Execute all integration and chaos tests once after all units complete
+- **Gates 0-3, 6-7 (per unit):** Write code + run tests per task/subtask
+- **Gates 4-5 (per unit):** Write/update integration and chaos test code, verify compilation, but do **not execute** tests (no containers)
+- **Gates 4-5 (end of cycle):** Execute all integration and chaos tests once after all units complete
 
 This keeps test code current with each feature while avoiding redundant container spin-ups during development.
 
-**MUST announce at start:** "I'm using the bee:dev-cycle skill to orchestrate task execution through 10 gates (Gate 0–9). Gates 6-7 write tests per unit but execute at end of cycle."
+**MUST announce at start:** "I'm using the bee:dev-cycle skill to orchestrate task execution through 8 gates (Gate 0–7). Gates 4-5 write tests per unit but execute at end of cycle."
 
 ## ⛔ CRITICAL: Specialized Agents Perform All Tasks
 
@@ -184,15 +184,13 @@ This is not negotiable:
 
 <cannot_skip>
 - Gate 0: `Skill("bee:dev-implementation")` → then `Task(subagent_type="bee:backend-engineer-*", ...)`
-- Gate 1: `Skill("bee:dev-devops")` → then `Task(subagent_type="bee:devops-engineer", ...)`
-- Gate 2: `Skill("bee:dev-sre")` → then `Task(subagent_type="bee:sre", ...)`
-- Gate 3: `Skill("bee:dev-unit-testing")` → then `Task(subagent_type="bee:qa-analyst", test_mode="unit", ...)`
-- Gate 4: `Skill("bee:dev-fuzz-testing")` → then `Task(subagent_type="bee:qa-analyst", test_mode="fuzz", ...)`
-- Gate 5: `Skill("bee:dev-property-testing")` → then `Task(subagent_type="bee:qa-analyst", test_mode="property", ...)`
-- Gate 6: `Skill("bee:dev-integration-testing")` → per unit: write/update tests + compile check (no execution); end of cycle: execute
-- Gate 7: `Skill("bee:dev-chaos-testing")` → per unit: write/update tests + compile check (no execution); end of cycle: execute
-- Gate 8: `Skill("bee:requesting-code-review")` → then 5x `Task(...)` in parallel
-- Gate 9: `Skill("bee:dev-validation")` → N/A (verification only)
+- Gate 1: `Skill("bee:dev-unit-testing")` → then `Task(subagent_type="bee:qa-analyst", test_mode="unit", ...)`
+- Gate 2: `Skill("bee:dev-fuzz-testing")` → then `Task(subagent_type="bee:qa-analyst", test_mode="fuzz", ...)`
+- Gate 3: `Skill("bee:dev-property-testing")` → then `Task(subagent_type="bee:qa-analyst", test_mode="property", ...)`
+- Gate 4: `Skill("bee:dev-integration-testing")` → per unit: write/update tests + compile check (no execution); end of cycle: execute
+- Gate 5: `Skill("bee:dev-chaos-testing")` → per unit: write/update tests + compile check (no execution); end of cycle: execute
+- Gate 6: `Skill("bee:requesting-code-review")` → then 5x `Task(...)` in parallel
+- Gate 7: `Skill("bee:dev-validation")` → N/A (verification only)
 </cannot_skip>
 
 Between "WebFetch standards" and "Task(agent)" there MUST be "Skill(sub-skill)".
@@ -239,7 +237,7 @@ Task tool:
 | "Focus on error handling first" | Agents prioritize error-related acceptance criteria |
 | "Use existing UserRepository interface" | Agents integrate with specified interface instead of creating new |
 | "Deprioritize UI polish" | Gate 3 still enforces 85% coverage, but agents deprioritize non-functional UI tweaks |
-| "Prioritize observability gaps" | SRE gate gets more attention, implementation focuses on instrumentation |
+| "Prioritize observability gaps" | Implementation focuses on instrumentation; reviewers check observability gaps |
 
 ### Anti-Rationalization for Skipping Sub-Skills
 
@@ -321,10 +319,10 @@ You CANNOT proceed when blocked. Report and wait for resolution.
 ### Cannot Be Overridden
 
 <cannot_skip>
-- All 10 gates must execute (0→1→2→3→4→5→6→7→8→9) - Each gate catches different issues
-- All testing gates (3-7) are MANDATORY - Comprehensive test coverage ensures quality
-- Gates execute in order (0→1→2→3→4→5→6→7→8→9) - Dependencies exist between gates
-- Gate 8 requires all 6 reviewers - Different review perspectives are complementary
+- All 8 gates must execute (0→1→2→3→4→5→6→7) - Each gate catches different issues
+- All testing gates (1-5) are MANDATORY - Comprehensive test coverage ensures quality
+- Gates execute in order (0→1→2→3→4→5→6→7) - Dependencies exist between gates
+- Gate 6 requires all 6 reviewers - Different review perspectives are complementary
 - Coverage threshold ≥ 85% - Industry standard for quality code
 - PROJECT_RULES.md must exist - Cannot verify standards without target
 </cannot_skip>
@@ -423,72 +421,66 @@ Day 4: Production incident from Day 1 code
 | 0.1 | TDD-RED: Failing test written + failure output captured | Test exists but no failure output = FAIL |
 | 0.2 | TDD-GREEN: Implementation passes test | Code exists but test fails = FAIL |
 | 0 | Both 0.1 and 0.2 complete | 0.1 done without 0.2 = FAIL |
-| 1 | Dockerfile + docker-compose + .env.example | Missing any = FAIL |
-| 2 | Structured JSON logs with trace correlation | Partial structured logs = FAIL |
-| 3 | Unit test coverage ≥ 85% + all AC tested | 84% = FAIL |
-| 4 | Fuzz tests with seed corpus ≥ 5 entries | Missing corpus = FAIL |
-| 5 | Property-based tests for domain invariants | Missing property tests = FAIL |
-| 6 | Integration tests with testcontainers | No testcontainers = FAIL |
-| 7 | Chaos tests for failure scenarios | Missing chaos tests = FAIL |
-| 8 | **All 6 reviewers PASS** | 5/6 reviewers = FAIL |
-| 9 | Explicit "APPROVED" from user | "Looks good" = not approved |
+| 1 | Unit test coverage ≥ 85% + all AC tested | 84% = FAIL |
+| 2 | Fuzz tests with seed corpus ≥ 5 entries | Missing corpus = FAIL |
+| 3 | Property-based tests for domain invariants | Missing property tests = FAIL |
+| 4 | Integration tests with testcontainers | No testcontainers = FAIL |
+| 5 | Chaos tests for failure scenarios | Missing chaos tests = FAIL |
+| 6 | **All 6 reviewers PASS** | 5/6 reviewers = FAIL |
+| 7 | Explicit "APPROVED" from user | "Looks good" = not approved |
 
-**CRITICAL for Gate 8:** Running 5 of 6 reviewers is not a partial pass - it's a FAIL. Re-run all 6 reviewers.
+**CRITICAL for Gate 6:** Running 5 of 6 reviewers is not a partial pass - it's a FAIL. Re-run all 6 reviewers.
 
 **Anti-Rationalization for Partial Gates:**
 
 | Rationalization | Why It's WRONG | Required Action |
 |-----------------|----------------|-----------------|
-| "5 of 6 reviewers passed" | Gate 8 requires all 6. 5/6 = 0/6. | **Re-run all 6 reviewers** |
+| "5 of 6 reviewers passed" | Gate 6 requires all 6. 5/6 = 0/6. | **Re-run all 6 reviewers** |
 | "Gate mostly complete" | Mostly ≠ complete. Binary: done or not done. | **Complete all components** |
 | "Can finish remaining in next cycle" | Gates don't carry over. Complete NOW. | **Finish current gate** |
 | "Core components done, optional can wait" | No component is optional within a gate. | **Complete all components** |
-| "Unit tests are enough, skip fuzz/property" | Each test type catches different bugs. All are MANDATORY. | **Execute all testing gates (3-7)** |
-| "No external dependencies, skip integration" | Integration testing is MANDATORY. Write tests per unit, execute at end of cycle. | **Write Gate 6 tests per unit, execute at end** |
+| "Unit tests are enough, skip fuzz/property" | Each test type catches different bugs. All are MANDATORY. | **Execute all testing gates (2-6)** |
+| "No external dependencies, skip integration" | Integration testing is MANDATORY. Write tests per unit, execute at end of cycle. | **Write Gate 4 tests per unit, execute at end** |
 
 ---
 
 ## Gate Order Enforcement (HARD GATE)
 
-**Gates MUST execute in order: 0 → 1 → 2 → 3 → 4 → 5 → 6(write) → 7(write) → 8 → 9. All 10 gates are MANDATORY.**
+**Gates MUST execute in order: 0 → 1 → 2 → 3 → 4(write) → 5(write) → 6 → 7. All 8 gates are MANDATORY.**
 
-**Deferred Execution Model for Gates 6-7:**
+**Deferred Execution Model for Gates 4-5:**
 - **Per unit:** Write/update test code + verify compilation (no container execution)
 - **End of cycle:** Execute all integration and chaos tests (containers spun up once)
 
 | Violation | Why It's WRONG | Consequence |
 |-----------|----------------|-------------|
-| Skip Gate 1 (DevOps) | "No infra changes" | Code without container = works on my machine only |
-| Skip Gate 2 (SRE) | "Observability later" | Blind production = debugging nightmare |
-| Skip Gate 4 (Fuzz) | "Unit tests are enough" | Edge cases and crashes not discovered |
-| Skip Gate 5 (Property) | "Too complex" | Domain invariant violations not detected |
-| Skip Gate 6 (Integration) | "No external dependencies" | Internal integration bugs surface in production |
-| Skip Gate 7 (Chaos) | "Infra is reliable" | System fails under real-world conditions |
+| Skip Gate 2 (Fuzz) | "Unit tests are enough" | Edge cases and crashes not discovered |
+| Skip Gate 3 (Property) | "Too complex" | Domain invariant violations not detected |
+| Skip Gate 4 (Integration) | "No external dependencies" | Internal integration bugs surface in production |
+| Skip Gate 5 (Chaos) | "Infra is reliable" | System fails under real-world conditions |
 | Reorder Gates | "Review before test" | Reviewing untested code wastes reviewer time |
-| Parallel Gates | "Run 3 and 4 together" | Dependencies exist. Order is intentional. |
+| Parallel Gates | "Run 1 and 2 together" | Dependencies exist. Order is intentional. |
 
-**All testing gates (3-7) are MANDATORY. No exceptions. No skip reasons.**
+**All testing gates (1-5) are MANDATORY. No exceptions. No skip reasons.**
 
 **Gates are not parallelizable across different gates. Sequential execution is MANDATORY.**
 
-## The 10 Gates
+## The 8 Gates
 
 | Gate | Skill | Purpose | Agent | Per Unit | Standards Module |
 |------|-------|---------|-------|----------|------------------|
 | 0 | bee:dev-implementation | Write code following TDD | Based on task language/domain | Write + Run | core.md, domain.md |
-| 1 | bee:dev-devops | Infrastructure and deployment | bee:devops-engineer | Write + Run | devops.md |
-| 2 | bee:dev-sre | Observability (health, logging, tracing) | bee:sre | Write + Run | sre.md |
-| 3 | bee:dev-unit-testing | Unit tests for acceptance criteria | bee:qa-analyst (test_mode: unit) | Write + Run | testing-unit.md |
-| 4 | bee:dev-fuzz-testing | Fuzz tests for edge cases and crashes | bee:qa-analyst (test_mode: fuzz) | Write + Run | testing-fuzz.md |
-| 5 | bee:dev-property-testing | Property-based tests for domain invariants | bee:qa-analyst (test_mode: property) | Write + Run | testing-property.md |
-| 6 | bee:dev-integration-testing | Integration tests with testcontainers | bee:qa-analyst (test_mode: integration) | **Write only** | testing-integration.md |
-| 7 | bee:dev-chaos-testing | Chaos tests for failure scenarios | bee:qa-analyst (test_mode: chaos) | **Write only** | testing-chaos.md |
-| 8 | bee:requesting-code-review | Parallel code review (6 reviewers) | bee:code-reviewer, bee:business-logic-reviewer, bee:security-reviewer, bee:nil-safety-reviewer, bee:test-reviewer, bee:consequences-reviewer | Run | N/A |
-| 9 | bee:dev-validation | Final acceptance validation | N/A (verification) | Run | N/A |
+| 1 | bee:dev-unit-testing | Unit tests for acceptance criteria | bee:qa-analyst (test_mode: unit) | Write + Run | testing-unit.md |
+| 2 | bee:dev-fuzz-testing | Fuzz tests for edge cases and crashes | bee:qa-analyst (test_mode: fuzz) | Write + Run | testing-fuzz.md |
+| 3 | bee:dev-property-testing | Property-based tests for domain invariants | bee:qa-analyst (test_mode: property) | Write + Run | testing-property.md |
+| 4 | bee:dev-integration-testing | Integration tests with testcontainers | bee:qa-analyst (test_mode: integration) | **Write only** | testing-integration.md |
+| 5 | bee:dev-chaos-testing | Chaos tests for failure scenarios | bee:qa-analyst (test_mode: chaos) | **Write only** | testing-chaos.md |
+| 6 | bee:requesting-code-review | Parallel code review (6 reviewers) | bee:code-reviewer, bee:business-logic-reviewer, bee:security-reviewer, bee:nil-safety-reviewer, bee:test-reviewer, bee:consequences-reviewer | Run | N/A |
+| 7 | bee:dev-validation | Final acceptance validation | N/A (verification) | Run | N/A |
 
 **All gates are MANDATORY. No exceptions. No skip reasons.**
 
-**Gates 6-7 Deferred Execution:** Test code is written/updated per unit to stay current. Actual test execution (with containers) happens once at end of cycle.
+**Gates 5-6 Deferred Execution:** Test code is written/updated per unit to stay current. Actual test execution (with containers) happens once at end of cycle.
 
 ## Integrated PM → Dev Workflow
 
@@ -501,17 +493,17 @@ Day 4: Production incident from Day 1 code
 
 ## Execution Order
 
-**Core Principle:** Each execution unit passes through all 10 gates. Gates 6-7 write test code per unit but defer execution to end of cycle.
+**Core Principle:** Each execution unit passes through all 8 gates. Gates 4-5 write test code per unit but defer execution to end of cycle.
 
-**Per-Unit Flow:** Unit → Gate 0→1→2→3→4→5→6(write)→7(write)→8→9 → 🔒 Unit Checkpoint → 🔒 Task Checkpoint → Next Unit
-**End-of-Cycle Flow:** All units done → Gate 6(execute)→7(execute) → Final Commit → Feedback
+**Per-Unit Flow:** Unit → Gate 0→1→2→3→4(write)→5(write)→6→7 → 🔒 Unit Checkpoint → 🔒 Task Checkpoint → Next Unit
+**End-of-Cycle Flow:** All units done → Gate 4(execute)→5(execute) → Final Commit → Feedback
 
 | Scenario | Execution Unit | Gates Per Unit | End of Cycle |
 |----------|----------------|----------------|--------------|
-| Task without subtasks | Task itself | 10 gates (6-7 write only) | Gate 6-7 execute |
-| Task with subtasks | Each subtask | 10 gates per subtask (6-7 write only) | Gate 6-7 execute |
+| Task without subtasks | Task itself | 8 gates (4-5 write only) | Gate 4-5 execute |
+| Task with subtasks | Each subtask | 8 gates per subtask (4-5 write only) | Gate 4-5 execute |
 
-**Why deferred execution for Gates 6-7:**
+**Why deferred execution for Gates 4-5:**
 - Integration tests require testcontainers (slow to spin up/tear down)
 - Chaos tests require Toxiproxy infrastructure
 - Running containers per subtask is wasteful when subsequent subtasks modify the same code
@@ -523,7 +515,7 @@ Day 4: Production incident from Day 1 code
 
 | Option | When Commit Happens | Use Case |
 |--------|---------------------|----------|
-| **(a) Per subtask** | After each subtask passes Gate 9 | Fine-grained history, easy rollback per subtask |
+| **(a) Per subtask** | After each subtask passes Gate 7 | Fine-grained history, easy rollback per subtask |
 | **(b) Per task** | After all subtasks of a task complete | Logical grouping, one commit per feature chunk |
 | **(c) At the end** | After entire cycle completes | Single commit with all changes, clean history |
 
@@ -630,8 +622,6 @@ State is persisted to `{state_path}` (either `docs/bee:dev-cycle/current-cycle.j
             "completed_at": "ISO timestamp"
           }
         },
-        "devops": {"status": "pending"},
-        "sre": {"status": "pending"},
         "unit_testing": {"status": "pending"},
         "fuzz_testing": {"status": "pending"},
         "property_testing": {"status": "pending"},
@@ -658,38 +648,6 @@ State is persisted to `{state_path}` (either `docs/bee:dev-cycle/current-cycle.j
             "total_sections": 15,
             "compliant": 14,
             "not_applicable": 1,
-            "non_compliant": 0,
-            "gaps": []
-          }
-        },
-        "devops": {
-          "agent": "bee:devops-engineer",
-          "output": "## Summary\n...",
-          "timestamp": "ISO timestamp",
-          "duration_ms": 0,
-          "iterations": 1,
-          "artifacts_created": ["Dockerfile", "docker-compose.yml", ".env.example"],
-          "verification_errors": [],
-          "standards_compliance": {
-            "total_sections": 8,
-            "compliant": 8,
-            "not_applicable": 0,
-            "non_compliant": 0,
-            "gaps": []
-          }
-        },
-        "sre": {
-          "agent": "bee:sre",
-          "output": "## Summary\n...",
-          "timestamp": "ISO timestamp",
-          "duration_ms": 0,
-          "iterations": 1,
-          "instrumentation_coverage": "92%",
-          "validation_errors": [],
-          "standards_compliance": {
-            "total_sections": 10,
-            "compliant": 10,
-            "not_applicable": 0,
             "non_compliant": 0,
             "gaps": []
           }
@@ -906,19 +864,6 @@ State is persisted to `{state_path}` (either `docs/bee:dev-cycle/current-cycle.j
 }
 ```
 
-#### SRE Validation Error Schema
-
-```json
-{
-  "check": "structured_logging",
-  "status": "FAIL",
-  "file": "app/Http/Controllers/UserController.php",
-  "line": 32,
-  "error": "Using fmt.Printf instead of structured logger",
-  "suggestion": "Use logger.Info().Str(\"user_id\", id).Msg(\"user created\")"
-}
-```
-
 ### Populating Structured Data
 
 **Each gate MUST populate its structured fields when saving to state:**
@@ -926,14 +871,12 @@ State is persisted to `{state_path}` (either `docs/bee:dev-cycle/current-cycle.j
 | Gate | Fields to Populate |
 |------|-------------------|
 | Gate 0 (Implementation) | `standards_compliance` (total, compliant, gaps[]) |
-| Gate 1 (DevOps) | `standards_compliance` + `verification_errors[]` |
-| Gate 2 (SRE) | `standards_compliance` + `validation_errors[]` |
-| Gate 3 (Unit Testing) | `standards_compliance` + `failures[]` + `uncovered_criteria[]` |
-| Gate 4 (Fuzz Testing) | `standards_compliance` + `corpus_entries` |
-| Gate 5 (Property Testing) | `standards_compliance` + `properties_tested` |
-| Gate 6 (Integration Testing) | `standards_compliance` + `scenarios_tested` + `tests_passed` + `tests_failed` + `flaky_tests_detected` |
-| Gate 7 (Chaos Testing) | `standards_compliance` + `failure_scenarios_tested` + `recovery_verified` |
-| Gate 8 (Review) | `standards_compliance` per reviewer + `issues[]` per reviewer |
+| Gate 1 (Unit Testing) | `standards_compliance` + `failures[]` + `uncovered_criteria[]` |
+| Gate 2 (Fuzz Testing) | `standards_compliance` + `corpus_entries` |
+| Gate 3 (Property Testing) | `standards_compliance` + `properties_tested` |
+| Gate 4 (Integration Testing) | `standards_compliance` + `scenarios_tested` + `tests_passed` + `tests_failed` + `flaky_tests_detected` |
+| Gate 5 (Chaos Testing) | `standards_compliance` + `failure_scenarios_tested` + `recovery_verified` |
+| Gate 6 (Review) | `standards_compliance` per reviewer + `issues[]` per reviewer |
 
 **All gates track `standards_compliance`:**
 - `total_sections`: Count from agent's standards file (via standards-coverage-table.md)
@@ -950,7 +893,7 @@ State is persisted to `{state_path}` (either `docs/bee:dev-cycle/current-cycle.j
 
 ### After every Gate Transition
 
-You MUST execute these steps after completing any gate (0, 1, 2, 3, 4, or 5):
+You MUST execute these steps after completing any gate (0, 1, 2, 3, 4, or 5, or 6):
 
 ```yaml
 # Step 1: Update state object with gate results
@@ -976,17 +919,15 @@ Read tool:
 |-------|-------------|-----------------|
 | Gate 0.1 (TDD-RED) | `tdd_red.status`, `tdd_red.failure_output` | ✅ YES |
 | Gate 0.2 (TDD-GREEN) | `tdd_green.status`, `implementation.status` | ✅ YES |
-| Gate 1 (DevOps) | `devops.status`, `agent_outputs.devops` | ✅ YES |
-| Gate 2 (SRE) | `sre.status`, `agent_outputs.sre` | ✅ YES |
-| Gate 3 (Unit Testing) | `unit_testing.status`, `agent_outputs.unit_testing` | ✅ YES |
-| Gate 4 (Fuzz Testing) | `fuzz_testing.status`, `agent_outputs.fuzz_testing` | ✅ YES |
-| Gate 5 (Property Testing) | `property_testing.status`, `agent_outputs.property_testing` | ✅ YES |
-| Gate 6 (Integration Testing) | `integration_testing.status`, `agent_outputs.integration_testing` | ✅ YES |
-| Gate 7 (Chaos Testing) | `chaos_testing.status`, `agent_outputs.chaos_testing` | ✅ YES |
-| Gate 8 (Review) | `review.status`, `agent_outputs.review` | ✅ YES |
-| Gate 9 (Validation) | `validation.status`, task `status` | ✅ YES |
-| Step 11.1 (Unit Approval) | `status = "paused_for_approval"` | ✅ YES |
-| Step 11.2 (Task Approval) | `status = "paused_for_task_approval"` | ✅ YES |
+| Gate 1 (Unit Testing) | `unit_testing.status`, `agent_outputs.unit_testing` | ✅ YES |
+| Gate 2 (Fuzz Testing) | `fuzz_testing.status`, `agent_outputs.fuzz_testing` | ✅ YES |
+| Gate 3 (Property Testing) | `property_testing.status`, `agent_outputs.property_testing` | ✅ YES |
+| Gate 4 (Integration Testing) | `integration_testing.status`, `agent_outputs.integration_testing` | ✅ YES |
+| Gate 5 (Chaos Testing) | `chaos_testing.status`, `agent_outputs.chaos_testing` | ✅ YES |
+| Gate 6 (Review) | `review.status`, `agent_outputs.review` | ✅ YES |
+| Gate 7 (Validation) | `validation.status`, task `status` | ✅ YES |
+| Step 9.1 (Unit Approval) | `status = "paused_for_approval"` | ✅ YES |
+| Step 9.2 (Task Approval) | `status = "paused_for_task_approval"` | ✅ YES |
 
 ### Anti-Rationalization for State Persistence
 
@@ -1691,9 +1632,9 @@ Task tool:
 
 | Status | Action |
 |--------|--------|
-| `paused_for_approval` | Re-present Step 11.1 checkpoint |
+| `paused_for_approval` | Re-present Step 9.1 checkpoint |
 | `paused_for_testing` | Ask if testing complete → continue or keep paused |
-| `paused_for_task_approval` | Re-present Step 11.2 checkpoint |
+| `paused_for_task_approval` | Re-present Step 9.2 checkpoint |
 | `paused_for_integration_testing` | Ask if integration testing complete |
 | `paused` (generic) | Ask user to confirm resume |
 | `in_progress` | Resume from current gate |
@@ -1883,7 +1824,7 @@ implementation_input = {
    │ TDD-GREEN: PASS verified ✓                     │
    │ STANDARDS: [N]/[N] sections compliant ✓        │
    │                                                 │
-   │ Proceeding to Gate 1 (DevOps)...               │
+   │ Proceeding to Gate 1 (Unit Testing)...         │
    └─────────────────────────────────────────────────┘
 
 7. MANDATORY: ⛔ Save state to file — Write tool → [state.state_path]
@@ -1903,255 +1844,11 @@ implementation_input = {
 | "I'll dispatch the agent and verify output myself" | Self-verification skips the skill's re-dispatch loop. | **Invoke Skill("bee:dev-implementation")** |
 | "Agent already did TDD internally" | Internal ≠ verified by skill. Skill validates output structure. | **Invoke Skill("bee:dev-implementation")** |
 
-## Step 3: Gate 1 - DevOps (Per Execution Unit)
-
-**REQUIRED SUB-SKILL:** Use bee:dev-devops
-
-### ⛔ HARD GATE: Required Artifacts MUST Be Created
-
-**Gate 1 is a BLOCKING gate.** DevOps agent MUST create all required artifacts. If any artifact is missing:
-- You CANNOT proceed to Gate 2
-- You MUST re-dispatch to bee:devops-engineer to create missing artifacts
-- You MUST verify all artifacts exist before proceeding
-
-### Required Artifacts
-
-**See [shared-patterns/standards-coverage-table.md](../skills/shared-patterns/standards-coverage-table.md) → "bee:devops-engineer → devops.md" for all required sections.**
-
-**Key artifacts from devops.md:**
-- Containers (Dockerfile + Docker Compose)
-- Makefile Standards (all required commands)
-- Infrastructure as Code (if applicable)
-- Helm charts (if K8s deployment)
-
-### Step 3.1: Prepare Input for bee:dev-devops Skill
-
-```text
-Gather from previous gates:
-
-devops_input = {
-  // REQUIRED - from current execution unit
-  unit_id: state.current_unit.id,
-  
-  // REQUIRED - from Gate 0 context
-  language: state.current_unit.language,  // "go" | "typescript" | "python"
-  service_type: state.current_unit.service_type,  // "api" | "worker" | "batch" | "cli"
-  implementation_files: agent_outputs.implementation.files_changed,  // list of files from Gate 0
-  
-  // OPTIONAL - additional context
-  gate0_handoff: agent_outputs.implementation,  // full Gate 0 output
-  new_dependencies: state.current_unit.new_deps || [],  // new deps added in Gate 0
-  new_env_vars: state.current_unit.env_vars || [],  // env vars needed
-  new_services: state.current_unit.services || [],  // postgres, redis, etc.
-  existing_dockerfile: [check if Dockerfile exists],
-  existing_compose: [check if docker-compose.yml exists]
-}
-```
-
-### Step 3.2: Invoke bee:dev-devops Skill
-
-```text
-1. Record gate start timestamp
-
-2. Invoke bee:dev-devops skill with structured input:
-
-   Skill("bee:dev-devops") with input:
-     unit_id: devops_input.unit_id
-     language: devops_input.language
-     service_type: devops_input.service_type
-     implementation_files: devops_input.implementation_files
-     gate0_handoff: devops_input.gate0_handoff
-     new_dependencies: devops_input.new_dependencies
-     new_env_vars: devops_input.new_env_vars
-     new_services: devops_input.new_services
-     existing_dockerfile: devops_input.existing_dockerfile
-     existing_compose: devops_input.existing_compose
-
-   The skill handles:
-   - Dispatching bee:devops-engineer agent
-   - Dockerfile creation/update
-   - docker-compose.yml configuration
-   - .env.example documentation
-   - Verification commands execution
-   - Fix iteration loop (max 3 attempts)
-
-3. Parse skill output for results:
-   
-   Expected output sections:
-   - "## DevOps Summary" → status, iterations
-   - "## Files Changed" → Dockerfile, docker-compose, .env.example actions
-   - "## Verification Results" → build, startup, health checks
-   - "## Handoff to Next Gate" → ready_for_sre: YES/no
-   
-   if skill output contains "Status: PASS" and "Ready for Gate 2: YES":
-     → Gate 1 PASSED. Proceed to Step 3.3.
-   
-   if skill output contains "Status: FAIL" or "Ready for Gate 2: no":
-     → Gate 1 BLOCKED.
-     → Skill already dispatched fixes to bee:devops-engineer
-     → Skill already re-ran verification
-     → If "ESCALATION" in output: STOP and report to user
-
-4. **MANDATORY: ⛔ Save state to file — Write tool → [state.state_path]**
-```
-
-### Step 3.3: Gate 1 Complete
-
-```text
-5. When bee:dev-devops skill returns PASS:
-   
-   Parse from skill output:
-   - status: extract from "## DevOps Summary"
-   - dockerfile_action: extract from "## Files Changed" table
-   - compose_action: extract from "## Files Changed" table
-   - verification_passed: extract from "## Verification Results"
-   
-   - agent_outputs.devops = {
-       skill: "bee:dev-devops",
-       output: "[full skill output]",
-       artifacts_created: ["Dockerfile", "docker-compose.yml", ".env.example"],
-       verification_passed: true,
-       timestamp: "[ISO timestamp]",
-       duration_ms: [execution time]
-     }
-
-6. Update state:
-   - gate_progress.devops.status = "completed"
-   - gate_progress.devops.artifacts = [list from skill output]
-
-7. Proceed to Gate 2
-```
-
-### Gate 1 Anti-Rationalization Table
-
-| Rationalization | Why It's WRONG | Required Action |
-|-----------------|----------------|-----------------|
-| "Dockerfile exists, skip other artifacts" | all artifacts required. 1/4 ≠ complete. | **Create all artifacts** |
-| "docker-compose not needed locally" | docker-compose is MANDATORY for local dev. | **Create docker-compose.yml** |
-| "Makefile is optional" | Makefile is MANDATORY for standardized commands. | **Create Makefile** |
-| ".env.example can be added later" | .env.example documents required config NOW. | **Create .env.example** |
-| "Small service doesn't need all this" | Size is irrelevant. Standards apply uniformly. | **Create all artifacts** |
-
-## Step 4: Gate 2 - SRE (Per Execution Unit)
-
-**REQUIRED SUB-SKILL:** Use `bee:dev-sre`
-
-### Step 4.1: Prepare Input for bee:dev-sre Skill
-
-```text
-Gather from previous gates:
-
-sre_input = {
-  // REQUIRED - from current execution unit
-  unit_id: state.current_unit.id,
-  
-  // REQUIRED - from Gate 0 context
-  language: state.current_unit.language,  // "go" | "typescript" | "python"
-  service_type: state.current_unit.service_type,  // "api" | "worker" | "batch" | "cli"
-  implementation_agent: agent_outputs.implementation.agent,  // e.g., "bee:backend-engineer-php"
-  implementation_files: agent_outputs.implementation.files_changed,  // list of files from Gate 0
-  
-  // OPTIONAL - additional context
-  external_dependencies: state.current_unit.external_deps || state.detected_dependencies || [],  // HTTP clients, gRPC, queues
-  gate0_handoff: agent_outputs.implementation,  // full Gate 0 output
-  gate1_handoff: agent_outputs.devops  // full Gate 1 output
-}
-```
-
-### Step 4.2: Invoke bee:dev-sre Skill
-
-```text
-1. Record gate start timestamp
-
-2. Invoke bee:dev-sre skill with structured input:
-
-   Skill("bee:dev-sre") with input:
-     unit_id: sre_input.unit_id
-     language: sre_input.language
-     service_type: sre_input.service_type
-     implementation_agent: sre_input.implementation_agent
-     implementation_files: sre_input.implementation_files
-     external_dependencies: sre_input.external_dependencies
-     gate0_handoff: sre_input.gate0_handoff
-     gate1_handoff: sre_input.gate1_handoff
-
-   The skill handles:
-   - Dispatching SRE agent for validation
-   - Structured logging validation
-   - Distributed tracing validation
-   - Code instrumentation coverage (90%+ required)
-   - Context propagation validation (InjectHTTPContext/InjectGRPCContext)
-   - Dispatching fixes to implementation agent if needed
-   - Re-validation loop (max 3 iterations)
-
-3. Parse skill output for validation results:
-   
-   Expected output sections:
-   - "## Validation Result" → status, iterations, coverage
-   - "## Instrumentation Coverage" → table with per-layer coverage
-   - "## Issues Found" → list or "None"
-   - "## Handoff to Next Gate" → ready_for_testing: YES/no
-   
-   if skill output contains "Status: PASS" and "Ready for Gate 3: YES":
-     → Gate 2 PASSED. Proceed to Step 4.3.
-   
-   if skill output contains "Status: FAIL" or "Ready for Gate 3: no":
-     → Gate 2 BLOCKED. 
-     → Skill already dispatched fixes to implementation agent
-     → Skill already re-ran validation
-     → If "ESCALATION" in output: STOP and report to user
-
-4. **MANDATORY: ⛔ Save state to file — Write tool → [state.state_path]**
-```
-
-### Step 4.3: Gate 2 Complete
-
-```text
-5. When bee:dev-sre skill returns PASS:
-   
-   Parse from skill output:
-   - status: extract from "## Validation Result"
-   - instrumentation_coverage: extract percentage from coverage table
-   - iterations: extract from "Iterations:" line
-   
-   - agent_outputs.sre = {
-       skill: "bee:dev-sre",
-       output: "[full skill output]",
-       validation_result: "PASS",
-       instrumentation_coverage: "[X%]",
-       iterations: [count],
-       timestamp: "[ISO timestamp]",
-       duration_ms: [execution time]
-     }
-
-6. Update state:
-   - gate_progress.sre.status = "completed"
-   - gate_progress.sre.observability_validated = true
-   - gate_progress.sre.instrumentation_coverage = "[X%]"
-
-7. Proceed to Gate 3
-```
-
-### Gate 2 Anti-Rationalization Table
-
-See [bee:dev-sre/SKILL.md](../dev-sre/SKILL.md) for complete anti-rationalization tables covebee:
-- Observability deferral rationalizations
-- Instrumentation coverage rationalizations
-- Context propagation rationalizations
-
-### Gate 2 Pressure Resistance
-
-| User Says | Your Response |
-|-----------|---------------|
-| "Skip SRE validation, we'll add observability later" | "Observability is MANDATORY for Gate 2. Invoking bee:dev-sre skill now." |
-| "SRE found issues but let's continue" | "Gate 2 is a HARD GATE. bee:dev-sre skill handles fix dispatch and re-validation." |
-| "Instrumentation coverage is low but code works" | "90%+ instrumentation coverage is REQUIRED. bee:dev-sre skill will not pass until met." |
-
-## Step 5: Gate 3 - Unit Testing (Per Execution Unit)
+## Step 3: Gate 1 - Unit Testing (Per Execution Unit)
 
 **REQUIRED SUB-SKILL:** Use `bee:dev-unit-testing`
 
-### Step 5.1: Prepare Input for bee:dev-unit-testing Skill
+### Step 3.1: Prepare Input for bee:dev-unit-testing Skill
 
 ```text
 Gather from previous gates:
@@ -2170,7 +1867,7 @@ testing_input = {
 }
 ```
 
-### Step 5.2: Invoke bee:dev-unit-testing Skill
+### Step 3.2: Invoke bee:dev-unit-testing Skill
 
 ```text
 1. Record gate start timestamp
@@ -2203,10 +1900,10 @@ testing_input = {
    - "## Handoff to Next Gate" → ready_for_review: YES/no
    
    if skill output contains "Status: PASS" and "Ready for Next Gate: YES":
-     → Gate 3 PASSED. Proceed to Step 5.3.
+     → Gate 1 PASSED. Proceed to Step 3.3.
 
    if skill output contains "Status: FAIL" or "Ready for Next Gate: NO":
-     → Gate 3 BLOCKED.
+     → Gate 1 BLOCKED.
      → Skill already dispatched fixes to implementation agent
      → Skill already re-ran coverage check
      → If "ESCALATION" in output: STOP and report to user
@@ -2214,7 +1911,7 @@ testing_input = {
 4. **MANDATORY: ⛔ Save state to file — Write tool → [state.state_path]**
 ```
 
-### Step 5.3: Gate 3 Complete
+### Step 3.3: Gate 1 Complete
 
 ```text
 5. When bee:dev-unit-testing skill returns PASS:
@@ -2270,30 +1967,30 @@ testing_input = {
    - gate_progress.testing.status = "completed"
    - gate_progress.testing.coverage = [coverage_actual]
 
-7. Proceed to Gate 4 (Fuzz Testing)
+7. Proceed to Gate 2 (Fuzz Testing)
 ```
 
-### Gate 3 Thresholds
+### Gate 1 Thresholds
 
 - **Minimum:** 85% (Bee standard - CANNOT be lowered)
 - **Project-specific:** Can be higher if defined in `docs/PROJECT_RULES.md`
 - **Validation:** Threshold < 85% → Use 85%
 
-### Gate 3 Pressure Resistance
+### Gate 1 Pressure Resistance
 
 | User Says | Your Response |
 |-----------|---------------|
 | "84% is close enough" | "85% is Bee minimum. bee:dev-unit-testing skill enforces this." |
 | "Skip testing, deadline" | "Testing is MANDATORY. bee:dev-unit-testing skill handles iterations." |
-| "Manual testing covers it" | "Gate 3 requires executable unit tests. Invoking bee:dev-unit-testing now." |
+| "Manual testing covers it" | "Gate 1 requires executable unit tests. Invoking bee:dev-unit-testing now." |
 
-## Step 6: Gate 4 - Fuzz Testing (Per Execution Unit)
+## Step 4: Gate 2 - Fuzz Testing (Per Execution Unit)
 
 **REQUIRED SUB-SKILL:** Use `bee:dev-fuzz-testing`
 
 **MANDATORY GATE:** All code paths MUST have fuzz tests to discover edge cases and crashes.
 
-### Step 6.1: Prepare Input for bee:dev-fuzz-testing Skill
+### Step 4.1: Prepare Input for bee:dev-fuzz-testing Skill
 
 ```text
 Gather from previous gates:
@@ -2305,11 +2002,11 @@ fuzz_testing_input = {
   language: state.current_unit.language,  // "go" | "typescript"
 
   // OPTIONAL - additional context
-  gate3_handoff: agent_outputs.unit_testing  // full Gate 3 output
+  gate1_handoff: agent_outputs.unit_testing  // full Gate 1 output
 }
 ```
 
-### Step 6.2: Invoke bee:dev-fuzz-testing Skill
+### Step 4.2: Invoke bee:dev-fuzz-testing Skill
 
 ```text
 1. Record gate start timestamp
@@ -2320,7 +2017,7 @@ fuzz_testing_input = {
      unit_id: fuzz_testing_input.unit_id
      implementation_files: fuzz_testing_input.implementation_files
      language: fuzz_testing_input.language
-     gate3_handoff: fuzz_testing_input.gate3_handoff
+     gate1_handoff: fuzz_testing_input.gate1_handoff
 
    The skill handles:
    - Dispatching bee:qa-analyst agent (test_mode: fuzz)
@@ -2333,33 +2030,33 @@ fuzz_testing_input = {
 3. Parse skill output for results:
 
    if skill output contains "Status: PASS":
-     → Gate 4 PASSED. Proceed to Gate 5.
+     → Gate 2 PASSED. Proceed to Gate 3.
 
    if skill output contains "Status: FAIL":
-     → Gate 4 BLOCKED.
+     → Gate 2 BLOCKED.
 
 4. **MANDATORY: ⛔ Save state to file — Write tool → [state.state_path]**
 ```
 
-### Step 6.3: Gate 4 Complete
+### Step 4.3: Gate 2 Complete
 
 ```text
 5. Update state:
    - gate_progress.fuzz_testing.status = "completed"
    - gate_progress.fuzz_testing.corpus_entries = [count]
 
-6. Proceed to Gate 5 (Property Testing)
+6. Proceed to Gate 3 (Property Testing)
 ```
 
 ---
 
-## Step 7: Gate 5 - Property-Based Testing (Per Execution Unit)
+## Step 5: Gate 3 - Property-Based Testing (Per Execution Unit)
 
 **REQUIRED SUB-SKILL:** Use `bee:dev-property-testing`
 
 **MANDATORY GATE:** Domain invariants MUST be verified with property-based tests.
 
-### Step 7.1: Prepare Input for bee:dev-property-testing Skill
+### Step 5.1: Prepare Input for bee:dev-property-testing Skill
 
 ```text
 Gather from previous gates:
@@ -2375,7 +2072,7 @@ property_testing_input = {
 }
 ```
 
-### Step 7.2: Invoke bee:dev-property-testing Skill
+### Step 5.2: Invoke bee:dev-property-testing Skill
 
 ```text
 1. Record gate start timestamp
@@ -2399,35 +2096,35 @@ property_testing_input = {
 3. Parse skill output for results:
 
    if skill output contains "Status: PASS":
-     → Gate 5 PASSED. Proceed to Gate 6.
+     → Gate 3 PASSED. Proceed to Gate 4.
 
    if skill output contains "Status: FAIL":
-     → Gate 5 BLOCKED.
+     → Gate 3 BLOCKED.
 
 4. **MANDATORY: ⛔ Save state to file — Write tool → [state.state_path]**
 ```
 
-### Step 7.3: Gate 5 Complete
+### Step 5.3: Gate 3 Complete
 
 ```text
 5. Update state:
    - gate_progress.property_testing.status = "completed"
    - gate_progress.property_testing.properties_tested = [count]
 
-6. Proceed to Gate 6 (Integration Testing)
+6. Proceed to Gate 4 (Integration Testing)
 ```
 
 ---
 
-## Step 8: Gate 6 - Integration Testing (Per Execution Unit — WRITE ONLY)
+## Step 6: Gate 4 - Integration Testing (Per Execution Unit — WRITE ONLY)
 
 **REQUIRED SUB-SKILL:** Use `bee:dev-integration-testing`
 
 **MANDATORY GATE:** All code MUST have integration tests using testcontainers.
 
-**⛔ DEFERRED EXECUTION:** Per unit, this gate writes/updates integration test code and verifies compilation. Tests are NOT executed here (no containers). Actual execution happens at end of cycle (Step 12.1).
+**⛔ DEFERRED EXECUTION:** Per unit, this gate writes/updates integration test code and verifies compilation. Tests are NOT executed here (no containers). Actual execution happens at end of cycle (Step 11.1).
 
-### Step 8.1: Prepare Input for bee:dev-integration-testing Skill
+### Step 6.1: Prepare Input for bee:dev-integration-testing Skill
 
 ```text
 Gather from previous gates:
@@ -2441,7 +2138,7 @@ integration_testing_input = {
   mode: "write_only",  // CRITICAL: write tests, verify compilation, do NOT execute
 
   // OPTIONAL - additional context
-  gate5_handoff: agent_outputs.property_testing,
+  gate3_handoff: agent_outputs.property_testing,
   implementation_files: agent_outputs.implementation.files_changed
 }
 
@@ -2449,7 +2146,7 @@ integration_testing_input = {
 // from Step 1.5 (cycle-level auto-detection) when the unit doesn't define them.
 ```
 
-### Step 8.2: Invoke bee:dev-integration-testing Skill (Write Mode)
+### Step 6.2: Invoke bee:dev-integration-testing Skill (Write Mode)
 
 ```text
 1. Record gate start timestamp
@@ -2462,7 +2159,7 @@ integration_testing_input = {
      external_dependencies: integration_testing_input.external_dependencies
      language: integration_testing_input.language
      mode: "write_only"
-     gate5_handoff: integration_testing_input.gate5_handoff
+     gate3_handoff: integration_testing_input.gate3_handoff
      implementation_files: integration_testing_input.implementation_files
 
    In write_only mode, the skill handles:
@@ -2481,15 +2178,15 @@ integration_testing_input = {
    - "## Standards Compliance" → build tags, naming, testcontainers
 
    if compilation PASS and standards met:
-     → Gate 6 (write) PASSED. Proceed to Step 8.3.
+     → Gate 4 (write) PASSED. Proceed to Step 6.3.
 
    if compilation FAIL:
-     → Gate 6 BLOCKED. Fix compilation errors before proceeding.
+     → Gate 4 BLOCKED. Fix compilation errors before proceeding.
 
 4. **MANDATORY: ⛔ Save state to file — Write tool → [state.state_path]**
 ```
 
-### Step 8.3: Gate 6 (Write) Complete
+### Step 6.3: Gate 4 (Write) Complete
 
 ```text
 5. Update state:
@@ -2498,10 +2195,10 @@ integration_testing_input = {
    - gate_progress.integration_testing.test_files = [list of test files written/updated]
    - gate_progress.integration_testing.compilation_passed = true
 
-6. Proceed to Gate 7 (Chaos Testing — Write Only)
+6. Proceed to Gate 5 (Chaos Testing — Write Only)
 ```
 
-### Gate 6 Pressure Resistance
+### Gate 4 Pressure Resistance
 
 | User Says | Your Response |
 |-----------|---------------|
@@ -2512,15 +2209,15 @@ integration_testing_input = {
 
 ---
 
-## Step 9: Gate 7 - Chaos Testing (Per Execution Unit — WRITE ONLY)
+## Step 7: Gate 5 - Chaos Testing (Per Execution Unit — WRITE ONLY)
 
 **REQUIRED SUB-SKILL:** Use `bee:dev-chaos-testing`
 
 **MANDATORY GATE:** All external dependencies MUST have chaos tests for failure scenarios.
 
-**⛔ DEFERRED EXECUTION:** Per unit, this gate writes/updates chaos test code and verifies compilation. Tests are NOT executed here (no Toxiproxy). Actual execution happens at end of cycle (Step 12.1).
+**⛔ DEFERRED EXECUTION:** Per unit, this gate writes/updates chaos test code and verifies compilation. Tests are NOT executed here (no Toxiproxy). Actual execution happens at end of cycle (Step 11.1).
 
-### Step 9.1: Prepare Input for bee:dev-chaos-testing Skill
+### Step 7.1: Prepare Input for bee:dev-chaos-testing Skill
 
 ```text
 Gather from previous gates:
@@ -2533,14 +2230,14 @@ chaos_testing_input = {
   mode: "write_only",  // CRITICAL: write tests, verify compilation, do NOT execute
 
   // OPTIONAL - additional context
-  gate6_handoff: agent_outputs.integration_testing
+  gate4_handoff: agent_outputs.integration_testing
 }
 
 // NOTE: external_dependencies falls back to state.detected_dependencies
 // from Step 1.5 (cycle-level auto-detection) when the unit doesn't define them.
 ```
 
-### Step 9.2: Invoke bee:dev-chaos-testing Skill (Write Mode)
+### Step 7.2: Invoke bee:dev-chaos-testing Skill (Write Mode)
 
 ```text
 1. Record gate start timestamp
@@ -2552,7 +2249,7 @@ chaos_testing_input = {
      external_dependencies: chaos_testing_input.external_dependencies
      language: chaos_testing_input.language
      mode: "write_only"
-     gate6_handoff: chaos_testing_input.gate6_handoff
+     gate4_handoff: chaos_testing_input.gate4_handoff
 
    In write_only mode, the skill handles:
    - Dispatching bee:qa-analyst agent (test_mode: chaos)
@@ -2565,15 +2262,15 @@ chaos_testing_input = {
 3. Parse skill output for results:
 
    if compilation PASS and standards met:
-     → Gate 7 (write) PASSED. Proceed to Gate 8.
+     → Gate 5 (write) PASSED. Proceed to Gate 6.
 
    if compilation FAIL:
-     → Gate 7 BLOCKED. Fix compilation errors before proceeding.
+     → Gate 5 BLOCKED. Fix compilation errors before proceeding.
 
 4. **MANDATORY: ⛔ Save state to file — Write tool → [state.state_path]**
 ```
 
-### Step 9.3: Gate 7 (Write) Complete
+### Step 7.3: Gate 5 (Write) Complete
 
 ```text
 5. Update state:
@@ -2582,10 +2279,10 @@ chaos_testing_input = {
    - gate_progress.chaos_testing.test_files = [list of test files written/updated]
    - gate_progress.chaos_testing.compilation_passed = true
 
-6. Proceed to Gate 8 (Review)
+6. Proceed to Gate 6 (Review)
 ```
 
-### Gate 7 Pressure Resistance
+### Gate 5 Pressure Resistance
 
 | User Says | Your Response |
 |-----------|---------------|
@@ -2596,11 +2293,11 @@ chaos_testing_input = {
 
 ---
 
-## Step 10: Gate 8 - Review (Per Execution Unit)
+## Step 8: Gate 6 - Review (Per Execution Unit)
 
 **REQUIRED SUB-SKILL:** Use `bee:requesting-code-review`
 
-### Step 10.1: Prepare Input for bee:requesting-code-review Skill
+### Step 8.1: Prepare Input for bee:requesting-code-review Skill
 
 ```text
 Gather from previous gates:
@@ -2619,7 +2316,7 @@ review_input = {
 }
 ```
 
-### Step 10.2: Invoke bee:requesting-code-review Skill
+### Step 8.2: Invoke bee:requesting-code-review Skill
 
 ```text
 1. Record gate start timestamp
@@ -2652,11 +2349,11 @@ review_input = {
    - "## Reviewer Verdicts" → all 6 reviewers
    - "## Handoff to Next Gate" → ready_for_validation: YES/NO
 
-   if skill output contains "Status: PASS" and "Ready for Gate 9: YES":
-     → Gate 8 PASSED. Proceed to Step 10.3.
+   if skill output contains "Status: PASS" and "Ready for Gate 7: YES":
+     → Gate 6 PASSED. Proceed to Step 8.3.
 
-   if skill output contains "Status: FAIL" or "Ready for Gate 9: NO":
-     → Gate 8 BLOCKED.
+   if skill output contains "Status: FAIL" or "Ready for Gate 7: NO":
+     → Gate 6 BLOCKED.
      → Skill already dispatched fixes to implementation agent
      → Skill already re-ran all 6 reviewers
      → If "ESCALATION" in output: STOP and report to user
@@ -2664,7 +2361,7 @@ review_input = {
 4. **MANDATORY: ⛔ Save state to file — Write tool → [state.state_path]**
 ```
 
-### Step 10.3: Gate 8 Complete
+### Step 8.3: Gate 6 Complete
 
 ```text
 5. When bee:requesting-code-review skill returns PASS:
@@ -2735,37 +2432,37 @@ review_input = {
 
 6. Update state:
    - gate_progress.review.status = "completed"
-   - gate_progress.review.reviewers_passed = "5/5"
+   - gate_progress.review.reviewers_passed = "6/6"
 
-7. Proceed to Gate 9
+7. Proceed to Gate 7
 ```
 
-### Gate 8 Anti-Rationalization Table
+### Gate 6 Anti-Rationalization Table
 
 | Rationalization | Why It's WRONG | Required Action |
 |-----------------|----------------|-----------------|
 | "Only 1 MEDIUM issue, can proceed" | MEDIUM = MUST FIX. Quantity is irrelevant. | **Fix the issue, re-run all 6 reviewers** |
 | "Issue is cosmetic, not really MEDIUM" | Reviewer decided severity. Accept their judgment. | **Fix the issue, re-run all 6 reviewers** |
-| "Will fix in next sprint" | Deferred fixes = technical debt = production bugs. | **Fix NOW before Gate 9** |
+| "Will fix in next sprint" | Deferred fixes = technical debt = production bugs. | **Fix NOW before Gate 7** |
 | "User approved, can skip fix" | User approval ≠ reviewer override. Fixes are mandatory. | **Fix the issue, re-run all 6 reviewers** |
 | "Same issue keeps appearing, skip it" | Recurring issue = fix is wrong. Debug properly. | **Root cause analysis, then fix** |
 | "Only one reviewer found it" | One reviewer = valid finding. All findings matter. | **Fix the issue, re-run all 6 reviewers** |
 | "Iteration limit reached, just proceed" | Limit = escalate, not bypass. Quality is non-negotiable. | **Escalate to user, DO NOT proceed** |
 | "Tests pass, review issues don't matter" | Tests ≠ review. Different quality dimensions. | **Fix the issue, re-run all 6 reviewers** |
 
-### Gate 8 Pressure Resistance
+### Gate 6 Pressure Resistance
 
 | User Says | Your Response |
 |-----------|---------------|
 | "Just skip this MEDIUM issue" | "MEDIUM severity issues are blocking by definition. I MUST dispatch a fix to the appropriate agent before proceeding. This protects code quality." |
-| "I'll fix it later, let's continue" | "Gate 8 is a HARD GATE. All CRITICAL/HIGH/MEDIUM issues must be resolved NOW. I'm dispatching the fix to [agent] and will re-run all 6 reviewers after." |
+| "I'll fix it later, let's continue" | "Gate 6 is a HARD GATE. All CRITICAL/HIGH/MEDIUM issues must be resolved NOW. I'm dispatching the fix to [agent] and will re-run all 6 reviewers after." |
 | "We're running out of time" | "Proceeding with known issues creates larger problems later. The fix dispatch is automated and typically takes 2-5 minutes. Quality gates exist to save time overall." |
 | "Override the gate, I approve" | "User approval cannot override reviewer findings. The gate ensures code quality. I'll dispatch the fix now." |
 | "It's just a style issue" | "If it's truly cosmetic, reviewers would mark it COSMETIC (non-blocking). MEDIUM means it affects maintainability or correctness. Fixing now." |
 
 ---
 
-## Step 11: Gate 9 - Validation (Per Execution Unit)
+## Step 9: Gate 7 - Validation (Per Execution Unit)
 
 ```text
 For current execution unit:
@@ -2795,10 +2492,10 @@ For current execution unit:
        timestamp: "[ISO timestamp]",
        criteria_results: [{criterion, status}]
      }
-   - Proceed to Step 11.1 (Execution Unit Approval)
+   - Proceed to Step 9.1 (Execution Unit Approval)
 ```
 
-## Step 11.1: Execution Unit Approval (Conditional)
+## Step 9.1: Execution Unit Approval (Conditional)
 
 **Checkpoint depends on `execution_mode`:** `manual_per_subtask` → Execute | `manual_per_task` / `automatic` → Skip
 
@@ -2814,8 +2511,8 @@ For current execution unit:
    - Content sourced from state JSON `agent_outputs` for the current unit:
      * **TDD Output:** `tdd_red` (failing test with failure_output) + `tdd_green` (implementation with pass_output)
      * **Files Changed:** Per-file before/after using `git diff` data from the implementation (for new files, show "New File" in the before panel). Do not read source files directly — use diff output provided by the implementation agent.
-     * **Review Verdicts:** Summary of all 6 reviewer verdicts from Gate 8
-     * **Acceptance Criteria:** Status from Gate 9 validation
+     * **Review Verdicts:** Summary of all 6 reviewer verdicts from Gate 6
+     * **Acceptance Criteria:** Status from Gate 7 validation
    - HTML includes: KPI cards (files changed, tests added, review iterations, gate pass/fail summary), per-file diff panels, review issues section (if any Medium+ issues were found and fixed)
    - Save to: `docs/bee:dev-cycle/reports/unit-{unit_id}-report.html`
    - Open in browser:
@@ -2827,17 +2524,17 @@ For current execution unit:
    - See [shared-patterns/anti-rationalization-visual-report.md](../shared-patterns/anti-rationalization-visual-report.md) for anti-rationalization table
 
 1. Set `status = "paused_for_approval"`, save state
-2. Present summary: Unit ID, Parent Task, Gates 0-9 status, Criteria X/X, Duration, Files Changed, Commit Status
+2. Present summary: Unit ID, Parent Task, Gates 0-7 status, Criteria X/X, Duration, Files Changed, Commit Status
 3. **AskUserQuestion:** "Ready to proceed?" Options: (a) Continue (b) Test First (c) Stop Here
 4. **Handle response:**
 
 | Response | Action |
 |----------|--------|
-| Continue | Set in_progress, move to next unit (or Step 11.2 if last) |
+| Continue | Set in_progress, move to next unit (or Step 9.2 if last) |
 | Test First | Set `paused_for_testing`, STOP, output resume command |
 | Stop Here | Set `paused`, STOP, output resume command |
 
-## Step 11.2: Task Approval Checkpoint (Conditional)
+## Step 9.2: Task Approval Checkpoint (Conditional)
 
 **Checkpoint depends on `execution_mode`:** `manual_per_subtask` / `manual_per_task` → Execute | `automatic` → Skip
 
@@ -2989,15 +2686,15 @@ After completing all subtasks of a task:
      - STOP execution
 ```
 
-**Note:** Tasks without subtasks execute both 7.1 and 7.2 in sequence.
+**Note:** Tasks without subtasks execute both 9.1 and 9.2 in sequence.
 
-## Step 12: Cycle Completion
+## Step 10: Cycle Completion
 
-### Step 12.0: Deferred Test Execution (Gates 6-7)
+### Step 10.0: Deferred Test Execution (Gates 4-5)
 
 **⛔ MANDATORY: Execute integration and chaos tests before final commit.**
 
-All units have written/updated test code during their Gate 6-7 passes. Now execute all tests once.
+All units have written/updated test code during their Gate 4-5 passes. Now execute all tests once.
 
 ```text
 1. Record deferred execution start timestamp
@@ -3039,7 +2736,7 @@ All units have written/updated test code during their Gate 6-7 passes. Now execu
 6. **MANDATORY: ⛔ Save state to file — Write tool → [state.state_path]**
 ```
 
-### Step 12.0 Anti-Rationalization
+### Step 10.0 Anti-Rationalization
 
 | Rationalization | Why It's WRONG | Required Action |
 |-----------------|----------------|-----------------|
@@ -3048,7 +2745,7 @@ All units have written/updated test code during their Gate 6-7 passes. Now execu
 | "Containers are slow, let CI handle it" | CI is backup, not replacement. Verify locally first. | **Execute deferred tests** |
 | "One test failed but it's flaky" | Flaky = unreliable = fix it. No exceptions. | **Fix and re-run** |
 
-### Step 12.1: Final Commit
+### Step 10.1: Final Commit
 
 0. **FINAL COMMIT CHECK (before completion):**
    - if `commit_timing == "at_end"`:
@@ -3129,9 +2826,7 @@ Base metrics per [shared-patterns/output-execution-report.md](../shared-patterns
 | Gate | Duration | Status |
 |------|----------|--------|
 | Implementation | Xm Ys | in_progress |
-| DevOps | - | pending |
-| SRE | - | pending |
-| Testing | - | pending |
+| Unit Testing | - | pending |
 | Review | - | pending |
 | Validation | - | pending |
 
@@ -3148,7 +2843,7 @@ When the backend dev cycle completes, it produces a handoff file for the fronten
 
 **Path:** `docs/bee:dev-cycle/handoff-frontend.json`
 
-**Generated:** Automatically after Gate 9 (Validation) passes for all tasks.
+**Generated:** Automatically after Gate 7 (Validation) passes for all tasks.
 
 ### Handoff Schema
 

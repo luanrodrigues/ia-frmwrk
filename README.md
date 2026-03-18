@@ -30,56 +30,52 @@ Bee Dev Team orchestrates a complete development team through Claude AI. It enfo
 
 ## Development Cycles
 
-### Backend — 10 Gates
+### Backend — 8 Gates
 
 ```
 Gate 0  Implementation     →  Code implementation (PHP/Laravel)
-Gate 1  DevOps             →  Infrastructure & containerization
-Gate 2  SRE                →  Observability validation
-Gate 3  Unit Testing       →  Pest/PHPUnit coverage
-Gate 4  Fuzz Testing       →  Input mutation testing
-Gate 5  Property Testing   →  Property-based testing
-Gate 6  Integration Testing →  Integration scenarios
-Gate 7  Chaos Testing      →  Failure injection
-Gate 8  Code Review        →  Peer review
-Gate 9  Validation         →  Final quality gates
+Gate 1  Unit Testing       →  Pest/PHPUnit coverage
+Gate 2  Fuzz Testing       →  Input mutation testing
+Gate 3  Property Testing   →  Property-based testing
+Gate 4  Integration Testing →  Integration scenarios
+Gate 5  Chaos Testing      →  Failure injection
+Gate 6  Code Review        →  Peer review
+Gate 7  Validation         →  Final quality gates
 ```
 
-### Frontend — 9 Gates (React/Next.js)
+### Frontend — 8 Gates (React/Next.js)
 
 ```
 Gate 0  Implementation       →  React/Next.js code
-Gate 1  Unit Testing         →  Vitest + Testing Library
-Gate 2  Accessibility        →  WCAG 2.1 AA compliance
+Gate 1  Accessibility        →  WCAG 2.1 AA compliance
+Gate 2  Unit Testing         →  Vitest + Testing Library
 Gate 3  Visual Testing       →  Visual regression
 Gate 4  E2E Testing          →  Playwright
 Gate 5  Performance          →  Core Web Vitals
 Gate 6  Code Review          →  Peer review
 Gate 7  Validation           →  Final quality gates
-Gate 8  Deployment           →  Frontend deployment
 ```
 
-### Frontend — 9 Gates (Vue.js/Nuxt 3)
+### Frontend — 8 Gates (Vue.js/Nuxt 3)
 
 ```
 Gate 0  Implementation       →  Vue 3/Nuxt 3 code (Composition API, Pinia)
-Gate 1  Unit Testing         →  Vitest + Vue Testing Library
-Gate 2  Accessibility        →  WCAG 2.1 AA compliance (axe-core, Radix Vue)
+Gate 1  Accessibility        →  WCAG 2.1 AA compliance (axe-core, Radix Vue)
+Gate 2  Unit Testing         →  Vitest + Vue Testing Library
 Gate 3  Visual Testing       →  Visual regression (snapshots, Storybook)
 Gate 4  E2E Testing          →  Playwright (Nuxt 3 flows)
 Gate 5  Performance          →  Core Web Vitals, Nuxt performance
 Gate 6  Code Review          →  Peer review
 Gate 7  Validation           →  Final quality gates
-Gate 8  Deployment           →  Frontend deployment
 ```
 
 ## Commands
 
 | Command | Description |
 |---------|-------------|
-| `/bee:dev-cycle [tasks] [prompt]` | Execute backend development cycle (10 gates) |
-| `/bee:dev-cycle-frontend [tasks] [prompt]` | Execute React/Next.js frontend development cycle (9 gates) |
-| `/bee:dev-cycle-frontend-vuejs [tasks] [prompt]` | Execute Vue.js/Nuxt 3 frontend development cycle (9 gates) |
+| `/bee:dev-cycle [tasks] [prompt]` | Execute backend development cycle (9 gates) |
+| `/bee:dev-cycle-frontend [tasks] [prompt]` | Execute React/Next.js frontend development cycle (8 gates) |
+| `/bee:dev-cycle-frontend-vuejs [tasks] [prompt]` | Execute Vue.js/Nuxt 3 frontend development cycle (8 gates) |
 | `/bee:dev-refactor [path] [prompt]` | Analyze and refactor backend code |
 | `/bee:dev-refactor-frontend [path] [prompt]` | Analyze and refactor React/Next.js frontend code |
 | `/bee:dev-refactor-frontend-vuejs [path] [prompt]` | Analyze and refactor Vue.js/Nuxt 3 frontend code |
@@ -154,7 +150,7 @@ Before using refactoring commands, your project must have a `docs/PROJECT_RULES.
 
 ### Starting a Backend Development Cycle
 
-Use `/bee:dev-cycle` to run a full 10-gate backend cycle. You can pass a tasks file or a direct prompt:
+Use `/bee:dev-cycle` to run a full 8-gate backend cycle. You can pass a tasks file or a direct prompt:
 
 ```bash
 # Direct prompt — the plugin generates tasks internally

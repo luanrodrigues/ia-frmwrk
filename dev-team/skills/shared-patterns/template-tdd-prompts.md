@@ -173,7 +173,7 @@ if pass_output is empty or contains "FAIL":
   → Max 3 retries, then STOP and report blocker
 
 if "all STANDARDS MET" = no:
-  → STOP. Cannot proceed to Gate 1.
+  → STOP. Cannot proceed to Gate 1 (Unit Testing).
   → Re-dispatch to same agent with fix request:
     "Fix missing standards: [list from compliance checklist]"
   → Max 3 retries, then STOP and report blocker
@@ -193,7 +193,7 @@ if "all STANDARDS MET" = no:
 │  3. Check "all STANDARDS MET" value in Compliance Summary                   │
 │                                                                             │
 │  if "all STANDARDS MET: ✅ YES" and all sections have ✅ or N/A:            │
-│    → Gate 0 PASSED. Proceed to Gate 1 (DevOps)                              │
+│    → Gate 0 PASSED. Proceed to Gate 1 (Unit Testing)                        │
 │                                                                             │
 │  if any section has ❌:                                                      │
 │    → Gate 0 BLOCKED. Standards not implemented.                             │
@@ -301,9 +301,7 @@ See [standards-coverage-table.md](https://raw.githubusercontent.com/luanrodrigue
 | Gate | Agent | Orchestrator Verifies |
 |------|-------|----------------------|
 | Gate 0 (Implementation) | backend-engineer-*, frontend-* | Standards Coverage Table from TDD-GREEN |
-| Gate 1 (DevOps) | bee:devops-engineer | Standards Coverage Table from artifacts |
-| Gate 2 (SRE) | bee:sre | Standards Coverage Table from validation |
-| Gate 3 (Testing) | bee:qa-analyst | Standards Coverage Table from test analysis |
+| Gate 1 (Unit Testing) | bee:qa-analyst | Standards Coverage Table from test analysis |
 
 ### State Update After Verification
 
@@ -366,7 +364,7 @@ See [standards-coverage-table.md](https://raw.githubusercontent.com/luanrodrigue
 
 **Priority:** Bee Standards > PROJECT_RULES.md (project adds context, not patterns)
 
-**Gate 0 implements standards + observability. Gate 2 (SRE) validates observability.**
+**Gate 0 implements standards + observability. Gate 1 (Unit Testing) validates coverage.**
 
 ## How to Use
 

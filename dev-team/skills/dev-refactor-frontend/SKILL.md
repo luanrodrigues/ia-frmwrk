@@ -546,32 +546,6 @@ Task tool 3:
     2. ISSUE-XXX for each non-compliant finding
 
 Task tool 4:
-  subagent_type: "bee:devops-engineer"
-  description: "DevOps analysis"
-  model: "opus"
-  prompt: |
-    **MODE: ANALYSIS only**
-    Check all 8 sections per shared-patterns/standards-coverage-table.md -> "bee:devops-engineer"
-
-    Frontend-specific DevOps focus:
-    - Dockerfile for SSR/SSG Next.js app
-    - Docker Compose for local development
-    - Nginx configuration for static assets/reverse proxy
-    - .env management for frontend environment variables
-    - Makefile with frontend commands (dev, build, lint, test, e2e)
-    - CI/CD pipeline for frontend build/test/deploy
-
-    "Containers" means BOTH Dockerfile and Docker Compose
-    "Makefile Standards" means all required commands
-
-    Input:
-    - Bee Standards: Load via WebFetch (devops.md)
-    - Codebase Report: docs/bee:dev-refactor-frontend/{timestamp}/codebase-report.md
-    - Project Rules: docs/PROJECT_RULES.md
-
-    Output: Standards Coverage Table + ISSUE-XXX for gaps
-
-Task tool 5:
   subagent_type: "bee:sre"
   description: "Observability analysis"
   model: "opus"
@@ -599,7 +573,7 @@ Task tool 5:
 **Add to the parallel dispatch if conditions from Step 1b are met:**
 
 ```yaml
-Task tool 6 (if dispatch_bff == true):
+Task tool 5 (if dispatch_bff == true):
   subagent_type: "bee:frontend-bff-engineer-typescript"
   description: "BFF TypeScript standards analysis"
   model: "opus"
@@ -629,7 +603,7 @@ Task tool 6 (if dispatch_bff == true):
     1. Standards Coverage Table (per shared-patterns format)
     2. ISSUE-XXX for each non-compliant finding
 
-Task tool 7 (if dispatch_ui_engineer == true):
+Task tool 6 (if dispatch_ui_engineer == true):
   subagent_type: "bee:ui-engineer"
   description: "UI engineer standards analysis"
   model: "opus"
@@ -663,9 +637,9 @@ Task tool 7 (if dispatch_ui_engineer == true):
 
 | Condition | Agents to Dispatch |
 |-----------|-------------------|
-| Always | Tasks 1-5 (Frontend Engineer + QA Frontend + Designer + DevOps + SRE) |
-| BFF layer detected | + Task 6 (BFF Engineer) |
-| ux-criteria.md exists | + Task 7 (UI Engineer) |
+| Always | Tasks 1-4 (Frontend Engineer + QA Frontend + Designer + Observability) |
+| BFF layer detected | + Task 5 (BFF Engineer) |
+| ux-criteria.md exists | + Task 6 (UI Engineer) |
 
 **TodoWrite:** Mark "Dispatch frontend specialist agents in parallel" as `completed`
 
@@ -733,7 +707,7 @@ This means:
 
 **Verification:** Use formula from "Mandatory Gap Principle -> Verification Rule" section.
 
-### Gate Escape Detection (Frontend 9-Gate Cycle)
+### Gate Escape Detection (Frontend 8-Gate Cycle)
 
 **When mapping findings, identify which gate SHOULD have caught the issue:**
 
@@ -741,22 +715,21 @@ This means:
 |------------------|---------------------|------|
 | Implementation pattern gaps | Gate 0 (Implementation) | Normal finding |
 | React/Next.js architectural issues | Gate 0 (Implementation) | Normal finding |
-| Docker/DevOps gaps | Gate 1 (DevOps) | GATE 1 ESCAPE |
-| WCAG violations, keyboard nav, ARIA | Gate 2 (Accessibility) | GATE 2 ESCAPE |
-| Semantic HTML, focus management | Gate 2 (Accessibility) | GATE 2 ESCAPE |
-| Unit test gaps, coverage <85% | Gate 3 (Unit Testing) | GATE 3 ESCAPE |
-| Test isolation issues | Gate 3 (Unit Testing) | GATE 3 ESCAPE |
-| Missing snapshot tests | Gate 4 (Visual) | GATE 4 ESCAPE |
-| Missing state/responsive coverage | Gate 4 (Visual) | GATE 4 ESCAPE |
-| sindarian-ui component duplication | Gate 4 (Visual) | GATE 4 ESCAPE |
-| Untested user flows | Gate 5 (E2E) | GATE 5 ESCAPE |
-| Cross-browser issues | Gate 5 (E2E) | GATE 5 ESCAPE |
-| Flaky tests | Gate 5 (E2E) | GATE 5 ESCAPE |
-| CWV violations (LCP > 2.5s, CLS > 0.1, INP > 200ms) | Gate 6 (Performance) | GATE 6 ESCAPE |
-| Lighthouse < 90 | Gate 6 (Performance) | GATE 6 ESCAPE |
-| Bundle size bloat | Gate 6 (Performance) | GATE 6 ESCAPE |
-| Bare `<img>` tags (not next/image) | Gate 6 (Performance) | GATE 6 ESCAPE |
-| Code quality (reviewer-catchable) | Gate 7 (Review) | GATE 7 ESCAPE |
+| WCAG violations, keyboard nav, ARIA | Gate 1 (Accessibility) | GATE 1 ESCAPE |
+| Semantic HTML, focus management | Gate 1 (Accessibility) | GATE 1 ESCAPE |
+| Unit test gaps, coverage <85% | Gate 2 (Unit Testing) | GATE 2 ESCAPE |
+| Test isolation issues | Gate 2 (Unit Testing) | GATE 2 ESCAPE |
+| Missing snapshot tests | Gate 3 (Visual) | GATE 3 ESCAPE |
+| Missing state/responsive coverage | Gate 3 (Visual) | GATE 3 ESCAPE |
+| sindarian-ui component duplication | Gate 3 (Visual) | GATE 3 ESCAPE |
+| Untested user flows | Gate 4 (E2E) | GATE 4 ESCAPE |
+| Cross-browser issues | Gate 4 (E2E) | GATE 4 ESCAPE |
+| Flaky tests | Gate 4 (E2E) | GATE 4 ESCAPE |
+| CWV violations (LCP > 2.5s, CLS > 0.1, INP > 200ms) | Gate 5 (Performance) | GATE 5 ESCAPE |
+| Lighthouse < 90 | Gate 5 (Performance) | GATE 5 ESCAPE |
+| Bundle size bloat | Gate 5 (Performance) | GATE 5 ESCAPE |
+| Bare `<img>` tags (not next/image) | Gate 5 (Performance) | GATE 5 ESCAPE |
+| Code quality (reviewer-catchable) | Gate 6 (Review) | GATE 6 ESCAPE |
 
 **Gate Escape Output Format:**
 
@@ -782,13 +755,12 @@ This means:
 | Gate | Escaped Issues | Most Common Type |
 |------|----------------|------------------|
 | Gate 0 (Implementation) | N | [type] |
-| Gate 1 (DevOps) | N | [type] |
-| Gate 2 (Accessibility) | N | [type] |
-| Gate 3 (Unit Testing) | N | [type] |
-| Gate 4 (Visual) | N | [type] |
-| Gate 5 (E2E) | N | [type] |
-| Gate 6 (Performance) | N | [type] |
-| Gate 7 (Review) | N | [type] |
+| Gate 1 (Accessibility) | N | [type] |
+| Gate 2 (Unit Testing) | N | [type] |
+| Gate 3 (Visual) | N | [type] |
+| Gate 4 (E2E) | N | [type] |
+| Gate 5 (Performance) | N | [type] |
+| Gate 6 (Review) | N | [type] |
 
 **Action Required:** If any gate has >2 escapes, review that gate's exit criteria.
 ```
@@ -810,8 +782,6 @@ docs/bee:dev-refactor-frontend/{timestamp}/reports/
 +-- bee:frontend-engineer-report.md           (always)
 +-- bee:qa-analyst-frontend-report.md         (always)
 +-- bee:frontend-designer-report.md           (always)
-+-- bee:devops-engineer-report.md             (always)
-+-- bee:sre-report.md                         (always)
 +-- bee:frontend-bff-engineer-typescript-report.md       (if BFF detected)
 +-- bee:ui-engineer-report.md                 (if ux-criteria.md exists)
 ```
@@ -1184,8 +1154,6 @@ docs/bee:dev-refactor-frontend/{timestamp}/
 |   +-- bee:frontend-engineer-report.md
 |   +-- bee:qa-analyst-frontend-report.md
 |   +-- bee:frontend-designer-report.md
-|   +-- bee:devops-engineer-report.md
-|   +-- bee:sre-report.md
 |   +-- bee:frontend-bff-engineer-typescript-report.md    (conditional)
 |   +-- bee:ui-engineer-report.md              (conditional)
 +-- findings.md         (Step 5)

@@ -129,16 +129,15 @@ jq '.custom_prompt' docs/bee:dev-cycle-frontend-react-native/current-cycle.json 
 | Gate | Skill | Description |
 |------|-------|-------------|
 | 0 | `bee:dev-implementation` | Implement code (TDD) |
-| 1 | `bee:dev-devops` | Create EAS Build config + CI pipeline |
-| 2 | `bee:dev-frontend-accessibility-react-native` | VoiceOver/TalkBack compliance |
-| 3 | `bee:dev-unit-testing` | Unit tests with 85%+ coverage (RNTL + Jest) |
-| 4 | `bee:dev-frontend-visual-react-native` | Snapshot testing (all states, iOS + Android) |
-| 5 | `bee:dev-frontend-e2e-react-native` | E2E tests with Detox (iOS + Android) |
-| 6 | `bee:dev-frontend-performance-react-native` | Bundle size + FlashList + Hermes + image optimization |
-| 7 | `bee:requesting-code-review` | Code review (5 reviewers in parallel) |
-| 8 | `bee:dev-validation` | Final validation |
+| 1 | `bee:dev-frontend-accessibility-react-native` | VoiceOver/TalkBack compliance |
+| 2 | `bee:dev-unit-testing` | Unit tests with 85%+ coverage (RNTL + Jest) |
+| 3 | `bee:dev-frontend-visual-react-native` | Snapshot testing (all states, iOS + Android) |
+| 4 | `bee:dev-frontend-e2e-react-native` | E2E tests with Detox (iOS + Android) |
+| 5 | `bee:dev-frontend-performance-react-native` | Bundle size + FlashList + Hermes + image optimization |
+| 6 | `bee:requesting-code-review` | Code review (5 reviewers in parallel) |
+| 7 | `bee:dev-validation` | Final validation |
 
-**Note:** Tasks are loaded at initialization, not as a separate gate. All 9 gates are MANDATORY.
+**Note:** Tasks are loaded at initialization, not as a separate gate. All 8 gates are MANDATORY.
 
 After all tasks: `bee:dev-feedback-loop` generates metrics report.
 
@@ -151,7 +150,7 @@ After all tasks: `bee:dev-feedback-loop` generates metrics report.
 
 | Command | Description |
 |---------|-------------|
-| `/bee:dev-cycle` | Backend development cycle (10 gates) |
+| `/bee:dev-cycle` | Backend development cycle (8 gates) |
 | `/bee:dev-status` | Check current cycle status |
 | `/bee:dev-cancel` | Cancel running cycle |
 | `/bee:dev-report` | View feedback report |

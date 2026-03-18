@@ -143,17 +143,15 @@ jq '.custom_prompt' docs/bee:dev-cycle/current-cycle.json  # View
 | Gate | Skill | Description |
 |------|-------|-------------|
 | 0 | `bee:dev-implementation` | Implement code (TDD) |
-| 1 | `bee:dev-devops` | Create Docker/compose |
-| 2 | `bee:dev-sre` | Observability (health checks, logging, tracing) |
-| 3 | `bee:dev-unit-testing` | Unit tests with 85%+ coverage |
-| 4 | `bee:dev-fuzz-testing` | Fuzz tests for edge cases |
-| 5 | `bee:dev-property-testing` | Property-based tests for invariants |
-| 6 | `bee:dev-integration-testing` | Integration tests with Docker Compose + RefreshDatabase |
-| 7 | `bee:dev-chaos-testing` | Chaos tests for failure scenarios |
-| 8 | `bee:requesting-code-review` | Code review (6 reviewers in parallel) |
-| 9 | `bee:dev-validation` | Final validation |
+| 1 | `bee:dev-unit-testing` | Unit tests with 85%+ coverage |
+| 2 | `bee:dev-fuzz-testing` | Fuzz tests for edge cases |
+| 3 | `bee:dev-property-testing` | Property-based tests for invariants |
+| 4 | `bee:dev-integration-testing` | Integration tests with Docker Compose + RefreshDatabase |
+| 5 | `bee:dev-chaos-testing` | Chaos tests for failure scenarios |
+| 6 | `bee:requesting-code-review` | Code review (6 reviewers in parallel) |
+| 7 | `bee:dev-validation` | Final validation |
 
-**Note:** Tasks are loaded at initialization, not as a separate gate. All 10 gates are MANDATORY.
+**Note:** Tasks are loaded at initialization, not as a separate gate. All 8 gates are MANDATORY.
 
 After all tasks: `bee:dev-feedback-loop` generates metrics report.
 
@@ -180,7 +178,7 @@ After all tasks: `bee:dev-feedback-loop` generates metrics report.
 Use Skill tool: bee:dev-cycle
 ```
 
-The skill contains the complete 10-gate workflow with:
+The skill contains the complete 8-gate workflow with:
 - Anti-rationalization tables
 - Pressure resistance scenarios
 - TDD sub-phases (Gate 0.1 RED → Gate 0.2 GREEN)
@@ -230,8 +228,8 @@ AskUserQuestion:
 
 See skill `bee:dev-cycle` for full details. Key rules:
 
-- **all 6 gates execute** - Checkpoints affect pauses, not gates
-- **Gates execute in order** - 0 → 1 → 2 → 3 → 4 → 5
-- **Gate 4 requires all 6 reviewers** - 5/6 = FAIL
+- **All 8 gates execute** - Checkpoints affect pauses, not gates
+- **Gates execute in order** - 0 → 1 → 2 → 3 → 4 → 5 → 6 → 7
+- **Gate 6 requires all 6 reviewers** - 5/6 = FAIL
 - **Coverage threshold** - 85% minimum, no exceptions
 - **State persisted** - Can resume with `--resume` after any interruption

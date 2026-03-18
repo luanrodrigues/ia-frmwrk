@@ -214,9 +214,9 @@ Each plugin auto-loads a `using-{plugin}` skill via SessionStart hook to introdu
 
 ---
 
-## Development Cycle (11-gate)
+## Development Cycle (8-gate)
 
-The **bee:dev-cycle** skill orchestrates task execution through **11 gates**: implementation (Gate 0) → multi-tenant (Gate 0.5) → devops (Gate 1) → SRE (Gate 2) → unit-testing (Gate 3) → fuzz-testing (Gate 4) → property-testing (Gate 5) → integration-testing (Gate 6) → chaos-testing (Gate 7) → review (Gate 8) → validation (Gate 9). All gates are MANDATORY. Invoke with `/bee:dev-cycle [tasks-file]` or Skill tool `bee:dev-cycle`. State is persisted to `docs/bee:dev-cycle/current-cycle.json`. See [dev-team/skills/dev-cycle/SKILL.md](../dev-team/skills/dev-cycle/SKILL.md) for full protocol.
+The **bee:dev-cycle** skill orchestrates task execution through **8 gates**: implementation (Gate 0) → devops (Gate 0 pre-check) → unit-testing (Gate 1) → fuzz-testing (Gate 2) → property-testing (Gate 3) → integration-testing (Gate 4) → chaos-testing (Gate 5) → review (Gate 6) → validation (Gate 7). All gates are MANDATORY. Invoke with `/bee:dev-cycle [tasks-file]` or Skill tool `bee:dev-cycle`. State is persisted to `docs/bee:dev-cycle/current-cycle.json`. See [dev-team/skills/dev-cycle/SKILL.md](../dev-team/skills/dev-cycle/SKILL.md) for full protocol.
 
 ---
 

@@ -544,29 +544,6 @@ Task tool 3:
     2. ISSUE-XXX for each non-compliant finding
 
 Task tool 4:
-  subagent_type: "bee:devops-engineer"
-  description: "DevOps analysis for Vue.js/Nuxt 3"
-  model: "opus"
-  prompt: |
-    **MODE: ANALYSIS only**
-    Check all sections per shared-patterns/standards-coverage-table.md -> "bee:devops-engineer"
-
-    Vue.js/Nuxt 3-specific DevOps focus:
-    - Dockerfile for Nuxt 3 SSR app (Node.js runtime, output: standalone)
-    - Docker Compose for local development (Nuxt dev server + API)
-    - Nginx configuration for Nuxt SSR static assets / reverse proxy
-    - .env management for Nuxt runtime config (runtimeConfig, useRuntimeConfig())
-    - Makefile with Nuxt/Vue commands (dev, build, generate, lint, test, e2e)
-    - CI/CD pipeline for Nuxt build/test/deploy
-
-    Input:
-    - Bee Standards: Load via WebFetch (devops.md)
-    - Codebase Report: docs/bee:dev-refactor-frontend-vuejs/{timestamp}/codebase-report.md
-    - Project Rules: docs/PROJECT_RULES.md
-
-    Output: Standards Coverage Table + ISSUE-XXX for gaps
-
-Task tool 5:
   subagent_type: "bee:sre"
   description: "Observability analysis for Vue.js/Nuxt 3"
   model: "opus"
@@ -595,7 +572,7 @@ Task tool 5:
 **Add to the parallel dispatch if conditions from Step 1b are met:**
 
 ```yaml
-Task tool 6 (if dispatch_bff == true):
+Task tool 5 (if dispatch_bff == true):
   subagent_type: "bee:frontend-bff-engineer-typescript"
   description: "Nuxt server API / BFF TypeScript standards analysis"
   model: "opus"
@@ -622,7 +599,7 @@ Task tool 6 (if dispatch_bff == true):
     1. Standards Coverage Table (per shared-patterns format)
     2. ISSUE-XXX for each non-compliant finding
 
-Task tool 7 (if dispatch_ui_engineer == true):
+Task tool 6 (if dispatch_ui_engineer == true):
   subagent_type: "bee:ui-engineer-vuejs"
   description: "Vue.js UI engineer standards analysis"
   model: "opus"
@@ -655,9 +632,9 @@ Task tool 7 (if dispatch_ui_engineer == true):
 
 | Condition | Agents to Dispatch |
 |-----------|-------------------|
-| Always | Tasks 1-5 (Frontend Engineer Vue.js + QA Frontend Vue.js + Designer Vue.js + DevOps + SRE) |
-| BFF layer detected | + Task 6 (BFF Engineer) |
-| ux-criteria.md exists | + Task 7 (UI Engineer Vue.js) |
+| Always | Tasks 1-4 (Frontend Engineer Vue.js + QA Frontend Vue.js + Designer Vue.js + Observability) |
+| BFF layer detected | + Task 5 (BFF Engineer) |
+| ux-criteria.md exists | + Task 6 (UI Engineer Vue.js) |
 
 **TodoWrite:** Mark "Dispatch Vue.js frontend specialist agents in parallel" as `completed`
 
@@ -678,7 +655,7 @@ Task tool 7 (if dispatch_ui_engineer == true):
 | Any testing gap | -> Create FINDING-XXX |
 | Any performance issue | -> Create FINDING-XXX |
 
-### Gate Escape Detection (Vue.js Frontend 9-Gate Cycle)
+### Gate Escape Detection (Vue.js Frontend 8-Gate Cycle)
 
 **When mapping findings, identify which gate SHOULD have caught the issue:**
 
@@ -686,22 +663,21 @@ Task tool 7 (if dispatch_ui_engineer == true):
 |------------------|---------------------|------|
 | Options API / Vuex usage | Gate 0 (Implementation) | Normal finding |
 | Vue component architecture issues | Gate 0 (Implementation) | Normal finding |
-| Docker/DevOps gaps | Gate 1 (DevOps) | GATE 1 ESCAPE |
-| WCAG violations, keyboard nav, ARIA | Gate 2 (Accessibility) | GATE 2 ESCAPE |
-| Vue template aria binding issues | Gate 2 (Accessibility) | GATE 2 ESCAPE |
-| Unit test gaps, coverage <85% | Gate 3 (Unit Testing) | GATE 3 ESCAPE |
-| Missing createTestingPinia() in tests | Gate 3 (Unit Testing) | GATE 3 ESCAPE |
-| Missing Vitest snapshot tests | Gate 4 (Visual) | GATE 4 ESCAPE |
-| Missing state/responsive coverage | Gate 4 (Visual) | GATE 4 ESCAPE |
-| sindarian-vue component duplication | Gate 4 (Visual) | GATE 4 ESCAPE |
-| Untested user flows | Gate 5 (E2E) | GATE 5 ESCAPE |
-| Vue Router navigation guards not tested | Gate 5 (E2E) | GATE 5 ESCAPE |
-| Pinia store state not reset in E2E | Gate 5 (E2E) | GATE 5 ESCAPE |
-| CWV violations (LCP > 2.5s, CLS > 0.1, INP > 200ms) | Gate 6 (Performance) | GATE 6 ESCAPE |
-| Lighthouse < 90 | Gate 6 (Performance) | GATE 6 ESCAPE |
-| Bare <img> tags (not NuxtImg) | Gate 6 (Performance) | GATE 6 ESCAPE |
-| Missing useLazyFetch for non-critical data | Gate 6 (Performance) | GATE 6 ESCAPE |
-| Code quality (reviewer-catchable) | Gate 7 (Review) | GATE 7 ESCAPE |
+| WCAG violations, keyboard nav, ARIA | Gate 1 (Accessibility) | GATE 1 ESCAPE |
+| Vue template aria binding issues | Gate 1 (Accessibility) | GATE 1 ESCAPE |
+| Unit test gaps, coverage <85% | Gate 2 (Unit Testing) | GATE 2 ESCAPE |
+| Missing createTestingPinia() in tests | Gate 2 (Unit Testing) | GATE 2 ESCAPE |
+| Missing Vitest snapshot tests | Gate 3 (Visual) | GATE 3 ESCAPE |
+| Missing state/responsive coverage | Gate 3 (Visual) | GATE 3 ESCAPE |
+| sindarian-vue component duplication | Gate 3 (Visual) | GATE 3 ESCAPE |
+| Untested user flows | Gate 4 (E2E) | GATE 4 ESCAPE |
+| Vue Router navigation guards not tested | Gate 4 (E2E) | GATE 4 ESCAPE |
+| Pinia store state not reset in E2E | Gate 4 (E2E) | GATE 4 ESCAPE |
+| CWV violations (LCP > 2.5s, CLS > 0.1, INP > 200ms) | Gate 5 (Performance) | GATE 5 ESCAPE |
+| Lighthouse < 90 | Gate 5 (Performance) | GATE 5 ESCAPE |
+| Bare <img> tags (not NuxtImg) | Gate 5 (Performance) | GATE 5 ESCAPE |
+| Missing useLazyFetch for non-critical data | Gate 5 (Performance) | GATE 5 ESCAPE |
+| Code quality (reviewer-catchable) | Gate 6 (Review) | GATE 6 ESCAPE |
 
 **TodoWrite:** Mark "Map agent findings to FINDING-XXX entries" as `completed`
 
@@ -716,8 +692,6 @@ docs/bee:dev-refactor-frontend-vuejs/{timestamp}/reports/
 +-- bee:frontend-engineer-vuejs-report.md         (always)
 +-- bee:qa-analyst-frontend-vuejs-report.md       (always)
 +-- bee:frontend-designer-vuejs-report.md         (always)
-+-- bee:devops-engineer-report.md                 (always)
-+-- bee:sre-report.md                             (always)
 +-- bee:frontend-bff-engineer-typescript-report.md  (if BFF detected)
 +-- bee:ui-engineer-vuejs-report.md               (if ux-criteria.md exists)
 ```
@@ -831,8 +805,6 @@ docs/bee:dev-refactor-frontend-vuejs/{timestamp}/
 |   +-- bee:frontend-engineer-vuejs-report.md
 |   +-- bee:qa-analyst-frontend-vuejs-report.md
 |   +-- bee:frontend-designer-vuejs-report.md
-|   +-- bee:devops-engineer-report.md
-|   +-- bee:sre-report.md
 |   +-- bee:frontend-bff-engineer-typescript-report.md    (conditional)
 |   +-- bee:ui-engineer-vuejs-report.md                   (conditional)
 +-- findings.md         (Step 5)

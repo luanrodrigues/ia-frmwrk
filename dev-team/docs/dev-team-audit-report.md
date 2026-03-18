@@ -81,7 +81,6 @@
 | bee:dev-chaos-testing | development-cycle | 90% | None |
 | bee:dev-cycle | orchestrator | 95% | None |
 | bee:dev-cycle-frontend | orchestrator | 95% | None |
-| bee:dev-devops | gate-1 | 92% | None |
 | bee:dev-feedback-loop | post-cycle | 88% | Severity Calibration implicit |
 | bee:dev-frontend-accessibility | gate-2-frontend | 92% | None |
 | bee:dev-frontend-e2e | gate-5-frontend | 92% | None |
@@ -94,8 +93,7 @@
 | bee:dev-property-testing | gate-5 | 88% | Shorter than other gates |
 | bee:dev-refactor | analysis | 95% | None |
 | bee:dev-refactor-frontend | analysis | 95% | None |
-| bee:dev-sre | gate-2 | 95% | None |
-| bee:dev-unit-testing | gate-3 | 92% | None |
+| bee:dev-unit-testing | gate-1 | 92% | None |
 | bee:dev-validation | gate-9/5 | 90% | None |
 | bee:using-dev-team | introduction | 85% | References shared-patterns |
 
@@ -177,7 +175,7 @@
 | GAP-L005 | qa-analyst | Chaos testing section brief | Expand Toxiproxy examples |
 | GAP-L006 | qa-analyst-frontend | New (v1.0.0) - may need iteration | Monitor for gaps in practice |
 | GAP-L007 | dev-chaos-testing | Toxiproxy setup could be more detailed | Add docker-compose example |
-| GAP-L008 | dev-cycle | 10-gate complexity | Add visual gate flow diagram |
+| GAP-L008 | dev-cycle | 8-gate complexity | Add visual gate flow diagram |
 | GAP-L009 | dev-cycle-frontend | 9-gate mirrors backend closely | Document key differences prominently |
 | GAP-L010 | dev-multi-tenant | Very detailed (good) but long | Add TL;DR summary at top |
 | GAP-L011 | dev-refactor | Long skill file | Consider splitting into sub-skills |

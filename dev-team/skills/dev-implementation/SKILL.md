@@ -21,7 +21,7 @@ tdd_policy:
     - Behavioral components (hooks, forms, state, conditional rendering, API) still require TDD.
 
 sequence:
-  before: [bee:dev-devops]
+  before: [bee:dev-unit-testing]
 
 related:
   complementary: [bee:dev-cycle, bee:test-driven-development, bee:requesting-code-review]
@@ -149,7 +149,7 @@ examples:
       | tests/Unit/Http/Controllers/AuthControllerTest.php | Created | +120 |
       
       ## Handoff to Next Gate
-      - Ready for Gate 1: YES
+      - Ready for Gate 1 (Unit Testing): YES
 ---
 
 # Code Implementation (Gate 0)
@@ -546,7 +546,7 @@ Generate skill output:
 - Code compiles: ✅
 - Tests pass: ✅
 - Standards met: ✅
-- Ready for Gate 1 (DevOps): YES
+- Ready for Gate 1 (Unit Testing): YES
 - Environment needs: [list any new deps, env vars, services]
 ```
 
@@ -625,6 +625,6 @@ When implementing frontend features with product-designer outputs (ux-criteria.m
 
 ## Handoff to Next Gate
 - Implementation status: [COMPLETE|PARTIAL]
-- Ready for Gate 1: [YES|no]
+- Ready for Gate 1 (Unit Testing): [YES|no]
 - Environment needs: [list]
 ```

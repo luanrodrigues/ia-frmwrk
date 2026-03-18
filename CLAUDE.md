@@ -482,7 +482,7 @@ Skill tool: "bee:using-bee"               # Load mandatory workflows
 /bee:brainstorm          # Socratic design refinement
 /bee:pre-dev-feature     # <2 day features (5 gates)
 /bee:pre-dev-full        # ≥2 day features (10 gates)
-/bee:dev-cycle           # 10-gate development cycle + post-cycle multi-tenant
+/bee:dev-cycle           # 8-gate development cycle + post-cycle multi-tenant
 /bee:execute-plan        # Batch execution with checkpoints
 /bee:worktree            # Create isolated development branch
 
@@ -503,8 +503,8 @@ python default/hooks/generate-skills-ref.py # Generate skill overview
 | Code review | `/bee:codereview` dispatches 6 parallel reviewers |
 | Pre-dev (small) | `/bee:pre-dev-feature` → 5-gate workflow |
 | Pre-dev (large) | `/bee:pre-dev-full` → 10-gate workflow |
-| Dev cycle - backend (10 gates + post-cycle MT) | `/bee:dev-cycle [tasks-file]` → implementation→devops→SRE→unit-testing→fuzz-testing→property-testing→integration-testing→chaos-testing→review→validation→**multi-tenant** (see [dev-team/skills/dev-cycle/SKILL.md](dev-team/skills/dev-cycle/SKILL.md)) |
-| Dev cycle - frontend (9 gates) | `/bee:dev-cycle-frontend [tasks-file]` → implementation→devops→accessibility→unit-testing→visual-testing→e2e-testing→performance→review→validation (see [dev-team/skills/dev-cycle-frontend/SKILL.md](dev-team/skills/dev-cycle-frontend/SKILL.md)) |
+| Dev cycle - backend (8 gates + post-cycle MT) | `/bee:dev-cycle [tasks-file]` → implementation→unit-testing→fuzz-testing→property-testing→integration-testing→chaos-testing→review→validation→**multi-tenant** (see [dev-team/skills/dev-cycle/SKILL.md](dev-team/skills/dev-cycle/SKILL.md)) |
+| Dev cycle - frontend (7 gates) | `/bee:dev-cycle-frontend [tasks-file]` → implementation→accessibility→unit-testing→visual-testing→e2e-testing→performance→review→validation (see [dev-team/skills/dev-cycle-frontend/SKILL.md](dev-team/skills/dev-cycle-frontend/SKILL.md)) |
 | Refactor - frontend | `/bee:dev-refactor-frontend` → dispatches 5-7 frontend agents in ANALYSIS mode → generates findings → tasks → handoff to `/bee:dev-cycle-frontend` |
 
 See [docs/WORKFLOWS.md](docs/WORKFLOWS.md) for detailed instructions.

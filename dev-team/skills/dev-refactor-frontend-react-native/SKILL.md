@@ -543,29 +543,6 @@ Task tool 3:
     2. ISSUE-XXX for each non-compliant finding
 
 Task tool 4:
-  subagent_type: "bee:devops-engineer"
-  description: "DevOps analysis for React Native / Expo"
-  model: "opus"
-  prompt: |
-    **MODE: ANALYSIS only**
-    Check all sections per shared-patterns/standards-coverage-table.md -> "bee:devops-engineer"
-
-    React Native / Expo-specific DevOps focus:
-    - EAS Build configuration (eas.json with development, preview, production profiles)
-    - app.config.ts or app.json completeness (bundleIdentifier, versionCode, etc.)
-    - .env management (react-native-dotenv or expo-constants)
-    - Makefile with RN commands (test, e2e, build:ios, build:android, lint)
-    - CI/CD pipeline for EAS Build / Fastlane / Bitrise
-    - Code signing setup (iOS provisioning, Android keystore documentation)
-
-    Input:
-    - Bee Standards: Load via WebFetch (devops.md)
-    - Codebase Report: docs/bee:dev-refactor-frontend-react-native/{timestamp}/codebase-report.md
-    - Project Rules: docs/PROJECT_RULES.md
-
-    Output: Standards Coverage Table + ISSUE-XXX for gaps
-
-Task tool 5:
   subagent_type: "bee:sre"
   description: "Observability analysis for React Native / Expo"
   model: "opus"
@@ -594,7 +571,7 @@ Task tool 5:
 **Add to the parallel dispatch if conditions from Step 1b are met:**
 
 ```yaml
-Task tool 6 (if dispatch_ui_engineer == true):
+Task tool 5 (if dispatch_ui_engineer == true):
   subagent_type: "bee:ui-engineer-react-native"
   description: "React Native UI engineer standards analysis"
   model: "opus"
@@ -628,8 +605,8 @@ Task tool 6 (if dispatch_ui_engineer == true):
 
 | Condition | Agents to Dispatch |
 |-----------|-------------------|
-| Always | Tasks 1-5 (Frontend Engineer RN + QA Frontend RN + Designer RN + DevOps + SRE) |
-| ux-criteria.md exists | + Task 6 (UI Engineer RN) |
+| Always | Tasks 1-4 (Frontend Engineer RN + QA Frontend RN + Designer RN + Observability) |
+| ux-criteria.md exists | + Task 5 (UI Engineer RN) |
 
 **TodoWrite:** Mark "Dispatch React Native frontend specialist agents in parallel" as `completed`
 
@@ -650,7 +627,7 @@ Task tool 6 (if dispatch_ui_engineer == true):
 | Any testing gap | -> Create FINDING-XXX |
 | Any performance issue | -> Create FINDING-XXX |
 
-### Gate Escape Detection (React Native 9-Gate Cycle)
+### Gate Escape Detection (React Native 8-Gate Cycle)
 
 **When mapping findings, identify which gate SHOULD have caught the issue:**
 
@@ -658,23 +635,22 @@ Task tool 6 (if dispatch_ui_engineer == true):
 |------------------|---------------------|------|
 | Class components / Redux usage | Gate 0 (Implementation) | Normal finding |
 | React Native component architecture issues | Gate 0 (Implementation) | Normal finding |
-| EAS Build/DevOps gaps | Gate 1 (DevOps) | GATE 1 ESCAPE |
-| Missing accessibilityLabel/accessibilityRole | Gate 2 (Accessibility) | GATE 2 ESCAPE |
-| VoiceOver/TalkBack violations | Gate 2 (Accessibility) | GATE 2 ESCAPE |
-| Touch target size violations (<44x44pt) | Gate 2 (Accessibility) | GATE 2 ESCAPE |
-| Unit test gaps, coverage <85% | Gate 3 (Unit Testing) | GATE 3 ESCAPE |
-| Missing RNTL patterns in tests | Gate 3 (Unit Testing) | GATE 3 ESCAPE |
-| Missing Jest snapshot tests | Gate 4 (Visual) | GATE 4 ESCAPE |
-| Missing platform snapshots (iOS/Android) | Gate 4 (Visual) | GATE 4 ESCAPE |
-| sindarian-rn component duplication | Gate 4 (Visual) | GATE 4 ESCAPE |
-| Untested user flows (Detox) | Gate 5 (E2E) | GATE 5 ESCAPE |
-| Navigation flows not tested | Gate 5 (E2E) | GATE 5 ESCAPE |
-| Deep linking not tested | Gate 5 (E2E) | GATE 5 ESCAPE |
-| FlatList used instead of FlashList | Gate 6 (Performance) | GATE 6 ESCAPE |
-| Bundle size over budget | Gate 6 (Performance) | GATE 6 ESCAPE |
-| Hermes not enabled | Gate 6 (Performance) | GATE 6 ESCAPE |
-| Unoptimized images (no FastImage) | Gate 6 (Performance) | GATE 6 ESCAPE |
-| Code quality (reviewer-catchable) | Gate 7 (Review) | GATE 7 ESCAPE |
+| Missing accessibilityLabel/accessibilityRole | Gate 1 (Accessibility) | GATE 1 ESCAPE |
+| VoiceOver/TalkBack violations | Gate 1 (Accessibility) | GATE 1 ESCAPE |
+| Touch target size violations (<44x44pt) | Gate 1 (Accessibility) | GATE 1 ESCAPE |
+| Unit test gaps, coverage <85% | Gate 2 (Unit Testing) | GATE 2 ESCAPE |
+| Missing RNTL patterns in tests | Gate 2 (Unit Testing) | GATE 2 ESCAPE |
+| Missing Jest snapshot tests | Gate 3 (Visual) | GATE 3 ESCAPE |
+| Missing platform snapshots (iOS/Android) | Gate 3 (Visual) | GATE 3 ESCAPE |
+| sindarian-rn component duplication | Gate 3 (Visual) | GATE 3 ESCAPE |
+| Untested user flows (Detox) | Gate 4 (E2E) | GATE 4 ESCAPE |
+| Navigation flows not tested | Gate 4 (E2E) | GATE 4 ESCAPE |
+| Deep linking not tested | Gate 4 (E2E) | GATE 4 ESCAPE |
+| FlatList used instead of FlashList | Gate 5 (Performance) | GATE 5 ESCAPE |
+| Bundle size over budget | Gate 5 (Performance) | GATE 5 ESCAPE |
+| Hermes not enabled | Gate 5 (Performance) | GATE 5 ESCAPE |
+| Unoptimized images (no FastImage) | Gate 5 (Performance) | GATE 5 ESCAPE |
+| Code quality (reviewer-catchable) | Gate 6 (Review) | GATE 6 ESCAPE |
 
 **TodoWrite:** Mark "Map agent findings to FINDING-XXX entries" as `completed`
 
@@ -689,8 +665,6 @@ docs/bee:dev-refactor-frontend-react-native/{timestamp}/reports/
 +-- bee:frontend-engineer-react-native-report.md     (always)
 +-- bee:qa-analyst-frontend-react-native-report.md   (always)
 +-- bee:frontend-designer-react-native-report.md     (always)
-+-- bee:devops-engineer-report.md                    (always)
-+-- bee:sre-report.md                                (always)
 +-- bee:ui-engineer-react-native-report.md           (if ux-criteria.md exists)
 ```
 
@@ -803,8 +777,6 @@ docs/bee:dev-refactor-frontend-react-native/{timestamp}/
 |   +-- bee:frontend-engineer-react-native-report.md
 |   +-- bee:qa-analyst-frontend-react-native-report.md
 |   +-- bee:frontend-designer-react-native-report.md
-|   +-- bee:devops-engineer-report.md
-|   +-- bee:sre-report.md
 |   +-- bee:ui-engineer-react-native-report.md           (conditional)
 +-- findings.md         (Step 5)
 +-- tasks.md            (Step 7)

@@ -26,10 +26,10 @@ NOT_skip_when: |
   - "tenancy package upgrade is too risky" → REQUIRES stancl/tenancy or spatie/multitenancy packages. No tenancy package = no multi-tenant.
 
 sequence:
-  after: [bee:dev-devops]
+  after: [bee:dev-implementation]
 
 related:
-  complementary: [bee:dev-cycle, bee:dev-implementation, bee:dev-devops, bee:dev-unit-testing, bee:requesting-code-review, bee:dev-validation]
+  complementary: [bee:dev-cycle, bee:dev-implementation, bee:dev-unit-testing, bee:requesting-code-review, bee:dev-validation]
 
 output_schema:
   format: markdown

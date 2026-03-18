@@ -1,8 +1,8 @@
 ---
 name: bee:dev-cycle-frontend-vuejs
 description: |
-  Vue.js/Nuxt 3 frontend development cycle orchestrator with 9 gates. Loads tasks from PM team output
-  or backend handoff and executes through implementation → devops → accessibility →
+  Vue.js/Nuxt 3 frontend development cycle orchestrator with 8 gates. Loads tasks from PM team output
+  or backend handoff and executes through implementation → accessibility →
   unit testing → visual testing → E2E testing → performance testing → review → validation.
 
 trigger: |
@@ -41,7 +41,7 @@ examples:
       2. Detect UI library mode (sindarian-vue or fallback)
       3. Load backend handoff if available
       4. Ask user for execution mode
-      5. Execute Gate 0→1→2→3→4→5→6→7→8 for each task
+      5. Execute Gate 0→1→2→3→4→5→6→7 for each task
       6. Generate feedback report
   - name: "Resume interrupted Vue.js frontend cycle"
     invocation: "/bee:dev-cycle-frontend-vuejs --resume"
@@ -72,14 +72,14 @@ If any condition is true, STOP and report blocker. Cannot proceed without Bee st
 
 ## Overview
 
-The Vue.js frontend development cycle orchestrator loads tasks/subtasks from PM team output (or manual task files) and executes through 9 gates (Gate 0-8) with **all gates executing per unit** (no deferred execution):
+The Vue.js frontend development cycle orchestrator loads tasks/subtasks from PM team output (or manual task files) and executes through 8 gates (Gate 0-7) with **all gates executing per unit** (no deferred execution):
 
-- **Gates 0-8 (per unit):** Write code + run tests/checks per task/subtask
-- **All 9 gates are sequential and mandatory**
+- **Gates 0-7 (per unit):** Write code + run tests/checks per task/subtask
+- **All 8 gates are sequential and mandatory**
 
 Unlike the backend `bee:dev-cycle` (which defers integration/chaos test execution), the Vue.js frontend cycle executes all gates fully per unit. Frontend testing tools (Playwright, Vitest, Lighthouse) do not require heavy container infrastructure.
 
-**MUST announce at start:** "I'm using the bee:dev-cycle-frontend-vuejs skill to orchestrate Vue.js frontend task execution through 9 gates (Gate 0-8). All gates execute per unit."
+**MUST announce at start:** "I'm using the bee:dev-cycle-frontend-vuejs skill to orchestrate Vue.js frontend task execution through 8 gates (Gate 0-7). All gates execute per unit."
 
 ## CRITICAL: Specialized Agents Perform All Tasks
 
@@ -216,14 +216,13 @@ Check: Does docs/bee:dev-cycle/handoff-frontend.json exist?
 
 <cannot_skip>
 - Gate 0: `Skill("bee:dev-implementation")` → then `Task(subagent_type="bee:frontend-engineer-vuejs" or "bee:ui-engineer-vuejs" or "bee:frontend-bff-engineer-typescript")`
-- Gate 1: `Skill("bee:dev-devops")` → then `Task(subagent_type="bee:devops-engineer")`
-- Gate 2: `Skill("bee:dev-frontend-accessibility-vuejs")` → then `Task(subagent_type="bee:qa-analyst-frontend-vuejs", test_mode="accessibility")`
-- Gate 3: `Skill("bee:dev-unit-testing")` → then `Task(subagent_type="bee:qa-analyst-frontend-vuejs", test_mode="unit")`
-- Gate 4: `Skill("bee:dev-frontend-visual-vuejs")` → then `Task(subagent_type="bee:qa-analyst-frontend-vuejs", test_mode="visual")`
-- Gate 5: `Skill("bee:dev-frontend-e2e-vuejs")` → then `Task(subagent_type="bee:qa-analyst-frontend-vuejs", test_mode="e2e")`
-- Gate 6: `Skill("bee:dev-frontend-performance-vuejs")` → then `Task(subagent_type="bee:qa-analyst-frontend-vuejs", test_mode="performance")`
-- Gate 7: `Skill("bee:requesting-code-review")` → then 5x `Task(...)` in parallel
-- Gate 8: `Skill("bee:dev-validation")` → N/A (verification only)
+- Gate 1: `Skill("bee:dev-frontend-accessibility-vuejs")` → then `Task(subagent_type="bee:qa-analyst-frontend-vuejs", test_mode="accessibility")`
+- Gate 2: `Skill("bee:dev-unit-testing")` → then `Task(subagent_type="bee:qa-analyst-frontend-vuejs", test_mode="unit")`
+- Gate 3: `Skill("bee:dev-frontend-visual-vuejs")` → then `Task(subagent_type="bee:qa-analyst-frontend-vuejs", test_mode="visual")`
+- Gate 4: `Skill("bee:dev-frontend-e2e-vuejs")` → then `Task(subagent_type="bee:qa-analyst-frontend-vuejs", test_mode="e2e")`
+- Gate 5: `Skill("bee:dev-frontend-performance-vuejs")` → then `Task(subagent_type="bee:qa-analyst-frontend-vuejs", test_mode="performance")`
+- Gate 6: `Skill("bee:requesting-code-review")` → then 5x `Task(...)` in parallel
+- Gate 7: `Skill("bee:dev-validation")` → N/A (verification only)
 </cannot_skip>
 
 Between "WebFetch standards" and "Task(agent)" there MUST be "Skill(sub-skill)".
@@ -290,10 +289,10 @@ RED FLAG: Standards loaded, but next action is not Task tool
 ### Cannot Be Overridden
 
 <cannot_skip>
-- All 9 gates must execute (0->1->2->3->4->5->6->7->8) - Each gate catches different issues
-- All testing gates (2-6) are MANDATORY - Comprehensive test coverage ensures quality
-- Gates execute in order (0->1->2->3->4->5->6->7->8) - Dependencies exist between gates
-- Gate 7 requires all 5 reviewers - Different review perspectives are complementary
+- All 8 gates must execute (0->1->2->3->4->5->6->7) - Each gate catches different issues
+- All testing gates (1-5) are MANDATORY - Comprehensive test coverage ensures quality
+- Gates execute in order (0->1->2->3->4->5->6->7) - Dependencies exist between gates
+- Gate 6 requires all 5 reviewers - Different review perspectives are complementary
 - Unit test coverage threshold >= 85% - Industry standard for quality code
 - WCAG 2.1 AA compliance is non-negotiable - Accessibility is a legal requirement
 - Core Web Vitals thresholds are non-negotiable - Performance affects user experience
@@ -304,19 +303,18 @@ No exceptions. User cannot override. Time pressure cannot override.
 
 ---
 
-## The 9 Gates
+## The 8 Gates
 
 | Gate | Skill | Purpose | Agent | Standards Module |
 |------|-------|---------|-------|------------------|
 | 0 | bee:dev-implementation | Write code following TDD | bee:frontend-engineer-vuejs / bee:ui-engineer-vuejs / bee:frontend-bff-engineer-typescript | frontend-vuejs.md |
-| 1 | bee:dev-devops | Docker/compose/Nginx setup | bee:devops-engineer | devops.md |
-| 2 | bee:dev-frontend-accessibility-vuejs | WCAG 2.1 AA compliance | bee:qa-analyst-frontend-vuejs (test_mode: accessibility) | testing-accessibility.md |
-| 3 | bee:dev-unit-testing | Unit tests 85%+ coverage | bee:qa-analyst-frontend-vuejs (test_mode: unit) | frontend-vuejs.md |
-| 4 | bee:dev-frontend-visual-vuejs | Vitest snapshot/visual regression tests | bee:qa-analyst-frontend-vuejs (test_mode: visual) | testing-visual.md |
-| 5 | bee:dev-frontend-e2e-vuejs | E2E tests with Playwright | bee:qa-analyst-frontend-vuejs (test_mode: e2e) | testing-e2e.md |
-| 6 | bee:dev-frontend-performance-vuejs | Core Web Vitals + Lighthouse + Nuxt optimizations | bee:qa-analyst-frontend-vuejs (test_mode: performance) | testing-performance.md |
-| 7 | bee:requesting-code-review | Parallel code review (5 reviewers) | bee:code-reviewer, bee:business-logic-reviewer, bee:security-reviewer, bee:test-reviewer, bee:frontend-engineer-vuejs (review mode) | N/A |
-| 8 | bee:dev-validation | Final acceptance validation | N/A (verification) | N/A |
+| 1 | bee:dev-frontend-accessibility-vuejs | WCAG 2.1 AA compliance | bee:qa-analyst-frontend-vuejs (test_mode: accessibility) | testing-accessibility.md |
+| 2 | bee:dev-unit-testing | Unit tests 85%+ coverage | bee:qa-analyst-frontend-vuejs (test_mode: unit) | frontend-vuejs.md |
+| 3 | bee:dev-frontend-visual-vuejs | Vitest snapshot/visual regression tests | bee:qa-analyst-frontend-vuejs (test_mode: visual) | testing-visual.md |
+| 4 | bee:dev-frontend-e2e-vuejs | E2E tests with Playwright | bee:qa-analyst-frontend-vuejs (test_mode: e2e) | testing-e2e.md |
+| 5 | bee:dev-frontend-performance-vuejs | Core Web Vitals + Lighthouse + Nuxt optimizations | bee:qa-analyst-frontend-vuejs (test_mode: performance) | testing-performance.md |
+| 6 | bee:requesting-code-review | Parallel code review (5 reviewers) | bee:code-reviewer, bee:business-logic-reviewer, bee:security-reviewer, bee:test-reviewer, bee:frontend-engineer-vuejs (review mode) | N/A |
+| 7 | bee:dev-validation | Final acceptance validation | N/A (verification) | N/A |
 
 **All gates are MANDATORY. No exceptions. No skip reasons.**
 
@@ -342,15 +340,15 @@ No exceptions. User cannot override. Time pressure cannot override.
 | Pinia store actions and getters | YES - TDD RED→GREEN | Gate 0 (implementation) | Test defines state transitions before code |
 | Conditional rendering (v-if logic) | YES - TDD RED→GREEN | Gate 0 (implementation) | Test defines when elements show/hide |
 | API integration (useFetch/useAsyncData) | YES - TDD RED→GREEN | Gate 0 (implementation) | Test defines expected request/response |
-| Layout / styling (templates without logic) | NO - test-after | Gate 4 (visual testing) | Visual output is exploratory; snapshot locks it |
-| Animations / Vue transitions | NO - test-after | Gate 4 (visual testing) | Motion is iterative; test captures final state |
-| Static presentational components | NO - test-after | Gate 4 (visual testing) | No logic to drive with RED phase |
+| Layout / styling (templates without logic) | NO - test-after | Gate 3 (visual testing) | Visual output is exploratory; snapshot locks it |
+| Animations / Vue transitions | NO - test-after | Gate 3 (visual testing) | Motion is iterative; test captures final state |
+| Static presentational components | NO - test-after | Gate 3 (visual testing) | No logic to drive with RED phase |
 
 **Rules:**
 1. **Behavioral composables and Pinia stores** in Gate 0 MUST produce TDD RED failure output before implementation
-2. **Visual/presentational Vue SFCs** in Gate 0 are implemented without RED phase; Gate 4 creates their snapshot tests
+2. **Visual/presentational Vue SFCs** in Gate 0 are implemented without RED phase; Gate 3 creates their snapshot tests
 3. **Mixed components** (behavior + visual): TDD for the behavioral part, test-after for the visual part
-4. Gate 3 (Unit Testing) coverage threshold (85%) still applies to ALL component types
+4. Gate 2 (Unit Testing) coverage threshold (85%) still applies to ALL component types
 
 **Vue.js-Specific TDD Anti-Rationalization:**
 
@@ -362,7 +360,7 @@ No exceptions. User cannot override. Time pressure cannot override.
 | "Template rendering is visual" | v-if conditions are logic, not presentation. | **TDD RED→GREEN for conditional rendering logic** |
 | "useFetch is just a wrapper" | Composables wrapping useFetch define caching, error handling contracts. | **TDD for composable behavior** |
 
-### Gate 7: Code Review Adaptation (5 Reviewers)
+### Gate 6: Code Review Adaptation (5 Reviewers)
 
 For the Vue.js frontend cycle, the 5 parallel reviewers are:
 
@@ -379,7 +377,7 @@ For the Vue.js frontend cycle, the 5 parallel reviewers are:
 **All 5 reviewers MUST be dispatched in a single message with 5 parallel Task calls.**
 
 ```yaml
-# Gate 7: Dispatch all 5 reviewers in parallel (SINGLE message)
+# Gate 6: Dispatch all 5 reviewers in parallel (SINGLE message)
 Task 1: { subagent_type: "bee:code-reviewer", ... }
 Task 2: { subagent_type: "bee:business-logic-reviewer", ... }
 Task 3: { subagent_type: "bee:security-reviewer", ... }
@@ -397,47 +395,45 @@ Task 5: { subagent_type: "bee:frontend-engineer-vuejs", prompt: "REVIEW MODE: Re
 |------|---------------------|----------------|
 | 0.1 | TDD-RED: Failing test written + failure output captured (behavioral components only - see Vue.js TDD Policy) | Test exists but no failure output = FAIL. Visual-only components skip to 0.2 |
 | 0.2 | TDD-GREEN: Implementation passes test (behavioral) OR implementation complete (visual) | Code exists but test fails = FAIL |
-| 0 | Both 0.1 and 0.2 complete (behavioral) OR 0.2 complete (visual - snapshots deferred to Gate 4) | 0.1 done without 0.2 = FAIL |
-| 1 | Dockerfile + docker-compose/nginx + .env.example | Missing any = FAIL |
-| 2 | 0 WCAG AA violations + keyboard navigation tested + screen reader tested | Any violation = FAIL |
-| 3 | Unit test coverage >= 85% + all AC tested | 84% = FAIL |
-| 4 | All state snapshots pass + responsive breakpoints covered | Missing snapshots = FAIL |
-| 5 | All user flows tested + cross-browser (Chromium, Firefox, WebKit) + 3x stable pass | Flaky = FAIL |
-| 6 | LCP < 2.5s + CLS < 0.1 + INP < 200ms + Lighthouse >= 90 + NuxtImg used for all images | Any threshold missed = FAIL |
-| 7 | All 5 reviewers PASS | 4/5 reviewers = FAIL |
-| 8 | Explicit "APPROVED" from user | "Looks good" = not approved |
+| 0 | Both 0.1 and 0.2 complete (behavioral) OR 0.2 complete (visual - snapshots deferred to Gate 3) | 0.1 done without 0.2 = FAIL |
+| 1 | 0 WCAG AA violations + keyboard navigation tested + screen reader tested | Any violation = FAIL |
+| 2 | Unit test coverage >= 85% + all AC tested | 84% = FAIL |
+| 3 | All state snapshots pass + responsive breakpoints covered | Missing snapshots = FAIL |
+| 4 | All user flows tested + cross-browser (Chromium, Firefox, WebKit) + 3x stable pass | Flaky = FAIL |
+| 5 | LCP < 2.5s + CLS < 0.1 + INP < 200ms + Lighthouse >= 90 + NuxtImg used for all images | Any threshold missed = FAIL |
+| 6 | All 5 reviewers PASS | 4/5 reviewers = FAIL |
+| 7 | Explicit "APPROVED" from user | "Looks good" = not approved |
 
-**CRITICAL for Gate 7:** Running 4 of 5 reviewers is not a partial pass - it's a FAIL. Re-run all 5 reviewers.
+**CRITICAL for Gate 6:** Running 4 of 5 reviewers is not a partial pass - it's a FAIL. Re-run all 5 reviewers.
 
 ---
 
 ## Gate Order Enforcement (HARD GATE)
 
-**Gates MUST execute in order: 0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8. All 9 gates are MANDATORY.**
+**Gates MUST execute in order: 0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7. All 8 gates are MANDATORY.**
 
 | Violation | Why It's WRONG | Consequence |
 |-----------|----------------|-------------|
-| Skip Gate 1 (DevOps) | "No infra changes" | App without container = works on my machine only |
-| Skip Gate 2 (Accessibility) | "It's internal tool" | Internal tools MUST be accessible. Legal requirement. |
-| Skip Gate 3 (Unit Testing) | "E2E covers it" | E2E is slow, Vitest unit tests catch logic bugs faster |
-| Skip Gate 4 (Visual) | "Snapshots are brittle" | Fix brittleness, don't skip regression detection |
-| Skip Gate 5 (E2E) | "Manual testing done" | Manual testing is not reproducible or automated |
-| Skip Gate 6 (Performance) | "Optimize later" | Later = never. NuxtImg, useAsyncData apply NOW |
+| Skip Gate 1 (Accessibility) | "It's internal tool" | Internal tools MUST be accessible. Legal requirement. |
+| Skip Gate 2 (Unit Testing) | "E2E covers it" | E2E is slow, Vitest unit tests catch logic bugs faster |
+| Skip Gate 3 (Visual) | "Snapshots are brittle" | Fix brittleness, don't skip regression detection |
+| Skip Gate 4 (E2E) | "Manual testing done" | Manual testing is not reproducible or automated |
+| Skip Gate 5 (Performance) | "Optimize later" | Later = never. NuxtImg, useAsyncData apply NOW |
 | Reorder Gates | "Review before test" | Reviewing untested Vue code wastes reviewer time |
-| Parallel Gates | "Run 2 and 3 together" | Dependencies exist. Order is intentional. |
+| Parallel Gates | "Run 1 and 2 together" | Dependencies exist. Order is intentional. |
 
 ---
 
 ## Execution Order
 
-**Core Principle:** Each execution unit passes through all 9 gates. All gates execute and complete per unit.
+**Core Principle:** Each execution unit passes through all 8 gates. All gates execute and complete per unit.
 
-**Per-Unit Flow:** Unit -> Gate 0->1->2->3->4->5->6->7->8 -> Unit Checkpoint -> Task Checkpoint -> Next Unit
+**Per-Unit Flow:** Unit -> Gate 0->1->2->3->4->5->6->7 -> Unit Checkpoint -> Task Checkpoint -> Next Unit
 
 | Scenario | Execution Unit | Gates Per Unit |
 |----------|----------------|----------------|
-| Task without subtasks | Task itself | 9 gates |
-| Task with subtasks | Each subtask | 9 gates per subtask |
+| Task without subtasks | Task itself | 8 gates |
+| Task with subtasks | Each subtask | 8 gates per subtask |
 
 ## Commit Timing
 
@@ -445,7 +441,7 @@ Task 5: { subagent_type: "bee:frontend-engineer-vuejs", prompt: "REVIEW MODE: Re
 
 | Option | When Commit Happens | Use Case |
 |--------|---------------------|----------|
-| **(a) Per subtask** | After each subtask passes Gate 8 | Fine-grained history, easy rollback per subtask |
+| **(a) Per subtask** | After each subtask passes Gate 7 | Fine-grained history, easy rollback per subtask |
 | **(b) Per task** | After all subtasks of a task complete | Logical grouping, one commit per feature chunk |
 | **(c) At the end** | After entire cycle completes | Single commit with all changes, clean history |
 
@@ -529,7 +525,6 @@ Task 5: { subagent_type: "bee:frontend-engineer-vuejs", prompt: "REVIEW MODE: Re
             "completed_at": "ISO timestamp"
           }
         },
-        "devops": {"status": "pending"},
         "accessibility": {
           "status": "pending|in_progress|completed",
           "wcag_violations": 0,
@@ -577,16 +572,6 @@ Task 5: { subagent_type: "bee:frontend-engineer-vuejs", prompt: "REVIEW MODE: Re
             "non_compliant": 0,
             "gaps": []
           }
-        },
-        "devops": {
-          "agent": "bee:devops-engineer",
-          "output": "## Summary\n...",
-          "timestamp": "ISO timestamp",
-          "duration_ms": 0,
-          "iterations": 1,
-          "artifacts_created": ["Dockerfile", "nginx.conf", ".env.example"],
-          "verification_errors": [],
-          "standards_compliance": {}
         },
         "accessibility": {
           "agent": "bee:qa-analyst-frontend-vuejs",
@@ -722,23 +707,23 @@ Read tool:
 
 | Mode | Checkpoint Behavior | Gate Behavior |
 |------|---------------------|---------------|
-| **Manual per subtask** | Pause after each subtask completes all 9 gates | All 9 gates execute without pause |
-| **Manual per task** | Pause after all subtasks of a task complete | All 9 gates execute without pause |
-| **Automatic** | No pauses | All 9 gates execute without pause |
+| **Manual per subtask** | Pause after each subtask completes all 8 gates | All 8 gates execute without pause |
+| **Manual per task** | Pause after all subtasks of a task complete | All 8 gates execute without pause |
+| **Automatic** | No pauses | All 8 gates execute without pause |
 
 **CRITICAL:** Execution mode affects CHECKPOINTS (user approval pauses), not GATES (quality checks). All gates execute regardless of mode.
 
 ### Checkpoint Questions
 
-**Unit Checkpoint (after subtask completes Gate 8):**
+**Unit Checkpoint (after subtask completes Gate 7):**
 
 **VISUAL CHANGE REPORT (MANDATORY - before checkpoint question):**
 - MUST invoke `Skill("bee:visual-explainer")` to generate a code-diff HTML report for this execution unit
 - Content sourced from state JSON `agent_outputs` for the current unit:
   * **TDD Output:** `tdd_red` (failing test) + `tdd_green` (implementation)
   * **Files Changed:** Per-file before/after diff panels using `git diff` data from the implementation agent
-  * **Vue.js-Specific Metrics:** WCAG violations resolved (Gate 2), Vitest snapshot pass rate (Gate 4), LCP/CLS/INP values (Gate 6), Lighthouse score (Gate 6)
-  * **Review Verdicts:** Summary of all 5 reviewer verdicts from Gate 7
+  * **Vue.js-Specific Metrics:** WCAG violations resolved (Gate 1), Vitest snapshot pass rate (Gate 3), LCP/CLS/INP values (Gate 5), Lighthouse score (Gate 5)
+  * **Review Verdicts:** Summary of all 5 reviewer verdicts from Gate 6
 - Save to: `docs/bee:dev-cycle-frontend-vuejs/reports/unit-{unit_id}-report.html`
 - Open in browser and tell the user the file path
 
@@ -804,7 +789,7 @@ Check: Does docs/PROJECT_RULES.md exist?
 
 ---
 
-## Step 2-10: Gate Execution (Per Unit)
+## Step 2-9: Gate Execution (Per Unit)
 
 ### Step 2: Gate 0 - Implementation
 
@@ -812,13 +797,7 @@ Check: Does docs/PROJECT_RULES.md exist?
 
 Dispatch appropriate Vue.js agent based on task type. Agent follows TDD (RED then GREEN) with frontend-vuejs.md standards.
 
-### Step 3: Gate 1 - DevOps
-
-**REQUIRED SUB-SKILL:** `Skill("bee:dev-devops")`
-
-Dispatch `bee:devops-engineer` for Dockerfile (Nuxt 3 standalone output), docker-compose, Nginx configuration, and .env.example (Nuxt runtimeConfig pattern).
-
-### Step 4: Gate 2 - Accessibility
+### Step 3: Gate 1 - Accessibility
 
 **REQUIRED SUB-SKILL:** `Skill("bee:dev-frontend-accessibility-vuejs")`
 
@@ -829,7 +808,7 @@ Dispatch `bee:qa-analyst-frontend-vuejs` with `test_mode="accessibility"`. MUST 
 - Focus management via Vue's nextTick() and Teleport components is proper
 - Color contrast ratios meet AA thresholds
 
-### Step 5: Gate 3 - Unit Testing
+### Step 4: Gate 2 - Unit Testing
 
 **REQUIRED SUB-SKILL:** `Skill("bee:dev-unit-testing")`
 
@@ -840,7 +819,7 @@ Dispatch `bee:qa-analyst-frontend-vuejs` with `test_mode="unit"`. MUST verify:
 - createTestingPinia() used for store-dependent component tests
 - flushPromises() used for async composable tests
 
-### Step 6: Gate 4 - Visual Testing
+### Step 5: Gate 3 - Visual Testing
 
 **REQUIRED SUB-SKILL:** `Skill("bee:dev-frontend-visual-vuejs")`
 
@@ -850,7 +829,7 @@ Dispatch `bee:qa-analyst-frontend-vuejs` with `test_mode="visual"`. MUST verify:
 - No sindarian-vue component duplication in components/ui/
 - Visual regression baseline established
 
-### Step 7: Gate 5 - E2E Testing
+### Step 6: Gate 4 - E2E Testing
 
 **REQUIRED SUB-SKILL:** `Skill("bee:dev-frontend-e2e-vuejs")`
 
@@ -861,7 +840,7 @@ Dispatch `bee:qa-analyst-frontend-vuejs` with `test_mode="e2e"`. MUST verify:
 - Vue Router navigation guards tested
 - Pinia store reset between test scenarios
 
-### Step 8: Gate 6 - Performance Testing
+### Step 7: Gate 5 - Performance Testing
 
 **REQUIRED SUB-SKILL:** `Skill("bee:dev-frontend-performance-vuejs")`
 
@@ -873,13 +852,13 @@ Dispatch `bee:qa-analyst-frontend-vuejs` with `test_mode="performance"`. MUST ve
 - NuxtImg used for ALL images (no bare `<img>` tags)
 - useAsyncData/useLazyFetch used for all page data fetching (not raw fetch())
 
-### Step 9: Gate 7 - Code Review
+### Step 8: Gate 6 - Code Review
 
 **REQUIRED SUB-SKILL:** `Skill("bee:requesting-code-review")`
 
-Dispatch all 5 reviewers in parallel (see Gate 7: Code Review Adaptation above).
+Dispatch all 5 reviewers in parallel (see Gate 6: Code Review Adaptation above).
 
-### Step 10: Gate 8 - Validation
+### Step 9: Gate 7 - Validation
 
 **REQUIRED SUB-SKILL:** `Skill("bee:dev-validation")`
 
@@ -920,10 +899,10 @@ Present implementation summary to user. Require explicit "APPROVED" response.
 
 | Pressure Type | Request | Agent Response |
 |---------------|---------|----------------|
-| **Accessibility** | "Skip accessibility, it's an internal tool" | "FORBIDDEN. Internal tools MUST be accessible. WCAG AA is a legal requirement in many jurisdictions. Gate 2 executes fully." |
+| **Accessibility** | "Skip accessibility, it's an internal tool" | "FORBIDDEN. Internal tools MUST be accessible. WCAG AA is a legal requirement in many jurisdictions. Gate 1 executes fully." |
 | **Browser Coverage** | "Only test Chromium, it's the main browser" | "All 3 browsers (Chromium, Firefox, WebKit) are REQUIRED. Cross-browser issues are the most common production bugs." |
 | **Performance** | "Performance will be optimized later" | "Performance thresholds apply NOW. LCP < 2.5s, CLS < 0.1, INP < 200ms, Lighthouse >= 90. useAsyncData and NuxtImg apply NOW." |
-| **Visual Tests** | "Vitest snapshots are too brittle to maintain" | "Fix the brittleness (use threshold tolerances or more stable selectors), don't skip regression detection. Gate 4 is MANDATORY." |
+| **Visual Tests** | "Vitest snapshots are too brittle to maintain" | "Fix the brittleness (use threshold tolerances or more stable selectors), don't skip regression detection. Gate 3 is MANDATORY." |
 | **Design System** | "We'll align with design system later" | "Design system compliance is part of Gate 0. Components MUST use Sindarian Vue (or shadcn-vue fallback) from the start." |
 | **Pinia** | "Vuex works fine, we'll migrate later" | "Vuex-to-Pinia migration is a standards gap. Gate 0 implements with Pinia. Vuex usage = FINDING-XXX." |
 

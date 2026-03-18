@@ -273,7 +273,7 @@ pmo-team/commands/
 
 dev-team/commands/
 ├── dev-cancel.md           # /bee:dev-cancel - Cancel dev cycle
-├── dev-cycle.md            # /bee:dev-cycle - 11-gate development cycle
+├── dev-cycle.md            # /bee:dev-cycle - 8-gate development cycle
 ├── dev-cycle-frontend.md   # /bee:dev-cycle-frontend - 9-gate frontend cycle
 ├── dev-refactor.md         # /bee:dev-refactor - Standards refactoring
 ├── dev-refactor-frontend.md # /bee:dev-refactor-frontend - Frontend standards refactor

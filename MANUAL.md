@@ -113,7 +113,7 @@ Commands are invoked directly: `/command-name`.
 
 | Command                     | Use Case                           | Example                                 |
 | --------------------------- | ---------------------------------- | --------------------------------------- |
-| `/bee:dev-cycle [task]`    | Start 11-gate development workflow | `/bee:dev-cycle "implement user auth"` |
+| `/bee:dev-cycle [task]`    | Start 8-gate development workflow | `/bee:dev-cycle "implement user auth"` |
 | `/bee:dev-cycle-frontend [task]` | Start 9-gate frontend workflow | `/bee:dev-cycle-frontend "improve dashboard UX"` |
 | `/bee:dev-refactor [path]` | Analyze codebase against standards | `/bee:dev-refactor src/`               |
 | `/bee:dev-refactor-frontend [path]` | Analyze frontend against standards | `/bee:dev-refactor-frontend web/` |
