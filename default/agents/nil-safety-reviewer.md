@@ -1,10 +1,11 @@
 ---
 name: bee:nil-safety-reviewer
-version: 1.1.1
+version: 1.1.2
 description: "Nil/Null Safety Review: Traces nil/null pointer risks from git diff changes through the codebase. Identifies missing guards, unsafe dereferences, fatal error paths, and API response consistency in PHP and TypeScript. Runs in parallel with bee:code-reviewer, bee:business-logic-reviewer, bee:security-reviewer, bee:test-reviewer, and bee:consequences-reviewer."
 type: reviewer
-last_updated: 2026-02-10
+last_updated: 2026-03-18
 changelog:
+  - 1.1.2: Remove Go language references; replace with PHP nullable type edge case examples
   - 1.1.0: Added missing CLAUDE.md compliance sections (Standards Loading, Blocker Criteria, Cannot Be Overridden, Pressure Resistance, When Not Needed), renamed Severity section to match expected pattern, fixed anti-rationalization table to include "Why It's WRONG" column
   - 1.0.0: Initial release - PHP and TypeScript nil/null safety analysis
 output_schema:

@@ -1,10 +1,11 @@
 ---
 name: bee:codebase-explorer
-version: 1.5.1
+version: 1.5.2
 description: "Deep codebase exploration agent for architecture understanding, pattern discovery, and comprehensive code analysis. Uses Opus for thorough analysis vs built-in Explore's Haiku speed-focus."
 type: exploration
-last_updated: 2026-02-12
+last_updated: 2026-03-18
 changelog:
+  - 1.5.2: Remove Go language references; update file patterns to PHP (*.php, *Test.php, composer.json)
   - 1.5.0: Update Standards Compliance Report with MUST prefix and required semantic tag
   - 1.4.0: Add Standards Compliance Report section (N/A) for CLAUDE.md compliance
   - 1.3.0: Add Model Requirements section - MANDATORY Opus verification before exploration

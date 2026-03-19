@@ -1,11 +1,12 @@
 ---
 name: bee:frontend-bff-engineer-typescript
-version: 2.5.1
+version: 2.5.2
 description: Senior BFF (Backend for Frontend) Engineer specialized in Next.js API Routes with Clean Architecture, DDD, and Hexagonal patterns. Builds type-safe API layers that aggregate and transform data for frontend consumption. Supports dual-mode architecture (sindarian-server with decorators OR vanilla inversify).
 type: specialist
 model: opus
-last_updated: 2026-02-05
+last_updated: 2026-03-18
 changelog:
+  - 2.5.2: Remove stale Go agent reference from changelog comment
   - 2.5.0: "Added Pre-Dev Integration (reads tasks.md, trd.md, api-design.md), Mode Detection Step 0, BFF Contract output section, Task Context Loading, Bootstrap Guidance, lib-commons-js integration, Code Review Preparation. Updated Technical Expertise with sindarian-server and Vitest. Added BFF-specific Pressure Resistance scenarios."
   - 2.4.0: "Added 6 BFF-specific sections (15-20): BFF Architecture Pattern, Three-Layer DTO Mapping, HttpService Lifecycle, API Routes Pattern, Exception Hierarchy, Cross-Cutting Decorators. Total sections now 20. Added dual-mode architecture (sindarian-server vs vanilla). Server Actions FORBIDDEN."
   - 2.3.0: Added MANDATORY Post-Implementation Validation section - ESLint + Prettier + tsc execution required
