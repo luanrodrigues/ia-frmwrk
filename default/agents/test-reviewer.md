@@ -169,15 +169,15 @@ This reviewer focuses on:
 - [ ] No hardcoded secrets in test files (use environment variables or test fixtures)
 
 ### 9. Error Handling in Test Code ⭐ HIGHEST PRIORITY
-- [ ] Test helpers propagate or assert errors (no `_, _ :=` patterns)
+- [ ] Test helpers propagate or assert errors (no silent failure patterns)
 - [ ] Setup/teardown functions fail loudly on error
 - [ ] No silent failures that could mask real bugs
-- [ ] `defer` cleanup statements handle errors appropriately
+- [ ] Cleanup statements handle errors appropriately
 
 | Language | Silent Error Pattern | Detection |
 |----------|---------------------|-----------|
-| **Go** | `_, _ := json.Marshal(...)` | Look for `_, _ :=` or `_ =` with error returns |
-| **Go** | `_ = file.Close()` in defer | Check error-returning functions in defer |
+| **PHP** | `try { ... } catch (\Exception $e) {}` | Empty catch blocks silencing errors |
+| **PHP** | `@$result = riskyOperation()` | Error suppression operator `@` in test code |
 | **TypeScript** | `.catch(() => {})` | Empty catch blocks in test code |
 | **TypeScript** | Unhandled promise rejection | Missing await or .catch |
 
@@ -305,20 +305,26 @@ test('should hash password', () => { ... });
 
 ### Anti-Pattern 7: Silenced Errors in Test Code
 
-```go
+```php
 // ❌ BAD: Error silently ignored - test may pass when helper fails
-func TestSomething(t *testing.T) {
-    data, _ := json.Marshal(input) // Silent failure!
-    result := process(string(data))
-    assert.NotNil(t, result)
+public function testSomething(): void
+{
+    try {
+        $data = json_encode($input);
+        $result = $this->process($data);
+        $this->assertNotNull($result);
+    } catch (\Exception $e) {
+        // Silent failure!
+    }
 }
 
 // ✅ GOOD: Error propagated
-func TestSomething(t *testing.T) {
-    data, err := json.Marshal(input)
-    require.NoError(t, err)
-    result := process(string(data))
-    assert.NotNil(t, result)
+public function testSomething(): void
+{
+    $data = json_encode($input);
+    $this->assertNotFalse($data, 'JSON encoding failed');
+    $result = $this->process($data);
+    $this->assertNotNull($result);
 }
 ```
 
@@ -366,26 +372,27 @@ test('should calculate 10% discount on orders over $100', () => { ... });
 
 ### Anti-Pattern 9: Testing Language Behavior
 
-```go
-// ❌ BAD: Testing Go's nil map behavior, not application logic
-func TestNilMapLookup(t *testing.T) {
-    var m map[string]int
-    _, ok := m["key"]
-    assert.False(t, ok)  // This is Go language behavior!
+```php
+// ❌ BAD: Testing PHP's null coalescing behavior, not application logic
+public function testNullCoalescing(): void
+{
+    $value = null ?? 'default';
+    $this->assertEquals('default', $value);  // This is PHP language behavior!
 }
 
-// ❌ BAD: Testing Go's append behavior
-func TestAppendToNil(t *testing.T) {
-    var slice []int
-    slice = append(slice, 1)
-    assert.Len(t, slice, 1)
+// ❌ BAD: Testing PHP's array_merge behavior
+public function testArrayMerge(): void
+{
+    $arr = array_merge([], [1]);
+    $this->assertCount(1, $arr);  // This is PHP language behavior!
 }
 
 // ✅ GOOD: Test application behavior
-func TestCacheGetMissReturnsDefault(t *testing.T) {
-    cache := NewCache()
-    val := cache.Get("missing")
-    assert.Equal(t, defaultValue, val)
+public function testCacheGetMissReturnsDefault(): void
+{
+    $cache = new Cache();
+    $val = $cache->get('missing');
+    $this->assertEquals($this->defaultValue, $val);
 }
 ```
 

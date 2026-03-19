@@ -92,7 +92,7 @@ When facing pressure, use this framework:
 ### Nil-Safety Reviewer
 | Pressure | Response |
 |----------|----------|
-| "Go's panic recovery handles it" | "Panic recovery is not a substitute for nil guards. Will document nil risks." |
+| "PHP's try/catch handles it" | "Exception catching is not a substitute for null guards. Will document null risks." |
 | "We check for nil elsewhere" | "Each layer must validate. Defense in depth requires nil checks at usage point." |
 
 ---

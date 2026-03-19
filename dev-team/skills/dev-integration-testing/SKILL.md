@@ -101,7 +101,7 @@ examples:
       unit_id: "task-001"
       integration_scenarios: ["Create user in DB", "Find user by email", "Update user"]
       external_dependencies: ["postgres"]
-      language: "go"
+      language: "php"
     expected_output: |
       ## Integration Testing Summary
       **Status:** PASS

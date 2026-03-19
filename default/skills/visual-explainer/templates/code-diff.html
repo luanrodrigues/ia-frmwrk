@@ -1037,7 +1037,7 @@
         <span class="finding-id">FINDING-001</span>
         <span class="severity-badge severity-badge--critical">Critical</span>
         <span class="category-tag">Error Handling</span>
-        <span class="finding-file">internal/handler/user.go</span>
+        <span class="finding-file">app/Http/Controllers/UserController.php</span>
       </div>
       <div class="finding-body">
         <div class="diff-toolbar">
@@ -1059,9 +1059,9 @@
           <summary>Why This Matters</summary>
           <div class="collapsible__body">
             <ul>
-              <li><strong>Problem:</strong> Bare <code>return err</code> discards all context about where the error originated, making production debugging impossible.</li>
-              <li><strong>Standard Violated:</strong> Ring Go Standards &sect; Error Handling &mdash; all errors must be wrapped with <code>fmt.Errorf("context: %w", err)</code> to preserve the chain.</li>
-              <li><strong>Impact:</strong> When an error surfaces in logs, operators cannot trace it back to the handler or operation that failed, increasing MTTR by orders of magnitude.</li>
+              <li><strong>Problem:</strong> Bare <code>throw $e</code> without wrapping discards all context about where the error originated, making production debugging impossible.</li>
+              <li><strong>Standard Violated:</strong> Bee Standards &sect; Error Handling &mdash; all exceptions must be wrapped with context using <code>new \RuntimeException('context: ' . $e->getMessage(), 0, $e)</code> to preserve the chain.</li>
+              <li><strong>Impact:</strong> When an error surfaces in logs, operators cannot trace it back to the controller or operation that failed, increasing MTTR by orders of magnitude.</li>
             </ul>
           </div>
         </details>
@@ -1076,7 +1076,7 @@
         <span class="finding-id">FINDING-002</span>
         <span class="severity-badge severity-badge--high">High</span>
         <span class="category-tag">Structured Logging</span>
-        <span class="finding-file">internal/service/auth.go</span>
+        <span class="finding-file">app/Services/AuthService.php</span>
       </div>
       <div class="finding-body">
         <div class="diff-toolbar">
@@ -1098,8 +1098,8 @@
           <summary>Why This Matters</summary>
           <div class="collapsible__body">
             <ul>
-              <li><strong>Problem:</strong> <code>log.Printf</code> emits unstructured text that cannot be parsed, filtered, or correlated in an observability stack.</li>
-              <li><strong>Standard Violated:</strong> Ring Go Standards &sect; Structured Logging &mdash; all log output must use the structured logger (zap) with typed fields and trace context.</li>
+              <li><strong>Problem:</strong> <code>error_log()</code> emits unstructured text that cannot be parsed, filtered, or correlated in an observability stack.</li>
+              <li><strong>Standard Violated:</strong> Bee Standards &sect; Structured Logging &mdash; all log output must use the structured logger (Laravel Log facade) with context arrays and trace context.</li>
               <li><strong>Impact:</strong> Log-based alerting, dashboard queries, and incident investigation all depend on structured key-value fields. Unstructured lines are invisible to these tools.</li>
             </ul>
           </div>
@@ -1115,7 +1115,7 @@
         <span class="finding-id">FINDING-003</span>
         <span class="severity-badge severity-badge--medium">Medium</span>
         <span class="category-tag">Context Propagation</span>
-        <span class="finding-file">internal/repository/user.go</span>
+        <span class="finding-file">app/Repositories/UserRepository.php</span>
       </div>
       <div class="finding-body">
         <div class="diff-toolbar">
@@ -1137,8 +1137,8 @@
           <summary>Why This Matters</summary>
           <div class="collapsible__body">
             <ul>
-              <li><strong>Problem:</strong> Without <code>context.Context</code> as the first parameter, the function cannot participate in request cancellation or distributed tracing.</li>
-              <li><strong>Standard Violated:</strong> Ring Go Standards &sect; Context Propagation &mdash; every function in the request path must accept <code>ctx context.Context</code> as its first parameter.</li>
+              <li><strong>Problem:</strong> Without propagating the request context (trace ID, correlation ID), the repository layer cannot participate in distributed tracing.</li>
+              <li><strong>Standard Violated:</strong> Bee Standards &sect; Context Propagation &mdash; every method in the request path must propagate context via the <code>$request</code> or an explicit context array with trace identifiers.</li>
               <li><strong>Impact:</strong> Database queries from cancelled HTTP requests continue executing, wasting resources. Trace spans have gaps because the repository layer is invisible to the tracing system.</li>
             </ul>
           </div>
@@ -1231,93 +1231,79 @@
   const FINDINGS = [
     {
       id: 1,
-      fileName: 'handler.go',
-      before: `func (h *UserHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
-\tvar req CreateUserRequest
-\tif err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-\t\treturn err
-\t}
+      fileName: 'UserController.php',
+      before: `public function store(Request $request): JsonResponse
+{
+    $data = $request->all();
 
-\tuser, err := h.service.Create(req)
-\tif err != nil {
-\t\treturn err
-\t}
+    $user = $this->service->create($data);
+    if (!$user) {
+        return response()->json(['error' => 'failed'], 500);
+    }
 
-\treturn json.NewEncoder(w).Encode(user)
+    return response()->json($user);
 }`,
-      after: `func (h *UserHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
-\tvar req CreateUserRequest
-\tif err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-\t\treturn fmt.Errorf("decoding create user request: %w", err)
-\t}
+      after: `public function store(StoreUserRequest $request): JsonResponse
+{
+    $validated = $request->validated();
 
-\tuser, err := h.service.Create(r.Context(), req)
-\tif err != nil {
-\t\treturn fmt.Errorf("creating user %q: %w", req.Email, err)
-\t}
+    try {
+        $user = $this->service->create($validated);
+    } catch (\\Throwable $e) {
+        throw new \\RuntimeException('creating user: ' . $e->getMessage(), 0, $e);
+    }
 
-\treturn json.NewEncoder(w).Encode(user)
+    return response()->json($user, 201);
 }`,
     },
     {
       id: 2,
-      fileName: 'auth.go',
-      before: `func (s *AuthService) Login(ctx context.Context, email, password string) (*Token, error) {
-\tlog.Printf("user login: %s", email)
+      fileName: 'AuthService.php',
+      before: `public function login(string $email, string $password): Token
+{
+    error_log("user login: $email");
 
-\tuser, err := s.repo.FindByEmail(ctx, email)
-\tif err != nil {
-\t\tlog.Printf("login failed: %v", err)
-\t\treturn nil, fmt.Errorf("finding user: %w", err)
-\t}
+    $user = $this->repo->findByEmail($email);
+    if (!$user) {
+        error_log("login failed: user not found");
+        throw new \\RuntimeException('finding user');
+    }
 
-\tlog.Printf("login success: %s", email)
-\treturn s.issueToken(user)
+    error_log("login success: $email");
+    return $this->issueToken($user);
 }`,
-      after: `func (s *AuthService) Login(ctx context.Context, email, password string) (*Token, error) {
-\tspan := trace.SpanFromContext(ctx)
-\ts.logger.Info("user login attempt",
-\t\tzap.String("trace_id", span.SpanContext().TraceID().String()),
-\t)
+      after: `public function login(string $email, string $password): Token
+{
+    Log::info('user login attempt', ['email' => $email, 'trace_id' => request()->header('X-Trace-Id')]);
 
-\tuser, err := s.repo.FindByEmail(ctx, email)
-\tif err != nil {
-\t\ts.logger.Warn("login failed",
-\t\t\tzap.Error(err),
-\t\t\tzap.String("trace_id", span.SpanContext().TraceID().String()),
-\t\t)
-\t\treturn nil, fmt.Errorf("finding user: %w", err)
-\t}
+    $user = $this->repo->findByEmail($email);
+    if (!$user) {
+        Log::warning('login failed', [
+            'email' => $email,
+            'trace_id' => request()->header('X-Trace-Id'),
+        ]);
+        throw new \\RuntimeException('finding user');
+    }
 
-\ts.logger.Info("login success",
-\t\tzap.String("user_id", user.ID),
-\t\tzap.String("trace_id", span.SpanContext().TraceID().String()),
-\t)
-\treturn s.issueToken(user)
+    Log::info('login success', [
+        'user_id' => $user->id,
+        'trace_id' => request()->header('X-Trace-Id'),
+    ]);
+    return $this->issueToken($user);
 }`,
     },
     {
       id: 3,
-      fileName: 'user.go',
-      before: `func (r *UserRepo) FindByID(id string) (*User, error) {
-\tvar user User
-
-\tresult := r.db.First(&user, "id = ?", id)
-\tif result.Error != nil {
-\t\treturn nil, fmt.Errorf("finding user %s: %w", id, result.Error)
-\t}
-
-\treturn &user, nil
+      fileName: 'UserRepository.php',
+      before: `public function findById(string $id): ?User
+{
+    return User::find($id);
 }`,
-      after: `func (r *UserRepo) FindByID(ctx context.Context, id string) (*User, error) {
-\tvar user User
+      after: `public function findById(string $id, array $context = []): ?User
+{
+    Log::debug('repository findById', array_merge(['user_id' => $id], $context));
 
-\tresult := r.db.WithContext(ctx).First(&user, "id = ?", id)
-\tif result.Error != nil {
-\t\treturn nil, fmt.Errorf("finding user %s: %w", id, result.Error)
-\t}
-
-\treturn &user, nil
+    return User::find($id);
 }`,
     },
   ];

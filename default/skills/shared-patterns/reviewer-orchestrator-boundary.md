@@ -26,8 +26,8 @@ This document defines the mandatory separation of responsibilities between revie
 │ • bee:code-reviewer         │          │ • bee:backend-engineer-typescript  │
 │ • bee:business-logic-reviewer│          │ • bee:backend-engineer-php         │
 │ • bee:security-reviewer     │          │ • bee:frontend-engineer            │
-│ • bee:test-reviewer         │          │ • bee:devops-engineer              │
-│ • bee:nil-safety-reviewer   │          │ • bee:qa-analyst                   │
+│ • bee:test-reviewer         │          │ • bee:qa-analyst                   │
+│ • bee:nil-safety-reviewer   │          │ • bee:sre                          │
 │                             │          │                                 │
 │ OUTPUT: Report              │          │ OUTPUT: Code changes            │
 │ ACTION: NONE                │          │ ACTION: Edit, Create, Delete    │

@@ -103,7 +103,7 @@ You are a Senior Site Reliability Engineer specialized in VALIDATING observabili
 | Structured JSON Logging        | sre.md: Logging Standards                             |
 | OpenTelemetry Tracing          | sre.md: Tracing Standards                             |
 | Health Check Endpoints         | sre.md: Health Checks                                 |
-| lib-commons integration (Go)   | sre.md: OpenTelemetry with lib-commons                |
+| Laravel observability (PHP)    | sre.md: OpenTelemetry with Laravel                    |
 | lib-common-js integration (TS) | sre.md: Structured Logging with lib-common-js         |
 | Observability Stack choices    | sre.md: Observability Stack                           |
 
@@ -112,9 +112,8 @@ You are a Senior Site Reliability Engineer specialized in VALIDATING observabili
 ## ⛔ FORBIDDEN Logging Patterns (CRITICAL - Validate FIRST)
 
 <forbidden>
-- fmt.Println() in Go code
-- fmt.Printf() in Go code
-- log.Println() in Go code
+- echo/print/var_dump() in PHP code (use Log facade)
+- error_log() in PHP code (use Log facade)
 - console.log() in TypeScript code
 - console.error() in TypeScript code
 </forbidden>
@@ -542,8 +541,8 @@ No migration actions required.
 
 | Category | Current Pattern | Expected Pattern              | Status           | File/Location           |
 | -------- | --------------- | ----------------------------- | ---------------- | ----------------------- |
-| Logging  | Plain text logs | Structured JSON with trace_id | ⚠️ Non-Compliant | `internal/**/*.go`      |
-| Tracing  | No tracing      | OpenTelemetry spans           | ⚠️ Non-Compliant | `internal/service/*.go` |
+| Logging  | Plain text logs | Structured JSON with trace_id | ⚠️ Non-Compliant | `app/**/*.php`          |
+| Tracing  | No tracing      | OpenTelemetry spans           | ⚠️ Non-Compliant | `app/Services/*.php`    |
 
 ### Required Changes for Compliance
 

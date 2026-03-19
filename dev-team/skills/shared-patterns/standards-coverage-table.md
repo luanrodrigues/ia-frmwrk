@@ -404,25 +404,6 @@ In addition to the standard Coverage Table, bee:ui-engineer MUST output:
 
 ---
 
-### bee:devops-engineer → devops.md
-
-| #   | Section to Check                   | Subsections (all REQUIRED)                                                                 |
-| --- | ---------------------------------- | ------------------------------------------------------------------------------------------ |
-| 1   | Cloud Provider (MANDATORY)         | Provider table                                                                             |
-| 2   | Infrastructure as Code (MANDATORY) | Terraform structure, State management, Module pattern, Best practices                      |
-| 3   | Containers (MANDATORY)             | **Dockerfile patterns, Docker Compose (Local Dev), .env file**, Image guidelines           |
-| 4   | Helm (MANDATORY)                   | Chart structure, Chart.yaml, values.yaml                                                   |
-| 5   | Observability (MANDATORY)          | Logging (Structured JSON), Tracing (OpenTelemetry)                                         |
-| 6   | Security (MANDATORY)               | Secrets management, Network policies                                                       |
-| 7   | Makefile Standards (MANDATORY)     | Required commands (build, lint, test, cover, up, down, etc.), Component delegation pattern |
-| 8   | CI/CD Pipeline (MANDATORY)         | Pipeline stages (lint, test, security, build), branch protection, required checks          |
-
-**⛔ HARD GATE:** When checking "Containers", you MUST verify BOTH Dockerfile and Docker Compose patterns. Checking only one = INCOMPLETE.
-
-**⛔ HARD GATE:** When checking "Makefile Standards", you MUST verify all required commands exist: `build`, `lint`, `test`, `cover`, `up`, `down`, `start`, `stop`, `restart`, `rebuild-up`, `set-env`, `generate-docs`.
-
----
-
 ### bee:sre → sre.md
 
 | #   | Section to Check                      | Anchor                                                            |

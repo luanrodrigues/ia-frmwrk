@@ -104,7 +104,6 @@ Read docs/PROJECT_RULES.md
 | `frontend-bff-engineer-typescript` | typescript.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/typescript.md` |
 | `bee:frontend-engineer` | frontend.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md` |
 | `bee:frontend-designer` | frontend.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md` |
-| `bee:devops-engineer` | devops.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/devops.md` |
 | `bee:sre` | sre.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/sre.md` |
 | `bee:database-engineer` | database.md | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/database.md` |
 | `bee:qa-analyst` | php.md | Based on project language (check PROJECT_RULES.md first) |
@@ -173,7 +172,6 @@ Read docs/PROJECT_RULES.md
 > - PHP: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/php.md
 > - TypeScript (BFF): https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/typescript.md
 > - Frontend: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md
-> - DevOps: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/devops.md
 > - SRE: https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/sre.md
 
 ## What Bee Standards Cover (DO not DUPLICATE HERE)

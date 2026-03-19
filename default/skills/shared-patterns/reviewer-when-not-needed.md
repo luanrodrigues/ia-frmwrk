@@ -13,7 +13,7 @@ Review can be MINIMAL (not skipped) when ALL these conditions are met:
 |-----------|----------------------|
 | **Documentation-only changes** | Verify .md files only, no code changes |
 | **Pure formatting/whitespace** | Verify no logic modifications via git diff |
-| **Generated/lock files only** | Verify package-lock.json, go.sum, etc. |
+| **Generated/lock files only** | Verify package-lock.json, composer.lock, etc. |
 | **Reverts previous commit** | Reference original review that approved reverted code |
 
 **IMPORTANT:** "Minimal" means reduced scope, NOT skipped review.
@@ -68,7 +68,7 @@ Even in minimal mode, these checks are MANDATORY:
 - Test file changes (no production code)
 - Pure type annotation changes (no runtime behavior)
 
-**STILL REQUIRED:** Any production code changes in Go or TypeScript
+**STILL REQUIRED:** Any production code changes in PHP or TypeScript
 
 ---
 

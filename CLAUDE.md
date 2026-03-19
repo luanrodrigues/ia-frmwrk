@@ -30,7 +30,7 @@ When creating or modifying any agent in `*/agents/*.md`:
 2. **MUST NOT run reviewers sequentially** - dispatch in parallel
 3. **MUST NOT skip TDD's RED phase** - Test must fail before implementation
 4. **MUST NOT ignore skill when applicable** - "Simple task" is not an excuse
-5. **MUST NOT use die()/exit() in PHP or panic() in Go** - Error handling required
+5. **MUST NOT use die()/exit() in PHP** - Error handling required
 6. **MUST NOT commit manually** - use `/bee:commit` command
 7. **MUST NOT assume compliance** - VERIFY with evidence
 
@@ -101,7 +101,6 @@ If any checkbox is no → Fix before committing.
 | `php.md`        | `bee:backend-engineer-php`, `bee:qa-analyst`                                                   |
 | `typescript.md` | `bee:backend-engineer-typescript`, `bee:frontend-bff-engineer-typescript`, `bee:qa-analyst` |
 | `frontend.md`   | `bee:frontend-engineer`, `bee:frontend-designer`                                             |
-| `devops.md`     | `bee:devops-engineer`                                                                         |
 | `database.md`   | `bee:database-engineer`                                                                       |
 | `sre.md`        | `bee:sre`                                                                                     |
 
@@ -118,7 +117,6 @@ MUST match `dev-team/skills/shared-patterns/standards-coverage-table.md`. See th
 | `bee:frontend-bff-engineer-typescript` | typescript.md              |
 | `bee:frontend-engineer`                | frontend.md                |
 | `bee:frontend-designer`                | frontend.md                |
-| `bee:devops-engineer`                  | devops.md                  |
 | `bee:sre`                              | sre.md                     |
 | `bee:database-engineer`                | database.md                |
 | `bee:qa-analyst`                       | typescript.md              |

@@ -18,7 +18,7 @@ changelog:
   - 2.1.2: Added required_when condition to Standards Compliance for bee:dev-refactor gate enforcement
   - 2.1.3: Added Anti-Rationalization Table to Standards Compliance, strengthened Cannot Be Overridden section, strengthened weak language (Apply → MUST apply)
   - 2.1.1: Added Standards Compliance documentation cross-references (CLAUDE.md, MANUAL.md, README.md, ARCHITECTURE.md, session-start.sh)
-  - 2.1.0: Added Standards Loading, Blocker Criteria, Severity Calibration per Go agent standards
+  - 2.1.0: Added Standards Loading, Blocker Criteria, Severity Calibration per agent standards
   - 2.0.0: Refactored to specification-only format, removed code examples
   - 1.0.0: Initial release - BFF specialist with Clean Architecture, DDD, Inversify DI
 output_schema:

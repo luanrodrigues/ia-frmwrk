@@ -568,9 +568,9 @@ From potential crash:
 #### Nil Risk Documentation Format
 ```markdown
 **Risk:** [Brief description]
-**Source:** `file.go:45` - Function returns `(*User, error)`
-**Path:** getUser() → handler assigns to `user` → user.Name accessed
-**Crash Point:** `handler.go:85` - `user.Name` when user is nil
+**Source:** `UserService.php:45` - Function returns nullable `?User`
+**Path:** getUser() → handler assigns to `user` → user.name accessed
+**Crash Point:** `UserController.php:85` - `user.name` when user is null
 **Severity:** CRITICAL - Direct panic path
 ```
 

@@ -267,7 +267,6 @@ Where:
 - ❌ Unit/integration test writing (TDD)
 - ❌ Automated code review (bee:code-reviewer)
 - ❌ SRE validation (bee:sre)
-- ❌ DevOps setup (bee:devops-engineer)
 
 ### Example Calculation
 

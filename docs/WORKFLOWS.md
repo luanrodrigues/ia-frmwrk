@@ -118,7 +118,6 @@ Each plugin auto-loads a `using-{plugin}` skill via SessionStart hook to introdu
 - Located: `dev-team/skills/using-dev-team/SKILL.md`
 - Agents (invoke as `bee:{agent-name}`):
   - bee:backend-engineer-typescript
-  - bee:devops-engineer
   - bee:frontend-bff-engineer-typescript
   - bee:frontend-designer
   - bee:frontend-engineer

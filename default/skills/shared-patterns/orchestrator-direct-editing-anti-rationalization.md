@@ -39,7 +39,7 @@ Before ANY Edit/Write/Create operation on source files:
 ```text
 STOP. Ask yourself:
 1. Am I an orchestrator (skill/workflow coordinator)? → YES
-2. Is this a source code file? → Check extension (.go, .ts, .tsx, .py, etc.)
+2. Is this a source code file? → Check extension (.php, .ts, .tsx, .py, etc.)
 3. If YES to both → DISPATCH AGENT. Do NOT edit directly.
 
 If you catch yourself about to use Edit/Write/Create on source files → STOP. Dispatch agent.

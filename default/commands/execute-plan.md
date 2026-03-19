@@ -61,7 +61,6 @@ You will be asked to choose between:
   - Backend TypeScript: `bee:backend-engineer-typescript`
   - Backend PHP: `bee:backend-engineer-php`
   - Frontend React/Next.js/BFF: `frontend-bff-engineer-typescript`
-  - Infrastructure: `bee:devops-engineer`
   - Testing: `bee:qa-analyst`
   - Reliability: `bee:sre`
 

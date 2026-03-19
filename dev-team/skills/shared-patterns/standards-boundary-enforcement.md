@@ -30,9 +30,9 @@ Canonical source for preventing agents from hallucinating requirements beyond wh
 **Example Failures:**
 | Agent Said | Reality | Problem |
 |------------|---------|---------|
-| "Missing `make proto`" | not in devops.md Makefile Standards | Hallucinated requirement |
-| "Missing `make mocks`" | not in devops.md Makefile Standards | Hallucinated requirement |
-| "Missing `make migrate-up/down`" | not in devops.md Makefile Standards | Hallucinated requirement |
+| "Missing `make proto`" | not in any Makefile Standards | Hallucinated requirement |
+| "Missing `make mocks`" | not in any Makefile Standards | Hallucinated requirement |
+| "Missing `make migrate-up/down`" | not in any Makefile Standards | Hallucinated requirement |
 | "Should use gRPC" | not in php.md Frameworks | Hallucinated requirement |
 | "Needs GraphQL schema" | not in php.md | Hallucinated requirement |
 
@@ -97,16 +97,6 @@ Each agent MUST:
 ### Common Hallucinations by Agent Type
 
 **These are items agents commonly invent that are not typically in standards. Always verify in WebFetch result before flagging.**
-
-#### bee:devops-engineer → devops.md
-
-| Common Hallucination | Action |
-|---------------------|--------|
-| `make proto` | Verify in devops.md "Makefile Standards" section |
-| `make mocks` | Verify in devops.md "Makefile Standards" section |
-| `make migrate-*` | Verify in devops.md "Makefile Standards" section |
-| `make install` | Verify in devops.md "Makefile Standards" section |
-| `make clean` | Verify in devops.md "Makefile Standards" section |
 
 #### bee:backend-engineer-php → php.md
 

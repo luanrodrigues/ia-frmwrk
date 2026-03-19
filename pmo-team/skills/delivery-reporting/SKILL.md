@@ -205,7 +205,6 @@ git branch -r --sort=-committerdate  # Active branches
 |----------------|-------------------|-----|
 | **Backend TypeScript** | `bee:backend-engineer-typescript` | TS/Node API analysis |
 | **Frontend React/Next** | `bee:frontend-engineer` | UI/UX impact analysis |
-| **Infrastructure** | `bee:devops-engineer` | Deployment, scaling impact |
 | **Tests** | `bee:qa-analyst` | Quality improvements analysis |
 | **Unknown/Mixed** | `bee:codebase-explorer` | Comprehensive exploration |
 
@@ -215,7 +214,7 @@ git branch -r --sort=-committerdate  # Active branches
 For each repository:
 
 1. **Identify Technology Stack**
-   - Read package.json, go.mod, requirements.txt
+   - Read package.json, composer.json, requirements.txt
    - Determine primary language
 
 2. **Dispatch Appropriate Specialized Agent**

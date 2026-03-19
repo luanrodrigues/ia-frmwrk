@@ -142,7 +142,7 @@ User saying "don't wait", "don't ask questions", or "just execute" does NOT skip
 ### Step 3: Execute Batch
 **Default: First 3 tasks**
 
-**Agent Selection:** Backend TS → `bee:backend-engineer-typescript` | Backend PHP → `bee:backend-engineer-php` | Frontend → `bee:frontend-bff-engineer-typescript` | Infra → `bee:devops-engineer` | Testing → `bee:qa-analyst` | Reliability → `bee:sre`
+**Agent Selection:** Backend TS → `bee:backend-engineer-typescript` | Backend PHP → `bee:backend-engineer-php` | Frontend → `bee:frontend-bff-engineer-typescript` | Testing → `bee:qa-analyst` | Reliability → `bee:sre`
 
 For each task: Check context switch (Step 2.5) → Mark in_progress → Dispatch to agent with working_directory → Follow plan steps exactly → Run verifications → Mark completed
 

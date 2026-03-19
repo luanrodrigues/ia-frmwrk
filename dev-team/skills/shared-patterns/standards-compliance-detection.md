@@ -29,7 +29,6 @@ Canonical source for Standards Compliance detection logic used by all dev-team a
 | `bee:backend-engineer-php` | php.md | any implementation task |
 | `frontend-bff-engineer-typescript` | typescript.md | any implementation task |
 | `bee:frontend-engineer` | frontend.md | any implementation task |
-| `bee:devops-engineer` | devops.md | any artifact creation |
 | `bee:sre` | sre.md | any validation task |
 | `bee:qa-analyst` | php.md | any testing task |
 | `bee:database-engineer` | database.md | any database task |
@@ -142,7 +141,7 @@ If detection is ambiguous, output FULL compliance (table + findings). Better to 
 ### FORBIDDEN Actions
 
 ```
-❌ Inventing section names ("Security", "Go Version", "Code Quality")
+❌ Inventing section names ("Security", "PHP Version", "Code Quality")
 ❌ Merging sections ("Error Handling & Logging" instead of separate rows)
 ❌ Renaming sections ("Config" instead of "Configuration Loading")
 ❌ Skipping sections not found in codebase

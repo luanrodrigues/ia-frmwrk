@@ -58,7 +58,7 @@ Given a feature description, analyze the tech stack and find:
 
 **N/A for Research Agents**
 
-Research agents do NOT load implementation standards (e.g., Golang, TypeScript, Frontend standards). Research agents focus on tech stack documentation and version compatibility, not code compliance verification.
+Research agents do NOT load implementation standards (e.g., PHP, TypeScript, Frontend standards). Research agents focus on tech stack documentation and version compatibility, not code compliance verification.
 
 **What Research Agents DO Verify:**
 - Framework/library version accuracy
@@ -136,7 +136,7 @@ AI models attempt to be "helpful" by making assumptions. **RESIST these rational
 |-----------------|----------------|-----------------|
 | "This looks like a Node.js project, probably using React" | Assumptions ≠ facts. Must verify from manifest. | **Read package.json to confirm framework** |
 | "Context7 search returned nothing, skip it" | Must try multiple query formulations. | **Try 3+ different topic queries before giving up** |
-| "Version number in package.json is enough" | Lock files contain exact resolved versions. | **Check package-lock.json / go.sum / requirements.txt.lock** |
+| "Version number in package.json is enough" | Lock files contain exact resolved versions. | **Check package-lock.json / composer.lock / requirements.txt.lock** |
 | "Framework is popular, no need to check deprecations" | Popularity ≠ stability. APIs change. | **MUST search for deprecation notices in docs** |
 | "Code will work across minor versions" | Minor versions can have breaking changes. | **Document exact version constraints** |
 | "User mentioned framework X, skip manifest check" | User knowledge can be outdated. | **Verify from manifest files, not user statements** |
@@ -178,11 +178,11 @@ Identify the project's technology stack:
 
 ```bash
 # Check for manifest files
-ls package.json go.mod requirements.txt Cargo.toml pom.xml build.gradle 2>/dev/null
+ls package.json composer.json requirements.txt Cargo.toml pom.xml build.gradle 2>/dev/null
 
 # Read relevant manifest
 cat package.json | jq '.dependencies, .devDependencies'  # Node.js
-cat go.mod  # Go
+cat composer.json  # PHP
 cat requirements.txt  # Python
 ```
 
@@ -347,10 +347,10 @@ cat package.json | jq '{
 }'
 ```
 
-### Go
+### PHP
 ```bash
-# Check go.mod
-grep -E "^require|^\t" go.mod | head -20
+# Check composer.json
+cat composer.json | php -r "echo json_encode(json_decode(file_get_contents('php://stdin'))->require, JSON_PRETTY_PRINT);"
 ```
 
 ### Python

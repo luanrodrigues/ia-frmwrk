@@ -86,7 +86,7 @@ The skill's core principle: **When pressure is highest, systematic approach matt
 **Scenario:** Grep for location → Answer question → User asks follow-up → Grep again → Another follow-up
 
 **Example:**
-- Q1: "Where is validation?" → Grep → Answer: `validation.go:45`
+- Q1: "Where is validation?" → Grep → Answer: `UserRequest.php:45`
 - Q2: "How does it integrate?" → Read files → Answer: "Called from use case"
 - Q3: "What else validates?" → Grep again → Answer: "Assert package + HTTP layer"
 - **Total: 3 round trips, 15 minutes, incomplete mental model**
@@ -110,9 +110,9 @@ The skill's core principle: **When pressure is highest, systematic approach matt
 
 **Example:**
 - Task: Add account validation rule
-- Grep finds: `create-account.go` has validation
+- Grep finds: `CreateAccountRequest.php` has validation
 - You add: New validation in same file
-- Discovery would reveal: `pkg/validator/account.go` has shared validation library
+- Discovery would reveal: `app/Rules/AccountValidator.php` has shared validation library
 - Result: Duplicate logic, inconsistent validation across codebase
 
 **Discovery would have revealed:** Centralized validation library for reuse.
@@ -168,8 +168,8 @@ Based on Phase 1 discoveries, launch **N targeted explorers** (where N adapts):
 
 **Don't use when:**
 - Pure reference lookup: "What's the signature of function X?"
-- File existence check: "Does utils.go exist?"
-- Reading known error location: "Show me line 45 of errors.go"
+- File existence check: "Does helpers.php exist?"
+- Reading known error location: "Show me line 45 of Exceptions/Handler.php"
 
 **COMMON TRAPS - These SEEM like valid skip reasons but are NOT:**
 
@@ -178,7 +178,7 @@ Based on Phase 1 discoveries, launch **N targeted explorers** (where N adapts):
 
 **Reality:** Location questions lead to "how does X work?" next
 - Question: "Where is validation logic?"
-- Grep answer: `validation.go:45`
+- Grep answer: `UserRequest.php:45`
 - Follow-up: "How does it integrate with the system?"
 - Follow-up: "What else validates this?"
 - **Result:** 3 questions, incomplete picture, wasted time
@@ -782,7 +782,7 @@ Based on autonomous exploration:
 - List of top-level directories
 - README files describing components
 - Import/dependency patterns
-- Package.json, go.mod, or similar dependency files
+- Package.json, composer.json, or similar dependency files
 
 **Output format:**
 ```

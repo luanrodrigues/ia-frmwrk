@@ -287,7 +287,7 @@ Re-run after file exists.
 
 **TodoWrite:** Mark "Detect frontend stack and UI library mode" as `in_progress`
 
-**⛔ SCOPE: FRONTEND AND BFF CODE ONLY.** This skill analyzes frontend code (React, Next.js) and BFF layers exclusively. MUST use `bee:dev-refactor` for backend code (Go, pure TypeScript backend with Express/Fastify/NestJS without React).
+**⛔ SCOPE: FRONTEND AND BFF CODE ONLY.** This skill analyzes frontend code (React, Next.js) and BFF layers exclusively. MUST use `bee:dev-refactor` for backend code (PHP, pure TypeScript backend with Express/Fastify/NestJS without React).
 
 **⛔ FORBIDDEN:** Dispatching `bee:backend-engineer-php` from this skill. Backend agents belong to `bee:dev-refactor`.
 

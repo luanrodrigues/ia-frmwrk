@@ -110,7 +110,7 @@ The skill defines all steps including: React Native stack detection, Expo detect
 | **Accessibility** | VoiceOver/TalkBack, accessibilityLabel/Role/Hint, touch target sizes | `frontend-react-native/testing-accessibility.md` |
 | **Testing** | Unit coverage (RNTL/Jest), visual snapshots, E2E (Detox), performance | `frontend-react-native/testing-*.md` |
 | **Performance** | Bundle size, FlashList, Hermes, image optimization, re-renders | `frontend-react-native/testing-performance.md` |
-| **DevOps** | EAS Build config, CI/CD pipeline, code signing, Makefile | `devops.md` |
+| **DevOps** | EAS Build config, CI/CD pipeline, code signing, Makefile | industry best practices |
 
 **Analysis vs Execution:**
 - **Analysis (always):** All seven dimensions analyzed, all severities (Critical, High, Medium, Low) tracked

@@ -88,7 +88,7 @@ examples:
     input:
       unit_id: "task-001"
       external_dependencies: ["postgres", "redis"]
-      language: "go"
+      language: "php"
     expected_output: |
       ## Chaos Testing Summary
       **Status:** PASS

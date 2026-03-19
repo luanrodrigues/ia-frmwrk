@@ -110,7 +110,7 @@ The skill defines all steps including: frontend stack detection, UI library mode
 | **Accessibility** | WCAG 2.1 AA, semantic HTML, keyboard, ARIA | `frontend/testing-accessibility.md` |
 | **Testing** | Unit coverage, visual snapshots, E2E, performance | `frontend/testing-*.md` |
 | **Performance** | Core Web Vitals, Lighthouse, bundle, server components | `frontend/testing-performance.md` |
-| **DevOps** | Dockerfile, docker-compose, Nginx, CI/CD | `devops.md` |
+| **DevOps** | Dockerfile, docker-compose, Nginx, CI/CD | industry best practices |
 
 **Analysis vs Execution:**
 - **Analysis (always):** All seven dimensions analyzed, all severities (Critical, High, Medium, Low) tracked

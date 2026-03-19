@@ -56,7 +56,7 @@ After getting the feature name, follow the complete bee:using-git-worktrees skil
    - Node.js: `npm install` (if package.json exists)
    - Rust: `cargo build` (if Cargo.toml exists)
    - Python: `pip install -r requirements.txt` or `poetry install`
-   - Go: `go mod download` (if go.mod exists)
+   - PHP: `composer install` (if composer.json exists)
 
 7. **Verify clean baseline**:
    - Run appropriate test command for the project

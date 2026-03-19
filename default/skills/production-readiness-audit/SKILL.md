@@ -84,12 +84,12 @@ Use this skill when:
 | 16 | **Idempotency** | Idempotency keys, retry safety, duplicate prevention |
 | 17 | **API Documentation** | Swaggo/OpenAPI annotations, response schemas, examples |
 | 18 | **Technical Debt** | TODOs, FIXMEs, deprecated code, incomplete implementations |
-| 19 | **Testing Coverage** | Co-located tests, mockgen, table-driven tests, integration tests |
+| 19 | **Testing Coverage** | Co-located tests, Mockery/Jest mocks, parameterized tests, integration tests |
 | 20 | **Dependency Management** | Pinned versions, CVE scanning, deprecated packages |
 | 21 | **Performance Patterns** | N+1 queries, SELECT *, slice pre-allocation, batching |
 | 22 | **Concurrency Safety** | Race conditions, goroutine leaks, mutex usage, worker pools |
 | 23 | **Migration Safety** | Up/down pairs, CONCURRENTLY indexes, NOT NULL defaults |
-| 31 | **Linting & Code Quality** | Import ordering (3 groups), magic numbers, golangci-lint config |
+| 31 | **Linting & Code Quality** | Import ordering (3 groups), magic numbers, linter config (phpstan, eslint) |
 | 40 | **Caching Patterns** | Cache invalidation, TTL management, stampede prevention, tenant-scoped keys |
 
 ### Category E: Infrastructure & Hardening (6 dimensions)
@@ -101,7 +101,7 @@ Use this skill when:
 | 26 | **CI/CD Pipeline** | Pipeline definitions, automated tests, security scanning |
 | 27 | **Async Reliability** | DLQs, retry policies, consumer group usage, message durability |
 | 32 | **Makefile & Dev Tooling** | 17+ required Makefile commands, dev workflow automation |
-| 34 | **License Headers** | Copyright headers on all .go files |
+| 34 | **License Headers** | Copyright headers on all source files (.php, .ts, .tsx) |
 
 ## Execution Protocol
 
@@ -133,10 +133,10 @@ Before running any explorers, detect the project stack to determine which Bee st
 |-------|------|-------------------|
 | `**/package.json` + React/Next.js deps | FRONTEND=true | (future enrichment) |
 | `**/package.json` + Express/Fastify deps | TS_BACKEND=true | (future enrichment) |
-| `**/Dockerfile*` exists | DOCKER=true | devops.md |
-| `**/Makefile` exists | MAKEFILE=true | devops.md → Makefile Standards |
+| `**/Dockerfile*` exists | DOCKER=true | container best practices |
+| `**/Makefile` exists | MAKEFILE=true | Makefile Standards |
 | `**/LICENSE*` exists | LICENSE=true | Activates dimension 34 |
-| `MULTI_TENANT` env var in config/env files (`.env*`, `docker-compose*`, `**/config*.go`) | MULTI_TENANT=true | multi-tenant.md |
+| `MULTI_TENANT` env var in config/env files (`.env*`, `docker-compose*`, `**/config*.php`, `**/config*.ts`) | MULTI_TENANT=true | multi-tenant.md |
 
 **Detection Logic:**
 ```
@@ -160,7 +160,6 @@ Based on detected stack, load Bee development standards via WebFetch from the ca
 
 | Module | Variable | URL |
 |--------|----------|-----|
-| devops.md | `standards_devops` | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/devops.md` |
 | sre.md | `standards_sre` | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/sre.md` |
 
 **Fallback:** If any WebFetch fails, note the failure in the audit report and proceed with existing generic patterns for that dimension. Do not abort the audit.
@@ -184,7 +183,7 @@ Write to docs/audits/production-readiness-{YYYY-MM-DDTHH:MM:SS}.md:
 
 | Property | Value |
 |----------|-------|
-| **Detected Stack** | {Go / TypeScript / Frontend / Mixed} |
+| **Detected Stack** | {PHP / TypeScript / Frontend / Mixed} |
 | **Standards Loaded** | {list of loaded standards files} |
 | **Active Dimensions** | {43 base + 1 conditional (max 44)} |
 | **Max Possible Score** | {dynamic_max: 430 or 440} |
@@ -307,39 +306,37 @@ Audit pagination implementation across the codebase for production readiness.
 - **Cursor** for high-volume transaction entities (transactions, operations, balances, audit logs, events)
 
 **Search Patterns:**
-- Files: `**/pagination*.go`, `**/handlers.go`, `**/dto.go`, `**/httputils.go`, `**/cursor.go`
+- Files: `**/Pagination*.php`, `**/Controllers/*.php`, `**/DTO/*.php`, `**/Helpers/Http*.php`, `**/Cursor*.php`
 - Keywords: `limit`, `offset`, `cursor`, `Page`, `NextCursor`, `PrevCursor`, `SetCursor`, `SetItems`
 - Standards-specific: `CursorPagination`, `Pagination`, `ValidateParameters`, `QueryHeader`, `MAX_PAGINATION_LIMIT`
 
 **Reference Implementations (GOOD):**
 
 Offset mode (admin entities):
-```go
-// Handler sets Page field — indicates offset mode
-pagination := libPostgres.Pagination{
-    Limit:     headerParams.Limit,
-    Page:      headerParams.Page,
-    SortOrder: headerParams.SortOrder,
-}
-items, err := h.Query.GetAllOrganizations(ctx, *headerParams)
-pagination.SetItems(items)
-return libHTTP.OK(c, pagination)
+```php
+// Handler sets page field — indicates offset mode
+$pagination = $this->paginationService->paginate(
+    query: Organization::query(),
+    limit: $request->header('X-Limit', 10),
+    page:  $request->header('X-Page', 1),
+    sortOrder: $request->header('X-Sort-Order', 'asc'),
+);
+return response()->json($pagination);
 
 // Repository uses OFFSET = (Page - 1) * Limit
-query.Limit(filter.Limit).Offset((filter.Page - 1) * filter.Limit)
+$query->limit($filter->limit)->offset(($filter->page - 1) * $filter->limit);
 ```
 
 Cursor mode (transaction entities):
-```go
-// Handler does NOT set Page — indicates cursor mode
-pagination := libPostgres.Pagination{
-    Limit:     headerParams.Limit,
-    SortOrder: headerParams.SortOrder,
-}
-items, cursor, err := h.Query.GetAllTransactions(ctx, orgID, ledgerID, *headerParams)
-pagination.SetItems(items)
-pagination.SetCursor(cursor.Next, cursor.Prev)
-return libHTTP.OK(c, pagination)
+```php
+// Handler does NOT set page — indicates cursor mode
+$pagination = $this->paginationService->cursorPaginate(
+    query: Transaction::query(),
+    limit: $request->header('X-Limit', 10),
+    sortOrder: $request->header('X-Sort-Order', 'asc'),
+    cursor: $request->header('X-Cursor'),
+);
+return response()->json($pagination);
 ```
 
 **Check Against Bee Standards For:**
@@ -396,104 +393,110 @@ Audit error handling framework usage for production readiness.
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `**/error*.go`, `**/handlers.go`
-- Keywords: `ErrRepo`, `errors.Is`, `errors.As`, `errors.New`
-- Also search: `panic(`, `log.Fatal`
+- Files: `**/Exceptions/*.php`, `**/Controllers/*.php`
+- Keywords: `DomainException`, `throw new`, `catch`, `Exception`
+- Also search: `die(`, `exit(`
 - Standards-specific: `ErrCode`, `DomainError`, `ErrorResponse`
 
 **Reference Implementation (GOOD):**
-```go
-// Validate with explicit checks and return errors (no panic)
-if config == nil {
-    return fmt.Errorf("validation: config required")
+```php
+// Validate with explicit checks and throw exceptions (no die/exit)
+if ($config === null) {
+    throw new \InvalidArgumentException('validation: config required');
 }
 
-// Domain error types
-var (
-    ErrNotFound        = errors.New("resource not found")
-    ErrInvalidInput    = errors.New("invalid input")
-)
+// Domain exception types
+class ResourceNotFoundException extends DomainException {}
+class InvalidInputException extends DomainException {}
 
 // Error mapping in handlers
-if errors.Is(err, domain.ErrNotFound) {
-    return httputil.NotFoundError(c, span, logger, "resource not found", err)
+try {
+    $result = $this->service->find($id);
+} catch (ResourceNotFoundException $e) {
+    return response()->json(['error' => 'resource not found'], 404);
 }
 ```
 
 **Reference Implementation (BAD):**
-```go
-// Direct panic in production code
-if config == nil {
-    panic("config is nil")  // BAD: Return error instead
+```php
+// Direct die/exit in production code
+if ($config === null) {
+    die('config is null');  // BAD: Throw exception instead
 }
 
 // Swallowing errors
-result, _ := doSomething()  // BAD: Ignoring error
+$result = doSomething(); // exception ignored with no try/catch
 
 // Generic error messages
-return errors.New("error")  // BAD: Not descriptive
+throw new \Exception('error');  // BAD: Not descriptive
 ```
 
 **Reference Implementation (GOOD — RFC 7807 Error Responses):**
-```go
+```php
 // RFC 7807 Problem Details compliant error response
-type ProblemDetails struct {
-    Type     string `json:"type"`               // URI reference identifying the problem type
-    Title    string `json:"title"`              // Short human-readable summary
-    Status   int    `json:"status"`             // HTTP status code
-    Detail   string `json:"detail"`             // Human-readable explanation specific to this occurrence
-    Instance string `json:"instance,omitempty"` // URI reference for the specific occurrence
-    Code     string `json:"code"`               // Machine-readable error code for programmatic handling
+class ProblemDetails
+{
+    public function __construct(
+        public readonly string $type,     // URI reference identifying the problem type
+        public readonly string $title,    // Short human-readable summary
+        public readonly int    $status,   // HTTP status code
+        public readonly string $detail,   // Human-readable explanation specific to this occurrence
+        public readonly string $instance, // URI reference for the specific occurrence
+        public readonly string $code,     // Machine-readable error code for programmatic handling
+    ) {}
 }
 
 // Consistent error response factory
-func NewProblemResponse(c *fiber.Ctx, status int, errCode string, detail string) error {
-    return c.Status(status).JSON(ProblemDetails{
-        Type:     "https://api.example.com/errors/" + errCode,
-        Title:    http.StatusText(status),
-        Status:   status,
-        Detail:   detail,
-        Instance: c.Path(),
-        Code:     errCode,
-    })
+function problemResponse(int $status, string $errCode, string $detail, Request $request): JsonResponse
+{
+    return response()->json(new ProblemDetails(
+        type:     "https://api.example.com/errors/{$errCode}",
+        title:    Response::$statusTexts[$status] ?? 'Error',
+        status:   $status,
+        detail:   $detail,
+        instance: $request->path(),
+        code:     $errCode,
+    ), $status);
 }
 
 // Handler usage — consistent across ALL endpoints
-func (h *Handler) Create(c *fiber.Ctx) error {
-    // ...
-    if errors.Is(err, domain.ErrNotFound) {
-        return NewProblemResponse(c, 404, "RESOURCE_NOT_FOUND", "The requested resource does not exist")
+public function create(Request $request): JsonResponse
+{
+    try {
+        // ...
+    } catch (ResourceNotFoundException $e) {
+        return problemResponse(404, 'RESOURCE_NOT_FOUND', 'The requested resource does not exist', $request);
+    } catch (InvalidInputException $e) {
+        return problemResponse(422, 'VALIDATION_FAILED', $e->getMessage(), $request);
+    } catch (\Throwable $e) {
+        return problemResponse(500, 'INTERNAL_ERROR', 'An unexpected error occurred', $request);
     }
-    if errors.Is(err, domain.ErrInvalidInput) {
-        return NewProblemResponse(c, 422, "VALIDATION_FAILED", err.Error())
-    }
-    return NewProblemResponse(c, 500, "INTERNAL_ERROR", "An unexpected error occurred")
 }
 
-// Swaggo annotation with error response schema documented
-// @Failure 404 {object} ProblemDetails "Resource not found"
-// @Failure 422 {object} ProblemDetails "Validation failed"
-// @Failure 500 {object} ProblemDetails "Internal server error"
+// OpenAPI/Swagger annotation with error response schema documented
+// @OA\Response(response=404, description="Resource not found", @OA\JsonContent(ref="#/components/schemas/ProblemDetails"))
+// @OA\Response(response=422, description="Validation failed", @OA\JsonContent(ref="#/components/schemas/ProblemDetails"))
+// @OA\Response(response=500, description="Internal server error", @OA\JsonContent(ref="#/components/schemas/ProblemDetails"))
 ```
 
 **Reference Implementation (BAD — Inconsistent Error Responses):**
-```go
+```php
 // BAD: Inconsistent error response formats across endpoints
 // Handler A returns:
-return c.Status(400).JSON(fiber.Map{"error": "invalid input"})
+return response()->json(['error' => 'invalid input'], 400);
 
 // Handler B returns a different structure:
-return c.Status(400).JSON(fiber.Map{"message": "invalid input", "code": 400})
+return response()->json(['message' => 'invalid input', 'code' => 400], 400);
 
 // Handler C returns yet another structure:
-return c.Status(400).JSON(fiber.Map{"errors": []string{"field X is required"}})
+return response()->json(['errors' => ['field X is required']], 400);
 
 // BAD: Free-text error messages only (no machine-readable codes)
-return c.Status(422).JSON(fiber.Map{"error": "The email field is required and must be valid"})
+return response()->json(['error' => 'The email field is required and must be valid'], 422);
 // Client cannot programmatically distinguish error types — must parse human text
 
-// BAD: No error response schema in Swaggo annotations
-// @Failure 400 "Bad request"   // No response body schema defined
+// BAD: No error response schema in OpenAPI annotations
+// @OA\Response(response=400, description="Bad request")  // No response body schema defined
 ```
 
 **Check Against Bee Standards For:**
@@ -551,29 +554,31 @@ Audit route organization and handler structure for production readiness.
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `**/routes.go`, `**/handlers.go`, `internal/**/adapters/http/*.go`
+- Files: `**/routes/*.php`, `**/Controllers/*.php`, `app/Http/Controllers/*.php`
 - Keywords: `RegisterRoutes`, `protected(`, `fiber.Router`, `NewHandler`
 - Standards-specific: `internal/{module}/adapters/`, `hexagonal`, `ports`
 
 **Reference Implementation (GOOD):**
-```go
-// Centralized route registration
-func RegisterRoutes(protected func(resource, action string) fiber.Router, handler *Handler) error {
-    if handler == nil {
-        return errors.New("handler is nil")
-    }
-    protected("resource", "create").Post("/v1/resources", handler.Create)
-    protected("resource", "read").Get("/v1/resources", handler.List)
-    protected("resource", "read").Get("/v1/resources/:id", handler.Get)
-    return nil
-}
+```php
+// Centralized route registration (Laravel)
+// routes/api.php
+Route::middleware(['auth:sanctum', 'tenant'])->group(function () {
+    Route::post('/v1/resources', [ResourceController::class, 'create']);
+    Route::get('/v1/resources', [ResourceController::class, 'list']);
+    Route::get('/v1/resources/{id}', [ResourceController::class, 'show']);
+});
 
-// Handler constructor with validation
-func NewHandler(deps ...interface{}) (*Handler, error) {
-    if dep == nil {
-        return nil, ErrNilDependency
+// Controller constructor with dependency injection validation
+class ResourceController extends Controller
+{
+    public function __construct(
+        private readonly ResourceService $service,
+        private readonly ResourceRepository $repository,
+    ) {
+        if ($this->service === null) {
+            throw new \InvalidArgumentException('ResourceService is required');
+        }
     }
-    return &Handler{...}, nil
 }
 ```
 
@@ -583,7 +588,7 @@ func NewHandler(deps ...interface{}) (*Handler, error) {
 3. Handler constructors validate all dependencies
 4. Consistent URL patterns (v1, kebab-case, plural resources) per Bee conventions
 5. All routes use protected() wrapper (no public endpoints without explicit exemption)
-6. Clear separation: routes.go vs handlers.go per Bee directory structure
+6. Clear separation: routes files vs controllers per Bee directory structure
 
 **Severity Ratings:**
 - CRITICAL: Unprotected routes (missing auth middleware)
@@ -622,45 +627,38 @@ Audit application bootstrap and initialization for production readiness.
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `**/main.go`, `**/init.go`, `**/bootstrap/*.go`
+- Files: `**/bootstrap/app.php`, `**/bootstrap/*.php`, `artisan`
 - Keywords: `InitServers`, `startupSucceeded`, `defer`, `cleanup`, `graceful`
 - Standards-specific: `NewServiceBootstrap`, `staged initialization`
 
 **Reference Implementation (GOOD):**
-```go
-// Staged initialization with cleanup
-func InitServers(opts *Options) (*Service, error) {
-    startupSucceeded := false
-    defer func() {
-        if !startupSucceeded {
-            cleanupConnections(...)  // Only cleanup on failure
-        }
-    }()
-
-    // 1. Load config
-    cfg, err := loadConfig()
-    if err != nil {
-        return nil, fmt.Errorf("config: %w", err)
+```php
+// Staged initialization (Laravel bootstrap/app.php)
+// 1. Load config — validated at boot via AppServiceProvider
+public function boot(): void
+{
+    // Fail fast if required config is missing
+    if (empty(config('services.database.url'))) {
+        throw new \RuntimeException('config: DATABASE_URL required');
     }
-
-    // 2. Initialize logger
-    logger := initLogger(cfg)
-
-    // 3. Initialize telemetry
-    telemetry := initTelemetry(cfg, logger)
-
-    // 4. Connect infrastructure (DB, Redis, MQ)
-    db, err := connectDB(cfg)
-    if err != nil {
-        return nil, fmt.Errorf("database: %w", err)
-    }
-
-    // 5. Initialize modules in dependency order
-    ...
-
-    startupSucceeded = true
-    return &Service{...}, nil
 }
+
+// 2. Logger initialized by framework before providers boot
+
+// 3. Telemetry initialized in TelemetryServiceProvider
+public function register(): void
+{
+    $this->app->singleton(Tracer::class, function () {
+        return $this->initTelemetry(config('telemetry'));
+    });
+}
+
+// 4. Connect infrastructure — deferred until first use via service providers
+// 5. Graceful shutdown — registered signal handlers
+register_shutdown_function(function () {
+    app(ConnectionPool::class)->closeAll();
+    app(QueueWorker::class)->stop();
+});
 ```
 
 **Check Against Bee Standards For:**
@@ -704,51 +702,76 @@ Audit pkg/runtime usage and panic handling for production readiness.
 **Detected Stack:** {DETECTED_STACK}
 
 **Search Patterns:**
-- Files: `**/runtime/*.go`, `**/recover*.go`, `**/*.go`
-- Keywords: `RecoverAndLog`, `RecoverWithPolicy`, `InitPanicMetrics`, `SetProductionMode`
-- Also search: `panic(`, `recover()` (manual usage)
+- PHP files: `**/Exceptions/**/*.php`, `**/Http/Kernel.php`, `**/bootstrap/app.php`, `**/Middleware/**/*.php`
+- TypeScript files: `**/middleware/**/*.ts`, `**/error-handler*.ts`, `**/exceptions/**/*.ts`
+- Keywords (PHP): `Handler`, `report(`, `render(`, `Bugsnag`, `Sentry`, `withExceptions`, `set_exception_handler`
+- Keywords (TS): `uncaughtException`, `unhandledRejection`, `process.on(`, `catch (`, `ErrorBoundary`
 
-**Reference Implementation (GOOD):**
-```go
-// Bootstrap initialization
-runtime.InitPanicMetrics(telemetry.MetricsFactory)
-if cfg.EnvName == "production" {
-    runtime.SetProductionMode(true)
-}
+**Reference Implementation (GOOD — PHP/Laravel):**
+```php
+// Global exception handler with structured logging (Laravel 11+)
+// bootstrap/app.php
+->withExceptions(function (Exceptions $exceptions) {
+    // Report all exceptions to Sentry/Bugsnag
+    $exceptions->report(function (Throwable $e) {
+        if (app()->environment('production')) {
+            app('sentry')->captureException($e);
+        }
+    });
 
-// In HTTP handlers
-defer runtime.RecoverAndLogWithContext(ctx, logger, "module", "handler_name")
+    // Render JSON errors for API routes
+    $exceptions->render(function (Throwable $e, Request $request) {
+        if ($request->expectsJson()) {
+            return response()->json([
+                'error' => [
+                    'code'    => 'INTERNAL_SERVER_ERROR',
+                    'message' => app()->environment('production')
+                        ? 'An error occurred'
+                        : $e->getMessage(),
+                ]
+            ], 500);
+        }
+    });
+})
+```
 
-// In worker goroutines
-defer runtime.RecoverWithPolicyAndContext(ctx, logger, "module", "worker", runtime.CrashProcess)
+**Reference Implementation (GOOD — TypeScript):**
+```typescript
+// Global unhandled rejection handler at process level
+process.on('uncaughtException', (err) => {
+    logger.error('Uncaught exception', { error: err.message, stack: err.stack });
+    process.exit(1);  // Exit and let process manager restart
+});
 
-// In background jobs (should retry, not crash)
-defer runtime.RecoverWithPolicyAndContext(ctx, logger, "module", "job", runtime.LogAndContinue)
+process.on('unhandledRejection', (reason, promise) => {
+    logger.error('Unhandled promise rejection', { reason, promise });
+});
 ```
 
 **Check For:**
-1. pkg/runtime initialized at startup
-2. Production mode set based on environment
-3. All goroutines have panic recovery
-4. Appropriate recovery policies per context
-5. Panic metrics enabled for alerting
-6. No raw recover() without pkg/runtime
+1. Global exception handler configured per framework conventions
+2. Production mode hides error details from API responses (no stack traces in JSON)
+3. Unhandled exceptions reported to error tracking (Sentry/Bugsnag)
+4. HTTP handlers have try/catch (TypeScript) or exception middleware (PHP)
+5. Background job failures logged and reported
+6. API routes return consistent JSON error structure on 500
 
 **Severity Ratings:**
-- CRITICAL: Goroutines without panic recovery
-- HIGH: Missing production mode setting
-- HIGH: Raw recover() without proper handling
-- MEDIUM: Inconsistent recovery policies
-- LOW: Missing panic metrics
+- CRITICAL: Stack traces or internal error details exposed in production API responses
+- HIGH: No global exception handler configured
+- HIGH: Unhandled exceptions/rejections not reported to error tracking
+- MEDIUM: Background job failures not logged or tracked
+- LOW: Inconsistent error response structure across endpoints
 
 **Output Format:**
 ```
 ## Runtime Safety Audit Findings
 
 ### Summary
-- Runtime initialized: Yes/No
-- Handlers with recovery: X/Y
-- Goroutines with recovery: X/Y
+- Global exception handler: Yes/No
+- Stack traces in production API responses: Yes/No
+- Error tracking integration: Yes/No (Sentry/Bugsnag)
+- Unhandled rejection handlers: Yes/No
 
 ### Critical Issues
 [file:line] - Description
@@ -771,34 +794,37 @@ Audit authentication and authorization implementation for production readiness.
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `**/auth/*.go`, `**/middleware*.go`, `**/routes.go`
+- Files: `**/Middleware/*.php`, `app/Http/Middleware/*.php`, `routes/api.php`
 - Keywords: `Authorize`, `protected`, `JWT`, `tenant`, `ExtractToken`
 - Standards-specific: `AccessManager`, `lib-auth`, `ProtectedGroup`
 
 **Reference Implementation (GOOD):**
-```go
-// Protected route group
-protected := func(resource, action string) fiber.Router {
-    return auth.ProtectedGroup(api, authClient, tenantExtractor, resource, action)
-}
+```php
+// Protected route group via middleware (Laravel)
+Route::middleware(['auth:sanctum', 'tenant', 'access-manager:contexts,create'])
+    ->post('/v1/config/contexts', [ContextController::class, 'create']);
 
-// All routes use protected
-protected("contexts", "create").Post("/v1/config/contexts", handler.Create)
+// All routes use auth middleware
+Route::middleware(['auth:sanctum', 'tenant'])->group(function () {
+    Route::apiResource('contexts', ContextController::class);
+});
 
-// JWT validation
-func parseTokenClaims(tokenString string, secret []byte) (jwt.MapClaims, error) {
-    parser := jwt.NewParser(jwt.WithValidMethods(validSigningMethods))
-    token, err := parser.ParseWithClaims(...)
-    if err != nil || !token.Valid {
-        return nil, ErrInvalidToken
-    }
-    // Check expiration
-    if exp, ok := claims["exp"].(float64); ok {
-        if time.Now().Unix() > int64(exp) {
-            return nil, ErrTokenExpired
+// JWT validation middleware (lib-auth)
+class ValidateJwtToken
+{
+    public function handle(Request $request, Closure $next): Response
+    {
+        $token = $request->bearerToken();
+        if (empty($token)) {
+            throw new UnauthorizedException('Missing bearer token');
         }
+        $claims = $this->libAuth->parseAndValidate($token, $this->signingSecret);
+        if ($claims['exp'] < time()) {
+            throw new UnauthorizedException('Token expired');
+        }
+        $request->merge(['tenant_id' => $claims['tenantId']]);
+        return $next($request);
     }
-    return claims, nil
 }
 ```
 
@@ -844,50 +870,56 @@ Audit IDOR (Insecure Direct Object Reference) protection for production readines
 **Detected Stack:** {DETECTED_STACK}
 
 **Search Patterns:**
-- Files: `**/verifier*.go`, `**/handlers.go`, `**/context.go`
+- Files: `**/Verifier*.php`, `**/Controllers/*.php`, `**/Context*.php`
 - Keywords: `VerifyOwnership`, `tenantID`, `contextID`, `ParseAndVerify`
 
 **Reference Implementation (GOOD):**
-```go
+```php
 // 4-layer IDOR protection
-func ParseAndVerifyContextParam(fiberCtx *fiber.Ctx, verifier ContextOwnershipVerifier) (uuid.UUID, uuid.UUID, error) {
-    // 1. UUID format validation
-    contextID, err := uuid.Parse(fiberCtx.Params("contextId"))
-    if err != nil {
-        return uuid.Nil, uuid.Nil, ErrInvalidID
-    }
+class ResourceController extends Controller
+{
+    public function show(Request $request, string $contextId): JsonResponse
+    {
+        // 1. UUID format validation
+        if (!Str::isUuid($contextId)) {
+            throw new InvalidArgumentException('Invalid context ID format');
+        }
 
-    // 2. Extract tenant from auth context (cannot be spoofed)
-    tenantID := auth.GetTenantID(ctx)
+        // 2. Extract tenant from auth context (cannot be spoofed)
+        $tenantId = $request->get('tenant_id'); // set by JWT middleware
 
-    // 3. Database query filtered by tenant
-    // 4. Post-query ownership verification
-    if err := verifier.VerifyOwnership(ctx, tenantID, contextID); err != nil {
-        return uuid.Nil, uuid.Nil, err
+        // 3. Database query filtered by tenant
+        // 4. Post-query ownership verification
+        $resource = $this->repository->findByTenant($contextId, $tenantId);
+        if ($resource === null) {
+            throw new ResourceNotFoundException('Resource not found');
+        }
+        if ($resource->tenant_id !== $tenantId) { // double-check ownership
+            throw new AccessDeniedException('Resource not owned by tenant');
+        }
+        return response()->json($resource);
     }
-    return contextID, tenantID, nil
 }
 
-// Verifier implementation
-func (v *verifier) VerifyOwnership(ctx context.Context, tenantID, resourceID uuid.UUID) error {
-    resource, err := v.query.Get(ctx, tenantID, resourceID)  // Query WITH tenant filter
-    if errors.Is(err, sql.ErrNoRows) {
-        return ErrNotFound
+// Repository implementation
+class ResourceRepository
+{
+    public function findByTenant(string $id, string $tenantId): ?Resource
+    {
+        return Resource::where('id', $id)
+            ->where('tenant_id', $tenantId) // always filter by tenant
+            ->first();
     }
-    if resource.TenantID != tenantID {  // Double-check ownership
-        return ErrNotOwned
-    }
-    return nil
 }
 ```
 
 **Reference Implementation (BAD):**
-```go
+```php
 // BAD: No ownership verification
-func GetResource(c *fiber.Ctx) error {
-    id := c.Params("id")
-    resource, err := repo.FindByID(ctx, id)  // No tenant filter!
-    return c.JSON(resource)
+public function show(string $id): JsonResponse
+{
+    $resource = Resource::find($id); // No tenant filter!
+    return response()->json($resource);
 }
 ```
 
@@ -931,36 +963,39 @@ Audit SQL injection prevention for production readiness.
 **Detected Stack:** {DETECTED_STACK}
 
 **Search Patterns:**
-- Files: `**/*.postgresql.go`, `**/repository/*.go`, `**/*_repo.go`
+- Files: `**/Repositories/*.php`, `app/Repositories/*.php`, `**/*Repository.php`
 - Keywords: `ExecContext`, `QueryContext`, `Exec(`, `Query(`, `$1`, `$2`
 - Also search for: String concatenation in SQL: `"SELECT.*" +`, `fmt.Sprintf.*SELECT`
 
 **Reference Implementation (GOOD):**
-```go
-// Parameterized queries
-query := `INSERT INTO resources (id, name, tenant_id) VALUES ($1, $2, $3)`
-_, err = tx.ExecContext(ctx, query, id, name, tenantID)
+```php
+// Parameterized queries via PDO / Eloquent / Query Builder
+DB::insert(
+    'INSERT INTO resources (id, name, tenant_id) VALUES (?, ?, ?)',
+    [$id, $name, $tenantId]
+);
 
-// SQL identifier escaping for dynamic schemas
-func QuoteIdentifier(identifier string) string {
-    return "\"" + strings.ReplaceAll(identifier, "\"", "\"\"") + "\""
-}
-schemaQuery := "SET LOCAL search_path TO " + QuoteIdentifier(tenantID)
+// Eloquent query builder — always parameterized
+Resource::where('tenant_id', $tenantId)->where('name', $name)->first();
 
-// Query builder (Squirrel)
-query := sq.Select("*").From("resources").Where(sq.Eq{"tenant_id": tenantID})
+// Raw query with bindings
+DB::select('SELECT * FROM resources WHERE tenant_id = ? AND id = ?', [$tenantId, $id]);
+
+// SQL identifier escaping for dynamic schemas (via PDO quoteIdentifier)
+$escapedSchema = DB::connection()->getPdo()->quote($tenantId);
+DB::statement("SET search_path TO {$escapedSchema}");
 ```
 
 **Reference Implementation (BAD):**
-```go
-// BAD: String concatenation
-query := "SELECT * FROM users WHERE name = '" + name + "'"
+```php
+// BAD: String concatenation — SQL injection
+$query = "SELECT * FROM users WHERE name = '" . $name . "'";
 
-// BAD: fmt.Sprintf for values
-query := fmt.Sprintf("SELECT * FROM users WHERE id = '%s'", id)
+// BAD: sprintf for values — SQL injection
+$query = sprintf("SELECT * FROM users WHERE id = '%s'", $id);
 
-// BAD: Unescaped identifier
-query := "SET search_path TO " + tenantID  // SQL injection via tenant
+// BAD: Unescaped identifier — SQL injection via tenant
+DB::statement("SET search_path TO " . $tenantId);
 ```
 
 **Check For:**
@@ -1003,63 +1038,77 @@ Audit input validation patterns for production readiness.
 
 **Bee Standards (Source of Truth):**
 ---BEGIN STANDARDS---
-{INJECTED: "Frameworks & Libraries" section from core.md — specifically go-playground/validator/v10 reference}
+{INJECTED: "Frameworks & Libraries" section from core.md — specifically Laravel Form Requests and Spatie validation reference}
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `**/dto.go`, `**/handlers.go`, `**/value_objects/*.go`
-- Keywords: `validate:`, `BodyParser`, `IsValid()`, `Parse`, `required`
-- Standards-specific: `validator/v10`, `go-playground/validator`
+- Files: `**/DTO/*.php`, `**/Controllers/*.php`, `**/ValueObjects/*.php`, `**/Requests/*.php`
+- Keywords: `FormRequest`, `rules()`, `validated()`, `IsValid()`, `$request->validate`
+- Standards-specific: `Laravel Form Requests`, `Spatie`, `validateOrFail`
 
 **Reference Implementation (GOOD):**
-```go
-// DTO with validation tags
-type CreateRequest struct {
-    Name   string `json:"name" validate:"required,min=1,max=255"`
-    Type   string `json:"type" validate:"required,oneof=TYPE_A TYPE_B"`
-    Amount int    `json:"amount" validate:"gte=0,lte=1000000"`
+```php
+// Form Request with validation rules
+class CreateResourceRequest extends FormRequest
+{
+    public function rules(): array
+    {
+        return [
+            'name'   => ['required', 'string', 'min:1', 'max:255'],
+            'type'   => ['required', 'string', 'in:TYPE_A,TYPE_B'],
+            'amount' => ['required', 'integer', 'min:0', 'max:1000000'],
+        ];
+    }
 }
 
-// Handler with body parsing error handling
-func (h *Handler) Create(c *fiber.Ctx) error {
-    var payload CreateRequest
-    if err := c.BodyParser(&payload); err != nil {
-        return badRequest(c, span, logger, "invalid request body", err)
+// Controller — validation enforced automatically
+class ResourceController extends Controller
+{
+    public function create(CreateResourceRequest $request): JsonResponse
+    {
+        // $request->validated() only contains validated fields
+        $data = $request->validated();
+        // ...
     }
-    // Validate struct
-    if err := h.validator.Struct(payload); err != nil {
-        return badRequest(c, span, logger, "validation failed", err)
-    }
-    ...
 }
 
 // Value object with domain validation
-func (vo ValueObject) IsValid() bool {
-    if vo.value == "" || len(vo.value) > maxLength {
-        return false
+class AmountValueObject
+{
+    private const MAX_LENGTH = 255;
+    private const VALID_PATTERN = '/^[A-Za-z0-9]+$/';
+
+    public function isValid(): bool
+    {
+        if (empty($this->value) || strlen($this->value) > self::MAX_LENGTH) {
+            return false;
+        }
+        return (bool) preg_match(self::VALID_PATTERN, $this->value);
     }
-    return validPattern.MatchString(vo.value)
 }
 ```
 
 **Reference Implementation (BAD):**
-```go
-// BAD: No validation tags
-type Request struct {
-    Name string `json:"name"`  // No validation!
+```php
+// BAD: No validation rules
+class CreateRequest extends FormRequest
+{
+    public function rules(): array
+    {
+        return [];  // No validation!
+    }
 }
 
-// BAD: Ignoring body parse error
-payload := Request{}
-c.BodyParser(&payload)  // Error ignored!
+// BAD: Accessing raw input without validation
+$name = $request->input('name');  // Could be null or any value
 
 // BAD: No bounds checking
-amount := c.QueryInt("amount")  // Could be negative or huge
+$amount = (int) $request->input('amount');  // Could be negative or huge
 ```
 
 **Check Against Bee Standards For:**
-1. (HARD GATE) go-playground/validator/v10 used for struct validation per Bee core.md
-2. (HARD GATE) All DTOs have validate: tags on required fields
+1. (HARD GATE) Laravel Form Requests used for input validation per Bee core.md
+2. (HARD GATE) All Form Requests have rules() defined for required fields
 3. BodyParser errors are handled (not ignored)
 4. Query/path params validated before use
 5. Numeric bounds enforced (min/max)
@@ -1070,7 +1119,7 @@ amount := c.QueryInt("amount")  // Could be negative or huge
 
 **Severity Ratings:**
 - CRITICAL: BodyParser errors ignored
-- CRITICAL: HARD GATE violation — not using go-playground/validator/v10 per Bee standards
+- CRITICAL: HARD GATE violation — not using Laravel Form Requests for validation per Bee standards
 - HIGH: No validation on user input DTOs
 - HIGH: Unbounded numeric inputs
 - MEDIUM: Missing string length limits
@@ -1106,111 +1155,120 @@ Audit telemetry and observability implementation for production readiness.
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `**/observability*.go`, `**/telemetry*.go`, `**/handlers.go`
+- Files: `**/Observability*.php`, `**/Telemetry*.php`, `**/Controllers/*.php`
 - Keywords: `NewTrackingFromContext`, `tracer.Start`, `span`, `logger`, `metrics`
 - Standards-specific: `libCommons.NewTrackingFromContext`, `otel`, `OpenTelemetry`
 
 **Reference Implementation (GOOD):**
-```go
-// Handler with proper telemetry
-func (h *Handler) DoSomething(c *fiber.Ctx) error {
-    ctx := c.UserContext()
-    logger, tracer, headerID, _ := libCommons.NewTrackingFromContext(ctx)
-    ctx, span := tracer.Start(ctx, "handler.DoSomething")
-    defer span.End()
+```php
+// Handler with proper telemetry (PHP/lib-commons)
+class ResourceController extends Controller
+{
+    public function doSomething(Request $request): JsonResponse
+    {
+        $tracer = app(Tracer::class);
+        $span = $tracer->spanBuilder('handler.doSomething')->startSpan();
+        $scope = $span->activate();
 
-    span.SetAttributes(attribute.String("request_id", headerID))
-
-    // On error
-    span.RecordError(err)
-    span.SetStatus(codes.Error, err.Error())
-    logger.Errorf("operation failed: %v", err)
-
-    return nil
+        try {
+            $span->setAttribute('request_id', $request->header('X-Request-Id'));
+            // ... business logic
+            return response()->json($result);
+        } catch (\Throwable $e) {
+            $span->recordException($e);
+            $span->setStatus(StatusCode::STATUS_ERROR, $e->getMessage());
+            Log::error('operation failed', ['error' => $e->getMessage()]);
+            throw $e;
+        } finally {
+            $scope->detach();
+            $span->end();
+        }
+    }
 }
 ```
 
 **Reference Implementation (GOOD — Trace Propagation & Sampling):**
-```go
-// W3C Trace Context propagation in outgoing HTTP requests
-import (
-    "go.opentelemetry.io/otel"
-    "go.opentelemetry.io/otel/propagation"
-)
-
-func (c *HTTPClient) Do(ctx context.Context, req *http.Request) (*http.Response, error) {
-    // Inject trace context into outgoing request headers
-    otel.GetTextMapPropagator().Inject(ctx, propagation.HeaderCarrier(req.Header))
-    return c.client.Do(req.WithContext(ctx))
+```php
+// W3C Trace Context propagation in outgoing HTTP requests (PHP)
+class TracedHttpClient
+{
+    public function send(string $url, array $options = []): ResponseInterface
+    {
+        // Inject trace context into outgoing request headers
+        $propagator = Globals::propagator();
+        $carrier = [];
+        $propagator->inject($carrier);
+        $options['headers'] = array_merge($options['headers'] ?? [], $carrier);
+        return $this->httpClient->request('GET', $url, $options);
+    }
 }
 
 // Baggage propagation for business context
-import "go.opentelemetry.io/otel/baggage"
+$baggage = Baggage::getBuilder()
+    ->set('tenantId', $tenantId)
+    ->set('userId', $userId)
+    ->build();
+Context::storage()->attach(
+    Context::getCurrent()->withContextValue($baggage)
+);
 
-func InjectBusinessContext(ctx context.Context, tenantID, userID string) context.Context {
-    tenantMember, _ := baggage.NewMember("tenantId", tenantID)
-    userMember, _ := baggage.NewMember("userId", userID)
-    bag, _ := baggage.New(tenantMember, userMember)
-    return baggage.ContextWithBaggage(ctx, bag)
-}
-
-// Span linking for async flows — consumer side
-func (c *Consumer) Handle(msg *Message) error {
-    producerCtx := otel.GetTextMapPropagator().Extract(context.Background(), propagation.MapCarrier(msg.Headers))
-    producerSpanCtx := trace.SpanContextFromContext(producerCtx)
-
-    ctx, span := c.tracer.Start(context.Background(), "consume."+msg.Type,
-        trace.WithLinks(trace.Link{SpanContext: producerSpanCtx}),
-    )
-    defer span.End()
-    return c.process(ctx, msg)
+// Span linking for async flows — consumer side (Laravel Queue)
+class ProcessOrderJob implements ShouldQueue
+{
+    public function handle(): void
+    {
+        $propagator = Globals::propagator();
+        $producerCtx = $propagator->extract($this->traceHeaders);
+        $tracer = app(Tracer::class);
+        $span = $tracer->spanBuilder('consume.' . $this->eventType)
+            ->addLink(Span::fromContext($producerCtx)->getContext())
+            ->startSpan();
+        try {
+            $this->processEvent();
+        } finally {
+            $span->end();
+        }
+    }
 }
 
 // Trace sampling configuration
-func initTracer(env string) *trace.TracerProvider {
-    var sampler trace.Sampler
-    switch env {
-    case "production":
-        sampler = trace.ParentBased(trace.TraceIDRatioBased(0.1))
-    case "staging":
-        sampler = trace.ParentBased(trace.TraceIDRatioBased(0.5))
-    default:
-        sampler = trace.AlwaysSample()
-    }
-    return trace.NewTracerProvider(trace.WithSampler(sampler))
-}
+// config/telemetry.php
+return [
+    'sampler' => env('APP_ENV') === 'production'
+        ? new ParentBased(new TraceIdRatioBased(0.1))   // 10% in production
+        : new AlwaysOnSampler(),                          // 100% in development
+];
 
 // Custom span attributes for business context
-func (h *Handler) CreateOrder(c *fiber.Ctx) error {
-    ctx, span := h.tracer.Start(c.UserContext(), "handler.CreateOrder")
-    defer span.End()
-    span.SetAttributes(
-        attribute.String("order.id", order.ID.String()),
-        attribute.String("tenant.id", tenantID.String()),
-        attribute.Float64("order.amount", order.TotalAmount),
-    )
-    // ...
-}
+$span->setAttribute('order.id', $order->id);
+$span->setAttribute('tenant.id', $tenantId);
+$span->setAttribute('order.amount', $order->total_amount);
 ```
 
 **Reference Implementation (BAD — Trace Propagation):**
-```go
+```php
 // BAD: Outgoing HTTP request without trace context propagation
-func (c *HTTPClient) Do(ctx context.Context, req *http.Request) (*http.Response, error) {
-    return c.client.Do(req)  // No propagation — downstream sees a new disconnected trace
+class HttpClient
+{
+    public function send(string $url): ResponseInterface
+    {
+        return $this->client->request('GET', $url);  // No propagation — downstream sees new disconnected trace
+    }
 }
 
-// BAD: Async message consumer starts fresh trace without linking to producer
-func (c *Consumer) Handle(msg *Message) error {
-    ctx, span := c.tracer.Start(context.Background(), "consume.event")
-    defer span.End()
-    return c.process(ctx, msg)  // No link to producer span — trace is disconnected
+// BAD: Async queue job starts fresh trace without linking to producer
+class ProcessOrderJob implements ShouldQueue
+{
+    public function handle(): void
+    {
+        $span = app(Tracer::class)->spanBuilder('consume.event')->startSpan();
+        $this->processEvent();  // No link to producer span — trace is disconnected
+        $span->end();
+    }
 }
 
-// BAD: No sampling configuration (AlwaysSample in production)
-func initTracer() *trace.TracerProvider {
-    return trace.NewTracerProvider()  // Default: AlwaysSample — 100% of traces stored
-}
+// BAD: No sampling configuration (AlwaysOn in production)
+// config/telemetry.php — missing sampler config, defaults to 100% sampling
 ```
 
 **Check Against Bee Standards For:**
@@ -1270,50 +1328,44 @@ Audit health check endpoints for production readiness.
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `**/fiber_server.go`, `**/health*.go`, `**/routes.go`
+- Files: `**/Http/Kernel.php`, `**/Health*.php`, `routes/api.php`
 - Keywords: `/health`, `/ready`, `/live`, `healthHandler`, `readinessHandler`
 - Standards-specific: `liveness`, `readiness`, `degraded`
 
 **Reference Implementation (GOOD):**
-```go
-// Liveness probe - always returns healthy if process is running
-func healthHandler(c *fiber.Ctx) error {
-    return c.SendString("healthy")
-}
+```php
+// Liveness probe — always returns healthy if process is running
+// routes/api.php
+Route::get('/health', fn () => response('healthy', 200));
 
-// Readiness probe - checks all dependencies
-func readinessHandler(deps *HealthDependencies) fiber.Handler {
-    return func(c *fiber.Ctx) error {
-        checks := fiber.Map{}
-        status := fiber.StatusOK
+// Readiness probe — checks all dependencies
+Route::get('/ready', function () {
+    $checks = [];
+    $status = 200;
 
-        // Required dependency - fails readiness if down
-        if err := deps.DB.Ping(c.Context()); err != nil {
-            checks["database"] = "unhealthy"
-            status = fiber.StatusServiceUnavailable
-        } else {
-            checks["database"] = "healthy"
-        }
-
-        // Optional dependency - reports degraded but doesn't fail
-        if deps.Redis != nil {
-            if err := deps.Redis.Ping(c.Context()).Err(); err != nil {
-                checks["redis"] = "degraded"
-            } else {
-                checks["redis"] = "healthy"
-            }
-        }
-
-        return c.Status(status).JSON(fiber.Map{
-            "status": statusString(status),
-            "checks": checks,
-        })
+    // Required dependency — fails readiness if down
+    try {
+        DB::connection()->getPdo()->query('SELECT 1');
+        $checks['database'] = 'healthy';
+    } catch (\Throwable $e) {
+        $checks['database'] = 'unhealthy';
+        $status = 503;
     }
-}
 
-// Register without auth middleware
-app.Get("/health", healthHandler)
-app.Get("/ready", readinessHandler(deps))
+    // Optional dependency — reports degraded but doesn't fail readiness
+    try {
+        Redis::ping();
+        $checks['redis'] = 'healthy';
+    } catch (\Throwable $e) {
+        $checks['redis'] = 'degraded';
+        // status stays 200 — optional dep
+    }
+
+    return response()->json([
+        'status' => $status === 200 ? 'healthy' : 'unavailable',
+        'checks' => $checks,
+    ], $status);
+});
 ```
 
 **Check Against Bee Standards For:**
@@ -1363,48 +1415,41 @@ Audit configuration management for production readiness.
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `**/config.go`, `**/bootstrap/*.go`, `**/.env*`
+- Files: `**/config/*.php`, `**/bootstrap/*.php`, `**/.env*`
 - Keywords: `env:`, `envDefault:`, `Validate()`, `LoadConfig`, `production`
 - Standards-specific: `envconfig`, `caarlos0/env`
 
 **Reference Implementation (GOOD):**
-```go
-// Config with validation
-type Config struct {
-    EnvName    string `env:"ENV_NAME" envDefault:"development"`
-    DBPassword string `env:"POSTGRES_PASSWORD"`
-    AuthEnabled bool  `env:"AUTH_ENABLED" envDefault:"false"`
-}
+```php
+// Config loaded from env vars with defaults (Laravel config files)
+// config/app.php
+return [
+    'env'          => env('APP_ENV', 'development'),
+    'db_password'  => env('DB_PASSWORD'),
+    'auth_enabled' => env('AUTH_ENABLED', false),
+    'db_ssl_mode'  => env('DB_SSLMODE', 'require'),
+];
 
-// Production validation
-func (c *Config) Validate() error {
-    if c.EnvName == "production" {
-        // Require auth in production
-        if !c.AuthEnabled {
-            return errors.New("AUTH_ENABLED must be true in production")
-        }
-        // Require DB password in production
-        if c.DBPassword == "" {
-            return errors.New("POSTGRES_PASSWORD required in production")
-        }
-        // Require TLS for databases
-        if c.PostgresSSLMode == "disable" {
-            return errors.New("POSTGRES_SSLMODE cannot be disable in production")
+// Production validation in AppServiceProvider
+class AppServiceProvider extends ServiceProvider
+{
+    public function boot(): void
+    {
+        if (app()->environment('production')) {
+            // Require auth in production
+            if (!config('app.auth_enabled')) {
+                throw new \RuntimeException('AUTH_ENABLED must be true in production');
+            }
+            // Require DB password in production
+            if (empty(config('app.db_password'))) {
+                throw new \RuntimeException('DB_PASSWORD required in production');
+            }
+            // Require TLS for databases
+            if (config('app.db_ssl_mode') === 'disable') {
+                throw new \RuntimeException('DB_SSLMODE cannot be disable in production');
+            }
         }
     }
-    return nil
-}
-
-// Load with validation
-func LoadConfig() (*Config, error) {
-    cfg := &Config{}
-    if err := envconfig.Process("", cfg); err != nil {
-        return nil, fmt.Errorf("load env: %w", err)
-    }
-    if err := cfg.Validate(); err != nil {
-        return nil, fmt.Errorf("validate: %w", err)
-    }
-    return cfg, nil
 }
 ```
 
@@ -1456,40 +1501,40 @@ Audit database and cache connection management for production readiness.
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `**/config.go`, `**/database*.go`, `**/redis*.go`, `**/postgres*.go`
+- Files: `**/config/database.php`, `**/config/cache.php`, `**/database*.php`, `**/Redis*.php`
 - Keywords: `MaxOpenConns`, `MaxIdleConns`, `PoolSize`, `Timeout`, `SetConnMaxLifetime`
 - Standards-specific: `lib-commons`, `mpostgres`, `mredis`, `mmongo`
 
 **Reference Implementation (GOOD):**
-```go
-// Database pool configuration
-type DBConfig struct {
-    MaxOpenConnections int `env:"POSTGRES_MAX_OPEN_CONNS" envDefault:"25"`
-    MaxIdleConnections int `env:"POSTGRES_MAX_IDLE_CONNS" envDefault:"5"`
-    ConnMaxLifetime    int `env:"POSTGRES_CONN_MAX_LIFETIME_MINS" envDefault:"30"`
-}
+```php
+// Database pool configuration (config/database.php)
+'pgsql' => [
+    'driver'         => 'pgsql',
+    'url'            => env('DATABASE_URL'),
+    'pool'           => [
+        'max_connections' => env('POSTGRES_MAX_OPEN_CONNS', 25),
+        'min_connections' => env('POSTGRES_MAX_IDLE_CONNS', 5),
+        'max_lifetime'    => env('POSTGRES_CONN_MAX_LIFETIME_MINS', 30) * 60,
+    ],
+    'sticky'         => true,
+    'read'           => ['host' => env('DB_REPLICA_HOST')], // replica support
+    'write'          => ['host' => env('DB_HOST')],
+],
 
-// Apply pool settings
-func ConfigurePool(db *sql.DB, cfg *DBConfig) {
-    db.SetMaxOpenConns(cfg.MaxOpenConnections)
-    db.SetMaxIdleConns(cfg.MaxIdleConnections)
-    db.SetConnMaxLifetime(time.Duration(cfg.ConnMaxLifetime) * time.Minute)
-}
-
-// Redis pool configuration
-type RedisConfig struct {
-    PoolSize       int `env:"REDIS_POOL_SIZE" envDefault:"10"`
-    MinIdleConns   int `env:"REDIS_MIN_IDLE_CONNS" envDefault:"2"`
-    ReadTimeoutMs  int `env:"REDIS_READ_TIMEOUT_MS" envDefault:"3000"`
-    WriteTimeoutMs int `env:"REDIS_WRITE_TIMEOUT_MS" envDefault:"3000"`
-    DialTimeoutMs  int `env:"REDIS_DIAL_TIMEOUT_MS" envDefault:"5000"`
-}
-
-// Primary + Replica support
-type DatabaseConnections struct {
-    Primary *sql.DB
-    Replica *sql.DB  // Falls back to primary if not configured
-}
+// Redis pool configuration (config/database.php)
+'redis' => [
+    'client'  => env('REDIS_CLIENT', 'phpredis'),
+    'default' => [
+        'host'              => env('REDIS_HOST', '127.0.0.1'),
+        'port'              => env('REDIS_PORT', 6379),
+        'pool'              => [
+            'max_connections' => env('REDIS_POOL_SIZE', 10),
+            'min_connections' => env('REDIS_MIN_IDLE_CONNS', 2),
+        ],
+        'read_timeout'      => env('REDIS_READ_TIMEOUT_MS', 3000) / 1000,
+        'timeout'           => env('REDIS_DIAL_TIMEOUT_MS', 5000) / 1000,
+    ],
+],
 ```
 
 **Check Against Bee Standards For:**
@@ -1542,59 +1587,72 @@ Audit logging practices and PII protection for production readiness.
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `**/*.go`
-- Keywords: `logger.`, `log.`, `Errorf`, `Infof`, `WithFields`, `password`, `token`, `secret`
-- Also search: `fmt.Print`, `fmt.Println` (should not be used for logging)
-- Standards-specific: `zap`, `zerolog`, structured logging library references
+- PHP files: `**/*.php` — search for logging calls, PII in log context
+- TypeScript files: `**/*.ts`, `**/*.tsx` — search for console.log, logger usage, PII in logs
+- Keywords (PHP): `Log::`, `\Log::`, `logger(`, `error_log(`, `echo `, `var_dump(`, `password`, `token`, `secret`
+- Keywords (TS): `console.log(`, `console.error(`, `logger.`, `winston`, `pino`, `password`, `token`, `secret`
+- Standards-specific: structured logging library references (`monolog`, `winston`, `pino`)
 
-**Reference Implementation (GOOD):**
-```go
+**Reference Implementation (GOOD — PHP/Laravel):**
+```php
 // Structured logging with context
-logger, tracer, requestID, _ := libCommons.NewTrackingFromContext(ctx)
-logger.WithFields(
-    "request_id", requestID,
-    "user_id", userID,
-    "action", "create_resource",
-).Info("resource created")
+Log::info('Resource created', [
+    'request_id' => $request->header('X-Request-Id'),
+    'user_id'    => $user->id,
+    'action'     => 'create_resource',
+    'resource_id' => $resource->id,
+]);
 
-// Production-safe error logging
-if isProduction {
-    // Don't include error details that might leak PII
-    logger.Errorf("operation failed: status=%d path=%s", code, path)
-} else {
-    // Development can have full details
-    logger.Errorf("operation failed: error=%v", err)
-}
+// Production-safe error logging (no PII in error message)
+Log::error('Operation failed', [
+    'status'    => $statusCode,
+    'path'      => $request->path(),
+    // NO: password, email, credit card numbers
+]);
+```
 
-// Config DSN without password
-func (c *Config) DSN() string {
-    // Returns connection string without logging password
-    return fmt.Sprintf("host=%s port=%d user=%s dbname=%s",
-        c.Host, c.Port, c.User, c.DBName)
-}
+**Reference Implementation (GOOD — TypeScript):**
+```typescript
+// Structured logging with Winston/Pino
+logger.info('Resource created', {
+    requestId: req.headers['x-request-id'],
+    userId: user.id,
+    action: 'create_resource',
+});
+
+// Never log sensitive data
+logger.error('Login failed', {
+    userId: user.id,
+    // NO: password, token, credit card
+});
 ```
 
 **Reference Implementation (BAD):**
-```go
-// BAD: fmt.Println for logging
-fmt.Println("User logged in:", userEmail)
+```php
+// BAD: var_dump/echo for logging in PHP
+var_dump($user);  // Outputs everything including passwords
 
 // BAD: Logging sensitive data
-logger.Infof("Login attempt: email=%s password=%s", email, password)
+Log::info('Login attempt', ['email' => $email, 'password' => $password]);
 
 // BAD: Logging full request body (might contain PII)
-logger.Debugf("Request body: %+v", requestBody)
+Log::debug('Request body', $request->all());
+```
 
-// BAD: Not using structured logging
-log.Printf("Error: %v", err)
+```typescript
+// BAD: console.log for logging in TypeScript
+console.log('User logged in:', user.email);
+
+// BAD: Logging sensitive data
+console.log('Login attempt:', { email, password });
 ```
 
 **Check Against Bee Standards For:**
-1. (HARD GATE) Structured logging used (not fmt.Print or log.Printf) per quality.md logging section
-2. Logger obtained from context (request tracking)
-3. No passwords/tokens logged
-4. Production mode sanitizes error details
-5. Request/response bodies not logged raw
+1. (HARD GATE) Structured logging used (not echo/var_dump for PHP, not console.log for TypeScript) per quality.md logging section
+2. Log entries include request ID and user ID for traceability
+3. No passwords/tokens/card numbers logged
+4. Request/response bodies not logged raw (may contain PII)
+5. Log levels used appropriately (error for exceptions, info for business events, debug for internals)
 6. Log levels appropriate (not everything at INFO)
 7. Request IDs included for tracing
 8. No PII in log messages (emails, names, etc.)
@@ -1637,60 +1695,69 @@ Audit idempotency implementation for production readiness.
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `**/idempotency*.go`, `**/value_objects/*.go`, `**/redis/*.go`
+- Files: `**/Idempotency*.php`, `**/ValueObjects/*.php`, `**/Redis/*.php`
 - Keywords: `IdempotencyKey`, `TryAcquire`, `MarkComplete`, `SetNX`, `idempotent`
 - Standards-specific: `IdempotencyRepository`, `idempotency middleware`
 
 **Reference Implementation (GOOD):**
-```go
+```php
 // Idempotency key value object
-type IdempotencyKey string
+class IdempotencyKey
+{
+    private const MAX_LENGTH   = 128;
+    private const VALID_PATTERN = '/^[A-Za-z0-9:_-]+$/';
 
-const (
-    idempotencyKeyMaxLength = 128
-    idempotencyKeyPattern   = `^[A-Za-z0-9:_-]+$`
-)
+    public function __construct(private readonly string $value) {}
 
-func (key IdempotencyKey) IsValid() bool {
-    s := string(key)
-    if s == "" || len(s) > idempotencyKeyMaxLength {
-        return false
-    }
-    return regexp.MustCompile(idempotencyKeyPattern).MatchString(s)
-}
-
-// Redis-backed idempotency
-type IdempotencyRepository struct {
-    client *redis.Client
-    ttl    time.Duration  // e.g., 7 days
-}
-
-func (r *IdempotencyRepository) TryAcquire(ctx context.Context, key IdempotencyKey) (bool, error) {
-    // SetNX is atomic - only first caller wins
-    result, err := r.client.SetNX(ctx, r.keyName(key), "acquired", r.ttl).Result()
-    return result, err
-}
-
-func (r *IdempotencyRepository) MarkComplete(ctx context.Context, key IdempotencyKey) error {
-    return r.client.Set(ctx, r.keyName(key), "complete", r.ttl).Err()
-}
-
-// Usage in handler
-func (h *Handler) ProcessCallback(c *fiber.Ctx) error {
-    key := extractIdempotencyKey(c)
-
-    acquired, err := h.idempotency.TryAcquire(ctx, key)
-    if err != nil {
-        return internalError(c, "idempotency check failed", err)
-    }
-    if !acquired {
-        return c.Status(200).JSON(fiber.Map{"status": "already_processed"})
+    public function isValid(): bool
+    {
+        if (empty($this->value) || strlen($this->value) > self::MAX_LENGTH) {
+            return false;
+        }
+        return (bool) preg_match(self::VALID_PATTERN, $this->value);
     }
 
-    // Process...
+    public function __toString(): string { return $this->value; }
+}
 
-    h.idempotency.MarkComplete(ctx, key)
-    return c.JSON(result)
+// Redis-backed idempotency repository
+class IdempotencyRepository
+{
+    private const TTL_SECONDS = 7 * 24 * 60 * 60; // 7 days
+
+    public function tryAcquire(IdempotencyKey $key): bool
+    {
+        // SET NX is atomic — only first caller wins
+        return (bool) Redis::set(
+            "idempotency:{$key}",
+            'acquired',
+            ['NX', 'EX' => self::TTL_SECONDS]
+        );
+    }
+
+    public function markComplete(IdempotencyKey $key): void
+    {
+        Redis::set("idempotency:{$key}", 'complete', ['EX' => self::TTL_SECONDS]);
+    }
+}
+
+// Usage in controller
+class PaymentController extends Controller
+{
+    public function processCallback(Request $request): JsonResponse
+    {
+        $key = new IdempotencyKey($request->header('Idempotency-Key'));
+
+        if (!$this->idempotency->tryAcquire($key)) {
+            return response()->json(['status' => 'already_processed'], 200);
+        }
+
+        // Process...
+        $result = $this->paymentService->process($request->validated());
+
+        $this->idempotency->markComplete($key);
+        return response()->json($result);
+    }
 }
 ```
 
@@ -1742,64 +1809,60 @@ Audit API documentation (Swagger/OpenAPI) for production readiness.
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `**/main.go`, `**/handlers.go`, `**/dto.go`, `**/swagger/*`
-- Keywords: `@Summary`, `@Router`, `@Param`, `@Success`, `@Failure`, `@Security`
-- Standards-specific: `swaggo`, `swag init`, `docs/swagger.json`
+- PHP files: `**/Http/Controllers/**/*.php`, `**/Requests/**/*.php`, `**/Resources/**/*.php`, `**/swagger.yaml`, `**/openapi.yaml`
+- TypeScript files: `**/swagger.ts`, `**/openapi.ts`, `**/*.swagger.ts`, JSDoc/TSDoc comments with `@openapi`
+- Config files: `openapi.yaml`, `swagger.yaml`, `docs/swagger.json`
+- Keywords (PHP): `@OA\`, `#[OA\`, `swagger-php`, `@param`, `@return`, `openapi`
+- Keywords (TS): `@swagger`, `@openapi`, `swagger-jsdoc`, `@nestjs/swagger`, `zod-openapi`
+- Standards-specific: `swagger-php`, `zod-openapi`, `openapi.yaml`
 
-**Reference Implementation (GOOD):**
-```go
-// Main entry with API metadata
-// @title           My API
-// @version         v1.0.0
-// @description     API description
-// @BasePath        /
-// @securityDefinitions.apikey BearerAuth
-// @in header
-// @name Authorization
+**Reference Implementation (GOOD — PHP/L5-Swagger):**
+```php
+/**
+ * @OA\Post(
+ *     path="/v1/resources",
+ *     summary="Create a resource",
+ *     description="Creates a new resource with the given parameters",
+ *     tags={"Resources"},
+ *     security={{"bearerAuth":{}}},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(ref="#/components/schemas/CreateResourceRequest")
+ *     ),
+ *     @OA\Response(response=201, description="Created", @OA\JsonContent(ref="#/components/schemas/ResourceResponse")),
+ *     @OA\Response(response=400, description="Invalid input"),
+ *     @OA\Response(response=401, description="Unauthorized"),
+ *     @OA\Response(response=500, description="Internal error"),
+ * )
+ */
+public function store(CreateResourceRequest $request): JsonResponse {}
+```
 
-// Handler with full documentation
-// @Summary      Create a resource
-// @Description  Creates a new resource with the given parameters
-// @Tags         resources
-// @Accept       json
-// @Produce      json
-// @Param        request body CreateRequest true "Resource to create"
-// @Success      201 {object} ResourceResponse
-// @Failure      400 {object} ErrorResponse "Invalid input"
-// @Failure      401 {object} ErrorResponse "Unauthorized"
-// @Failure      403 {object} ErrorResponse "Forbidden"
-// @Failure      500 {object} ErrorResponse "Internal error"
-// @Security     BearerAuth
-// @Router       /v1/resources [post]
-func (h *Handler) Create(c *fiber.Ctx) error { ... }
-
-// DTO with documentation
-type CreateRequest struct {
-    Name   string `json:"name" example:"my-resource" validate:"required"`
-    Type   string `json:"type" example:"TYPE_A" enums:"TYPE_A,TYPE_B"`
-    Amount int    `json:"amount" example:"100" minimum:"0" maximum:"1000000"`
-}
+**Reference Implementation (GOOD — TypeScript/NestJS):**
+```typescript
+@ApiOperation({ summary: 'Create a resource' })
+@ApiResponse({ status: 201, type: ResourceDto })
+@ApiResponse({ status: 400, description: 'Invalid input' })
+@ApiBearerAuth()
+@Post('/v1/resources')
+async create(@Body() dto: CreateResourceDto): Promise<ResourceDto> {}
 ```
 
 **Check Against Bee Standards For:**
-1. (HARD GATE) Swaggo annotations present per Bee api-patterns.md
-2. API title, version, description in main.go
-3. Security definitions (Bearer token)
-4. All endpoints have @Router annotation
-5. Request/response types documented
-6. All error codes documented (@Failure)
-7. Examples in DTOs (example: tag)
-8. Enums documented (enums: tag)
-9. Parameter constraints documented (minimum, maximum)
-10. Tags organize endpoints logically
-11. Swagger UI accessible
+1. (HARD GATE) OpenAPI/Swagger documentation present per Bee api-patterns.md
+2. API title, version, description in openapi config
+3. Security definitions (Bearer token / OAuth)
+4. All endpoints have route documentation
+5. Request/response types documented with examples
+6. All error codes documented (400, 401, 403, 500)
+7. Swagger UI accessible at `/api/documentation` or `/api-docs`
 
 **Severity Ratings:**
-- HIGH: No Swagger annotations at all (HARD GATE violation per Bee standards)
+- HIGH: No OpenAPI/Swagger documentation at all (HARD GATE violation per Bee standards)
 - HIGH: Missing security definitions
 - MEDIUM: Endpoints without documentation
 - MEDIUM: Error responses not documented
-- LOW: Missing examples in DTOs
+- LOW: Missing examples in request/response schemas
 - LOW: Inconsistent tag usage
 
 **Output Format:**
@@ -1898,83 +1961,94 @@ Audit test coverage and testing patterns for production readiness.
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `**/*_test.go`, `**/mocks/**/*.go`, `tests/**/*.go`
-- Keywords: `func Test`, `t.Run`, `mock.Mock`, `assert.`, `require.`
-- Standards-specific: `mockgen`, `testify`, `testcontainers`
+- PHP files: `**/*Test.php`, `**/tests/**/*.php`, `**/test/**/*.php`
+- TypeScript files: `**/*.test.ts`, `**/*.spec.ts`, `**/*.test.tsx`, `**/*.spec.tsx`, `**/__tests__/**/*.ts`
+- Keywords (PHP): `extends TestCase`, `it(`, `test(`, `describe(`, `Mockery::mock`, `$this->mock`, `$this->assertSame`, `$this->assertEquals`, `uses(Tests\TestCase::class)`
+- Keywords (TS): `describe(`, `it(`, `test(`, `expect(`, `jest.mock`, `vi.mock`, `beforeEach`, `afterEach`
+- Standards-specific: `PHPUnit`, `Pest`, `Mockery`, `Jest`, `Vitest`, `testcontainers`
 
-**Reference Implementation (GOOD):**
-```go
-// Co-located test file
-// file: handler_test.go (next to handler.go)
+**Reference Implementation (GOOD — PHP/Pest):**
+```php
+// Pest test co-located with feature (tests/Feature/CreateOrderTest.php)
+use App\Models\Order;
+use Mockery;
 
-func TestHandler_Create(t *testing.T) {
+it('creates an order successfully', function () {
     // Arrange
-    ctrl := gomock.NewController(t)
-    defer ctrl.Finish()
-
-    mockRepo := mocks.NewMockRepository(ctrl)
-    mockRepo.EXPECT().Save(gomock.Any(), gomock.Any()).Return(nil)
-
-    handler := NewHandler(mockRepo)
+    $repository = Mockery::mock(OrderRepositoryInterface::class);
+    $repository->shouldReceive('save')->once()->andReturn(true);
+    app()->instance(OrderRepositoryInterface::class, $repository);
 
     // Act
-    result, err := handler.Create(ctx, input)
+    $response = $this->postJson('/api/orders', [
+        'amount' => 100,
+        'currency' => 'USD',
+    ]);
 
     // Assert
-    require.NoError(t, err)
-    assert.Equal(t, expected, result)
-}
+    $response->assertCreated();
+    $response->assertJsonStructure(['id', 'amount', 'currency']);
+});
 
-// Table-driven tests for multiple cases
-func TestValidation(t *testing.T) {
-    tests := []struct {
-        name    string
-        input   string
-        wantErr bool
-    }{
-        {"valid input", "test", false},
-        {"empty input", "", true},
-        {"too long", strings.Repeat("a", 300), true},
-    }
+// Data-driven test for validation
+it('validates order amount', function (int $amount, bool $valid) {
+    $response = $this->postJson('/api/orders', ['amount' => $amount]);
+    $valid ? $response->assertCreated() : $response->assertUnprocessable();
+})->with([
+    [100, true],
+    [-1, false],
+    [0, false],
+]);
+```
 
-    for _, tt := range tests {
-        t.Run(tt.name, func(t *testing.T) {
-            err := Validate(tt.input)
-            if tt.wantErr {
-                assert.Error(t, err)
-            } else {
-                assert.NoError(t, err)
-            }
-        })
-    }
-}
+**Reference Implementation (GOOD — TypeScript/Jest):**
+```typescript
+// Unit test with mock
+describe('OrderService', () => {
+    let service: OrderService;
+    let mockRepo: jest.Mocked<OrderRepository>;
 
-// Integration test with testcontainers
-func TestIntegration_CreateResource(t *testing.T) {
-    if testing.Short() {
-        t.Skip("skipping integration test")
-    }
-    // Setup container...
-}
+    beforeEach(() => {
+        mockRepo = { save: jest.fn(), findById: jest.fn() } as any;
+        service = new OrderService(mockRepo);
+    });
+
+    it('creates an order', async () => {
+        mockRepo.save.mockResolvedValue({ id: '1', amount: 100 });
+        const result = await service.create({ amount: 100 });
+        expect(result.id).toBe('1');
+        expect(mockRepo.save).toHaveBeenCalledTimes(1);
+    });
+
+    it.each([
+        [-1, false],
+        [0, false],
+        [100, true],
+    ])('validates amount %i → valid: %s', async (amount, valid) => {
+        if (!valid) {
+            await expect(service.create({ amount })).rejects.toThrow();
+        }
+    });
+});
 ```
 
 **Check Against Bee Standards For:**
-1. (HARD GATE) Test files co-located with source (*_test.go) per quality.md testing section
-2. (HARD GATE) Mocks generated via mockgen (not hand-written) per Bee standards
-3. (HARD GATE) Assertions use testify (assert/require) per Bee standards
-4. Table-driven tests for multiple cases
-5. Integration tests in separate directory or with build tags
-6. Test helpers/fixtures organized
-7. Parallel tests where appropriate (t.Parallel())
-8. Test cleanup with t.Cleanup() or defer
+1. (HARD GATE) Test files co-located with feature modules or in `tests/` directory per quality.md testing section
+2. (HARD GATE) Mocks use Mockery (PHP) or Jest/Vitest `mock()` (TypeScript) — not hand-written stubs
+3. (HARD GATE) Assertions use PHPUnit/Pest assertions or Jest `expect()` per Bee standards
+4. Data-driven / parameterized tests for validators and edge cases
+5. Integration tests covering external dependencies (DB, Redis, HTTP)
+6. Test helpers/fixtures organized in `tests/Helpers/` or `__fixtures__/`
+7. Tests isolated — no shared mutable state between test cases
+8. Test cleanup in `afterEach` / `tearDown` / `Mockery::close()`
 
 **Severity Ratings:**
 - HIGH: Critical paths without tests (HARD GATE violation per Bee standards)
-- HIGH: Hand-written mocks (should use mockgen per Bee standards)
-- MEDIUM: Missing table-driven tests for validators
+- HIGH: Hand-written mocks instead of Mockery / Jest mocks (per Bee standards)
+- MEDIUM: Missing parameterized tests for validators
 - MEDIUM: No integration tests
-- LOW: Tests not running in parallel
 - LOW: Missing edge case coverage
+- LOW: Test cleanup not implemented (Mockery::close() missing for PHP)
 
 **Output Format:**
 ```
@@ -1983,7 +2057,7 @@ func TestIntegration_CreateResource(t *testing.T) {
 ### Summary
 - Test files found: X
 - Modules with tests: X/Y
-- Mock generation: mockgen / hand-written
+- Mock approach: Mockery / Jest mocks / hand-written
 - Integration tests: Yes/No
 
 ### Critical Issues
@@ -2007,62 +2081,78 @@ Audit dependency management for production readiness.
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `go.mod`, `go.sum`, `**/vendor/**`
-- Commands: Run `go list -m -u all` mentally based on go.mod
-- Standards-specific: Check for required Bee dependencies in go.mod
+- PHP files: `composer.json`, `composer.lock`, `**/vendor/composer/installed.json`
+- TypeScript files: `package.json`, `package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`
+- Commands: Run `composer audit` (PHP) or `npm audit` / `pnpm audit` (TypeScript) for vulnerability scan
+- Standards-specific: Check for required Bee dependencies per stack
 
-**Reference Implementation (GOOD):**
-```go
-// go.mod with pinned versions
-module github.com/company/project
-
-go 1.24
-
-require (
-    github.com/gofiber/fiber/v2 v2.52.10  // Pinned, not "latest"
-    github.com/lib/pq v1.10.9
-    go.opentelemetry.io/otel v1.39.0
-)
-
-// Indirect deps managed automatically
-require (
-    github.com/valyala/fasthttp v1.52.0 // indirect
-)
+**Reference Implementation (GOOD — PHP):**
+```json
+// composer.json with pinned constraints
+{
+    "require": {
+        "php": "^8.3",
+        "laravel/framework": "^11.0",
+        "lerian-studio/lib-commons": "^2.0",
+        "firebase/php-jwt": "^6.10"
+    },
+    "require-dev": {
+        "pestphp/pest": "^3.0",
+        "mockery/mockery": "^1.6",
+        "phpstan/phpstan": "^1.11",
+        "laravel/pint": "^1.17"
+    }
+}
 ```
 
-**Reference Implementation (BAD):**
-```go
-// BAD: Using replace for production
-replace github.com/some/lib => ../local-lib
+**Reference Implementation (GOOD — TypeScript):**
+```json
+// package.json with pinned versions
+{
+    "dependencies": {
+        "next": "15.2.x",
+        "@opentelemetry/api": "^1.9.0"
+    },
+    "devDependencies": {
+        "typescript": "^5.6.0",
+        "eslint": "^9.0.0",
+        "vitest": "^2.0.0"
+    }
+}
+```
 
-// BAD: Unpinned versions
-require github.com/some/lib latest
-
-// BAD: Very old versions with known CVEs
-require github.com/dgrijalva/jwt-go v3.2.0  // Has CVE, use golang-jwt
+**Reference Implementation (BAD — PHP):**
+```json
+// BAD: Unpinned/wildcard versions
+{
+    "require": {
+        "laravel/framework": "*",
+        "some/package": "dev-master"
+    }
+}
 ```
 
 **Check Against Bee Standards For:**
-1. (HARD GATE) Required Bee framework dependencies present in go.mod per core.md version table
-2. All dependencies pinned (no "latest")
-3. No local replace directives in production
-4. Known vulnerable packages identified
-5. Unused dependencies (not imported anywhere)
-6. Major version mismatches
-7. Deprecated packages (e.g., dgrijalva/jwt-go -> golang-jwt)
-8. go.sum exists and is committed
-9. Framework versions meet Bee minimum requirements (Go 1.24+, Fiber v2, etc.)
+1. (HARD GATE) Required Bee framework dependencies present in composer.json / package.json per core.md version table
+2. All dependencies pinned (no `*` or `dev-master` in PHP, no `latest` in npm)
+3. Lock files committed (`composer.lock`, `package-lock.json`)
+4. Known vulnerable packages identified via `composer audit` / `npm audit`
+5. No unused dependencies
+6. Major version mismatches in core framework
+7. Framework versions meet Bee minimum requirements (PHP 8.3+, Laravel 11+, Node 22+)
 
-**Known Vulnerable Packages to Flag:**
-- github.com/dgrijalva/jwt-go (use golang-jwt/jwt)
-- github.com/pkg/sftp < v1.13.5
-- golang.org/x/crypto < recent
-- golang.org/x/net < recent
+**Known Vulnerable Packages to Flag (PHP):**
+- `laravel/framework` versions with known critical CVEs
+- `firebase/php-jwt` < v6.0 (algorithm confusion vulnerabilities)
+- Any package flagged by `composer audit`
+
+**Known Vulnerable Packages to Flag (TypeScript):**
+- Any package flagged by `npm audit --audit-level=high`
 
 **Severity Ratings:**
 - CRITICAL: Known CVE in dependency
-- CRITICAL: HARD GATE violation — required Bee framework dependency missing from go.mod
-- HIGH: Local replace directive
+- CRITICAL: HARD GATE violation — required Bee framework dependency missing from composer.json / package.json
+- HIGH: Lock file not committed
 - HIGH: Deprecated package with security issues
 - MEDIUM: Significantly outdated dependencies
 - MEDIUM: Framework versions below Bee minimum requirements
@@ -2094,79 +2184,76 @@ Audit performance patterns for production readiness.
 **Detected Stack:** {DETECTED_STACK}
 
 **Search Patterns:**
-- Files: `**/*.go`
-- Keywords: `for.*range`, `append(`, `make(`, `sync.Pool`, `SELECT *`, `N+1`
+- PHP files: `**/*.php` — search for Eloquent queries, DB::table, foreach loops, N+1 patterns
+- TypeScript files: `**/*.ts`, `**/*.tsx` — search for array operations, Promise.all, SELECT patterns
+- Keywords (PHP): `->get()`, `->all()`, `foreach (`, `SELECT *`, `->with(`, `->load(`
+- Keywords (TS): `SELECT *`, `findMany`, `findAll`, `Promise.all`, `for.*of`
 
-**Reference Implementation (GOOD):**
-```go
-// Pre-allocate slices when size is known
-items := make([]Item, 0, len(input))  // Capacity hint
+**Reference Implementation (GOOD — PHP/Laravel):**
+```php
+// Select only needed columns
+$users = User::select('id', 'name', 'email')->paginate(20);  // Not all columns
 
-// Use sync.Pool for frequently allocated objects
-var bufferPool = sync.Pool{
-    New: func() interface{} {
-        return new(bytes.Buffer)
-    },
-}
+// Avoid N+1 with eager loading
+$orders = Order::with(['items', 'customer'])->paginate(20);
 
 // Batch database operations
-func (r *Repo) CreateBatch(ctx context.Context, items []Item) error {
-    return r.db.WithContext(ctx).CreateInBatches(items, 100).Error
-}
+Order::insert($ordersArray);  // Single query instead of N inserts
 
+// Chunk large datasets
+User::chunk(200, function ($users) {
+    foreach ($users as $user) {
+        // process without loading all records into memory
+    }
+});
+```
+
+**Reference Implementation (GOOD — TypeScript):**
+```typescript
 // Select only needed columns
-func (r *Repo) List(ctx context.Context) ([]Item, error) {
-    return r.db.WithContext(ctx).
-        Select("id", "name", "status").  // Not SELECT *
-        Find(&items).Error
-}
+const users = await db.user.findMany({
+    select: { id: true, name: true, email: true },  // Not all columns
+    take: 20,
+});
 
-// Avoid N+1 with preloading
-func (r *Repo) GetWithRelations(ctx context.Context, id uuid.UUID) (*Item, error) {
-    return r.db.WithContext(ctx).
-        Preload("Children").
-        First(&item, id).Error
-}
+// Avoid N+1 with include
+const orders = await db.order.findMany({
+    include: { items: true, customer: { select: { name: true } } },
+});
+
+// Batch parallel I/O (bounded)
+const results = await Promise.all(ids.slice(0, 10).map(id => fetchById(id)));
 ```
 
 **Reference Implementation (BAD):**
-```go
+```php
 // BAD: SELECT * fetches unnecessary data
-db.Find(&items)
+$users = User::all();
 
 // BAD: N+1 query pattern
-for _, item := range items {
-    db.Where("parent_id = ?", item.ID).Find(&children)  // Query per item!
+$orders = Order::paginate(20);
+foreach ($orders as $order) {
+    $customer = Customer::find($order->customer_id);  // Query per order!
 }
 
-// BAD: Growing slice without capacity
-var items []Item
-for _, input := range inputs {
-    items = append(items, transform(input))  // Reallocates repeatedly
-}
-
-// BAD: Large allocations in hot path without pooling
-func handleRequest() {
-    buf := make([]byte, 1<<20)  // 1MB allocation per request
-}
+// BAD: Loading entire dataset into memory
+$allUsers = User::all();  // 100K records in memory
 ```
 
 **Check For:**
 1. SELECT * avoided (explicit column selection)
-2. N+1 queries prevented (use Preload/joins)
-3. Slice pre-allocation when size known
-4. sync.Pool for frequent allocations
-5. Batch operations for bulk inserts/updates
-6. Indexes exist for filtered/sorted columns
-7. Connection pooling configured
-8. Context timeouts on DB operations
+2. N+1 queries prevented (use eager loading / include)
+3. Large datasets processed in chunks, not `->all()`
+4. Batch operations for bulk inserts/updates
+5. Indexes exist for filtered/sorted columns
+6. Connection pooling configured
+7. Database query timeouts configured
 
 **Severity Ratings:**
 - HIGH: N+1 query pattern in production code
 - HIGH: SELECT * on large tables
-- MEDIUM: Missing slice pre-allocation
+- MEDIUM: Loading entire dataset into memory instead of chunking
 - MEDIUM: No batch operations for bulk data
-- LOW: Missing sync.Pool optimization
 - LOW: Minor inefficiencies
 
 **Output Format:**
@@ -2199,121 +2286,100 @@ Audit concurrency patterns for production readiness.
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `**/*.go`
-- Keywords: `go func`, `sync.Mutex`, `sync.RWMutex`, `chan`, `select {`, `sync.WaitGroup`
-- Standards-specific: `errgroup`, `semaphore`, `worker pool`
+- PHP files: `**/*.php` — search for async/queue jobs, parallel execution, shared state
+- TypeScript files: `**/*.ts`, `**/*.tsx` — search for async/await, Promise.all, shared mutable state, race conditions
+- Keywords (PHP): `dispatch(`, `Queue::push`, `parallel(`, `array_map`, `static $`, `Cache::lock`
+- Keywords (TS): `async`, `await`, `Promise.all`, `Promise.race`, `Promise.allSettled`, `setTimeout`, `setInterval`, `EventEmitter`, `shared`
+- Standards-specific: `p-limit`, `semaphore`, `queue`, `worker`, `AbortController`
 
-**Reference Implementation (GOOD):**
-```go
-// Mutex protecting shared state
-type Cache struct {
-    mu    sync.RWMutex
-    items map[string]Item
+**Reference Implementation (GOOD — TypeScript):**
+```typescript
+// Bounded concurrency with p-limit
+import pLimit from 'p-limit';
+
+const limit = pLimit(10); // max 10 concurrent
+const results = await Promise.all(
+    items.map(item => limit(() => processItem(item)))
+);
+
+// Promise.allSettled for partial failures
+const results = await Promise.allSettled(
+    items.map(item => processItem(item))
+);
+const failures = results.filter(r => r.status === 'rejected');
+
+// AbortController for cancellation
+const controller = new AbortController();
+const timeoutId = setTimeout(() => controller.abort(), 5000);
+try {
+    await fetch(url, { signal: controller.signal });
+} finally {
+    clearTimeout(timeoutId);
 }
+```
 
-func (c *Cache) Get(key string) (Item, bool) {
-    c.mu.RLock()
-    defer c.mu.RUnlock()
-    item, ok := c.items[key]
-    return item, ok
-}
+**Reference Implementation (GOOD — PHP/Laravel Queues):**
+```php
+// Dispatch jobs to queue (non-blocking)
+ProcessOrderJob::dispatch($order)->onQueue('orders');
 
-func (c *Cache) Set(key string, item Item) {
-    c.mu.Lock()
-    defer c.mu.Unlock()
-    c.items[key] = item
-}
-
-// WaitGroup for goroutine coordination
-func processAll(items []Item) error {
-    var wg sync.WaitGroup
-    errCh := make(chan error, len(items))
-
-    for _, item := range items {
-        wg.Add(1)
-        go func(i Item) {
-            defer wg.Done()
-            if err := process(i); err != nil {
-                errCh <- err
-            }
-        }(item)  // Pass item to avoid closure capture
-    }
-
-    wg.Wait()
-    close(errCh)
-
-    // Collect errors
-    for err := range errCh {
-        return err
-    }
-    return nil
-}
-
-// Context for cancellation
-func worker(ctx context.Context) {
-    for {
-        select {
-        case <-ctx.Done():
-            return
-        case item := <-workCh:
-            process(item)
-        }
+// Use atomic cache locks to prevent race conditions
+$lock = Cache::lock('process-order-' . $orderId, 30);
+if ($lock->get()) {
+    try {
+        $this->processOrder($orderId);
+    } finally {
+        $lock->release();
     }
 }
 ```
 
-**Reference Implementation (BAD):**
-```go
-// BAD: Race condition - map access without lock
-var cache = make(map[string]Item)
-func Get(key string) Item { return cache[key] }  // Concurrent read/write!
+**Reference Implementation (BAD — TypeScript):**
+```typescript
+// BAD: Unbounded Promise.all — overwhelms downstream
+const results = await Promise.all(
+    millionItems.map(item => fetchItem(item))  // 1M concurrent requests!
+);
 
-// BAD: Goroutine leak - no way to stop
-go func() {
-    for {
-        process()  // Runs forever, no context check
-    }
-}()
+// BAD: Shared mutable state without synchronization
+let counter = 0;
+await Promise.all(items.map(async () => {
+    counter++;  // Race condition — concurrent reads/writes
+}));
 
-// BAD: Closure captures loop variable
-for _, item := range items {
-    go func() {
-        process(item)  // All goroutines see last item!
-    }()
-}
-
-// BAD: Unbounded goroutine spawning
-for _, item := range millionItems {
-    go process(item)  // 1M goroutines!
+// BAD: Missing await — async operations not awaited
+function processOrder(order: Order) {
+    saveOrder(order);  // Fire and forget — errors silently swallowed
+    sendEmail(order);  // No error handling
 }
 ```
 
 **Check Against Bee Standards For:**
-1. (HARD GATE) Maps protected by mutex when shared per architecture.md concurrency patterns
-2. Loop variables not captured in closures
-3. Goroutines have cancellation (context)
-4. WaitGroup used for coordination
-5. Bounded concurrency (worker pools) per Bee patterns
-6. Channels closed by sender
-7. Select with default for non-blocking
-8. No goroutine leaks (all paths exit)
+1. (HARD GATE) Concurrent async operations use bounded concurrency (p-limit or equivalent) per Bee patterns
+2. No unbounded `Promise.all()` on variable-length external calls
+3. Shared mutable state is avoided in async contexts (prefer immutable, use atomic locks for PHP)
+4. All async operations are properly awaited
+5. AbortController used for cancellable long-running operations
+6. Queue workers used for CPU-intensive or long-running PHP operations
+7. No unhandled Promise rejections
 
 **Severity Ratings:**
-- CRITICAL: Race condition on shared map (HARD GATE violation per Bee standards)
-- CRITICAL: Goroutine leak (no exit path)
-- HIGH: Loop variable capture bug
-- HIGH: Unbounded goroutine spawning
-- MEDIUM: Missing context cancellation
-- LOW: Inefficient locking patterns
+- CRITICAL: Unbounded concurrent requests to external services (thundering herd risk)
+- HIGH: Shared mutable state across concurrent async operations (data corruption risk)
+- HIGH: Unhandled Promise rejections (silent failures)
+- HIGH: CPU-intensive operations blocking event loop (TypeScript) or main thread (PHP sync)
+- MEDIUM: Missing AbortController on long-running fetch operations
+- MEDIUM: Missing atomic locks for shared resources in PHP
+- LOW: Suboptimal concurrency patterns (sequential where parallel is safe)
 
 **Output Format:**
 ```
 ## Concurrency Audit Findings
 
 ### Summary
-- Goroutine spawns: X locations
-- Mutex usage: Y locations
-- Potential race conditions: Z
+- Unbounded Promise.all usages: X locations
+- Shared mutable state in async: Y locations
+- Unhandled Promise rejections: Z
 
 ### Critical Issues
 [file:line] - Description
@@ -2336,9 +2402,9 @@ Audit database migration safety for production readiness.
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `migrations/*.sql`, `migrations/*.go`
-- Keywords: `DROP`, `ALTER`, `RENAME`, `NOT NULL`, `CREATE INDEX`
-- Standards-specific: `golang-migrate`, `lib-commons migration`
+- Files: `database/migrations/*.php` (Laravel), `migrations/*.sql`, `migrations/*.php`
+- Keywords: `DROP`, `ALTER`, `RENAME`, `NOT NULL`, `CREATE INDEX`, `Schema::`, `$table->`
+- Standards-specific: `php artisan migrate`, `Laravel Schema Builder`, `Phinx`, `Doctrine Migrations`
 
 **Reference Implementation (GOOD):**
 ```sql
@@ -2438,7 +2504,7 @@ CREATE INDEX CONCURRENTLY idx_orders_status ON orders(status);
 6. No destructive operations in up migrations
 7. Migrations are additive (safe rollback)
 8. Sequential numbering (no gaps)
-9. Migration tool matches Bee standard (golang-migrate or lib-commons)
+9. Migration tool matches Bee standard (Laravel migrations or project-standard migration tool)
 10. NOT NULL columns MUST have DEFAULT values in ADD COLUMN migrations — adding a NOT NULL column without DEFAULT requires a full table rewrite lock on existing data, causing downtime on large tables
 11. CHECK constraints for domain-specific validation at database level — values validated only in application code MUST also have database-level CHECK constraints as a safety net
 12. Foreign key consistency — foreign keys MUST have matching column types and MUST define explicit cascading behavior (ON DELETE/ON UPDATE) rather than relying on database defaults
@@ -2495,29 +2561,45 @@ Audit container security and Dockerfile best practices for production readiness.
 
 **Reference Implementation (GOOD):**
 ```dockerfile
-# Multi-stage build
-FROM golang:1.24-alpine AS builder
+# Multi-stage build — PHP example
+FROM composer:2.7 AS composer
 WORKDIR /app
-COPY go.mod go.sum ./
-RUN go mod download
-COPY . .
-RUN CGO_ENABLED=0 go build -o /main cmd/app/main.go
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --optimize-autoloader --no-scripts
 
-# Distroless or minimal runtime image
-FROM gcr.io/distroless/static-debian12:nonroot
-WORKDIR /
-COPY --from=builder /main .
+FROM php:8.3-fpm-alpine AS runtime
+WORKDIR /app
+COPY --from=composer /app/vendor ./vendor
+COPY . .
 # Non-root user
-USER nonroot:nonroot
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+USER appuser:appgroup
 # Healthcheck defined
-HEALTHCHECK --interval=30s --timeout=3s CMD ["/main", "-health"]
-ENTRYPOINT ["/main"]
+HEALTHCHECK --interval=30s --timeout=3s CMD php artisan health:check || exit 1
+EXPOSE 9000
+```
+
+```dockerfile
+# Multi-stage build — TypeScript/Node.js example
+FROM node:22-alpine AS builder
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci --only=production
+
+FROM node:22-alpine AS runtime
+WORKDIR /app
+COPY --from=builder /app/node_modules ./node_modules
+COPY . .
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+USER appuser:appgroup
+HEALTHCHECK --interval=30s --timeout=3s CMD node healthcheck.js || exit 1
+EXPOSE 3000
 ```
 
 **Check Against Bee Standards For:**
-1. (HARD GATE) Multi-stage builds (builder vs runtime) per devops.md containers section
-2. (HARD GATE) Non-root user execution (`USER nonroot` or numeric ID) per Bee standards
-3. Minimal/Distroless runtime images per Bee container patterns
+1. (HARD GATE) Multi-stage builds (builder vs runtime) — separate dependency installation stage from runtime
+2. (HARD GATE) Non-root user execution (`USER appuser` or numeric ID) per Bee standards
+3. Minimal runtime images (alpine-based) per Bee container patterns
 4. Pinned base image versions (not `latest`)
 5. `COPY` used instead of `ADD` (unless extracting tar)
 6. .dockerignore file exists and excludes secrets/git
@@ -2525,7 +2607,7 @@ ENTRYPOINT ["/main"]
 
 **Severity Ratings:**
 - CRITICAL: Running as root in production image (HARD GATE violation per Bee standards)
-- CRITICAL: HARD GATE violation — no multi-stage build per devops.md
+- CRITICAL: HARD GATE violation — no multi-stage build
 - HIGH: Secrets in Dockerfile/history
 - MEDIUM: Using `latest` tag
 - LOW: Missing HEALTHCHECK in Dockerfile
@@ -2555,21 +2637,29 @@ Audit HTTP security headers and hardening configuration for production readiness
 **Detected Stack:** {DETECTED_STACK}
 
 **Search Patterns:**
-- Files: `**/fiber_server.go`, `**/middleware*.go`
+- Files: `**/Http/Kernel.php`, `**/Middleware/*.php`
 - Keywords: `Helmet`, `CSRF`, `Secure`, `HttpOnly`, `SameSite`
 
 **Reference Implementation (GOOD):**
-```go
-// Security headers
-app.Use(helmet.New(helmet.Config{
-    XSSProtection:             "1; mode=block",
-    ContentTypeNosniff:        "nosniff",
-    XFrameOptions:             "DENY",
-    HSTSMaxAge:                31536000,
-    HSTSExcludeSubdomains:     false,
-    HSTSPreloadEnabled:        true,
-    ContentSecurityPolicy:     "default-src 'self'",
-}))
+```php
+// Security headers middleware (Laravel)
+class SecurityHeadersMiddleware
+{
+    public function handle(Request $request, Closure $next): Response
+    {
+        $response = $next($request);
+
+        return $response
+            ->header('X-Content-Type-Options', 'nosniff')
+            ->header('X-Frame-Options', 'DENY')
+            ->header('X-XSS-Protection', '1; mode=block')
+            ->header('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload')
+            ->header('Content-Security-Policy', "default-src 'self'")
+            ->header('Referrer-Policy', 'strict-origin-when-cross-origin')
+            ->withoutHeader('Server') // suppress server banner
+            ->withoutHeader('X-Powered-By');
+    }
+}
 ```
 
 **Check For:**
@@ -2609,15 +2699,16 @@ Audit CI/CD pipelines for production readiness.
 
 **Bee Standards (Source of Truth):**
 ---BEGIN STANDARDS---
-{INJECTED: CI section from devops.md}
+{INJECTED: CI section from industry CI/CD best practices — no dedicated standards file}
 ---END STANDARDS---
 
 **Search Patterns:**
 - Files: `.github/workflows/*.yml`, `.gitlab-ci.yml`, `Makefile`
 - Keywords: `test`, `lint`, `build`, `docker`, `sign`
-- Standards-specific: `golangci-lint`, `gosec`, `trivy`, `cosign`
+- Standards-specific (PHP): `phpstan`, `php-cs-fixer`, `pint`, `composer audit`
+- Standards-specific (TypeScript): `eslint`, `tsc`, `npm audit`, `trivy`, `cosign`
 
-**Reference Implementation (GOOD):**
+**Reference Implementation (GOOD — PHP):**
 ```yaml
 # .github/workflows/ci.yml
 name: CI
@@ -2627,23 +2718,44 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
-      - run: go test -race -v ./...
-      - run: golangci-lint run
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+      - run: composer install --no-interaction --prefer-dist
+      - run: php artisan test
+      - run: ./vendor/bin/phpstan analyse
+      - run: ./vendor/bin/pint --test
 
   security:
     runs-on: ubuntu-latest
     steps:
-      - uses: securego/gosec@master
+      - run: composer audit
+      - uses: aquasecurity/trivy-action@master
         with:
-          args: ./...
+          scan-type: 'fs'
+```
+
+**Reference Implementation (GOOD — TypeScript):**
+```yaml
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - run: npm test
+      - run: npx eslint .
+      - run: npm run type-check
+      - run: npm audit --audit-level=high
 ```
 
 **Check Against Bee Standards For:**
-1. (HARD GATE) CI pipeline exists (GitHub Actions/GitLab CI) per devops.md
+1. (HARD GATE) CI pipeline exists (GitHub Actions/GitLab CI)
 2. (HARD GATE) Tests run on PRs per Bee CI requirements
-3. Linting runs on PRs (golangci-lint)
-4. Security scanning (gosec, trivy) integrated
+3. Linting runs on PRs (phpstan/pint for PHP, eslint for TypeScript)
+4. Security scanning (composer audit / npm audit, trivy) integrated
 5. Artifact signing (cosign/sigstore)
 6. Docker image build and push stages
 7. Automated deployment stages (if applicable)
@@ -2686,134 +2798,155 @@ Audit asynchronous processing reliability for production readiness.
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `**/worker/*.go`, `**/queue/*.go`, `**/kafka/*.go`, `**/rabbitmq/*.go`
+- Files: `**/Jobs/*.php`, `**/Queue/*.php`, `**/Listeners/*.php`, `**/Events/*.php`
 - Keywords: `Ack`, `Nack`, `Retry`, `DeadLetter`, `DLQ`, `ConsumerGroup`
 - Standards-specific: `amqp`, `RabbitMQ`, `lib-commons messaging`
 
 **Reference Implementation (GOOD):**
-```go
-// Reliable consumer with DLQ strategy
-func (c *Consumer) Handle(msg *Message) error {
-    if err := c.process(msg); err != nil {
-        if msg.RetryCount >= maxRetries {
-            // Move to Dead Letter Queue
-            return c.dlq.Publish(msg)
-        }
-        // Retry with backoff
-        return c.RetryLater(msg, backoff(msg.RetryCount))
+```php
+// Reliable consumer with DLQ strategy (Laravel Queue)
+class ProcessMessageJob implements ShouldQueue
+{
+    public int $tries = 3;
+    public int $backoff = 60; // seconds between retries
+
+    public function handle(): void
+    {
+        $this->messageService->process($this->message);
     }
-    return msg.Ack()
+
+    public function failed(\Throwable $exception): void
+    {
+        // After max retries — move to dead letter queue
+        $this->dlqService->publish($this->message, $exception->getMessage());
+        Log::error('Message moved to DLQ', ['message_id' => $this->message->id]);
+    }
 }
 ```
 
 **Reference Implementation (GOOD — Outbox, Idempotency & Poison Messages):**
-```go
+```php
 // Transactional outbox pattern — event published within same DB transaction
-func (s *Service) CreateOrder(ctx context.Context, order *Order) error {
-    return s.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
-        if err := tx.Create(order).Error; err != nil {
-            return err
-        }
-        outboxEvent := OutboxEvent{
-            AggregateID:   order.ID,
-            AggregateType: "Order",
-            EventType:     "OrderCreated",
-            Payload:       mustMarshal(order),
-            Status:        "pending",
-        }
-        return tx.Create(&outboxEvent).Error
-    })
+class OrderService
+{
+    public function createOrder(array $data): Order
+    {
+        return DB::transaction(function () use ($data) {
+            $order = Order::create($data['order']);
+            // Outbox event stored in same transaction
+            OutboxEvent::create([
+                'aggregate_id'   => $order->id,
+                'aggregate_type' => 'Order',
+                'event_type'     => 'OrderCreated',
+                'payload'        => json_encode($order->toArray()),
+                'status'         => 'pending',
+            ]);
+            return $order;
+        });
+    }
 }
 
-// Outbound webhook with retry and delivery tracking
-func (w *WebhookDelivery) Deliver(ctx context.Context, endpoint string, payload []byte) error {
-    var lastErr error
-    for attempt := 0; attempt < w.maxRetries; attempt++ {
-        resp, err := w.httpClient.Post(endpoint, "application/json", bytes.NewReader(payload))
-        if err == nil && resp.StatusCode >= 200 && resp.StatusCode < 300 {
-            w.trackDelivery(ctx, endpoint, "delivered", attempt+1)
-            return nil
+// Outbound webhook with retry and delivery tracking (Laravel Queue)
+class DeliverWebhookJob implements ShouldQueue
+{
+    public int $tries = 5;
+
+    public function handle(): void
+    {
+        $response = Http::timeout(10)->post($this->endpoint, $this->payload);
+        if (!$response->successful()) {
+            throw new \RuntimeException("Webhook delivery failed: {$response->status()}");
         }
-        lastErr = fmt.Errorf("attempt %d: status=%d err=%w", attempt+1, resp.StatusCode, err)
-        w.trackDelivery(ctx, endpoint, "retrying", attempt+1)
-        time.Sleep(exponentialBackoff(attempt))
+        WebhookDelivery::updateStatus($this->deliveryId, 'delivered', $this->attempt);
     }
-    w.trackDelivery(ctx, endpoint, "failed", w.maxRetries)
-    return fmt.Errorf("webhook delivery failed after %d attempts: %w", w.maxRetries, lastErr)
+
+    public function retryAfter(): array
+    {
+        return [60, 120, 300, 600]; // exponential backoff in seconds
+    }
+
+    public function failed(\Throwable $e): void
+    {
+        WebhookDelivery::updateStatus($this->deliveryId, 'failed', $this->attempts());
+    }
 }
 
 // Idempotent message consumer with deduplication
-func (c *Consumer) HandleIdempotent(ctx context.Context, msg *Message) error {
-    if processed, _ := c.dedup.IsProcessed(ctx, msg.ID); processed {
-        logger.Info("duplicate message skipped", "msg_id", msg.ID)
-        return msg.Ack()
+class ProcessMessageJob implements ShouldQueue
+{
+    public function handle(): void
+    {
+        if (Cache::get("processed:{$this->message->id}")) {
+            Log::info('Duplicate message skipped', ['msg_id' => $this->message->id]);
+            return;
+        }
+        $this->messageService->process($this->message);
+        Cache::put("processed:{$this->message->id}", true, now()->addHours(24));
     }
-    if err := c.process(ctx, msg); err != nil {
-        return err
-    }
-    c.dedup.MarkProcessed(ctx, msg.ID, 24*time.Hour)
-    return msg.Ack()
 }
 
-// Event ordering via partition key
-func (p *Producer) PublishOrderEvent(ctx context.Context, orderID string, event interface{}) error {
-    return p.channel.Publish(ctx, PublishOptions{
-        Exchange:     "orders",
-        RoutingKey:   "order.events",
-        PartitionKey: orderID,
-        Body:         mustMarshal(event),
-        Headers: map[string]interface{}{
-            "sequence": event.SequenceNumber,
-        },
-    })
-}
+// Event ordering via partition key (Laravel Horizon queue routing)
+$partitionKey = $orderId; // same partition key → same queue worker → ordered processing
+PublishOrderEventJob::dispatch($event)->onQueue("orders.{$partitionKey}");
 
 // Poison message isolation (separate from DLQ)
-func (c *Consumer) HandleWithPoisonDetection(msg *Message) error {
-    var event DomainEvent
-    if err := json.Unmarshal(msg.Body, &event); err != nil {
-        c.poisonQueue.Publish(msg, fmt.Sprintf("deserialization failed: %v", err))
-        return msg.Ack()
-    }
-    if err := c.process(event); err != nil {
-        if msg.RetryCount >= maxRetries {
-            return c.dlq.Publish(msg)
+class ConsumeOrderEventJob implements ShouldQueue
+{
+    public function handle(): void
+    {
+        $event = json_decode($this->rawPayload, true);
+        if ($event === null) {
+            // Deserialization failed — isolate to poison queue, do not retry
+            PoisonMessageQueue::publish($this->rawPayload, 'json_decode failed');
+            return;
         }
-        return c.RetryLater(msg, backoff(msg.RetryCount))
+        $this->processEvent($event);
     }
-    return msg.Ack()
 }
 ```
 
 **Reference Implementation (BAD — Outbox, Idempotency & Poison Messages):**
-```go
+```php
 // BAD: Fire-and-forget webhook — no retry, no delivery tracking
-func (s *Service) NotifyWebhook(endpoint string, payload []byte) {
-    go func() {
-        http.Post(endpoint, "application/json", bytes.NewReader(payload))
-    }()
+class OrderService
+{
+    public function notifyWebhook(string $endpoint, array $payload): void
+    {
+        Http::post($endpoint, $payload); // no retry, no tracking, failures silently lost
+    }
 }
 
 // BAD: Event published OUTSIDE transaction — lost events on rollback
-func (s *Service) CreateOrder(ctx context.Context, order *Order) error {
-    if err := s.db.Create(order).Error; err != nil {
-        return err
+class OrderService
+{
+    public function createOrder(array $data): Order
+    {
+        $order = Order::create($data['order']);
+        $this->publisher->publish('OrderCreated', $order); // fails after commit — lost event
+        return $order;
     }
-    return s.publisher.Publish("OrderCreated", order)
 }
 
 // BAD: Consumer without idempotency — processes duplicates
-func (c *Consumer) Handle(msg *Message) error {
-    return c.process(msg)
+class ProcessMessageJob implements ShouldQueue
+{
+    public function handle(): void
+    {
+        $this->messageService->process($this->message); // no dedup check
+    }
 }
 
 // BAD: Poison messages treated same as processing failures
-func (c *Consumer) Handle(msg *Message) error {
-    var event DomainEvent
-    if err := json.Unmarshal(msg.Body, &event); err != nil {
-        return msg.Nack(true)  // Requeue — malformed message retried forever
+class ConsumeOrderEventJob implements ShouldQueue
+{
+    public function handle(): void
+    {
+        $event = json_decode($this->rawPayload, true);
+        if ($event === null) {
+            throw new \RuntimeException('json_decode failed'); // requeued — malformed message retried forever
+        }
+        $this->processEvent($event);
     }
-    return c.process(event)
 }
 ```
 
@@ -2873,56 +3006,75 @@ Audit core dependency usage and framework compliance for production readiness.
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `go.mod`, `go.sum`, `**/utils/*.go`, `**/helpers/*.go`, `**/common/*.go`
-- Keywords: `lib-commons`, `github.com/LerianStudio`, `go 1.`, `fiber`, `gorm`, `validator`
+- PHP files: `composer.json`, `**/app/Helpers/*.php`, `**/app/Utils/*.php`, `**/app/Common/*.php`
+- TypeScript files: `package.json`, `**/utils/**/*.ts`, `**/helpers/**/*.ts`, `**/common/**/*.ts`
+- Keywords (PHP): `lerian-studio/lib-commons`, `laravel/framework`, custom `ConnectDB`, custom `StartSpan`
+- Keywords (TS): `lib-commons`, `@lerian-studio`, custom db utilities, custom tracing wrappers
 - Also search: Custom utility packages that may duplicate lib-commons functionality
 
-**Reference Implementation (GOOD):**
-```go
-// go.mod with lib-commons v2 and required frameworks
-module github.com/company/project
+**Reference Implementation (GOOD — PHP):**
+```json
+// composer.json with lib-commons and required frameworks
+{
+    "require": {
+        "php": "^8.3",
+        "laravel/framework": "^11.0",
+        "lerian-studio/lib-commons": "^2.0",
+        "laravel/sanctum": "^4.0",
+        "spatie/laravel-query-builder": "^5.0"
+    },
+    "require-dev": {
+        "pestphp/pest": "^3.0",
+        "mockery/mockery": "^1.6",
+        "phpstan/phpstan": "^1.11"
+    }
+}
+```
 
-go 1.24
-
-require (
-    github.com/LerianStudio/lib-commons/v2 v2.x.x   // lib-commons present
-    github.com/gofiber/fiber/v2 v2.52.x               // Fiber v2
-    gorm.io/gorm v1.25.x                              // GORM
-    github.com/go-playground/validator/v10 v10.x.x     // Validator
-    github.com/stretchr/testify v1.9.x                 // Testify
-)
+**Reference Implementation (GOOD — TypeScript):**
+```json
+// package.json with required frameworks
+{
+    "dependencies": {
+        "next": "^15.0.0",
+        "@lerian-studio/lib-commons": "^2.0.0"
+    },
+    "devDependencies": {
+        "typescript": "^5.6.0",
+        "eslint": "^9.0.0"
+    }
+}
 ```
 
 **Reference Implementation (BAD):**
-```go
+```php
 // BAD: Custom utilities that duplicate lib-commons
-// internal/utils/database.go
-func ConnectDB(dsn string) (*sql.DB, error) {
-    // Custom connection logic duplicating lib-commons/mpostgres
+// app/Helpers/Database.php
+function connectDatabase(string $dsn): PDO {
+    // Custom connection logic duplicating lib-commons database module
 }
 
 // BAD: Custom telemetry wrapper duplicating lib-commons
-// internal/common/tracing.go
-func StartSpan(ctx context.Context, name string) (context.Context, trace.Span) {
-    // Custom wrapper duplicating lib-commons/NewTrackingFromContext
+// app/Common/Tracing.php
+function startSpan(string $name): Span {
+    // Custom wrapper duplicating lib-commons/tracing module
 }
 
 // BAD: Missing lib-commons entirely
-// go.mod without github.com/LerianStudio/lib-commons
+// composer.json without lerian-studio/lib-commons
 ```
 
 **Check Against Bee Standards For:**
-1. (HARD GATE) lib-commons v2 present in go.mod — this is mandatory per Bee standards
-2. (HARD GATE) No custom utility packages that duplicate lib-commons functionality (check utils/, helpers/, common/)
-3. Go version 1.24+ in go.mod
-4. Fiber v2 framework present
-5. GORM ORM present
-6. go-playground/validator/v10 present
-7. testify present for testing
-8. No alternative libraries used for functionality already covered by lib-commons
+1. (HARD GATE) lib-commons v2 present in composer.json / package.json — this is mandatory per Bee standards
+2. (HARD GATE) No custom utility packages that duplicate lib-commons functionality (check Helpers/, Utils/, Common/)
+3. PHP version 8.3+ in composer.json
+4. Laravel framework 11+ (PHP) or Next.js 15+ (TypeScript frontend) present
+5. Required validation library present (Laravel validation / Zod / Yup)
+6. Test framework present (Pest/PHPUnit for PHP, Jest/Vitest for TypeScript)
+7. No alternative libraries used for functionality already covered by lib-commons
 
 **Severity Ratings:**
-- CRITICAL: lib-commons not in go.mod (HARD GATE violation per Bee standards)
+- CRITICAL: lib-commons not in composer.json / package.json (HARD GATE violation per Bee standards)
 - CRITICAL: Custom utilities duplicating lib-commons functionality (HARD GATE violation)
 - HIGH: Framework versions below Bee minimum requirements
 - MEDIUM: Using alternative libraries for functionality covered by Bee stack
@@ -2934,13 +3086,13 @@ func StartSpan(ctx context.Context, name string) (context.Context, trace.Span) {
 
 ### Summary
 - lib-commons v2 present: Yes/No
-- Go version: X (minimum 1.24)
+- PHP/Node version meets minimum: Yes/No
 - Required frameworks present: X/Y
 - Custom utility packages found: [list]
 - lib-commons duplication detected: Yes/No
 
 ### Critical Issues
-[file:line or go.mod] - Description
+[file:line or composer.json/package.json] - Description
 
 ### Recommendations
 1. ...
@@ -2960,40 +3112,58 @@ Audit naming conventions across the codebase for production readiness.
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `**/*.go` for struct tags, `**/migrations/*.sql` for column names
-- Keywords: `json:"`, `db:"`, `gorm:"`, `column:`, `CREATE TABLE`
+- PHP files: `**/*.php` — search for model property casts, Eloquent `$fillable`, API resource transformations
+- TypeScript files: `**/*.ts`, `**/*.tsx` — search for interface/type definitions, API response shapes
+- Migration files: `**/migrations/*.php`, `**/migrations/*.sql` — search for column definitions
+- Keywords (PHP): `protected $casts`, `return [`, `snake_case`, `camelCase`, `JsonResource`
+- Keywords (TS): `interface `, `type `, `keyof`, JSON key patterns in response objects
 - Also search: Query parameter handling for naming consistency
 
-**Reference Implementation (GOOD):**
-```go
-// Go struct with correct naming conventions
-type Account struct {
-    ID          uuid.UUID `json:"id" gorm:"column:id"`
-    DisplayName string    `json:"display_name" gorm:"column:display_name"`  // camelCase JSON, snake_case DB
-    AccountType string    `json:"account_type" gorm:"column:account_type"`
-    CreatedAt   time.Time `json:"created_at" gorm:"column:created_at"`
+**Reference Implementation (GOOD — PHP):**
+```php
+// Laravel API Resource with snake_case JSON fields
+class AccountResource extends JsonResource
+{
+    public function toArray(Request $request): array
+    {
+        return [
+            'id'           => $this->id,
+            'display_name' => $this->display_name,  // snake_case JSON
+            'account_type' => $this->account_type,
+            'created_at'   => $this->created_at,
+        ];
+    }
 }
 
-// Query parameters use snake_case
+// Query parameters: snake_case
 // GET /v1/accounts?account_type=savings&created_after=2024-01-01
+```
 
-// SQL migration with snake_case columns
-// CREATE TABLE accounts (
-//     id UUID PRIMARY KEY,
-//     display_name VARCHAR(255),
-//     account_type VARCHAR(50),
-//     created_at TIMESTAMP WITH TIME ZONE
-// );
+**Reference Implementation (GOOD — TypeScript):**
+```typescript
+// API response type with snake_case fields (matching backend)
+interface AccountResponse {
+    id: string;
+    display_name: string;  // snake_case matches backend convention
+    account_type: string;
+    created_at: string;
+}
 ```
 
 **Reference Implementation (BAD):**
-```go
-// BAD: Inconsistent JSON naming
-type Account struct {
-    ID          uuid.UUID `json:"id"`
-    DisplayName string    `json:"displayName"`    // camelCase instead of snake_case
-    AccountType string    `json:"account_type"`   // snake_case — inconsistent with above!
-    CreatedAt   time.Time `json:"CreatedAt"`      // PascalCase — wrong!
+```php
+// BAD: Inconsistent JSON naming in PHP resource
+class AccountResource extends JsonResource
+{
+    public function toArray(Request $request): array
+    {
+        return [
+            'id'          => $this->id,
+            'displayName' => $this->display_name,  // camelCase — wrong!
+            'account_type' => $this->account_type,  // Inconsistent with above
+            'CreatedAt'   => $this->created_at,    // PascalCase — wrong!
+        ];
+    }
 }
 
 // BAD: Mixed naming in query params
@@ -3001,11 +3171,11 @@ type Account struct {
 ```
 
 **Check Against Bee Standards For:**
-1. snake_case for database column names in migrations and GORM tags
-2. snake_case for JSON response body fields (json:"field_name")
+1. snake_case for database column names in migrations
+2. snake_case for JSON response body fields in API resources/transformers
 3. snake_case for query parameters
-4. PascalCase for Go exported types and functions
-5. camelCase for Go unexported fields and variables
+4. PascalCase for PHP class names and TypeScript interfaces/types
+5. camelCase for TypeScript variables and functions
 6. Consistent naming convention within each context (no mixing)
 
 **Severity Ratings:**
@@ -3053,85 +3223,98 @@ Audit domain modeling patterns for production readiness.
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `**/domain/*.go`, `**/entity/*.go`, `**/model/*.go`, `**/value_objects/*.go`
-- Keywords: `ToEntity`, `FromEntity`, `NewXxx`, `IsValid()`, `private fields`
-- Also search: `**/adapters/**/*.go` for mapping patterns
+- PHP files: `**/Domain/**/*.php`, `**/Entities/**/*.php`, `**/Models/**/*.php`, `**/ValueObjects/**/*.php`
+- TypeScript files: `**/domain/**/*.ts`, `**/entities/**/*.ts`, `**/models/**/*.ts`
+- Keywords (PHP): `toEntity`, `fromEntity`, `public function __construct`, `private readonly`, `isValid()`, `create(`
+- Keywords (TS): `toEntity`, `fromEntity`, `class .*Entity`, `readonly`, `private `
+- Also search: `**/Http/Resources/**/*.php`, `**/adapters/**/*.ts` for mapping patterns
 
-**Reference Implementation (GOOD):**
-```go
-// Always-valid domain model with private fields and constructor
-type Account struct {
-    id          uuid.UUID   // Private fields
-    name        string
-    accountType AccountType
-    status      Status
-    createdAt   time.Time
-}
+**Reference Implementation (GOOD — PHP):**
+```php
+// Always-valid domain model with private constructor and named constructor
+final class Account
+{
+    private function __construct(
+        private readonly string $id,
+        private readonly string $name,
+        private readonly AccountType $accountType,
+        private AccountStatus $status,
+    ) {}
 
-// Constructor enforces invariants
-func NewAccount(name string, accountType AccountType) (*Account, error) {
-    if name == "" {
-        return nil, ErrNameRequired
+    // Named constructor enforces invariants
+    public static function create(string $name, AccountType $type): self
+    {
+        if (empty($name)) {
+            throw new \InvalidArgumentException('Account name is required');
+        }
+        return new self(
+            id: (string) Str::uuid(),
+            name: $name,
+            accountType: $type,
+            status: AccountStatus::Active,
+        );
     }
-    if !accountType.IsValid() {
-        return nil, ErrInvalidAccountType
+
+    // Getters (no public setters for immutable fields)
+    public function getId(): string { return $this->id; }
+    public function getName(): string { return $this->name; }
+    public function getStatus(): AccountStatus { return $this->status; }
+}
+
+// DTO mapping in HTTP layer
+class CreateAccountRequest extends FormRequest
+{
+    public function toEntity(): Account
+    {
+        return Account::create(
+            name: $this->input('name'),
+            type: AccountType::from($this->input('account_type')),
+        );
     }
-    return &Account{
-        id:          uuid.New(),
-        name:        name,
-        accountType: accountType,
-        status:      StatusActive,
-        createdAt:   time.Now(),
-    }, nil
 }
 
-// Exported getters (no setters for immutable fields)
-func (a *Account) ID() uuid.UUID       { return a.id }
-func (a *Account) Name() string        { return a.name }
-func (a *Account) Status() Status      { return a.status }
-
-// ToEntity/FromEntity mapping in adapters
-func (dto *CreateAccountDTO) ToEntity() (*domain.Account, error) {
-    return domain.NewAccount(dto.Name, domain.AccountType(dto.Type))
-}
-
-func FromEntity(account *domain.Account) *AccountResponse {
-    return &AccountResponse{
-        ID:     account.ID().String(),
-        Name:   account.Name(),
-        Status: string(account.Status()),
+// Resource maps entity → response (fromEntity equivalent)
+class AccountResource extends JsonResource
+{
+    public function toArray(Request $request): array
+    {
+        return [
+            'id'     => $this->resource->getId(),
+            'name'   => $this->resource->getName(),
+            'status' => $this->resource->getStatus()->value,
+        ];
     }
 }
 ```
 
-**Reference Implementation (BAD):**
-```go
-// BAD: Domain model with exported mutable fields and no constructor
-type Account struct {
-    ID          uuid.UUID `json:"id"`           // Exported + mutable!
-    Name        string    `json:"name"`         // Can be set to "" directly
-    AccountType string    `json:"account_type"` // No type safety
-    Status      string    `json:"status"`       // No validation
+**Reference Implementation (BAD — PHP):**
+```php
+// BAD: Domain model with all-public mutable fields, no constructor enforcement
+class Account extends Model
+{
+    public string $id;
+    public string $name;    // Can be empty string directly
+    public string $status;  // No type safety — accepts any string
 }
 
-// BAD: Direct field access without validation
-account := &Account{Name: ""}  // Invalid state allowed!
-
-// BAD: No ToEntity/FromEntity — DTOs used directly as domain models
-func (h *Handler) Create(c *fiber.Ctx) error {
-    var account Account
-    c.BodyParser(&account)
-    repo.Save(ctx, &account)  // DTO goes straight to persistence!
+// BAD: No toEntity/fromEntity — request data used directly as domain model
+class AccountController
+{
+    public function store(Request $request): JsonResponse
+    {
+        $account = new Account($request->all());  // DTO goes straight to persistence!
+        $account->save();
+    }
 }
 ```
 
 **Check Against Bee Standards For:**
-1. (HARD GATE) Domain models use private fields with exported getters per domain-modeling.md always-valid pattern
-2. (HARD GATE) Constructors (NewXxx) enforce invariants — no invalid domain objects can be created
-3. (HARD GATE) ToEntity/FromEntity mapping patterns in adapters per domain.md section 9
-4. Value objects have IsValid() methods
-5. No direct field access on domain models from outside the package
-6. DTOs are separate from domain models (not the same struct)
+1. (HARD GATE) Domain models use private/readonly properties with named constructors per domain-modeling.md always-valid pattern
+2. (HARD GATE) Named constructors enforce invariants — no invalid domain objects can be created
+3. (HARD GATE) `toEntity()`/`fromEntity()` (or equivalent) mapping patterns in request/resource layer per domain.md
+4. Value objects have `isValid()` or typed enum backing
+5. No public mutating setters on domain models for immutable fields
+6. DTOs / request objects are separate from domain models
 7. Consistent domain modeling across all bounded contexts
 
 **Severity Ratings:**
@@ -3174,74 +3357,71 @@ Audit linting configuration and code quality patterns for production readiness.
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `.golangci.yml`, `.golangci.yaml`, `**/*.go`
-- Keywords: `//nolint`, `golangci-lint`, import grouping patterns
+- PHP files: `phpstan.neon`, `phpstan.neon.dist`, `.php-cs-fixer.php`, `pint.json`, `**/*.php`
+- TypeScript files: `.eslintrc*`, `.eslintignore`, `eslint.config.*`, `**/*.ts`, `**/*.tsx`
+- Keywords: `// phpcs:ignore`, `// @phpstan-ignore`, `// eslint-disable`, import grouping patterns
 - Also search: Magic numbers in business logic code
 
-**Reference Implementation (GOOD):**
-```go
-// Import ordebee: 3 groups (stdlib, external, internal)
-import (
-    "context"
-    "fmt"
-    "time"
-
-    "github.com/gofiber/fiber/v2"
-    "github.com/google/uuid"
-    "go.opentelemetry.io/otel"
-
-    "github.com/company/project/internal/domain"
-)
-
+**Reference Implementation (GOOD — PHP):**
+```php
 // Named constants instead of magic numbers
-const (
-    maxRetries       = 3
-    defaultTimeout   = 30 * time.Second
-    maxPageSize      = 100
-    minPasswordLen   = 8
-)
+final class OrderLimits
+{
+    public const MAX_RETRIES = 3;
+    public const DEFAULT_TIMEOUT_SECONDS = 30;
+    public const MAX_PAGE_SIZE = 100;
+    public const MIN_PASSWORD_LENGTH = 8;
+}
 
 // Using named constants in logic
-if retryCount >= maxRetries {
-    return ErrMaxRetriesExceeded
+if ($retryCount >= OrderLimits::MAX_RETRIES) {
+    throw new MaxRetriesExceededException();
 }
 ```
 
-**Reference Implementation (BAD):**
-```go
-// BAD: Import ordering not following convention
-import (
-    "github.com/company/project/internal/domain"
-    "fmt"
-    "github.com/gofiber/fiber/v2"
-    "context"
-)
+**Reference Implementation (GOOD — TypeScript):**
+```typescript
+// Named constants
+const MAX_RETRIES = 3;
+const DEFAULT_TIMEOUT_MS = 30_000;
+const MAX_PAGE_SIZE = 100;
 
+// Three import groups: node built-ins, external, internal
+import { createHash } from 'node:crypto';
+
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+
+import { UserRepository } from '../repositories/user.repository';
+```
+
+**Reference Implementation (BAD):**
+```php
 // BAD: Magic numbers in business logic
-if retryCount >= 3 {           // What is 3?
-    time.Sleep(30 * time.Second) // What is 30?
+if ($retryCount >= 3) {        // What is 3?
+    sleep(30);                  // What is 30?
 }
-if len(password) < 8 {          // What is 8?
-    return errors.New("too short")
+if (strlen($password) < 8) {   // What is 8?
+    throw new \InvalidArgumentException('too short');
 }
-if pageSize > 100 {             // What is 100?
-    pageSize = 100
+if ($pageSize > 100) {          // What is 100?
+    $pageSize = 100;
 }
 ```
 
 **Check Against Bee Standards For:**
-1. (HARD GATE) golangci-lint configuration exists per quality.md linting section
-2. Import ordering follows 3-group convention (stdlib, external, internal)
+1. (HARD GATE) Linting configuration exists — `phpstan.neon` or `eslint.config.*` per quality.md linting section
+2. Import ordering follows 3-group convention (built-ins, external, internal) for TypeScript
 3. Magic numbers replaced with named constants in business logic
-4. Required linters enabled in golangci-lint config
-5. No blanket //nolint without specific linter name
-6. Consistent code formatting (gofmt/goimports applied)
+4. Required linters enabled and configured (phpstan level ≥7 for PHP, strict TypeScript)
+5. No blanket lint-disable comments without specific rule name and justification
+6. Consistent code formatting (pint/php-cs-fixer for PHP, prettier/eslint for TypeScript)
 
 **Severity Ratings:**
-- HIGH: No golangci-lint configuration (HARD GATE violation per Bee standards)
+- HIGH: No linting configuration at all (HARD GATE violation per Bee standards)
 - MEDIUM: Magic numbers in business logic
-- MEDIUM: Import ordering not following 3-group convention
-- MEDIUM: Blanket //nolint without justification
+- MEDIUM: Import ordering not following 3-group convention (TypeScript)
+- MEDIUM: Blanket lint-disable without justification
 - LOW: Minor style inconsistencies
 
 **Output Format:**
@@ -3249,14 +3429,14 @@ if pageSize > 100 {             // What is 100?
 ## Linting & Code Quality Audit Findings
 
 ### Summary
-- golangci-lint config: Yes/No
+- Linting config present: Yes/No (phpstan.neon / eslint.config.*)
 - Import ordering violations: X files
 - Magic numbers found: Y locations
-- Blanket //nolint usage: Z locations
+- Blanket lint-disable usage: Z locations
 
 ### Issues
-#### golangci-lint Configuration
-[config status and missing linters]
+#### Linting Configuration
+[config status and missing linter rules]
 
 #### Import Ordering
 [file:line] - Imports not following 3-group convention
@@ -3278,7 +3458,7 @@ Audit Makefile and development tooling for production readiness.
 
 **Bee Standards (Source of Truth):**
 ---BEGIN STANDARDS---
-{INJECTED: "Makefile Standards" section 7 from devops.md}
+{INJECTED: Makefile Standards — no dedicated standards file; patterns derived from Bee project conventions and industry best practices}
 ---END STANDARDS---
 
 **Search Patterns:**
@@ -3286,22 +3466,24 @@ Audit Makefile and development tooling for production readiness.
 - Keywords: `.PHONY`, `build`, `test`, `lint`, `help`, `docker`
 - Also search: `scripts/*.sh` for development scripts
 
-**Reference Implementation (GOOD):**
+**Reference Implementation (GOOD — PHP/Laravel):**
 ```makefile
-.PHONY: build test lint cover up down logs setup migrate seed generate swagger docker-build docker-push clean help check
+.PHONY: install test lint analyse cover up down logs setup migrate seed docker-build docker-push clean help check
 
-build: ## Build the application binary
-	go build -o bin/app cmd/app/main.go
+install: ## Install dependencies
+	composer install
 
-test: ## Run all unit tests
-	go test -race -v ./...
+test: ## Run all tests
+	./vendor/bin/pest
 
-lint: ## Run linters
-	golangci-lint run
+lint: ## Run code style fixer (Pint)
+	./vendor/bin/pint
+
+analyse: ## Run static analysis (PHPStan)
+	./vendor/bin/phpstan analyse
 
 cover: ## Run tests with coverage
-	go test -race -coverprofile=coverage.out ./...
-	go tool cover -html=coverage.out -o coverage.html
+	./vendor/bin/pest --coverage --coverage-html=coverage/
 
 up: ## Start local dependencies (docker-compose)
 	docker compose up -d
@@ -3313,20 +3495,15 @@ logs: ## Tail local dependency logs
 	docker compose logs -f
 
 setup: ## Initial project setup
-	go mod download
-	go install github.com/swaggo/swag/cmd/swag@latest
+	composer install
+	cp .env.example .env
+	php artisan key:generate
 
 migrate: ## Run database migrations
-	migrate -path migrations -database "$$DATABASE_URL" up
+	php artisan migrate
 
 seed: ## Seed database with test data
-	go run cmd/seed/main.go
-
-generate: ## Run code generators (mockgen, etc.)
-	go generate ./...
-
-swagger: ## Generate Swagger documentation
-	swag init -g cmd/app/main.go
+	php artisan db:seed
 
 docker-build: ## Build Docker image
 	docker build -t app:latest .
@@ -3335,24 +3512,70 @@ docker-push: ## Push Docker image
 	docker push app:latest
 
 clean: ## Clean build artifacts
-	rm -rf bin/ coverage.out coverage.html
+	rm -rf vendor/ coverage/
 
 help: ## Show this help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-check: ## Run all checks (lint + test + cover)
+check: ## Run all checks (lint + analyse + test)
 	$(MAKE) lint
+	$(MAKE) analyse
 	$(MAKE) test
-	$(MAKE) cover
+```
+
+**Reference Implementation (GOOD — TypeScript/Node.js):**
+```makefile
+.PHONY: install test lint type-check cover up down logs setup migrate docker-build docker-push clean help check
+
+install: ## Install dependencies
+	npm ci
+
+test: ## Run all tests
+	npm test
+
+lint: ## Run ESLint
+	npm run lint
+
+type-check: ## Run TypeScript compiler check
+	npm run type-check
+
+cover: ## Run tests with coverage
+	npm run test:coverage
+
+up: ## Start local dependencies (docker-compose)
+	docker compose up -d
+
+down: ## Stop local dependencies
+	docker compose down
+
+migrate: ## Run database migrations
+	npm run db:migrate
+
+docker-build: ## Build Docker image
+	docker build -t app:latest .
+
+docker-push: ## Push Docker image
+	docker push app:latest
+
+clean: ## Clean build artifacts
+	rm -rf dist/ coverage/ .next/
+
+help: ## Show this help message
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
+
+check: ## Run all checks (lint + type-check + test)
+	$(MAKE) lint
+	$(MAKE) type-check
+	$(MAKE) test
 ```
 
 **Check Against Bee Standards For:**
-1. (HARD GATE) Makefile exists in project root per devops.md
-2. Required targets present: build, lint, test, cover, up, down, logs, setup, migrate, seed, generate, swagger, docker-build, docker-push, clean, help, check
+1. (HARD GATE) Makefile exists in project root per Bee conventions
+2. Required targets present: install/setup, test, lint, cover/type-check, up, down, logs, migrate, seed (PHP), docker-build, docker-push, clean, help, check
 3. All targets have help descriptions (## comments)
 4. .PHONY declarations for non-file targets
 5. `help` target shows available commands
-6. `check` target runs full validation pipeline
+6. `check` target runs full validation pipeline (lint + static analysis + test)
 
 **Severity Ratings:**
 - HIGH: No Makefile in project (HARD GATE violation per Bee standards)
@@ -3367,25 +3590,23 @@ check: ## Run all checks (lint + test + cover)
 
 ### Summary
 - Makefile present: Yes/No
-- Required targets present: X/17
+- Stack: PHP/TypeScript/Mixed
+- Required targets present: X/Y
 - Missing targets: [list]
 - Targets with help: X/Y
 
 ### Required Targets Checklist
 | Target | Present | Has Help |
 |--------|---------|----------|
-| build | Yes/No | Yes/No |
+| install/setup | Yes/No | Yes/No |
 | test | Yes/No | Yes/No |
 | lint | Yes/No | Yes/No |
-| cover | Yes/No | Yes/No |
+| cover/type-check | Yes/No | Yes/No |
 | up | Yes/No | Yes/No |
 | down | Yes/No | Yes/No |
 | logs | Yes/No | Yes/No |
-| setup | Yes/No | Yes/No |
 | migrate | Yes/No | Yes/No |
-| seed | Yes/No | Yes/No |
-| generate | Yes/No | Yes/No |
-| swagger | Yes/No | Yes/No |
+| seed (PHP) | Yes/No | Yes/No |
 | docker-build | Yes/No | Yes/No |
 | docker-push | Yes/No | Yes/No |
 | clean | Yes/No | Yes/No |
@@ -3412,62 +3633,67 @@ If multi-tenant IS detected, audit multi-tenant architecture patterns for produc
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `**/tenant*.go`, `**/pool*.go`, `**/middleware*.go`, `**/context*.go`
+- Files: `**/Tenant*.php`, `**/Pool*.php`, `**/Middleware/*.php`, `**/Context*.php`
 - Keywords: `tenantID`, `TenantManager`, `TenantContext`, `schema`, `search_path`
-- Also search: `**/jwt*.go`, `**/auth*.go` for tenant extraction
+- Also search: `**/JWT*.php`, `**/Auth*.php` for tenant extraction
 
 **Reference Implementation (GOOD):**
-```go
-// DualPoolMiddleware routes to correct tenant connection pool per module
-type DualPoolMiddleware struct {
-    onboardingPool       *tenantmanager.TenantConnectionManager
-    transactionPool      *tenantmanager.TenantConnectionManager
-    onboardingMongoPool  *tenantmanager.MongoManager
-    transactionMongoPool *tenantmanager.MongoManager
+```php
+// TenantConnectionManager routes to correct tenant connection pool per module (PHP)
+class TenantConnectionManager
+{
+    public function resolveModuleDB(string $module, string $tenantId): Connection
+    {
+        $pool = $this->isTransactionModule($module)
+            ? $this->transactionPool
+            : $this->onboardingPool;
+        return $pool->getConnection($tenantId);
+    }
+
+    private function isTransactionModule(string $module): bool
+    {
+        return in_array($module, ['transactions', 'balances', 'operations']);
+    }
 }
 
-// Path-based pool selection
-func (m *DualPoolMiddleware) selectPool(path string) *tenantmanager.TenantConnectionManager {
-    if m.isTransactionPath(path) {
-        return m.transactionPool
-    }
-    return m.onboardingPool
-}
+// Module-specific connection from context — resolved in repository
+class EntityRepository
+{
+    public function find(string $orgId, string $ledgerId, string $id): ?Entity
+    {
+        $db = $this->tenantManager->resolveModuleDB('transactions', tenant());
 
-// Module-specific connection from context
-db, err := tenantmanager.ResolveModuleDB(ctx, constant.ModuleOnboarding, r.connection)
-
-// Entity-scoped query — ALWAYS filter by organization_id + ledger_id
-func (r *Repo) Find(ctx context.Context, orgID, ledgerID, id uuid.UUID) (*Entity, error) {
-    db, err := tenantmanager.ResolveModuleDB(ctx, constant.ModuleTransaction, r.connection)
-    if err != nil {
-        return nil, err
+        // Entity-scoped query — ALWAYS filter by organization_id + ledger_id
+        return $db->table($this->tableName)
+            ->where('organization_id', $orgId)
+            ->where('ledger_id', $ledgerId)
+            ->where('id', $id)
+            ->first();
     }
-    find := squirrel.Select(columnList...).
-        From(r.tableName).
-        Where(squirrel.Expr("organization_id = ?", orgID)).
-        Where(squirrel.Expr("ledger_id = ?", ledgerID)).
-        Where(squirrel.Expr("id = ?", id)).
-        PlaceholderFormat(squirrel.Dollar)
-    // ...
 }
 ```
 
 **Reference Implementation (BAD):**
-```go
+```php
 // BAD: Query without entity scoping — intra-tenant IDOR!
-func (r *Repo) FindByID(ctx context.Context, id uuid.UUID) (*Entity, error) {
-    db, _ := tenantmanager.ResolveModuleDB(ctx, constant.ModuleTransaction, r.connection)
-    return db.QueryRowContext(ctx, "SELECT * FROM entities WHERE id = $1", id)
+class EntityRepository
+{
+    public function findById(string $id): ?Entity
+    {
+        return Entity::find($id); // no tenant filter — any tenant can access any entity!
+    }
 }
 
 // BAD: Tenant ID from request header (can be spoofed)
-func GetTenantID(c *fiber.Ctx) string {
-    return c.Get("X-Tenant-ID")  // User-controlled!
+class TenantMiddleware
+{
+    public function handle(Request $request, Closure $next): Response
+    {
+        $tenantId = $request->header('X-Tenant-ID'); // user-controlled!
+        $request->merge(['tenant_id' => $tenantId]);
+        return $next($request);
+    }
 }
-
-// BAD: Using ResolvePostgres in multi-module service — must use ResolveModuleDB
-db, err := tenantmanager.ResolvePostgres(ctx, r.connection)  // WRONG: use ResolveModuleDB(ctx, module, fallback)
 ```
 
 **Check Against Bee Standards For:**
@@ -3526,33 +3752,44 @@ Audit license/copyright headers on source files for production readiness. If no 
 ---END STANDARDS---
 
 **Search Patterns:**
-- Files: `**/*.go` (check first 5 lines for copyright/license header)
+- PHP files: `**/*.php` (check first 5 lines for copyright/license header)
+- TypeScript files: `**/*.ts`, `**/*.tsx` (check first 3 lines for copyright/license header)
 - Also check: `LICENSE`, `LICENSE.md`, `NOTICE` files in project root
 - Keywords: `Copyright`, `Licensed under`, `SPDX-License-Identifier`
 
-**Reference Implementation (GOOD):**
-```go
+**Reference Implementation (GOOD — PHP):**
+```php
+<?php
+
 // Copyright 2025 LerianStudio. All rights reserved.
 // Use of this source code is governed by the Apache License 2.0
 // that can be found in the LICENSE file.
 // SPDX-License-Identifier: Apache-2.0
 
-package domain
+declare(strict_types=1);
 
-import (
-    ...
-)
+namespace App\Domain;
+```
+
+**Reference Implementation (GOOD — TypeScript):**
+```typescript
+// Copyright 2025 LerianStudio. All rights reserved.
+// Use of this source code is governed by the Apache License 2.0
+// that can be found in the LICENSE file.
+// SPDX-License-Identifier: Apache-2.0
 ```
 
 **Reference Implementation (BAD):**
-```go
+```php
+<?php
+
 // BAD: No license header at all
-package domain
+declare(strict_types=1);
 
-import (
-    ...
-)
+namespace App\Domain;
+```
 
+```typescript
 // BAD: Outdated year
 // Copyright 2020 LerianStudio. All rights reserved.
 // (If current year is 2025+)
@@ -3561,19 +3798,18 @@ import (
 /* This file is part of Project X
  * (c) Company Name
  */
-package domain
 ```
 
 **Check Against Bee Standards For:**
 1. LICENSE file exists in project root
-2. All .go files have copyright/license header comment in first 5 lines
+2. All .php and .ts/.tsx files have copyright/license header comment in first 5 lines
 3. Consistent header format across all files
 4. Year in copyright is current or includes current year (e.g., "2024-2025")
 5. SPDX-License-Identifier present (preferred for machine-readability)
 6. License matches LICENSE file (e.g., Apache-2.0 header matches Apache-2.0 LICENSE)
 
 **Severity Ratings:**
-- HIGH: .go files missing license headers (if license headers are required)
+- HIGH: .php/.ts files missing license headers (if license headers are required)
 - MEDIUM: Inconsistent license header format across files
 - MEDIUM: License header does not match LICENSE file
 - LOW: Outdated year in copyright header
@@ -3585,8 +3821,8 @@ package domain
 
 ### Summary
 - LICENSE file present: Yes/No (type: Apache-2.0/MIT/etc.)
-- Total .go files: X
-- Files with headers: Y/X
+- Total .php files: X, Total .ts/.tsx files: Y
+- Files with headers: Z/total
 - Consistent format: Yes/No
 - Year current: Yes/No
 
@@ -3614,25 +3850,21 @@ Audit nil/null pointer safety and dereference risks across the codebase for prod
 ---END STANDARDS---
 
 **Search Patterns:**
-- Go files: `**/*.go` — search for type assertions, map access, pointer receivers, channel operations, interface checks
+- PHP files: `**/*.php` — search for nullable type hints, null checks, optional method calls, array access
 - TypeScript files: `**/*.ts`, `**/*.tsx` — search for nullable access, optional chaining, destructuring, Promise handling
-- Keywords (Go): `.(*`, `.(type)`, `map[`, `<-`, `func (`, `err != nil`, `if err`, `interface{}`
+- Keywords (PHP): `?->`, `?? `, `?? null`, `is_null(`, `isset(`, `@`, `->get(`, `->first(`
 - Keywords (TS): `?.`, `!.`, `as `, `.find(`, `.get(`, `undefined`, `null`
 
-**Go Nil Safety Patterns to Check:**
+**PHP Null Safety Patterns to Check:**
 
 | Pattern | Risk Level | What to Look For |
 |---------|:----------:|------------------|
-| Type assertion without ok | CRITICAL | `value := x.(Type)` — panics if wrong type. MUST use `value, ok := x.(Type)` |
-| Nil map write | CRITICAL | Writing to an uninitialized map panics. Check `make(map[...])` before writes |
-| Nil receiver method call | CRITICAL | `ptr.Method()` when ptr could be nil. Trace all pointer receivers |
-| Nil channel operations | CRITICAL | Send/receive on nil channel blocks forever. Check channel initialization |
-| Nil function call | CRITICAL | Calling a nil function variable panics |
-| Unguarded map read | HIGH | `value := m[key]` without `, ok` check — returns zero value silently |
-| Nil interface comparison | HIGH | Interface holding nil concrete value is NOT == nil. Check with reflect |
-| Error-then-use | HIGH | Using return value when `err != nil` — value may be nil/invalid |
-| Nil slice in API response | MEDIUM | `var items []T` serializes as JSON `null`, not `[]`. Use `make([]T, 0)` |
-| Nil map in API response | MEDIUM | `var m map[K]V` serializes as JSON `null`, not `{}`. Use `make(map[K]V)` |
+| Unguarded nullable property access | CRITICAL | `$obj->method()` when `$obj` could be `null` — TypeError |
+| Accessing array key without isset | HIGH | `$arr['key']` without `isset($arr['key'])` — Undefined index warning or null |
+| Null returned from repository, used immediately | HIGH | `$entity = $repo->find($id); $entity->method()` — no null check |
+| Missing nullable return type on method that returns null | MEDIUM | `function getUser(): User` but can return `null` — misleads callers |
+| Null in API response instead of empty array | MEDIUM | Returning `null` where caller expects `[]` — client-side null handling required |
+| Error suppression operator (@) hiding null | LOW | `@$value->method()` — suppresses TypeError instead of handling null |
 
 **TypeScript Null Safety Patterns to Check:**
 
@@ -3653,53 +3885,40 @@ Audit nil/null pointer safety and dereference risks across the codebase for prod
 3. **Trace backward**: For each dereference point, trace all callers to verify they handle nil returns
 4. **Find dereference points**: Method calls, field access, index access, channel operations on potentially nil values
 
-**Reference Implementation (GOOD — Go):**
-```go
-// GOOD: Type assertion with ok check
-value, ok := x.(MyType)
-if !ok {
-    return fmt.Errorf("unexpected type: %T", x)
+**Reference Implementation (GOOD — PHP):**
+```php
+// GOOD: Null check before method call
+$user = $this->userRepository->find($id);
+if ($user === null) {
+    throw new UserNotFoundException($id);
 }
+// Safe to call $user->getName() here
 
-// GOOD: Map access with ok check
-if conn, ok := pools[tenantID]; ok {
-    return conn, nil
-}
+// GOOD: Null coalescing to provide fallback
+$name = $request->input('name') ?? 'Unknown';
 
-// GOOD: Nil-safe API response
-func (s *Service) List(ctx context.Context) ([]Item, error) {
-    items := make([]Item, 0) // never nil — serializes as []
-    // ...
-    return items, nil
-}
+// GOOD: Null-safe operator (?->)
+$city = $user?->getAddress()?->getCity() ?? 'Unknown';
 
-// GOOD: Error-then-use pattern
-result, err := repo.FindByID(ctx, id)
-if err != nil {
-    return nil, err // do NOT use result
+// GOOD: Empty array instead of null in API response
+public function index(): JsonResponse
+{
+    $items = $this->repository->findAll();
+    return response()->json($items ?? []);  // never null
 }
-// Safe to use result here
 ```
 
-**Reference Implementation (BAD — Go):**
-```go
-// BAD: Type assertion without ok — PANICS on wrong type
-value := x.(MyType)
+**Reference Implementation (BAD — PHP):**
+```php
+// BAD: No null check — TypeError if find() returns null
+$user = $this->userRepository->find($id);
+echo $user->getName();  // TypeError: call to member function on null
 
-// BAD: Nil map write — PANICS
-var m map[string]int
-m["key"] = 1
+// BAD: Array access without isset — Undefined index notice
+$value = $data['key'];  // No isset() check
 
-// BAD: Error-then-use — result may be nil
-result, err := repo.FindByID(ctx, id)
-log.Info("found", "name", result.Name) // PANIC if err != nil
-if err != nil {
-    return nil, err
-}
-
-// BAD: Nil slice in response — JSON null instead of []
-var items []Item
-return items, nil // serializes as null
+// BAD: Null in API response instead of empty array
+return response()->json(null);  // Client must handle null AND []
 ```
 
 **Reference Implementation (GOOD — TypeScript):**
@@ -3735,36 +3954,33 @@ const { name, email } = await findUser(id); // throws if null
 ```
 
 **Check Against Standards For:**
-1. (CRITICAL) All type assertions use the two-value `value, ok` form (Go)
-2. (CRITICAL) No writes to uninitialized maps
-3. (CRITICAL) All pointer receivers are nil-safe or callers guarantee non-nil
-4. (CRITICAL) No nil channel operations
-5. (HIGH) All map reads use `, ok` form or have prior existence guarantee
-6. (HIGH) Return values are not used after error check fails (error-then-use)
-7. (HIGH) Nullable values are checked before property access (TypeScript)
-8. (HIGH) Object destructuring only on guaranteed non-null values (TypeScript)
-9. (MEDIUM) API responses use initialized slices/maps (Go: `make()`, not `var`)
-10. (MEDIUM) Optional chaining covers full property chain (TypeScript)
-11. (MEDIUM) `Array.find()` and `Map.get()` results are checked before use (TypeScript)
-12. (LOW) Non-null assertion operator (!) is used sparingly with justification (TypeScript)
+1. (CRITICAL) Repository/service methods returning nullable objects are checked before use (PHP)
+2. (HIGH) All nullable property access uses null-safe operator (?->) or null check (PHP)
+3. (HIGH) Array key access uses `isset()` or `array_key_exists()` before direct access (PHP)
+4. (HIGH) Nullable values are checked before property access (TypeScript)
+5. (HIGH) Object destructuring only on guaranteed non-null values (TypeScript)
+6. (MEDIUM) API responses return empty arrays `[]` not `null` for collection endpoints
+7. (MEDIUM) Optional chaining covers full property chain (TypeScript: `a?.b?.c` not `a?.b.c`)
+8. (MEDIUM) `Array.find()` and `Map.get()` results are checked before use (TypeScript)
+9. (LOW) Non-null assertion operator (!) is used sparingly with justification (TypeScript)
+10. (LOW) Nullable return types are documented in PHP docblocks where not obvious
 
 **Severity Ratings:**
-- CRITICAL: Type assertion without ok (panics), nil map write (panics), nil receiver call (panics), nil channel (deadlocks), nil function call (panics)
-- HIGH: Unguarded map read (silent wrong data), error-then-use (nil dereference), nullable property access (TypeError), unhandled Promise rejection
-- MEDIUM: Nil slice/map in API response (JSON null vs []/{}), partial optional chaining, unchecked find()/get(), non-null assertion abuse
-- LOW: Missing nil documentation on exported functions, unnecessary nil checks on guaranteed non-nil values
+- CRITICAL: Nullable object method call without null check (PHP TypeError), accessing undefined variable
+- HIGH: Unguarded array index access (PHP), nullable property access (TypeError in TS), unhandled Promise rejection
+- MEDIUM: Null in API response for collection endpoint (client null-handling burden), partial optional chaining, unchecked find()/get(), non-null assertion abuse
+- LOW: Missing nullable type hints on functions that can return null, unnecessary null checks on guaranteed non-null values
 
 **Output Format:**
 ```
 ## Nil/Null Safety Audit Findings
 
 ### Summary
-- Language(s) detected: {Go / TypeScript / Both}
-- Type assertions (Go): X total, Y unsafe (without ok)
-- Map operations (Go): X writes, Y to potentially nil maps
-- Pointer receivers (Go): X total, Y without nil safety
+- Language(s) detected: {PHP / TypeScript / Both}
+- Nullable property accesses (PHP): X total, Y without null check
+- Array access (PHP): X unchecked index accesses
 - Nullable access (TS): X unguarded property accesses
-- API response consistency: X nil slices/maps found
+- API response consistency: X null vs empty array mismatches found
 
 ### Critical Issues
 [file:line] - Description (pattern: {pattern name})
@@ -3799,23 +4015,23 @@ Audit resilience patterns (circuit breakers, retries, timeouts, bulkheads) acros
 ---END STANDARDS---
 
 **Search Patterns:**
-- Go files: `**/*.go` — search for circuit breaker, retry, timeout, backoff, bulkhead, errgroup patterns
+- PHP files: `**/*.php` — search for circuit breaker, retry, timeout, queue, cache lock patterns
 - TypeScript files: `**/*.ts`, `**/*.tsx` — search for circuit breaker, retry, timeout, abort, concurrency limiter patterns
 - Config files: `**/*.yaml`, `**/*.yml`, `**/*.json`, `**/*.toml` — search for timeout, retry, backoff configuration
-- Keywords (Go): `gobreaker`, `CircuitBreaker`, `retry`, `backoff`, `Timeout`, `context.WithTimeout`, `context.WithDeadline`, `http.Client`, `Transport`, `errgroup`, `semaphore`
+- Keywords (PHP): `CircuitBreaker`, `Guzzle`, `retry`, `timeout`, `connect_timeout`, `Cache::lock`, `dispatch`, `Queue::`
 - Keywords (TS): `CircuitBreaker`, `cockatiel`, `opossum`, `p-retry`, `axios-retry`, `AbortController`, `setTimeout`, `Promise.race`, `semaphore`, `bulkhead`
 - Keywords (general): `timeout`, `retry`, `circuit`, `breaker`, `backoff`, `jitter`, `bulkhead`, `resilience`
 
-**Go Resilience Patterns to Check:**
+**PHP Resilience Patterns to Check:**
 
 | Pattern | Risk Level | What to Look For |
 |---------|:----------:|------------------|
-| HTTP client without timeout | CRITICAL | `http.DefaultClient` or `&http.Client{}` with no `Timeout` set — blocks forever on slow downstream |
-| No circuit breaker on critical dependency | CRITICAL | Direct HTTP/gRPC calls to external services without circuit breaker wrapping |
-| Retry without backoff | HIGH | Retry loops using fixed delay or no delay — causes thundering herd on recovery |
-| Inner timeout >= outer timeout | HIGH | `context.WithTimeout` where child timeout >= parent — cascading failure risk |
+| HTTP client without timeout | CRITICAL | Guzzle `new Client()` without `timeout` and `connect_timeout` — blocks forever on slow downstream |
+| No circuit breaker on critical dependency | CRITICAL | Direct HTTP calls to external services without circuit breaker wrapping (e.g., `lcobucci/circuit-breaker`) |
+| Retry without backoff | HIGH | Retry middleware with fixed delay or no delay — causes thundering herd on recovery |
+| No timeout on queued jobs | HIGH | Long-running queue jobs without `$timeout` property — worker process blocked indefinitely |
 | No jitter on backoff | MEDIUM | Exponential backoff without randomization — synchronized retries across instances |
-| No bulkhead isolation | MEDIUM | All external calls sharing single connection pool / goroutine pool — one slow dependency exhausts all resources |
+| No bulkhead isolation | MEDIUM | All external calls sharing single Guzzle client without concurrency limits |
 | Hardcoded timeout values | LOW | Timeout durations as magic numbers instead of configuration — hard to tune in production |
 | No retry on transient errors | LOW | External calls that fail without retry on network/5xx errors — reduced availability |
 
@@ -3837,90 +4053,62 @@ Audit resilience patterns (circuit breakers, retries, timeouts, bulkheads) acros
 3. **Example valid cascade**: API gateway 30s > service handler 25s > database query 10s > cache lookup 2s
 4. **Example INVALID cascade**: API gateway 30s > service handler 30s > database query 30s (all same = no cascading)
 
-**Reference Implementation (GOOD — Go):**
-```go
-// GOOD: Circuit breaker wrapping HTTP client
-cb := gobreaker.NewCircuitBreaker(gobreaker.Settings{
-    Name:        "downstream-api",
-    MaxRequests: 3,
-    Interval:    10 * time.Second,
-    Timeout:     30 * time.Second,
-    ReadyToTrip: func(counts gobreaker.Counts) bool {
-        return counts.ConsecutiveFailures > 5
-    },
-})
+**Reference Implementation (GOOD — PHP):**
+```php
+// GOOD: Guzzle HTTP client with explicit timeouts
+$client = new \GuzzleHttp\Client([
+    'timeout'         => 30,   // Total request timeout
+    'connect_timeout' => 5,    // Connection timeout
+]);
 
-result, err := cb.Execute(func() (interface{}, error) {
-    ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
-    defer cancel()
-    return client.Do(req.WithContext(ctx))
-})
-
-// GOOD: Retry with exponential backoff + jitter
-func retryWithBackoff(ctx context.Context, maxRetries int, fn func() error) error {
-    for attempt := 0; attempt < maxRetries; attempt++ {
-        if err := fn(); err != nil {
-            if !isRetryable(err) {
-                return err
-            }
-            base := time.Duration(1<<uint(attempt)) * 100 * time.Millisecond
-            jitter := time.Duration(rand.Int63n(int64(base / 2)))
-            select {
-            case <-time.After(base + jitter):
-            case <-ctx.Done():
-                return ctx.Err()
-            }
-            continue
+// GOOD: Retry middleware with exponential backoff + jitter
+$handlerStack = HandlerStack::create();
+$handlerStack->push(
+    Middleware::retry(
+        function ($retries, $request, $response, $exception) {
+            return $retries < 3 && ($exception || $response->getStatusCode() >= 500);
+        },
+        function ($retries) {
+            $base = 100 * (2 ** $retries);             // Exponential: 100ms, 200ms, 400ms
+            $jitter = random_int(0, (int) ($base / 2)); // Random jitter
+            return $base + $jitter;
         }
-        return nil
-    }
-    return fmt.Errorf("max retries exceeded")
-}
+    )
+);
 
-// GOOD: Timeout cascading (outer > inner)
-func handler(w http.ResponseWriter, r *http.Request) {
-    ctx, cancel := context.WithTimeout(r.Context(), 25*time.Second) // handler: 25s
-    defer cancel()
-
-    dbCtx, dbCancel := context.WithTimeout(ctx, 10*time.Second) // db: 10s < 25s
-    defer dbCancel()
-    data, err := db.QueryContext(dbCtx, query)
-}
-
-// GOOD: HTTP client with explicit timeouts
-client := &http.Client{
-    Timeout: 30 * time.Second,
-    Transport: &http.Transport{
-        ResponseHeaderTimeout: 10 * time.Second,
-        IdleConnTimeout:       90 * time.Second,
-        MaxIdleConnsPerHost:   10,
-    },
+// GOOD: Queue job with timeout
+class ProcessPaymentJob implements ShouldQueue
+{
+    public int $timeout = 60;  // Job-level timeout
+    public int $tries = 3;     // Max retry attempts
+    public int $backoff = 30;  // Seconds between retries
 }
 ```
 
-**Reference Implementation (BAD — Go):**
-```go
-// BAD: http.DefaultClient — no timeout, blocks forever
-resp, err := http.DefaultClient.Do(req)
+**Reference Implementation (BAD — PHP):**
+```php
+// BAD: Guzzle client with no timeout — blocks forever on slow downstream
+$client = new \GuzzleHttp\Client();
+$response = $client->get('https://slow-service.example.com/api');
 
-// BAD: Custom client with no timeout
-client := &http.Client{}
-resp, err := client.Do(req)
-
-// BAD: Retry without backoff — thundering herd
-for i := 0; i < 3; i++ {
-    resp, err = client.Do(req)
-    if err == nil {
-        break
+// BAD: Retry without delay — thundering herd
+for ($i = 0; $i < 3; $i++) {
+    try {
+        return $client->get($url);
+    } catch (\Exception $e) {
+        // No delay between retries!
     }
-    // No delay between retries!
 }
 
-// BAD: Inner timeout >= outer timeout — cascading failure
-ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second) // outer: 10s
-defer cancel()
-dbCtx, dbCancel := context.WithTimeout(ctx, 10*time.Second) // inner: 10s (same!)
-defer dbCancel()
+// BAD: Queue job with no timeout — worker blocked indefinitely
+class ProcessPaymentJob implements ShouldQueue
+{
+    // No $timeout property — default is 60s, but may not be set in horizon config
+    public function handle(): void
+    {
+        $this->callExternalServiceThatMayHangForever();
+    }
+}
 ```
 
 **Reference Implementation (GOOD — TypeScript):**
@@ -3978,7 +4166,7 @@ const results = await Promise.all(
 4. (HIGH) Timeout cascading is correct: outer timeout > inner timeout at every level
 5. (MEDIUM) Retry backoff includes jitter to prevent synchronized retries
 6. (MEDIUM) Bulkhead isolation exists between dependency pools (separate connection pools, bounded concurrency)
-7. (MEDIUM) Concurrency is bounded on parallel external calls (errgroup limit in Go, semaphore in TS)
+7. (MEDIUM) Concurrency is bounded on parallel external calls (queue worker concurrency limit in PHP, semaphore in TS)
 8. (LOW) Timeout and retry values are configurable (not hardcoded magic numbers)
 9. (LOW) Transient errors are retried; non-transient errors fail fast
 
@@ -3993,7 +4181,7 @@ const results = await Promise.all(
 ## Resilience Patterns Audit Findings
 
 ### Summary
-- Language(s) detected: {Go / TypeScript / Both}
+- Language(s) detected: {PHP / TypeScript / Both}
 - HTTP clients audited: X total, Y without timeouts
 - Circuit breakers found: X (covering Y of Z external dependencies)
 - Retry patterns found: X total, Y without backoff, Z without jitter
@@ -4039,7 +4227,7 @@ Audit the codebase for hardcoded secrets, credentials, API keys, tokens, and sen
 ---END STANDARDS---
 
 **Search Patterns:**
-- All source files: `**/*.go`, `**/*.ts`, `**/*.tsx`, `**/*.js`, `**/*.jsx`, `**/*.py`, `**/*.java`
+- All source files: `**/*.php`, `**/*.ts`, `**/*.tsx`, `**/*.js`, `**/*.jsx`, `**/*.py`, `**/*.java`
 - Configuration files: `**/*.yaml`, `**/*.yml`, `**/*.json`, `**/*.toml`, `**/*.ini`, `**/*.conf`, `**/*.cfg`
 - Environment files: `**/*.env`, `**/*.env.*`, `.env.local`, `.env.production`
 - Key/certificate files: `**/*.pem`, `**/*.key`, `**/*.p12`, `**/*.pfx`, `**/*.crt`, `**/*.cer`
@@ -4075,20 +4263,20 @@ Audit the codebase for hardcoded secrets, credentials, API keys, tokens, and sen
 5. **Check for tracked key files**: `git ls-files '*.pem' '*.key'` — any results are CRITICAL
 
 **Reference Implementation (GOOD):**
-```go
+```php
 // GOOD: Secrets from environment variables
-dbURL := os.Getenv("DATABASE_URL")
-if dbURL == "" {
-    log.Fatal("DATABASE_URL environment variable is required")
+$dbUrl = env('DATABASE_URL');
+if (empty($dbUrl)) {
+    throw new \RuntimeException('DATABASE_URL environment variable is required');
 }
 
 // GOOD: API key from environment
-apiKey := os.Getenv("EXTERNAL_API_KEY")
+$apiKey = env('EXTERNAL_API_KEY');
 
 // GOOD: Secret from vault/secret manager
-secret, err := vault.ReadSecret(ctx, "secret/data/myapp/api-key")
-if err != nil {
-    return fmt.Errorf("failed to read secret: %w", err)
+$secret = app(VaultClient::class)->readSecret('secret/data/myapp/api-key');
+if ($secret === null) {
+    throw new \RuntimeException('Failed to read secret from vault');
 }
 ```
 
@@ -4117,16 +4305,16 @@ credentials.json
 ```
 
 **Reference Implementation (BAD):**
-```go
+```php
 // BAD: Hardcoded API key
-const APIKey = "sk-proj-abc123xyz789..."
+const API_KEY = 'sk-proj-abc123xyz789...';
 
 // BAD: Hardcoded database connection with password
-const DatabaseURL = "postgres://admin:SuperSecret123@db.example.com:5432/production"
+const DATABASE_URL = 'postgres://admin:SuperSecret123@db.example.com:5432/production';
 
-// BAD: Hardcoded AWS credentials
-const AWSAccessKey = "AKIAIOSFODNN7EXAMPLE"
-const AWSSecretKey = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+// BAD: Hardcoded cloud credentials
+const AWS_ACCESS_KEY = 'AKIAIOSFODNN7EXAMPLE';
+const AWS_SECRET_KEY = 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY';
 ```
 
 ```typescript
@@ -4225,7 +4413,7 @@ Audit API versioning strategy, backward compatibility practices, and deprecation
 ---END STANDARDS---
 
 **Search Patterns:**
-- Route definitions (Go): `**/*.go` — search for router groups, path prefixes, handler registrations
+- Route definitions (PHP): `**/routes/**/*.php`, `**/Http/Controllers/**/*.php` — search for Route:: definitions, controller attributes, path prefixes
 - Route definitions (TS): `**/*.ts`, `**/*.tsx` — search for route decorators, Express/Fastify route registrations, controller paths
 - API specs: `**/openapi*.yaml`, `**/openapi*.json`, `**/swagger*.yaml`, `**/swagger*.json`, `**/*.proto`
 - Config/Gateway: `**/nginx*.conf`, `**/traefik*.yaml`, `**/gateway*.yaml`, `**/kong*.yaml`
@@ -4247,14 +4435,14 @@ Audit API versioning strategy, backward compatibility practices, and deprecation
 | Mixed versioning strategies | MEDIUM | Some endpoints use URL versioning (`/v1/`), others use header versioning — inconsistent approach |
 | Deprecated code still in main paths | MEDIUM | Code marked `@deprecated` or `// Deprecated` is still in active request handling paths |
 
-**Go-Specific Patterns:**
+**PHP-Specific Patterns:**
 
 | Pattern | What to Look For |
 |---------|------------------|
-| Router group versioning | `r.Group("/v1")`, `chi.Route("/v1/", ...)`, `gin.Group("/v1")` |
-| Handler deprecation | Comments `// Deprecated:` on handler functions per Go convention |
-| Version constants | `const APIVersion = "v1"`, version in package names |
-| gRPC versioning | Package naming: `package api.v1`, `package api.v2` in `.proto` files |
+| Router group versioning | `Route::prefix('v1')`, `Route::group(['prefix' => 'v1'], ...)` |
+| Handler deprecation | DocBlock `@deprecated` on controller methods per PHP convention |
+| Version constants | `const API_VERSION = 'v1'`, version in namespace or route files |
+| API resource versioning | `app/Http/Resources/V1/`, `app/Http/Controllers/Api/V1/` |
 
 **TypeScript-Specific Patterns:**
 
@@ -4272,61 +4460,56 @@ Audit API versioning strategy, backward compatibility practices, and deprecation
 4. **Identify deprecated versions**: Find which versions are marked for deprecation and their sunset timeline
 5. **Check backward compatibility**: Look for breaking changes within a single version (field removals, type changes, required field additions)
 
-**Reference Implementation (GOOD — Go):**
-```go
-// GOOD: Consistent URL path versioning with router groups
-func SetupRoutes(r chi.Router) {
-    r.Route("/v1", func(r chi.Router) {
-        r.Get("/users", v1.ListUsers)
-        r.Post("/users", v1.CreateUser)
-        r.Get("/users/{id}", v1.GetUser)
-    })
+**Reference Implementation (GOOD — PHP):**
+```php
+// GOOD: Consistent URL path versioning with route groups
+Route::prefix('v1')->group(function () {
+    Route::get('/users', [V1\UserController::class, 'index']);
+    Route::post('/users', [V1\UserController::class, 'store']);
+    Route::get('/users/{id}', [V1\UserController::class, 'show']);
+});
 
-    r.Route("/v2", func(r chi.Router) {
-        r.Get("/users", v2.ListUsers)     // Enhanced response format
-        r.Post("/users", v2.CreateUser)    // New required fields
-        r.Get("/users/{id}", v2.GetUser)
-    })
-}
+Route::prefix('v2')->group(function () {
+    Route::get('/users', [V2\UserController::class, 'index']);  // Enhanced response
+    Route::post('/users', [V2\UserController::class, 'store']); // New required fields
+    Route::get('/users/{id}', [V2\UserController::class, 'show']);
+});
 
-// GOOD: Sunset header on deprecated version
-func V1DeprecationMiddleware(next http.Handler) http.Handler {
-    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-        w.Header().Set("Sunset", "Sat, 01 Mar 2025 00:00:00 GMT")
-        w.Header().Set("Deprecation", "true")
-        w.Header().Set("Link", `</v2/docs>; rel="successor-version"`)
-        next.ServeHTTP(w, r)
-    })
+// GOOD: Sunset header on deprecated version via middleware
+class V1DeprecationMiddleware
+{
+    public function handle(Request $request, Closure $next): Response
+    {
+        $response = $next($request);
+        $response->header('Sunset', 'Sat, 01 Mar 2025 00:00:00 GMT');
+        $response->header('Deprecation', 'true');
+        $response->header('Link', '</v2/docs>; rel="successor-version"');
+        return $response;
+    }
 }
 
 // GOOD: Version constant and documentation
-const (
-    APIVersionV1 = "v1" // Deprecated: Use v2. Sunset date: 2025-03-01
-    APIVersionV2 = "v2" // Current stable version
-)
+const API_VERSION_V1 = 'v1'; // @deprecated Use v2. Sunset date: 2025-03-01
+const API_VERSION_V2 = 'v2'; // Current stable version
 ```
 
-**Reference Implementation (BAD — Go):**
-```go
+**Reference Implementation (BAD — PHP):**
+```php
 // BAD: No versioning — breaking changes have no migration path
-func SetupRoutes(r chi.Router) {
-    r.Get("/users", ListUsers)       // No version prefix
-    r.Post("/users", CreateUser)     // If response format changes, all clients break
-    r.Get("/users/{id}", GetUser)
-}
+Route::get('/users', [UserController::class, 'index']);       // No version prefix
+Route::post('/users', [UserController::class, 'store']);      // If response changes, all clients break
+Route::get('/users/{id}', [UserController::class, 'show']);
 
 // BAD: Mixed versioning — some versioned, some not
-func SetupRoutes(r chi.Router) {
-    r.Get("/users", ListUsers)           // Unversioned
-    r.Get("/v2/users", v2.ListUsers)     // Versioned — inconsistent!
-    r.Get("/health", HealthCheck)        // Unversioned (acceptable for infra endpoints)
-}
+Route::get('/users', [UserController::class, 'index']);           // Unversioned
+Route::get('/v2/users', [V2\UserController::class, 'index']);     // Versioned — inconsistent!
+Route::get('/health', [HealthController::class, 'check']);        // Unversioned (acceptable for infra)
 
 // BAD: Deprecated version with no sunset notice
-r.Route("/v1", func(r chi.Router) {
+Route::prefix('v1')->group(function () {
     // No deprecation headers, no documentation, no sunset date
-    r.Get("/users", v1.ListUsers)
-})
+    Route::get('/users', [V1\UserController::class, 'index']);
+});
 ```
 
 **Reference Implementation (GOOD — TypeScript):**
@@ -4444,13 +4627,14 @@ Audit graceful degradation and fallback behavior when downstream dependencies fa
 ---END STANDARDS---
 
 **Search Patterns:**
-- Go files: `**/*.go` — search for fallback handlers, circuit breakers, cached responses, feature flags, default values
+- PHP files: `**/*.php` — search for fallback handlers, circuit breakers, cached responses, feature flags, default values
+- TypeScript files: `**/*.ts`, `**/*.tsx` — search for fallback return values, catch-with-defaults, feature flag patterns
 - TypeScript files: `**/*.ts`, `**/*.tsx` — search for fallback chains, error boundaries, feature flag SDKs, service workers
 - Config files: `**/*.yaml`, `**/*.yml`, `**/*.json` — search for feature flag configuration, fallback settings
-- Keywords (Go): `fallback`, `circuitbreaker`, `circuit_breaker`, `degrade`, `stale`, `cache.Get`, `default`, `feature`, `toggle`, `killswitch`, `kill_switch`, `singleflight`
+- Keywords (PHP): `fallback`, `circuitbreaker`, `circuit_breaker`, `degrade`, `stale`, `cache()->get`, `default`, `feature`, `toggle`, `killswitch`, `kill_switch`
 - Keywords (TS): `fallback`, `ErrorBoundary`, `errorBoundary`, `featureFlag`, `feature_flag`, `LaunchDarkly`, `unleash`, `serviceWorker`, `caches.match`
 
-**Go Graceful Degradation Patterns to Check:**
+**PHP Graceful Degradation Patterns to Check:**
 
 | Pattern | Risk Level | What to Look For |
 |---------|:----------:|------------------|
@@ -4479,64 +4663,85 @@ Audit graceful degradation and fallback behavior when downstream dependencies fa
 4. **Verify cache-aside**: For read-heavy endpoints, verify cached/stale data can be served when primary source is down
 5. **Check kill switches**: For new or risky features, verify feature flags exist for quick disable
 
-**Reference Implementation (GOOD — Go):**
-```go
+**Reference Implementation (GOOD):**
+```php
 // GOOD: Fallback to cached data when DB unavailable
-func (s *Service) GetProduct(ctx context.Context, id string) (*Product, error) {
-    product, err := s.repo.FindByID(ctx, id)
-    if err != nil {
-        // Fallback to cache
-        cached, cacheErr := s.cache.Get(ctx, "product:"+id)
-        if cacheErr == nil {
-            return cached.(*Product), nil // serve stale data
+class ProductService
+{
+    public function getProduct(string $id): ?Product
+    {
+        try {
+            $product = $this->repository->findById($id);
+            // Update cache for future fallbacks
+            Cache::put("product:{$id}", $product, now()->addMinutes(10));
+            return $product;
+        } catch (\Throwable $e) {
+            // Fallback to cache — serve stale data
+            $cached = Cache::get("product:{$id}");
+            if ($cached !== null) {
+                return $cached;
+            }
+            throw new ServiceDegradedException("product unavailable: {$e->getMessage()}", previous: $e);
         }
-        return nil, fmt.Errorf("product unavailable: %w", err)
     }
-    // Update cache for future fallbacks
-    _ = s.cache.Set(ctx, "product:"+id, product, 10*time.Minute)
-    return product, nil
 }
 
-// GOOD: Circuit breaker with fallback handler
-func (s *Service) CallExternalAPI(ctx context.Context, req *Request) (*Response, error) {
-    resp, err := s.breaker.Execute(func() (interface{}, error) {
-        return s.client.Do(ctx, req)
-    })
-    if err != nil {
-        // Circuit open — return default response
-        return s.defaultResponse(req), nil
+// GOOD: Circuit breaker with fallback handler (spatie/laravel-failsafe or custom)
+class ExternalApiService
+{
+    public function call(array $request): array
+    {
+        return $this->circuitBreaker->call(function () use ($request) {
+            return $this->httpClient->post('/api/endpoint', $request)->json();
+        }, fallback: fn () => $this->defaultResponse($request));
     }
-    return resp.(*Response), nil
 }
 
-// GOOD: Feature flag for gradual rollout
-func (s *Service) ProcessPayment(ctx context.Context, payment *Payment) error {
-    if s.featureFlags.IsEnabled("new-payment-gateway") {
-        return s.newGateway.Process(ctx, payment)
+// GOOD: Feature flag for gradual rollout (Unleash / LaunchDarkly / env-based)
+class PaymentService
+{
+    public function processPayment(Payment $payment): void
+    {
+        if (Feature::active('new-payment-gateway')) {
+            $this->newGateway->process($payment);
+        } else {
+            $this->legacyGateway->process($payment); // safe fallback
+        }
     }
-    return s.legacyGateway.Process(ctx, payment) // safe fallback
 }
 ```
 
-**Reference Implementation (BAD — Go):**
-```go
+**Reference Implementation (BAD):**
+```php
 // BAD: No fallback — entire endpoint fails if Redis is down
-func (s *Service) GetProduct(ctx context.Context, id string) (*Product, error) {
-    cached, err := s.cache.Get(ctx, "product:"+id)
-    if err != nil {
-        return nil, fmt.Errorf("cache unavailable: %w", err) // no DB fallback
+class ProductService
+{
+    public function getProduct(string $id): ?Product
+    {
+        $cached = Cache::get("product:{$id}");
+        if ($cached === null) {
+            throw new \RuntimeException('cache unavailable'); // no DB fallback
+        }
+        return $cached;
     }
-    return cached.(*Product), nil
 }
 
 // BAD: No circuit breaker — hangs or crashes on external API failure
-func (s *Service) CallExternalAPI(ctx context.Context, req *Request) (*Response, error) {
-    return s.client.Do(ctx, req) // no timeout, no fallback, no breaker
+class ExternalApiService
+{
+    public function call(array $request): array
+    {
+        return Http::post('/api/endpoint', $request)->json(); // no timeout, no fallback, no breaker
+    }
 }
 
 // BAD: No kill switch — risky feature deployed with no way to disable
-func (s *Service) ProcessPayment(ctx context.Context, payment *Payment) error {
-    return s.newGateway.Process(ctx, payment) // no fallback to legacy
+class PaymentService
+{
+    public function processPayment(Payment $payment): void
+    {
+        $this->newGateway->process($payment); // no fallback to legacy
+    }
 }
 ```
 
@@ -4643,19 +4848,20 @@ Audit caching patterns, invalidation strategies, and cache safety for production
 ---END STANDARDS---
 
 **Search Patterns:**
-- Go files: `**/*.go` — search for cache operations, singleflight, TTL configuration, Redis clients, in-memory caches
+- PHP files: `**/*.php` — search for cache operations, TTL configuration, Redis clients, in-memory caches
+- TypeScript/JS files: `**/*.ts`, `**/*.tsx`, `**/*.js` — search for cache-aside patterns, LRU cache, ioredis, node-cache
 - TypeScript files: `**/*.ts`, `**/*.tsx` — search for cache-aside patterns, LRU cache, ioredis, node-cache
 - Config files: `**/*.yaml`, `**/*.yml`, `**/*.env*` — search for cache TTL, Redis connection, eviction settings
-- Keywords (Go): `singleflight`, `go-cache`, `bigcache`, `freecache`, `ristretto`, `redis.Set`, `redis.Get`, `cache.Set`, `cache.Get`, `TTL`, `Expiration`, `SetEX`, `SetNX`
+- Keywords (PHP): `laravel/cache`, `predis`, `spatie/laravel-responsecache`, `Cache::set`, `Cache::get`, `cache()->put`, `cache()->get`, `TTL`, `Expiration`, `setex`, `setnx`
 - Keywords (TS): `node-cache`, `ioredis`, `createClient`, `cache.set`, `cache.get`, `lru-cache`, `LRUCache`, `cache.del`, `invalidate`, `Redis`, `ttl`
 
-**Go Caching Patterns to Check:**
+**PHP Caching Patterns to Check:**
 
 | Pattern | Risk Level | What to Look For |
 |---------|:----------:|------------------|
 | Unbounded cache growth | CRITICAL | Cache `Set` without TTL or max-size — leads to OOM under load |
 | No invalidation on writes | HIGH | Data mutated in DB but cache not invalidated — stale data served indefinitely |
-| Cache stampede vulnerability | HIGH | Multiple goroutines hit cache miss simultaneously — all hit DB. Check for `singleflight` |
+| Cache stampede vulnerability | HIGH | Multiple requests hit cache miss simultaneously — all hit DB. Check for cache locks or `remember()` pattern |
 | Non-tenant-scoped keys | HIGH | Cache keys like `user:{id}` without tenant prefix in multi-tenant system — data leak |
 | Inconsistent TTL values | MEDIUM | Similar data types cached with wildly different TTLs — unpredictable staleness |
 | No cache warming | MEDIUM | Cold start after deploy/restart causes thundering herd to DB |
@@ -4679,80 +4885,57 @@ Audit caching patterns, invalidation strategies, and cache safety for production
 1. **Inventory caches**: Find all cache instances (in-memory, Redis, CDN) and their usage
 2. **Check bounds**: Verify every cache has TTL, max-size, or eviction policy — no unbounded growth
 3. **Check invalidation**: For every write/mutation path, verify the corresponding cache entry is invalidated
-4. **Check stampede protection**: Verify singleflight, distributed locks, or request coalescing on cache miss paths
+4. **Check stampede protection**: Verify cache locks, `remember()` pattern, or request coalescing on cache miss paths
 5. **Check tenant isolation**: In multi-tenant systems, verify all cache keys include tenant context
 6. **Check consistency**: Verify TTL values are consistent for similar data types
 
-**Reference Implementation (GOOD — Go):**
-```go
-// GOOD: singleflight prevents cache stampede
-var group singleflight.Group
+**Reference Implementation (GOOD — PHP):**
+```php
+// GOOD: Cache lock prevents cache stampede
+public function getProduct(string $tenantId, string $id): Product
+{
+    $key = "tenant:{$tenantId}:product:{$id}";
 
-func (s *Service) GetProduct(ctx context.Context, id string) (*Product, error) {
-    key := fmt.Sprintf("tenant:%s:product:%s", tenant.FromContext(ctx), id)
-
-    // Check cache first
-    if cached, err := s.cache.Get(ctx, key); err == nil {
-        return cached.(*Product), nil
-    }
-
-    // singleflight: only one goroutine fetches from DB
-    result, err, _ := group.Do(key, func() (interface{}, error) {
-        product, err := s.repo.FindByID(ctx, id)
-        if err != nil {
-            return nil, err
-        }
-        // Set with TTL
-        _ = s.cache.Set(ctx, key, product, 5*time.Minute)
-        return product, nil
-    })
-    if err != nil {
-        return nil, err
-    }
-    return result.(*Product), nil
+    // remember() with TTL — only one request fetches from DB on miss
+    return Cache::remember($key, now()->addMinutes(5), function () use ($id) {
+        return $this->repository->findById($id);
+    });
 }
 
 // GOOD: Invalidate cache on write
-func (s *Service) UpdateProduct(ctx context.Context, id string, update *ProductUpdate) error {
-    if err := s.repo.Update(ctx, id, update); err != nil {
-        return err
-    }
-    key := fmt.Sprintf("tenant:%s:product:%s", tenant.FromContext(ctx), id)
-    _ = s.cache.Delete(ctx, key)
-    return nil
+public function updateProduct(string $tenantId, string $id, array $data): void
+{
+    $this->repository->update($id, $data);
+    $key = "tenant:{$tenantId}:product:{$id}";
+    Cache::forget($key);
 }
 
-// GOOD: Bounded in-memory cache with TTL
-cache := ristretto.NewCache(&ristretto.Config{
-    NumCounters: 1e7,     // 10M counters
-    MaxCost:     1 << 30, // 1GB max
-    BufferItems: 64,
-})
+// GOOD: Bounded cache with explicit TTL
+Cache::put($key, $value, now()->addMinutes(30));
 ```
 
-**Reference Implementation (BAD — Go):**
-```go
-// BAD: No singleflight — cache stampede under load
-func (s *Service) GetProduct(ctx context.Context, id string) (*Product, error) {
-    if cached, err := s.cache.Get(ctx, id); err == nil { // no tenant prefix!
-        return cached.(*Product), nil
+**Reference Implementation (BAD — PHP):**
+```php
+// BAD: No cache lock — cache stampede under load
+public function getProduct(string $id): Product
+{
+    if ($cached = Cache::get($id)) { // no tenant prefix!
+        return $cached;
     }
     // Every concurrent request hits DB on cache miss
-    product, err := s.repo.FindByID(ctx, id)
-    if err != nil {
-        return nil, err
-    }
-    s.cache.Set(ctx, id, product, 0) // no TTL — lives forever
-    return product, nil
+    $product = $this->repository->findById($id);
+    Cache::forever($id, $product); // no TTL — lives forever
+    return $product;
 }
 
 // BAD: No invalidation on write — stale data served
-func (s *Service) UpdateProduct(ctx context.Context, id string, update *ProductUpdate) error {
-    return s.repo.Update(ctx, id, update) // cache not invalidated
+public function updateProduct(string $id, array $data): void
+{
+    $this->repository->update($id, $data); // cache not invalidated
 }
 
-// BAD: Unbounded in-memory map as cache — OOM risk
-var cache = make(map[string]interface{}) // grows forever, never evicted
+// BAD: Unbounded in-memory array as cache — memory leak risk
+static $cache = []; // grows forever, never evicted
 ```
 
 **Reference Implementation (GOOD — TypeScript):**
@@ -4815,7 +4998,7 @@ async function updateProduct(id: string, data: ProductUpdate): Promise<void> {
 **Check Against Standards For:**
 1. (CRITICAL) All caches have TTL, max-size, or eviction policy — no unbounded growth
 2. (HIGH) Cache entries are invalidated when underlying data is mutated
-3. (HIGH) Cache stampede protection exists (singleflight, distributed locks, request coalescing)
+3. (HIGH) Cache stampede protection exists (Cache::lock(), distributed locks, request coalescing)
 4. (HIGH) Cache keys are tenant-scoped in multi-tenant systems
 5. (MEDIUM) TTL values are consistent for similar data types across codebase
 6. (MEDIUM) Cache failures do not crash requests (graceful fallthrough to source)
@@ -4836,7 +5019,7 @@ async function updateProduct(id: string, data: ProductUpdate): Promise<void> {
 ### Summary
 - Cache instances found: X (in-memory: Y, Redis: Z, CDN: W)
 - Caches with TTL/eviction: Y/X
-- Stampede protection: Yes/No (mechanism: singleflight / locks / none)
+- Stampede protection: Yes/No (mechanism: cache locks / remember() / none)
 - Multi-tenant key scoping: Yes/No/N/A
 - Invalidation on writes: Y/Z write paths
 - Cache metrics instrumented: Yes/No
@@ -4876,11 +5059,11 @@ Audit data encryption at rest, key management, and sensitive data protection for
 ---END STANDARDS---
 
 **Search Patterns:**
-- Go files: `**/*.go` — search for encryption libraries, hashing functions, sensitive field handling, key management
+- PHP files: `**/*.php` — search for encryption libraries, hashing functions, sensitive field handling, key management
 - TypeScript files: `**/*.ts`, `**/*.tsx` — search for crypto modules, encryption utilities, password hashing
 - Config files: `**/*.yaml`, `**/*.yml`, `**/*.env*`, `**/docker-compose*` — search for encryption keys, database encryption settings
 - SQL/Migration files: `**/*.sql`, `**/migrations/**` — search for sensitive columns, pgcrypto, encryption extensions
-- Keywords (Go): `crypto/aes`, `crypto/cipher`, `bcrypt`, `scrypt`, `argon2`, `aes.NewCipher`, `gcm`, `Seal`, `Open`, `GenerateFromPassword`, `CompareHashAndPassword`
+- Keywords (PHP): `password_hash`, `password_verify`, `BCRYPT`, `PASSWORD_ARGON2ID`, `openssl_encrypt`, `openssl_decrypt`, `Hash::make`, `Crypt::encrypt`
 - Keywords (TS): `crypto`, `createCipheriv`, `createDecipheriv`, `node-forge`, `bcrypt`, `argon2`, `scrypt`, `pbkdf2`
 - Keywords (DB): `pgcrypto`, `encrypt`, `decrypt`, `gen_salt`, `crypt`, `ENCRYPTED`, `BYTEA`
 - Keywords (Config): `ENCRYPTION_KEY`, `MASTER_KEY`, `KMS`, `vault`, `SECRET_KEY`, `CIPHER`
@@ -4904,16 +5087,16 @@ Audit data encryption at rest, key management, and sensitive data protection for
 5. **Check backups**: Verify database backup processes include encryption
 6. **Check algorithm strength**: Flag use of MD5, SHA1, DES, RC4, or other deprecated algorithms
 
-**Go Encryption Patterns to Check:**
+**PHP Encryption Patterns to Check:**
 
 | Pattern | Risk Level | What to Look For |
 |---------|:----------:|------------------|
-| Plaintext passwords | CRITICAL | `password` field stored as `string` in DB without hashing |
-| Weak hash for passwords | CRITICAL | `md5.Sum`, `sha1.Sum`, `sha256.Sum` used for password hashing (use bcrypt/argon2 instead) |
+| Plaintext passwords | CRITICAL | `password` field stored as plain `string` in DB without hashing |
+| Weak hash for passwords | CRITICAL | `md5()`, `sha1()`, `sha256()` used for password hashing (use `password_hash()` with bcrypt/argon2 instead) |
 | Unencrypted financial data | CRITICAL | Credit card, bank account stored as plain `string` in DB |
-| Keys in source | HIGH | `ENCRYPTION_KEY`, `MASTER_KEY` hardcoded in Go files or committed .env |
+| Keys in source | HIGH | `ENCRYPTION_KEY`, `APP_KEY` hardcoded in PHP files or committed `.env` |
 | No key rotation | MEDIUM | Single encryption key with no rotation mechanism or key versioning |
-| Weak algorithm | MEDIUM | DES, RC4, AES-ECB (use AES-GCM), MD5/SHA1 for integrity |
+| Weak algorithm | MEDIUM | DES, RC4, AES-ECB (use AES-GCM via `openssl_encrypt`), MD5/SHA1 for integrity |
 | Unencrypted backups | HIGH | Backup commands/scripts without encryption flag |
 
 **TypeScript Encryption Patterns to Check:**
@@ -4927,70 +5110,48 @@ Audit data encryption at rest, key management, and sensitive data protection for
 | No key rotation | MEDIUM | Static encryption key with no versioning |
 | Weak algorithm | MEDIUM | `createCipheriv('des', ...)`, `createCipheriv('aes-128-ecb', ...)` |
 
-**Reference Implementation (GOOD — Go):**
-```go
-// GOOD: Password hashing with bcrypt
-import "golang.org/x/crypto/bcrypt"
+**Reference Implementation (GOOD — PHP):**
+```php
+// GOOD: Password hashing with PHP built-in bcrypt
+$hash = password_hash($password, PASSWORD_BCRYPT);  // bcrypt, cost 10+
+$valid = password_verify($password, $hash);
 
-func HashPassword(password string) (string, error) {
-    hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-    if err != nil {
-        return "", fmt.Errorf("hashing password: %w", err)
-    }
-    return string(hash), nil
+// Even better: Argon2id (more resistant to GPU attacks)
+$hash = password_hash($password, PASSWORD_ARGON2ID, [
+    'memory_cost' => PASSWORD_ARGON2_DEFAULT_MEMORY_COST,
+    'time_cost'   => PASSWORD_ARGON2_DEFAULT_TIME_COST,
+    'threads'     => PASSWORD_ARGON2_DEFAULT_THREADS,
+]);
+
+// GOOD: AES-256-GCM field encryption via openssl_encrypt
+function encryptField(string $plaintext, string $key): string
+{
+    $iv = random_bytes(16);
+    $encrypted = openssl_encrypt($plaintext, 'aes-256-gcm', $key, 0, $iv, $tag);
+    return base64_encode($iv . $tag . $encrypted);
 }
 
-func VerifyPassword(hash, password string) error {
-    return bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
-}
+// GOOD: Laravel Crypt facade (uses AES-256-CBC with HMAC integrity)
+$encrypted = Crypt::encryptString($sensitiveData);
+$decrypted = Crypt::decryptString($encrypted);
 
-// GOOD: AES-256-GCM field encryption with key from Vault
-func EncryptField(plaintext []byte, key []byte) ([]byte, error) {
-    block, err := aes.NewCipher(key)
-    if err != nil {
-        return nil, err
-    }
-    gcm, err := cipher.NewGCM(block)
-    if err != nil {
-        return nil, err
-    }
-    nonce := make([]byte, gcm.NonceSize())
-    if _, err := io.ReadFull(rand.Reader, nonce); err != nil {
-        return nil, err
-    }
-    return gcm.Seal(nonce, nonce, plaintext, nil), nil
-}
-
-// GOOD: Key from Vault/KMS
-func GetEncryptionKey(ctx context.Context) ([]byte, error) {
-    secret, err := vaultClient.Logical().Read("secret/data/encryption-key")
-    if err != nil {
-        return nil, fmt.Errorf("reading encryption key from vault: %w", err)
-    }
-    return base64.StdEncoding.DecodeString(secret.Data["key"].(string))
-}
+// GOOD: Key from Vault/KMS via config
+$key = config('services.vault.encryption_key');  // Loaded from Vault at boot
 ```
 
-**Reference Implementation (BAD — Go):**
-```go
+**Reference Implementation (BAD — PHP):**
+```php
 // BAD: Plaintext password storage
-type User struct {
-    Email    string `db:"email"`
-    Password string `db:"password"` // stored as plain text!
-}
+$user->password = $request->password;  // stored as plain text!
 
 // BAD: MD5 for password hashing — trivially crackable
-func HashPassword(password string) string {
-    hash := md5.Sum([]byte(password))
-    return hex.EncodeToString(hash[:])
-}
+$hash = md5($password);  // NEVER use for passwords
 
 // BAD: Encryption key hardcoded in source
-var encryptionKey = []byte("my-super-secret-key-1234567890ab")
+define('ENCRYPTION_KEY', 'my-super-secret-key-1234567890ab');
 
-// BAD: AES-ECB mode — deterministic, leaks patterns
-block, _ := aes.NewCipher(key)
-block.Encrypt(ciphertext, plaintext) // ECB mode — do NOT use
+// BAD: ECB mode — deterministic, leaks patterns
+$encrypted = openssl_encrypt($data, 'aes-256-ecb', $key);  // ECB — do NOT use
 ```
 
 **Reference Implementation (GOOD — TypeScript):**
@@ -5095,24 +5256,24 @@ Audit resource leak risks including unclosed handles, connection leaks, and clea
 
 **Bee Standards (Source of Truth):**
 ---BEGIN STANDARDS---
-{INJECTED: Resource leak patterns — no dedicated standards file; patterns derived from Go/TypeScript runtime behavior and production failure analysis}
+{INJECTED: Resource leak patterns — no dedicated standards file; patterns derived from PHP/TypeScript runtime behavior and production failure analysis}
 ---END STANDARDS---
 
 **Search Patterns:**
-- Go files: `**/*.go` — search for HTTP response bodies, database rows/connections, file handles, tickers, timers, context cancellation
+- PHP files: `**/*.php` — search for DB connections, file handles, Guzzle streams, curl resources, PDO connections
 - TypeScript files: `**/*.ts`, `**/*.tsx` — search for stream cleanup, event listeners, AbortController, finally blocks, using declarations
-- Keywords (Go): `resp.Body`, `rows.Close`, `rows.Next`, `tx.Rollback`, `tx.Commit`, `file.Close`, `ticker.Stop`, `timer.Stop`, `context.WithCancel`, `context.WithTimeout`, `defer`, `go func`
+- Keywords (PHP): `fopen(`, `fclose(`, `curl_init(`, `curl_close(`, `DB::connection(`, `$pdo->`, `fwrite(`, `tmpfile(`, `$resource =`
 - Keywords (TS): `finally`, `addEventListener`, `removeEventListener`, `AbortController`, `.destroy()`, `.close()`, `.end()`, `createReadStream`, `createWriteStream`, `using`, `Symbol.dispose`
 
-**Go Resource Leak Patterns to Check:**
+**PHP Resource Leak Patterns to Check:**
 
 | Pattern | Risk Level | What to Look For |
 |---------|:----------:|------------------|
-| HTTP body not closed | CRITICAL | `http.Get`, `client.Do` without `defer resp.Body.Close()` — connection pool exhaustion |
-| DB rows not closed | CRITICAL | `db.Query` / `db.QueryContext` without `defer rows.Close()` — connection pool exhaustion |
-| DB rows not closed on error | CRITICAL | `rows.Close()` in happy path only — error branch leaks connection |
-| File handle not closed | HIGH | `os.Open`, `os.Create` without `defer file.Close()` — fd exhaustion under load |
-| Context not propagated | HIGH | `go func()` spawned without parent context — cannot cancel child goroutines |
+| File handle not closed | CRITICAL | `fopen()` without `fclose()` in all code paths — fd exhaustion under load |
+| cURL handle not closed | CRITICAL | `curl_init()` without `curl_close()` — connection pool exhaustion |
+| File handle not closed on error | HIGH | `fclose()` only in happy path — error branch leaks file descriptor |
+| Database connection leak | HIGH | Manual PDO connection opened but not closed in error paths |
+| Stream not closed on exception | HIGH | `fopen()` wrapped in try block without `fclose()` in finally |
 | Ticker/timer not stopped | HIGH | `time.NewTicker`, `time.NewTimer` in goroutine without `defer ticker.Stop()` — memory leak |
 | Transaction not rolled back | HIGH | `db.Begin` without `defer tx.Rollback()` — connection held on error path |
 | Defer after error check | MEDIUM | `defer resp.Body.Close()` before checking `err != nil` — panics on nil resp |
@@ -5135,114 +5296,67 @@ Audit resource leak risks including unclosed handles, connection leaks, and clea
 1. **Find resource acquisitions**: Scan for all `open`, `create`, `new`, `begin`, `dial`, `connect` calls
 2. **Trace cleanup path**: For each acquisition, verify a corresponding `close`, `stop`, `rollback`, `release` exists
 3. **Check error paths**: Verify cleanup happens in error branches, not just happy path
-4. **Check goroutine context**: For each `go func()`, verify parent context is passed and cancellation propagates
+4. **Check async context**: For TypeScript, verify Promise chains have AbortController/cancellation; for PHP, verify async jobs respect timeouts
 5. **Check defer placement**: Verify `defer` is called AFTER error check on the acquisition, not before
 6. **Check defer ordering**: Verify LIFO ordering does not cause incorrect cleanup sequence
 
-**Reference Implementation (GOOD — Go):**
-```go
-// GOOD: HTTP response body closed immediately after error check
-resp, err := http.Get(url)
-if err != nil {
-    return nil, fmt.Errorf("fetching %s: %w", url, err)
+**Reference Implementation (GOOD — PHP):**
+```php
+// GOOD: File handle closed in finally block
+$handle = fopen($path, 'r');
+if ($handle === false) {
+    throw new \RuntimeException("Cannot open file: $path");
 }
-defer resp.Body.Close() // after error check — resp is guaranteed non-nil
-
-// GOOD: Database rows closed with defer
-rows, err := db.QueryContext(ctx, query, args...)
-if err != nil {
-    return nil, fmt.Errorf("querying: %w", err)
-}
-defer rows.Close() // closed on ALL exit paths
-
-// GOOD: Transaction with deferred rollback (safe even after commit)
-tx, err := db.BeginTx(ctx, nil)
-if err != nil {
-    return err
-}
-defer tx.Rollback() // no-op after successful commit
-
-if err := tx.Exec(ctx, stmt); err != nil {
-    return err // rollback will execute via defer
-}
-return tx.Commit()
-
-// GOOD: Context propagated to goroutine
-ctx, cancel := context.WithCancel(parentCtx)
-defer cancel()
-
-go func() {
-    select {
-    case <-ctx.Done():
-        return // goroutine exits when parent cancels
-    case msg := <-ch:
-        process(msg)
+try {
+    while (($line = fgets($handle)) !== false) {
+        process($line);
     }
-}()
-
-// GOOD: Ticker stopped in goroutine
-func (s *Service) StartPolling(ctx context.Context) {
-    ticker := time.NewTicker(30 * time.Second)
-    defer ticker.Stop()
-
-    for {
-        select {
-        case <-ctx.Done():
-            return
-        case <-ticker.C:
-            s.poll(ctx)
-        }
-    }
+} finally {
+    fclose($handle);  // always closed, even on exception
 }
+
+// GOOD: cURL handle closed in finally
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+try {
+    $response = curl_exec($ch);
+    if ($response === false) {
+        throw new \RuntimeException(curl_error($ch));
+    }
+    return $response;
+} finally {
+    curl_close($ch);  // always released
+}
+
+// GOOD: Laravel DB transaction rolled back automatically via closure
+DB::transaction(function () use ($data) {
+    Order::create($data['order']);
+    Payment::create($data['payment']);
+});
+// Transaction committed on success, rolled back on exception automatically
 ```
 
-**Reference Implementation (BAD — Go):**
-```go
-// BAD: HTTP body never closed — connection pool exhaustion
-resp, err := http.Get(url)
-if err != nil {
-    return nil, err
+**Reference Implementation (BAD — PHP):**
+```php
+// BAD: File handle opened but never closed — fd exhaustion under load
+$handle = fopen($path, 'r');
+while (($line = fgets($handle)) !== false) {
+    process($line);
 }
-// missing: defer resp.Body.Close()
-body, _ := io.ReadAll(resp.Body) // body open forever
+// missing: fclose($handle)
 
-// BAD: defer before error check — panics on nil resp
-resp, err := http.Get(url)
-defer resp.Body.Close() // PANIC if err != nil (resp is nil)
-if err != nil {
-    return nil, err
+// BAD: fclose() only in happy path — leaks on exception
+$handle = fopen($path, 'r');
+$data = processFile($handle);  // throws on malformed data
+fclose($handle);  // never reached if exception thrown above
+
+// BAD: cURL handle leaked on error
+$ch = curl_init($url);
+$response = curl_exec($ch);
+if ($response === false) {
+    throw new \RuntimeException(curl_error($ch));  // curl handle never closed!
 }
-
-// BAD: rows.Close() only in happy path — leaks on error
-rows, err := db.QueryContext(ctx, query)
-if err != nil {
-    return nil, err
-}
-for rows.Next() {
-    if err := rows.Scan(&item); err != nil {
-        return nil, err // rows NOT closed!
-    }
-    items = append(items, item)
-}
-rows.Close() // only reached on success
-
-// BAD: Context not propagated — goroutine cannot be cancelled
-go func() {
-    for {
-        data := fetchData() // runs forever, ignores parent context
-        process(data)
-        time.Sleep(time.Minute)
-    }
-}()
-
-// BAD: Ticker in goroutine never stopped — memory leak
-go func() {
-    ticker := time.NewTicker(time.Second)
-    // missing: defer ticker.Stop()
-    for range ticker.C {
-        doWork()
-    }
-}()
+curl_close($ch);
 ```
 
 **Reference Implementation (GOOD — TypeScript):**
@@ -5311,38 +5425,33 @@ async function fetchData(url: string): Promise<Response> {
 ```
 
 **Check Against Standards For:**
-1. (CRITICAL) All HTTP response bodies are closed with `defer resp.Body.Close()` after error check (Go)
-2. (CRITICAL) All database rows are closed with `defer rows.Close()` — including error paths (Go)
+1. (CRITICAL) All file handles are closed in `finally` block — not just happy path (PHP)
+2. (CRITICAL) All cURL handles are closed with `curl_close()` in `finally` (PHP)
 3. (CRITICAL) Streams and connections are closed in error paths (TypeScript)
-4. (HIGH) File handles are closed with `defer file.Close()` (Go) or finally/using (TypeScript)
-5. (HIGH) Context is propagated to all spawned goroutines (Go)
-6. (HIGH) Tickers and timers are stopped with `defer ticker.Stop()` in goroutines (Go)
-7. (HIGH) Transactions use `defer tx.Rollback()` before any operations (Go)
-8. (HIGH) `setInterval` has corresponding `clearInterval` on cleanup (TypeScript)
-9. (MEDIUM) `defer` is placed AFTER error check, not before (Go)
-10. (MEDIUM) Event listeners are removed on component unmount (TypeScript)
-11. (MEDIUM) AbortController is used for cancellable long-running operations (TypeScript)
-12. (MEDIUM) Channel producers close channels when done (Go)
-13. (LOW) Defer ordering (LIFO) does not cause incorrect cleanup sequence (Go)
+4. (HIGH) Database transactions use Laravel `DB::transaction()` closure or explicit rollback in catch (PHP)
+5. (HIGH) `setInterval` has corresponding `clearInterval` on cleanup (TypeScript)
+6. (HIGH) Stream cleanup in `finally` or try/using block (TypeScript)
+7. (MEDIUM) Event listeners are removed on component unmount (TypeScript)
+8. (MEDIUM) AbortController is used for cancellable long-running operations (TypeScript)
+9. (LOW) Redundant resource handling for auto-managed resources (e.g., Eloquent transactions)
 
 **Severity Ratings:**
-- CRITICAL: HTTP response body never closed (connection pool exhaustion), database rows/connections not closed on error paths (connection pool exhaustion), streams not closed on error (fd exhaustion)
-- HIGH: File handles not closed (fd exhaustion under load), context not propagated to goroutines (cannot cancel), tickers/timers not stopped (memory leak), transactions without deferred rollback (connection held), intervals not cleared (memory leak)
-- MEDIUM: Defer before error check (nil pointer panic), event listeners not removed on unmount (memory leak), no AbortController for fetch (cannot cancel), unclosed channels (goroutine leak)
-- LOW: Defer ordering issues (wrong cleanup sequence), redundant defer on auto-closed resources, missing using declaration for disposable resources
+- CRITICAL: File handles never closed (fd exhaustion under load), cURL handles leaked (connection pool exhaustion), streams not closed on error (memory/fd exhaustion)
+- HIGH: Database transactions without rollback on error (connection held, data inconsistency), intervals not cleared (memory leak), stream not cleaned up on exception
+- MEDIUM: Event listeners not removed on unmount (memory leak), no AbortController for fetch (cannot cancel)
+- LOW: Redundant cleanup for auto-managed resources, missing using declaration for disposable resources
 
 **Output Format:**
 ```
 ## Resource Leak Prevention Audit Findings
 
 ### Summary
-- HTTP response bodies: X found, Y properly closed
-- Database rows/connections: X queries, Y with defer rows.Close()
-- File handles: X opens, Y with defer/finally close
-- Goroutine context propagation: X goroutines, Y with parent context
-- Tickers/timers: X created, Y with defer Stop()
+- File handles (PHP): X opens, Y with finally/close in all paths
+- cURL handles (PHP): X inits, Y with curl_close() in finally
+- DB transactions (PHP): X transactions, Y using DB::transaction() or explicit rollback
 - Event listeners (TS): X added, Y with cleanup
 - Intervals (TS): X set, Y with clearInterval
+- Streams (TS): X opens, Y with finally cleanup
 
 ### Critical Issues
 [file:line] - Description (resource type: {type}, leak risk: {description})
@@ -5377,10 +5486,11 @@ Audit rate limiting implementation across the codebase for production readiness.
 ---END STANDARDS---
 
 **Search Patterns:**
-- Go files: `**/*.go` — search for rate limiting middleware, limiter configuration, Redis storage for rate limits
-- Config files: `**/*.env*`, `**/docker-compose*`, `**/config*.go` — search for RATE_LIMIT env vars
+- PHP files: `**/*.php` — search for rate limiting middleware, limiter configuration, Redis storage for rate limits
+- TypeScript files: `**/*.ts`, `**/*.tsx` — search for rate limiting middleware, express-rate-limit, Upstash Redis limiter
+- Config files: `**/*.env*`, `**/docker-compose*`, `**/config*.php` — search for RATE_LIMIT env vars
 - Middleware files: `**/middleware/**`, `**/bootstrap/**` — search for limiter registration
-- Keywords (Go): `limiter`, `ratelimit`, `rate_limit`, `RateLimit`, `RATE_LIMIT`, `fiber/middleware/limiter`, `MaxRequests`, `Expiration`, `KeyGenerator`, `LimitReached`, `429`, `Retry-After`
+- Keywords (PHP): `throttle`, `ratelimit`, `rate_limit`, `RateLimit`, `RATE_LIMIT`, `ThrottleRequests`, `maxAttempts`, `decayMinutes`, `RateLimiter`, `tooManyAttempts`, `429`, `Retry-After`
 - Keywords (Config): `RATE_LIMIT_ENABLED`, `RATE_LIMIT_MAX`, `RATE_LIMIT_EXPIRY_SEC`, `EXPORT_RATE_LIMIT`, `DISPATCH_RATE_LIMIT`
 
 **Rate Limiting Patterns to Check:**
@@ -5389,7 +5499,7 @@ Audit rate limiting implementation across the codebase for production readiness.
 |---------|:----------:|------------------|
 | No rate limiting at all | CRITICAL | No limiter middleware registered on any route |
 | Single-tier only | HIGH | Only global rate limit, no export/dispatch tiers |
-| In-memory storage only | HIGH | `fiber.Storage` not backed by Redis — rate limits not shared across instances |
+| In-memory storage only | HIGH | Rate limiter not backed by Redis — rate limits not shared across instances |
 | Hardcoded limits | MEDIUM | Rate limit values hardcoded in code instead of env vars |
 | No key generation strategy | HIGH | Default key generator (IP only) — no UserID or TenantID+IP |
 | Rate limiting disabled in production | CRITICAL | `RATE_LIMIT_ENABLED=false` with no production override |
@@ -5402,54 +5512,68 @@ Audit rate limiting implementation across the codebase for production readiness.
 3. **Dispatch tier**: Verify external integration endpoints (webhooks, external calls) have their own limiter (default: 50 req/60s)
 
 **Redis Storage Verification (MANDATORY — do not skip):**
-1. **Storage implementation**: Verify rate limiter uses Redis-backed storage implementing `fiber.Storage` interface
+1. **Storage implementation**: Verify rate limiter uses Redis-backed storage (not in-memory only)
 2. **Key prefix**: Verify rate limit keys use `ratelimit:` prefix for namespace isolation
-3. **Sentinel errors**: Verify Redis operations use sentinel errors (not `fmt.Errorf`)
-4. **Graceful degradation**: Verify fallback behavior when Redis is unavailable
+3. **Graceful degradation**: Verify fallback behavior when Redis is unavailable
 
 **Production Safety Verification (MANDATORY — do not skip):**
-1. **Force-enable in production**: Verify rate limiting cannot be disabled when `ENV_NAME=production`
+1. **Force-enable in production**: Verify rate limiting cannot be disabled when `APP_ENV=production`
 2. **Key generation**: Verify key generator uses UserID > TenantID+IP > IP priority
 3. **Configuration via env vars**: Verify all limits are configurable via environment variables
 
-**Reference Implementation (GOOD — Go):**
-```go
+**Reference Implementation (GOOD — PHP/Laravel):**
+```php
 // GOOD: Three-tier rate limiting with Redis storage
-rateLimitStorage := ratelimit.NewRedisStorage(redisConn)
+// Route groups with different rate limits
+Route::middleware(['auth:api', 'throttle:api'])->group(function () {
+    Route::get('/v1/accounts', [AccountController::class, 'index']);
+});
 
-// Global limiter
-app.Use(limiter.New(limiter.Config{
-    Max:        cfg.RateLimit.Max,
-    Expiration: time.Duration(cfg.RateLimit.ExpirySec) * time.Second,
-    Storage:    rateLimitStorage,
-    KeyGenerator: func(c *fiber.Ctx) string {
-        // UserID > TenantID+IP > IP
-        if uid := c.Locals("userID"); uid != nil {
-            return fmt.Sprintf("user:%v", uid)
-        }
-        if tid := c.Locals("tenantID"); tid != nil {
-            return fmt.Sprintf("tenant:%v:ip:%s", tid, c.IP())
-        }
-        return c.IP()
-    },
-}))
+// Export tier (stricter)
+Route::middleware(['auth:api', 'throttle:export'])->group(function () {
+    Route::get('/v1/exports', [ExportController::class, 'download']);
+});
+
+// config/cache.php — Redis driver for rate limiting
+'stores' => [
+    'redis' => ['driver' => 'redis', 'connection' => 'cache'],
+]
 ```
 
-**Reference Implementation (BAD — Go):**
-```go
-// BAD: No rate limiting at all — DoS vulnerable
-app.Get("/api/v1/exports", exportHandler)
+**Reference Implementation (GOOD — TypeScript/Next.js):**
+```typescript
+// GOOD: Rate limiting with Upstash Redis
+import { Ratelimit } from '@upstash/ratelimit';
+import { Redis } from '@upstash/redis';
 
-// BAD: Hardcoded limits, no Redis storage
-app.Use(limiter.New(limiter.Config{
-    Max:        100,           // hardcoded
-    Expiration: time.Minute,   // hardcoded
-    // No Storage — in-memory only, not shared across instances
-}))
+const ratelimit = new Ratelimit({
+    redis: Redis.fromEnv(),
+    limiter: Ratelimit.slidingWindow(
+        parseInt(process.env.RATE_LIMIT_MAX ?? '100'),
+        `${process.env.RATE_LIMIT_WINDOW_SECONDS ?? 60}s`,
+    ),
+    prefix: 'ratelimit:',
+});
+
+// In middleware
+const identifier = userId ?? `${tenantId}:${ip}` ?? ip;
+const { success } = await ratelimit.limit(identifier);
+if (!success) {
+    return NextResponse.json({ error: 'Too many requests' }, {
+        status: 429,
+        headers: { 'Retry-After': '60' },
+    });
+}
+```
+
+**Reference Implementation (BAD):**
+```php
+// BAD: No rate limiting at all — DoS vulnerable
+Route::get('/api/v1/exports', [ExportController::class, 'download']);
 
 // BAD: Rate limiting can be disabled in production
-if cfg.RateLimit.Enabled {
-    app.Use(rateLimiter)
+if (config('app.rate_limiting_enabled')) {
+    Route::middleware(['throttle:api'])->group(fn () => ...);
 }
 ```
 
@@ -5462,13 +5586,13 @@ if cfg.RateLimit.Enabled {
 6. (HIGH) Graceful degradation when Redis is unavailable
 7. (MEDIUM) All rate limit values configurable via environment variables
 8. (MEDIUM) 429 response includes `Retry-After` header
-9. (MEDIUM) Sentinel errors used in Redis storage operations
+9. (MEDIUM) Rate limit responses include `Retry-After` header with backoff seconds
 10. (LOW) Rate limit key prefix isolates namespace (`ratelimit:`)
 
 **Severity Ratings:**
 - CRITICAL: No rate limiting middleware at all, rate limiting disabled in production
 - HIGH: Single-tier only (no export/dispatch tiers), in-memory storage only (not distributed), no key generation strategy (IP only), no graceful degradation on Redis failure
-- MEDIUM: Hardcoded rate limit values (not configurable), no Retry-After header, fmt.Errorf instead of sentinel errors
+- MEDIUM: Hardcoded rate limit values (not configurable), no Retry-After header, missing key prefix namespace isolation
 - LOW: Missing key prefix, rate limit logging not structured, no rate limit metrics/observability
 
 **Output Format:**
@@ -5513,10 +5637,12 @@ Audit CORS (Cross-Origin Resource Sharing) configuration across the codebase for
 ---END STANDARDS---
 
 **Search Patterns:**
-- Go files: `**/*.go` — search for CORS middleware configuration, origin validation, preflight handling
-- Config files: `**/*.env*`, `**/docker-compose*`, `**/config*.go` — search for CORS env vars
+- PHP files: `**/*.php` — search for CORS middleware configuration, origin validation, preflight handling
+- TypeScript files: `**/*.ts`, `**/*.tsx` — search for CORS middleware (cors package, Next.js config)
+- Config files: `**/*.env*`, `**/docker-compose*`, `**/config*.php` — search for CORS env vars
 - Middleware files: `**/middleware/**`, `**/bootstrap/**` — search for CORS and Helmet middleware registration
-- Keywords (Go): `cors`, `CORS`, `AllowOrigins`, `AllowMethods`, `AllowHeaders`, `fiber/middleware/cors`, `helmet`, `Helmet`, `HSTS`, `HSTSMaxAge`, `ContentSecurityPolicy`, `XFrameOptions`, `PermissionPolicy`
+- Keywords (PHP): `cors`, `CORS`, `AllowOrigins`, `AllowMethods`, `AllowHeaders`, `fruitcake/laravel-cors`, `barryvdh/laravel-cors`, `CORS_ALLOWED_ORIGINS`, `Content-Security-Policy`
+- Keywords (TS): `cors()`, `CORS`, `NextResponse.headers`, `Content-Security-Policy`, `Strict-Transport-Security`, `cors` npm package
 - Keywords (Config): `CORS_ALLOWED_ORIGINS`, `CORS_ALLOWED_METHODS`, `CORS_ALLOWED_HEADERS`, `TLS_TERMINATED_UPSTREAM`, `SERVER_TLS_CERT_FILE`
 
 **CORS Patterns to Check:**
@@ -5540,10 +5666,9 @@ Recover → Request ID → CORS → Helmet (Security Headers) → Telemetry → 
 ```
 
 **Production Validation Verification (MANDATORY — do not skip):**
-1. **No wildcard origins**: Verify `*` is rejected when `ENV_NAME=production`
+1. **No wildcard origins**: Verify `*` is rejected when `APP_ENV=production`
 2. **No empty origins**: Verify empty `CORS_ALLOWED_ORIGINS` is rejected in production
 3. **HTTPS origins**: Verify production origins use `https://` (not `http://`)
-4. **Sentinel errors**: Verify validation uses sentinel errors (not `fmt.Errorf`)
 
 **Helmet Integration Verification (MANDATORY — do not skip):**
 1. **Security headers present**: Verify Helmet middleware is registered
@@ -5551,50 +5676,56 @@ Recover → Request ID → CORS → Helmet (Security Headers) → Telemetry → 
 3. **CSP configured**: Verify Content-Security-Policy header is set
 4. **Cross-origin policies**: Verify CrossOriginEmbedderPolicy, CrossOriginOpenerPolicy, CrossOriginResourcePolicy
 
-**Reference Implementation (GOOD — Go):**
-```go
-// GOOD: Configuration-driven CORS with production validation
-app.Use(cors.New(cors.Config{
-    AllowOrigins: cfg.Server.CORSAllowedOrigins,  // From env vars
-    AllowMethods: cfg.Server.CORSAllowedMethods,
-    AllowHeaders: cfg.Server.CORSAllowedHeaders,
-}))
+**Reference Implementation (GOOD — PHP/Laravel):**
+```php
+// GOOD: CORS configured via environment variables (config/cors.php)
+return [
+    'paths'           => ['api/*'],
+    'allowed_origins' => explode(',', env('CORS_ALLOWED_ORIGINS', '')),
+    'allowed_methods' => explode(',', env('CORS_ALLOWED_METHODS', 'GET,POST,PUT,DELETE')),
+    'allowed_headers' => explode(',', env('CORS_ALLOWED_HEADERS', 'Content-Type,Authorization')),
+    'supports_credentials' => false,
+];
 
-// GOOD: Production validation with sentinel errors
-var (
-    ErrCORSOriginsEmpty    = errors.New("CORS_ALLOWED_ORIGINS must be set in production")
-    ErrCORSOriginsWildcard = errors.New("CORS_ALLOWED_ORIGINS must not contain wildcard (*) in production")
-)
-
-func validateProductionConfig(cfg *Config) error {
-    if cfg.App.EnvName != "production" {
-        return nil
+// GOOD: Production validation in AppServiceProvider
+if (app()->environment('production')) {
+    $origins = config('cors.allowed_origins');
+    if (empty($origins) || in_array('*', $origins)) {
+        throw new \RuntimeException('CORS_ALLOWED_ORIGINS must be set and not wildcard in production');
     }
-    origins := strings.TrimSpace(cfg.Server.CORSAllowedOrigins)
-    if origins == "" {
-        return ErrCORSOriginsEmpty
-    }
-    if strings.Contains(origins, "*") {
-        return ErrCORSOriginsWildcard
-    }
-    return nil
 }
 ```
 
-**Reference Implementation (BAD — Go):**
-```go
+**Reference Implementation (GOOD — TypeScript/Next.js):**
+```typescript
+// GOOD: CORS in next.config.js from env vars
+const nextConfig = {
+    async headers() {
+        return [
+            {
+                source: '/api/:path*',
+                headers: [
+                    { key: 'Access-Control-Allow-Origin', value: process.env.CORS_ALLOWED_ORIGINS ?? '' },
+                    { key: 'Content-Security-Policy', value: "default-src 'self'" },
+                    { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains' },
+                ],
+            },
+        ];
+    },
+};
+```
+
+**Reference Implementation (BAD):**
+```php
 // BAD: Wildcard origins — allows any site to make requests
-cors.Config{AllowOrigins: "*"}
+'allowed_origins' => ['*'],
 
 // BAD: Hardcoded origins
-cors.Config{AllowOrigins: "https://app.example.com"}
+'allowed_origins' => ['https://app.example.com'],  // Not from env vars
 
-// BAD: No CORS middleware at all
+// BAD: No CORS configuration at all
 
-// BAD: CORS after business logic — preflight fails
-app.Use(authMiddleware)
-app.Use(rateLimiter)
-app.Use(cors.New(corsCfg))  // Too late
+// BAD: CORS middleware placed after auth — preflight OPTIONS request fails auth check
 
 // BAD: Origin reflection without validation
 cors.Config{
@@ -5698,7 +5829,7 @@ After all explorers complete, generate this report:
 
 | Property | Value |
 |----------|-------|
-| **Detected Stack** | {Go / TypeScript / Frontend / Mixed} |
+| **Detected Stack** | {PHP / TypeScript / Frontend / Mixed} |
 | **Standards Loaded** | {list of loaded standards files} |
 | **Active Dimensions** | {43 base + 1 conditional (max 44)} |
 | **Max Possible Score** | {dynamic_max: 430 or 440} |
@@ -6352,7 +6483,7 @@ Status icons: PASS (>=7), WARN (4-6), FAIL (<4), N/A (conditional not active)
 | **Report Type** | Thorough |
 | **Standards Source** | Bee Development Standards (GitHub) |
 | **Standards Files Loaded** | {list} |
-| **Stack Detected** | {Go / TypeScript / Frontend / Mixed} |
+| **Stack Detected** | {PHP / TypeScript / Frontend / Mixed} |
 | **Dimensions** | {43 + conditional count} |
 ```
 
@@ -6424,7 +6555,7 @@ TodoWrite: Create todos for stack detection, standards loading, all 5 batches + 
 ### Step 2: Detect Stack (Step 0)
 
 Use Glob and Grep to detect:
-- GO, TS_BACKEND, FRONTEND, DOCKER, MAKEFILE, LICENSE, MULTI_TENANT flags
+- PHP, TS_BACKEND, FRONTEND, DOCKER, MAKEFILE, LICENSE, MULTI_TENANT flags
 
 ### Step 3: Load Standards (Step 0.5)
 

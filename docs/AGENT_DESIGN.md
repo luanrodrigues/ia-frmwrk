@@ -33,7 +33,7 @@ output_schema:
       required: true
 ```
 
-**Used by:** `bee:backend-engineer-typescript`, `frontend-bff-engineer-typescript`, `bee:devops-engineer`, `bee:qa-analyst`, `bee:sre`, `finops-automation`
+**Used by:** `bee:backend-engineer-typescript`, `frontend-bff-engineer-typescript`, `bee:qa-analyst`, `bee:sre`, `finops-automation`
 
 ---
 
@@ -205,7 +205,6 @@ All bee-dev-team agents support Standards Compliance:
 | Agent | Standards Source | Categories Checked |
 |-------|------------------|-------------------|
 | `bee:backend-engineer-typescript` | `typescript.md` | Type Safety, Error Handling, Validation |
-| `bee:devops-engineer` | `devops.md` | Dockerfile, docker-compose, CI/CD |
 | `frontend-bff-engineer-typescript` | `frontend.md` | Component patterns, State management |
 | `bee:frontend-designer` | `frontend.md` | Accessibility, Design patterns |
 | `bee:qa-analyst` | `qa.md` | Test coverage, Test patterns |
@@ -230,9 +229,9 @@ No migration actions required.
 
 | Category | Current Pattern | Expected Pattern | Status | File/Location |
 |----------|----------------|------------------|--------|---------------|
-| Error Handling | Using panic() | Return error | Non-Compliant | handler.go:45 |
-| Logging | Uses fmt.Println | lib-commons/zap | Non-Compliant | service/*.go |
-| Config | os.Getenv direct | SetConfigFromEnvVars() | Non-Compliant | config.go:15 |
+| Error Handling | Using die() | throw new Exception() | Non-Compliant | UserController.php:45 |
+| Logging | Uses echo/var_dump | Log::info() / Monolog | Non-Compliant | app/Services/*.php |
+| Config | $_ENV direct | config() / env() helper | Non-Compliant | config/app.php:15 |
 
 ### Compliance Summary
 - **Total Violations:** 3
@@ -244,15 +243,14 @@ No migration actions required.
 ### Required Changes for Compliance
 
 1. **Error Handling Migration**
-   - Replace: `panic("error message")`
-   - With: `return fmt.Errorf("context: %w", err)`
-   - Files affected: handler.go, service.go
+   - Replace: `die("error message")`
+   - With: `throw new \RuntimeException("error message")`
+   - Files affected: UserController.php, OrderService.php
 
 2. **Logging Migration**
-   - Replace: `fmt.Println("debug info")`
-   - With: `logger.Info("debug info", zap.String("key", "value"))`
-   - Import: `import "github.com/LerianStudio/lib-commons/zap"`
-   - Files affected: internal/service/*.go
+   - Replace: `echo "debug info"`
+   - With: `Log::info("debug info", ['key' => 'value'])`
+   - Files affected: app/Services/*.php
 ```
 
 ### Cross-References

@@ -859,8 +859,8 @@ State is persisted to `{state_path}` (either `docs/bee:dev-cycle/current-cycle.j
 {
   "check": "docker_build",
   "status": "FAIL",
-  "error": "COPY failed: file not found in build context: go.sum",
-  "suggestion": "Ensure go.sum exists and is not in .dockerignore"
+  "error": "COPY failed: file not found in build context: composer.lock",
+  "suggestion": "Ensure composer.lock exists and is not in .dockerignore"
 }
 ```
 
@@ -1724,7 +1724,7 @@ implementation_input = {
   requirements: state.current_unit.acceptance_criteria,
 
   // REQUIRED - detected from project
-  language: state.current_unit.language,  // "go" | "typescript" | "python"
+  language: state.current_unit.language,  // "php" | "typescript" | "python"
   service_type: state.current_unit.service_type,  // "api" | "worker" | "batch" | "cli" | "frontend" | "bff"
 
   // OPTIONAL - additional context
@@ -1858,8 +1858,8 @@ testing_input = {
   unit_id: state.current_unit.id,
   acceptance_criteria: state.current_unit.acceptance_criteria,  // list of ACs to test
   implementation_files: agent_outputs.implementation.files_changed,
-  language: state.current_unit.language,  // "go" | "typescript" | "python"
-  
+  language: state.current_unit.language,  // "php" | "typescript" | "python"
+
   // OPTIONAL - additional context
   coverage_threshold: 85,  // Bee minimum, PROJECT_RULES.md can raise
   gate0_handoff: agent_outputs.implementation,  // full Gate 0 output
@@ -1999,7 +1999,7 @@ fuzz_testing_input = {
   // REQUIRED - from current execution unit
   unit_id: state.current_unit.id,
   implementation_files: agent_outputs.implementation.files_changed,
-  language: state.current_unit.language,  // "go" | "typescript"
+  language: state.current_unit.language,  // "php" | "typescript"
 
   // OPTIONAL - additional context
   gate1_handoff: agent_outputs.unit_testing  // full Gate 1 output

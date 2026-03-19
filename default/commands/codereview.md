@@ -18,7 +18,7 @@ Gather the required context first:
 - BASE_SHA: Base commit for comparison (if applicable)
 - HEAD_SHA: Head commit for comparison (if applicable)
 - DESCRIPTION: Additional context about the changes
-- LANGUAGES: Go, TypeScript, or both (for bee:nil-safety-reviewer)
+- LANGUAGES: PHP, TypeScript, or both (for bee:nil-safety-reviewer)
 
 Then dispatch all 6 reviewers:
 
@@ -62,7 +62,7 @@ Task tool #5 (bee:nil-safety-reviewer):
   description: "Review nil/null pointer safety"
   prompt: |
     [Same parameters as above]
-    LANGUAGES: [Go|TypeScript|both]
+    LANGUAGES: [PHP|TypeScript|both]
     Focus: Nil sources, propagation paths, missing guards.
 
 Task tool #6 (bee:consequences-reviewer):

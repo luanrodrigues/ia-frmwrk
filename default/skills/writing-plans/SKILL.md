@@ -106,7 +106,7 @@ Each task MUST include:
 |--------|------|-------|
 | `backend` | API endpoints, services, data layer, CLI | `bee:backend-engineer-{typescript,php}` |
 | `frontend` | UI components, pages, BFF routes | See [Frontend Tasks (api_pattern aware)](#frontend-tasks-api_pattern-aware) |
-| `shared` | CI/CD, configs, docs, cross-module | `bee:devops-engineer` or `bee:general-purpose` |
+| `shared` | CI/CD, configs, docs, cross-module | `bee:sre` or `bee:general-purpose` |
 
 **Working Directory Resolution:**
 
@@ -171,7 +171,6 @@ def is_bff_task(task):
 
 | Task Type | Agent |
 |-----------|-------|
-| Infra/CI/CD | `bee:devops-engineer` |
 | Testing | `bee:qa-analyst` |
 | Reliability | `bee:sre` |
 | Fallback | `bee:general-purpose` |

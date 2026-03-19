@@ -265,14 +265,14 @@ Use this matrix to quickly determine the appropriate exploration depth:
 
 ```bash
 # Find entry points
-**/{main,index,app,server}.{ts,js,go,py}
+**/{main,index,app,server}.{ts,js,php}
 
 # Find configuration
 **/{config,settings,env}*.{json,yaml,yml,toml}
 
 # Find tests (reveal behavior)
-**/*.{test,spec}.{ts,js,go}
-**/*_test.go
+**/*.{test,spec}.{ts,js}
+**/*Test.php
 
 # Find types/models (understand domain)
 **/types/**/*
@@ -317,16 +317,16 @@ Grep: pattern="(TODO|FIXME|HACK|XXX):"
 
 ```
 # Repository structure - use Glob tool
-Glob: pattern="**/*.go"              # Find all Go files
+Glob: pattern="**/*.php"             # Find all PHP files
 Glob: pattern="**/*.{ts,tsx}"        # Find all TypeScript files
 Glob: pattern="**/package.json"      # Find all package.json files
 
 # File content - use Read tool
 Read: file_path="package.json"       # Read specific file
-Read: file_path="go.mod"             # Read dependencies
+Read: file_path="composer.json"      # Read PHP dependencies
 
 # Content search - use Grep tool (ripgrep)
-Grep: pattern="TODO|FIXME" glob="**/*.go"  # Search with file filter
+Grep: pattern="TODO|FIXME" glob="**/*.php"  # Search with file filter
 ```
 
 ### Bash Commands (Git & System Only)

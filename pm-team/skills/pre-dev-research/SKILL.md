@@ -109,7 +109,7 @@ topology:
   modules:  # Only if monorepo or multi-repo
     backend:
       path: {path}
-      language: golang | typescript
+      language: php | typescript
     frontend:
       path: {path}
       framework: nextjs | react | vue

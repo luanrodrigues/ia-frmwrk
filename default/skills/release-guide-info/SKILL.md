@@ -424,7 +424,7 @@ From the diff, identify:
 
 **2) What Changed / O que mudou**
 - Bullet list with concrete changes
-- Include `file:line` references (e.g., `pkg/mmodel/balance.go:332-335`)
+- Include `file:line` references (e.g., `app/Models/Balance.php:332-335`)
 - Show key code snippets if they clarify behavior
 
 **3) Why It Changed / Por que mudou**

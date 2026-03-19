@@ -112,14 +112,13 @@ Backend-only features do not require design validation. Proceed directly to tech
 |----------|-----|---------|
 | **typescript.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/typescript.md` | TS patterns, async |
 | **frontend.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md` | React, Next.js, a11y |
-| **devops.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/devops.md` | Docker, CI/CD |
 | **sre.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/sre.md` | Health checks, logging |
 
 | Tech Stack | Load |
 |------------|------|
-| TypeScript Backend | typescript.md + devops.md + sre.md |
-| TypeScript Frontend | frontend.md + devops.md |
-| Full-Stack TypeScript | typescript.md + frontend.md + devops.md + sre.md |
+| TypeScript Backend | typescript.md + sre.md |
+| TypeScript Frontend | frontend.md |
+| Full-Stack TypeScript | typescript.md + frontend.md + sre.md |
 
 ### Step 0.3: Read PROJECT_RULES.md
 
@@ -162,7 +161,7 @@ This metadata flows to Gates 4-6.
 System architecture style (patterns, not products), component design with responsibilities, data architecture (ownership, flows - conceptual), API design (contracts, not protocols), security architecture (layers, threat model), integration patterns (sync/async, not tools), performance targets, deployment topology (logical)
 
 ### ❌ NEVER Include
-Technology products (PostgreSQL, Redis, Kafka), framework versions (Fiber v2, React 18), language specifics (Go 1.24, Node.js 20), cloud services (AWS RDS, Azure Functions), packages (bcrypt, zod, prisma), container orchestration (Kubernetes, ECS), CI/CD details, IaC specifics
+Technology products (PostgreSQL, Redis, Kafka), framework versions (Laravel 11, React 18), language specifics (PHP 8.3, Node.js 20), cloud services (AWS RDS, Azure Functions), packages (bcrypt, zod, prisma), container orchestration (Kubernetes, ECS), CI/CD details, IaC specifics
 
 ### Technology Abstraction Rules
 
@@ -195,7 +194,7 @@ Technology products (PostgreSQL, Redis, Kafka), framework versions (Fiber v2, Re
 If you catch yourself writing any of these in a TRD, **STOP**:
 
 - Specific product names with version numbers
-- Package manager commands (npm install, go get, pip install)
+- Package manager commands (npm install, composer require, pip install)
 - Cloud provider service names (RDS, Lambda, Cloud Run, etc.)
 - Framework-specific terms (Fiber middleware, React hooks, Express routers)
 - Container/orchestration specifics (Docker, K8s, ECS)
@@ -221,7 +220,7 @@ If you catch yourself writing any of these in a TRD, **STOP**:
 
 | Violation | Wrong | Correct |
 |-----------|-------|---------|
-| **Tech in Architecture** | `Language: Go 1.24+, Framework: Fiber v2.52+, Database: PostgreSQL 16` | `Style: Modular Monolith, Pattern: Hexagonal, Data Tier: Relational DB, Key-value store, Object storage` |
+| **Tech in Architecture** | `Language: PHP 8.3+, Framework: Laravel 11+, Database: PostgreSQL 16` | `Style: Modular Monolith, Pattern: Hexagonal, Data Tier: Relational DB, Key-value store, Object storage` |
 | **Framework in Components** | `Fiber middleware for JWT, bcrypt for passwords, passport.js for OAuth2` | `Auth Component: Purpose, Inbound (HTTP endpoints), Outbound (persistence, notifications), Security (token-based, industry-standard hashing)` |
 | **Cloud Services in Deployment** | `Compute: AWS ECS Fargate, Database: AWS RDS, Cache: ElastiCache` | `Compute: Container-based stateless, Data Tier: Managed DB with backup, Performance: Distributed caching, Traffic: Load balanced with health checks` |
 
@@ -707,9 +706,9 @@ This skill REQUIRES loading Bee Standards via WebFetch as part of Step 0 (Tech S
 
 | Tech Stack | Standards to Load via WebFetch |
 |------------|-------------------------------|
-| TypeScript Backend | typescript.md + devops.md + sre.md |
-| TypeScript Frontend | frontend.md + devops.md |
-| Full-Stack TypeScript | typescript.md + frontend.md + devops.md + sre.md |
+| TypeScript Backend | typescript.md + sre.md |
+| TypeScript Frontend | frontend.md |
+| Full-Stack TypeScript | typescript.md + frontend.md + sre.md |
 
 **MUST also** read PROJECT_RULES.md from `docs/PROJECT_RULES.md` (or `docs/STANDARDS.md` for legacy projects).
 

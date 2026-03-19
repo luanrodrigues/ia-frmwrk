@@ -179,7 +179,7 @@ Dispatch all six reviewer subagents in **parallel** for fast, comprehensive feed
 2. **bee:business-logic-reviewer** - Domain correctness, business rules, edge cases
 3. **bee:security-reviewer** - Vulnerabilities, authentication, OWASP risks
 4. **bee:test-reviewer** - Test quality, coverage, edge cases, anti-patterns
-5. **bee:nil-safety-reviewer** - Nil/null pointer safety for Go and TypeScript
+5. **bee:nil-safety-reviewer** - Nil/null pointer safety for PHP and TypeScript
 6. **bee:consequences-reviewer** - Ripple effects, caller chain impact, downstream consequences
 
 **Core principle:** All 6 reviewers run simultaneously in a single message with 6 Task tool calls.
@@ -518,7 +518,7 @@ Task:
     **Unit ID:** [unit_id]
     **Base SHA:** [base_sha]
     **Head SHA:** [head_sha]
-    **Languages:** [Go|TypeScript|both - detect from files]
+    **Languages:** [PHP|TypeScript|both - detect from files]
 
     ## What Was Implemented
     [implementation_summary]
@@ -544,8 +544,8 @@ Task:
     ## Your Focus
     - Nil/null pointer risks in changed code
     - Missing nil guards before dereference
-    - Map access without ok check (Go)
-    - Type assertions without ok check (Go)
+    - Null dereference without isset/null check (PHP)
+    - Unsafe nullable type access (PHP)
     - Optional chaining misuse (TypeScript)
     - Error-then-use patterns
 
@@ -1099,10 +1099,10 @@ IF gate0_handoff.subtasks exists AND gate0_handoff.subtasks.length > 0:
   │ Detected [N] subtasks. Will validate each separately:          │
   │                                                                 │
   │   1. [subtask-1-id]: [subtask-1-name]                          │
-  │      Files: [file1.go, file2.go]                               │
+  │      Files: [file1.php, file2.php]                             │
   │                                                                 │
   │   2. [subtask-2-id]: [subtask-2-name]                          │
-  │      Files: [file3.go, file4.go]                               │
+  │      Files: [file3.php, file4.php]                             │
   │                                                                 │
   │   ... (up to N subtasks)                                       │
   │                                                                 │
@@ -1259,20 +1259,20 @@ AFTER ALL UNITS VALIDATED:
 ## Unit: [subtask-1-id] - [subtask-1-name]
 **Validated:** [timestamp]
 **Status:** [PASS | ISSUES_FOUND]
-**Files:** [file1.go, file2.go]
+**Files:** [file1.php, file2.php]
 
 ### Issues Found
 | # | Severity | Description | File:Line | Recommendation | Status |
 |---|----------|-------------|-----------|----------------|--------|
-| 1 | CRITICAL | Race condition in handler | handler.go:45 | Use sync.Mutex | PENDING |
-| 2 | HIGH | Unchecked error return | repo.go:123 | Handle error | PENDING |
+| 1 | CRITICAL | Unhandled exception in controller | UserController.php:45 | Add try/catch | PENDING |
+| 2 | HIGH | Unchecked null return | UserRepository.php:123 | Handle null | PENDING |
 
 ---
 
 ## Unit: [subtask-2-id] - [subtask-2-name]
 **Validated:** [timestamp]
 **Status:** PASS
-**Files:** [file3.go]
+**Files:** [file3.php]
 
 ### Issues Found
 _No issues found._
@@ -1309,36 +1309,36 @@ IF coderabbit_results.overall_status == "ISSUES_FOUND":
   │ UNIT: [subtask-1] - [subtask name]                             │
   │ ───────────────────────────────────────────────────────────────│
   │ Issue #1 [CRITICAL]                                            │
-  │   Description: Race condition in concurrent request handler    │
-  │   File: src/handler.go:45                                      │
+  │   Description: Unhandled exception in controller               │
+  │   File: src/UserController.php:45                              │
   │   Code Context:                                                │
-  │     43 | func (h *Handler) Process(ctx context.Context) {      │
-  │     44 |     h.counter++  // ← NOT THREAD-SAFE                 │
-  │     45 |     data := h.sharedMap[key]                          │
-  │   Why it matters: Multiple goroutines can corrupt shared state │
-  │   Recommendation: Use sync.Mutex or atomic operations          │
+  │     43 | public function store(Request $request) {             │
+  │     44 |     $user = $this->service->create($request->all());  │
+  │     45 |     return response()->json($user);                   │
+  │   Why it matters: Exception propagates uncaught to client      │
+  │   Recommendation: Wrap in try/catch, return proper response    │
   │                                                                 │
   │ Issue #2 [HIGH]                                                │
-  │   Description: Unchecked error return from database query      │
-  │   File: src/repo.go:123                                        │
+  │   Description: Unchecked null return from repository           │
+  │   File: src/UserRepository.php:123                             │
   │   Code Context:                                                │
-  │     121 | func (r *Repo) GetUser(id string) (*User, error) {   │
-  │     122 |     result, _ := r.db.Query(query, id)  // ← IGNORED │
-  │     123 |     return parseUser(result), nil                    │
-  │   Why it matters: Silent failures can cause data corruption    │
-  │   Recommendation: Check and handle the error properly          │
+  │     121 | public function findById(int $id): User {            │
+  │     122 |     $user = User::find($id);  // ← CAN BE NULL       │
+  │     123 |     return $user->toArray(); // ← NULL DEREFERENCE   │
+  │   Why it matters: Null dereference causes fatal error          │
+  │   Recommendation: Check null before accessing properties       │
   │                                                                 │
   │ UNIT: [subtask-2] - [subtask name]                             │
   │ ───────────────────────────────────────────────────────────────│
   │ Issue #3 [HIGH]                                                │
   │   Description: SQL injection vulnerability                     │
-  │   File: src/query.go:89                                        │
+  │   File: src/ReportQuery.php:89                                 │
   │   Code Context:                                                │
-  │     87 | func BuildQuery(userInput string) string {            │
-  │     88 |     return fmt.Sprintf("SELECT * FROM users WHERE     │
-  │     89 |            name = '%s'", userInput)  // ← INJECTABLE  │
+  │     87 | public function buildQuery(string $input): string {   │
+  │     88 |     return "SELECT * FROM users WHERE                  │
+  │     89 |            name = '$input'"; // ← INJECTABLE          │
   │   Why it matters: Attacker can execute arbitrary SQL           │
-  │   Recommendation: Use parameterized queries                    │
+  │   Recommendation: Use parameterized queries / Query Builder    │
   │                                                                 │
   └─────────────────────────────────────────────────────────────────┘
   
@@ -1422,11 +1422,10 @@ IF coderabbit_results.overall_status == "ISSUES_FOUND":
             → Identify the correct agent for re-dispatch:
               - Check gate0_handoff.implementation_agent (if available)
               - OR infer from file type:
-                - *.go files → general-purpose
+                - *.php files → bee:backend-engineer-php
                 - *.ts files (backend) → bee:backend-engineer-typescript
                 - *.ts/*.tsx files (frontend) → bee:frontend-engineer
-                - *.yaml/*.yml (infra) → bee:devops-engineer
-            
+
             → Re-dispatch ONLY unresolved issues to the correct agent:
             
             Task:
@@ -1496,14 +1495,14 @@ IF coderabbit_results.overall_status == "ISSUES_FOUND":
         │ ┌──────────────────────────────────────────────────────────┐   │
         │ │ UNIT: [subtask-1]                                        │   │
         │ ├──────────────────────────────────────────────────────────┤   │
-        │ │ #1 [CRITICAL] Race condition in handler                  │   │
-        │ │    File: src/handler.go:45                               │   │
-        │ │    Fix: Added mutex lock                                 │   │
+        │ │ #1 [CRITICAL] Unhandled exception in controller          │   │
+        │ │    File: src/UserController.php:45                       │   │
+        │ │    Fix: Added try/catch with proper response             │   │
         │ │    Status: ✅ RESOLVED                                   │   │
-        │ │    Evidence: Test race_test.go passes                    │   │
+        │ │    Evidence: Test UserControllerTest.php passes          │   │
         │ ├──────────────────────────────────────────────────────────┤   │
-        │ │ #2 [HIGH] Unchecked error return                         │   │
-        │ │    File: src/handler.go:67                               │   │
+        │ │ #2 [HIGH] Unchecked null return                          │   │
+        │ │    File: src/UserRepository.php:67                       │   │
         │ │    Fix: Added error check with proper handling           │   │
         │ │    Status: ✅ RESOLVED                                   │   │
         │ │    Evidence: Error path verified in unit test            │   │
@@ -1650,23 +1649,23 @@ IF CodeRabbit found no issues:
 #### Unit: [subtask-2]
 | # | Severity | Description | File:Line | Code Context | Why It Matters | Recommendation |
 |---|----------|-------------|-----------|--------------|----------------|----------------|
-| 1 | CRITICAL | Race condition | handler.go:45 | `h.counter++` not thread-safe | Corrupts shared state | Use sync.Mutex |
-| 2 | HIGH | Unchecked error | repo.go:123 | `result, _ := r.db.Query()` | Silent failures | Handle error |
-| 3 | HIGH | SQL injection | query.go:89 | `fmt.Sprintf("...%s", input)` | Security breach | Parameterized query |
+| 1 | CRITICAL | Unhandled exception | UserController.php:45 | `service->create()` uncaught | Fatal error exposed | Add try/catch |
+| 2 | HIGH | Null dereference | UserRepository.php:123 | `User::find()` can return null | Fatal error | Check null before use |
+| 3 | HIGH | SQL injection | ReportQuery.php:89 | `"...name = '$input'"` | Security breach | Parameterized query |
 
 ### Issue-Level Validation (REQUIRED after fixes are applied)
 
 #### Unit: [subtask-2]
 | # | Severity | Description | File:Line | Fix Applied | Status | Evidence |
 |---|----------|-------------|-----------|-------------|--------|----------|
-| 1 | CRITICAL | Race condition in concurrent handler | handler.go:45 | Added mutex lock around shared state | ✅ RESOLVED | race_test.go passes |
-| 2 | HIGH | Unchecked error from DB query | repo.go:123 | Added error check with rollback | ✅ RESOLVED | Error path tested |
-| 3 | HIGH | SQL injection vulnerability | query.go:89 | Used parameterized query | ✅ RESOLVED | Security test added |
+| 1 | CRITICAL | Unhandled exception in controller | UserController.php:45 | Added try/catch with proper response | ✅ RESOLVED | UserControllerTest.php passes |
+| 2 | HIGH | Null dereference from repository | UserRepository.php:123 | Added null check before access | ✅ RESOLVED | Null path tested |
+| 3 | HIGH | SQL injection vulnerability | ReportQuery.php:89 | Used Query Builder bindings | ✅ RESOLVED | Security test added |
 
 #### Unit: [subtask-3] (if applicable)
 | # | Severity | Description | File:Line | Fix Applied | Status | Evidence |
 |---|----------|-------------|-----------|-------------|--------|----------|
-| 1 | HIGH | Missing input validation | api.go:34 | Added validation middleware | ✅ RESOLVED | Fuzz test passes |
+| 1 | HIGH | Missing input validation | UserRequest.php:34 | Added Form Request validation | ✅ RESOLVED | Validation test passes |
 
 ### Overall Summary by Severity
 | Severity | Found | Resolved | Remaining | Action |

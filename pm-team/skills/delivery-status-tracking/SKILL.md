@@ -203,7 +203,7 @@ If pattern matching finds <50% of expected work:
    Search all branches. Report which files/commits implement each item."
 
 3. Agent returns:
-   - Files found: internal/database/pool.go, migrations/001_users.sql
+   - Files found: app/Database/Pool.php, migrations/001_users.sql
    - Commits: abc123, def456, ghi789
    - Branches: feat/database-layer, feat/user-model
    - Completion: 4 of 4 scope items found (100%)
@@ -221,10 +221,10 @@ For task T-001:
     - Item 5: Error handling
 
   Found in repository (via agent analysis):
-    ✅ Item 1: internal/database/pool.go (commit abc123)
+    ✅ Item 1: app/Database/Pool.php (commit abc123)
     ✅ Item 2: migrations/001_users.sql (commit def456)
-    ✅ Item 3: internal/repository/user_repository.go (commit ghi789)
-    ✅ Item 4: internal/database/tx.go (commit jkl012)
+    ✅ Item 3: app/Repositories/UserRepository.php (commit ghi789)
+    ✅ Item 4: app/Database/Transaction.php (commit jkl012)
     ⏳ Item 5: Partial (basic errors, missing custom types)
 
   Completion: 4.5 of 5 items = 90%
@@ -277,8 +277,8 @@ For task T-001:
 **Scope Analysis (via {specialized-agent}):**
 ```
 Expected scope (from tasks.md):
-✅ Scope item 1 → Found in: path/file.go (commit hash)
-⏳ Scope item 2 → Partial in: path/file.go (missing X)
+✅ Scope item 1 → Found in: path/file.php (commit hash)
+⏳ Scope item 2 → Partial in: path/file.php (missing X)
 ⏸️ Scope item 3 → Not found
 
 Completion: X of Y scope items = Z%

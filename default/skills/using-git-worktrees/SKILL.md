@@ -64,7 +64,7 @@ git worktree add "$path" -b "$BRANCH_NAME" && cd "$path"
 [ -f pyproject.toml ] && poetry install
 [ -f composer.json ] && composer install
 
-# 4. Verify clean baseline (npm test / cargo test / pytest / go test ./...)
+# 4. Verify clean baseline (npm test / cargo test / pytest / php artisan test)
 ```
 
 **If tests fail:** Report failures, ask whether to proceed or investigate.

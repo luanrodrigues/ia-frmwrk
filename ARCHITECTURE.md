@@ -130,7 +130,6 @@ default/agents/
 ```
 dev-team/agents/
 ├── backend-engineer-typescript.md     # TypeScript backend specialist (`bee:backend-engineer-typescript`)
-├── devops-engineer.md                 # DevOps specialist (`bee:devops-engineer`)
 ├── frontend-bff-engineer-typescript.md # BFF specialist (`bee:frontend-bff-engineer-typescript`)
 ├── frontend-designer.md               # Visual design specialist (`bee:frontend-designer`)
 ├── frontend-engineer.md               # Frontend engineer (`bee:frontend-engineer`)
@@ -202,7 +201,6 @@ All bee-dev-team agents include a `## Standards Compliance` section in their out
 **Affected Agents:**
 
 - `bee:backend-engineer-typescript` → loads `typescript.md`
-- `bee:devops-engineer` → loads `devops.md`
 - `bee:frontend-bff-engineer-typescript` → loads `typescript.md`
 - `bee:frontend-designer` → loads `frontend.md`
 - `bee:qa-analyst` → loads `testing-*.md` (unit/fuzz/property/integration/chaos)
@@ -218,7 +216,7 @@ All bee-dev-team agents include a `## Standards Compliance` section in their out
 
 | Category | Current Pattern | Expected Pattern | Status           | File/Location |
 | -------- | --------------- | ---------------- | ---------------- | ------------- |
-| Logging  | fmt.Println     | lib-commons/zap  | ⚠️ Non-Compliant | service/\*.go |
+| Logging  | echo/error_log  | Log::info()      | ⚠️ Non-Compliant | app/Services/\*.php |
 
 ### Compliance Summary
 

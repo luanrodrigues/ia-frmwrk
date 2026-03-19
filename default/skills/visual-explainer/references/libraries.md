@@ -502,7 +502,7 @@ Use for code blocks that need language-aware syntax coloring. Required for non-d
 **Selective language loading** (smaller bundle — load only what the page needs):
 ```html
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/highlight.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/go.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/php.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/typescript.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/css.min.js"></script>
 <script>hljs.highlightAll();</script>
@@ -560,8 +560,8 @@ const instance = new FileDiff({
 });
 
 instance.render({
-  oldFile: { name: 'handler.go', contents: oldCode },
-  newFile: { name: 'handler.go', contents: newCode },
+  oldFile: { name: 'UserController.php', contents: oldCode },
+  newFile: { name: 'UserController.php', contents: newCode },
   containerWrapper: document.getElementById('diff-container'),
 });
 ```
@@ -621,7 +621,7 @@ instance.setThemeType('dark');  // or 'light' or 'system'
 
 ### Language Detection
 
-Language is auto-detected from filename extension (`handler.go` → Go). Override with `lang` property:
+Language is auto-detected from filename extension (`UserController.php` → PHP). Override with `lang` property:
 ```js
 { name: 'config', contents: '...', lang: 'yaml' }
 ```

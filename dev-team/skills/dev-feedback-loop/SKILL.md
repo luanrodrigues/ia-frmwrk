@@ -280,7 +280,6 @@ The state file now contains structured error/issue data for direct analysis:
 # From state file, extract standards compliance from all gates:
 all_standards_gaps = [
   ...agent_outputs.implementation.standards_compliance.gaps,
-  ...agent_outputs.devops.standards_compliance.gaps,
   ...agent_outputs.testing.standards_compliance.gaps,
   ...agent_outputs.review.code_reviewer.standards_compliance.gaps,
   ...agent_outputs.review.business_logic_reviewer.standards_compliance.gaps,
@@ -288,7 +287,6 @@ all_standards_gaps = [
 ]
 
 # Gate-specific errors/issues:
-devops_errors = agent_outputs.devops.verification_errors
 test_failures = agent_outputs.testing.failures
 uncovered_acs = agent_outputs.testing.uncovered_criteria
 review_issues = [
@@ -309,7 +307,6 @@ overall_compliance_rate = total_compliant / total_standards_sections * 100
 # Total extra iterations across all gates:
 extra_iterations = (
   max(0, implementation.iterations - 1) +
-  max(0, devops.iterations - 1) +
   max(0, testing.iterations - 1) +
   max(0, review.iterations - 1)
 )
@@ -330,7 +327,6 @@ Read `agent_outputs` from state file (`docs/bee:dev-cycle/current-cycle.json` or
 ```text
 Agents to analyze (if executed, not null):
   - implementation: bee:backend-engineer-php
-  - devops: bee:devops-engineer
   - testing: bee:qa-analyst
   - review: bee:code-reviewer, bee:business-logic-reviewer, bee:security-reviewer
 ```

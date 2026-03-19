@@ -100,7 +100,7 @@ For each changed function, type, interface, or configuration:
 ### Impact Trace Template
 
 ```markdown
-### Impact Trace: [ChangedSymbol] at file.go:123
+### Impact Trace: [ChangedSymbol] at UserService.php:123
 
 **What Changed:**
 - Before: [previous behavior/signature]
@@ -111,16 +111,16 @@ For each changed function, type, interface, or configuration:
 
 | # | Caller | Location | Impact | Status |
 |---|--------|----------|--------|--------|
-| 1 | HandleRequest | api/handler.go:45 | Uses return value directly | SAFE - handles new type correctly |
-| 2 | ProcessBatch | batch/runner.go:89 | Assumes old error type | AT_RISK - error handling may not catch new error variant |
-| 3 | MigrateData | migration/v2.go:34 | Calls with deprecated parameter | BROKEN - parameter removed in change |
+| 1 | HandleRequest | Http/Controllers/UserController.php:45 | Uses return value directly | SAFE - handles new type correctly |
+| 2 | ProcessBatch | Jobs/BatchRunner.php:89 | Assumes old error type | AT_RISK - error handling may not catch new error variant |
+| 3 | MigrateData | database/migrations/Migration.php:34 | Calls with deprecated parameter | BROKEN - parameter removed in change |
 
 **Consumers Found:** [N] consumers
 
 | # | Consumer | Location | Relationship | Status |
 |---|----------|----------|-------------|--------|
-| 1 | OrderService | order/service.go:12 | Embeds changed struct | AT_RISK - new field may need initialization |
-| 2 | ReportGenerator | report/gen.go:78 | Reads shared config key | SAFE - config key unchanged |
+| 1 | OrderService | app/Services/OrderService.php:12 | Embeds changed struct | AT_RISK - new field may need initialization |
+| 2 | ReportGenerator | app/Services/ReportGenerator.php:78 | Reads shared config key | SAFE - config key unchanged |
 
 **Verdict:** [N] SAFE | [N] AT_RISK | [N] BROKEN
 ```
@@ -374,7 +374,7 @@ MUST follow these documentation rules:
 
 ## Impact Trace Analysis
 
-### Changed Symbol: [name] at file.go:123-145
+### Changed Symbol: [name] at UserService.php:123-145
 **What Changed:** [signature/behavior delta]
 **Callers Found:** [N] across [M] files
 **Consumers Found:** [N]
@@ -434,29 +434,29 @@ MUST follow these documentation rules:
 ## Common Consequences Anti-Patterns
 
 ### Silent Contract Violation
-```go
-// ❌ Changed return type from (User, error) to (UserDTO, error)
-// 15 callers across 8 files still expect User struct
-func GetUser(id string) (UserDTO, error) { ... }
+```php
+// ❌ Changed return type from User to UserDTO
+// 15 callers across 8 files still expect User model
+public function getUser(string $id): UserDTO { ... }
 
-// Caller at order/service.go:45 - BROKEN
-user, err := GetUser(id)
-user.InternalField  // ← Field doesn't exist on UserDTO
+// Caller at app/Services/OrderService.php:45 - BROKEN
+$user = $this->getUser($id);
+$user->internalField;  // ← Field doesn't exist on UserDTO
 ```
 
 ### Behavioral Change Without Caller Update
-```go
-// ❌ Changed from returning nil on not-found to returning error
-// Callers that check `if user == nil` now get unexpected error
-func FindUser(id string) (*User, error) {
-    // Before: return nil, nil (not found)
-    // After: return nil, ErrNotFound
+```php
+// ❌ Changed from returning null on not-found to throwing exception
+// Callers that check `if ($user === null)` now get unexpected exception
+public function findUser(string $id): ?User
+{
+    // Before: return null; (not found)
+    // After: throw new UserNotFoundException();
 }
 
-// Caller at handler.go:89 - BROKEN
-user, err := FindUser(id)
-if err != nil { return 500 }  // ← Now returns 500 instead of 404
-if user == nil { return 404 }  // ← Never reached for not-found
+// Caller at app/Http/Controllers/UserController.php:89 - BROKEN
+$user = $this->findUser($id);
+if ($user === null) { return response(null, 404); }  // ← Never reached for not-found
 ```
 
 ### Config Key Rename Without Full Propagation
@@ -466,22 +466,22 @@ if user == nil { return 404 }  // ← Never reached for not-found
 database_host: "localhost"
 ```
 
-```go
-// Caller at monitoring/health.go:23 - BROKEN
-host := config.Get("db_host")  // ← Returns empty string now
+```php
+// Caller at app/Health/HealthCheck.php:23 - BROKEN
+$host = config('db_host');  // ← Returns null now
 ```
 
 ### Interface Behavioral Change
-```go
-// ❌ Changed Sort() to be stable sort instead of unstable
+```php
+// ❌ Changed sort() to be stable sort instead of unstable
 // Consumer relies on unstable sort for performance
-type Sorter interface {
-    Sort(items []Item) // behavioral change: now stable
+interface SorterInterface {
+    public function sort(array $items): array; // behavioral change: now stable
 }
 
-// Consumer at ranking/engine.go:56 - AT_RISK
-// Uses Sort() in hot path, stable sort is 2x slower
-sorter.Sort(candidates)  // ← Performance degradation
+// Consumer at app/Services/RankingEngine.php:56 - AT_RISK
+// Uses sort() in hot path, stable sort is 2x slower
+$sorted = $this->sorter->sort($candidates);  // ← Performance degradation
 ```
 
 ---

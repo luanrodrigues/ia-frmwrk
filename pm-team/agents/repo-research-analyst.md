@@ -56,7 +56,7 @@ Given a feature description, thoroughly search the codebase to find:
 
 **N/A for Research Agents**
 
-Research agents do NOT load implementation standards (e.g., Golang, TypeScript, Frontend standards). Research agents focus on discovering existing codebase patterns and conventions, not enforcing compliance.
+Research agents do NOT load implementation standards (e.g., PHP, TypeScript, Frontend standards). Research agents focus on discovering existing codebase patterns and conventions, not enforcing compliance.
 
 **What Research Agents DO Verify:**
 - File location accuracy (file:line references)
@@ -210,7 +210,7 @@ For EVERY pattern you find, document with exact location:
 
 ```
 Pattern: [description]
-Location: src/services/auth.go:142-156
+Location: app/Services/AuthService.php:142-156
 Relevance: [why this matters for the new feature]
 ```
 
@@ -286,7 +286,7 @@ Based on research findings:
 ## Critical Rules
 
 1. **NEVER guess file locations** - verify with Glob/Grep before citing
-2. **ALWAYS include line numbers** - `file.go:142` not just `file.go`
+2. **ALWAYS include line numbers** - `file.php:142` not just `file.php`
 3. **Search docs/solutions/ first** - knowledge base is highest priority
 4. **Read CLAUDE.md completely** - project conventions are mandatory
 5. **Document negative findings** - "no existing pattern found" is valuable info

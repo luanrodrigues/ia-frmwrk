@@ -468,7 +468,7 @@ For the frontend cycle, the 5 parallel reviewers are:
 | 4 | `bee:test-reviewer` | Test quality, coverage gaps, test patterns, assertion quality |
 | 5 | `bee:frontend-engineer` (review mode) | Accessibility compliance, frontend standards, component architecture |
 
-**NOTE:** The 5th reviewer slot uses `bee:frontend-engineer` in review mode instead of `bee:nil-safety-reviewer` (which is Go-specific). The frontend engineer reviews accessibility compliance and frontend standards adherence.
+**NOTE:** The 5th reviewer slot uses `bee:frontend-engineer` in review mode instead of `bee:nil-safety-reviewer` (which focuses on backend null-safety). The frontend engineer reviews accessibility compliance and frontend standards adherence.
 
 **All 5 reviewers MUST be dispatched in a single message with 5 parallel Task calls.**
 

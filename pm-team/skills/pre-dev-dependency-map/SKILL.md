@@ -53,7 +53,6 @@ Read `docs/pre-dev/{feature-name}/trd.md` and extract: `deployment.model`, `tech
 |----------|-----|---------|
 | **typescript.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/typescript.md` | TypeScript patterns |
 | **frontend.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/frontend.md` | Frontend patterns |
-| **devops.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/devops.md` | DevOps patterns |
 | **sre.md** | `https://raw.githubusercontent.com/luanrodrigues/ia-frmwrk/master/dev-team/docs/standards/sre.md` | Observability, logging |
 
 **Bee Standards** = coding patterns, observability, logging, error handling (shared across ALL projects)
@@ -156,9 +155,9 @@ If language cannot be auto-detected, use AskUserQuestion with tech stack options
 
 | Selection | Standards to Load |
 |-----------|-------------------|
-| TypeScript Backend | typescript.md + devops.md + sre.md |
-| TypeScript Frontend | frontend.md + devops.md |
-| Full-Stack TypeScript | typescript.md + frontend.md + devops.md + sre.md |
+| TypeScript Backend | typescript.md + sre.md |
+| TypeScript Frontend | frontend.md |
+| Full-Stack TypeScript | typescript.md + frontend.md + sre.md |
 
 **Validation Flow:** Standards loaded → Extract mandatory/prohibited/constraints → Check PROJECT_RULES.md → Validate each selection → Document compliance or justified deviations
 

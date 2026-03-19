@@ -56,7 +56,7 @@ Given a feature description, search external sources to find:
 
 **N/A for Research Agents**
 
-Research agents do NOT load implementation standards (e.g., Golang, TypeScript, Frontend standards). Research agents focus on external information gathering, not code compliance verification.
+Research agents do NOT load implementation standards (e.g., PHP, TypeScript, Frontend standards). Research agents focus on external information gathering, not code compliance verification.
 
 **What Research Agents DO Verify:**
 - Source credibility and recency
@@ -341,5 +341,5 @@ Always try Context7 before falling back to web search for framework docs.
 
 - Add year to queries for recent results: "jwt best practices 2025"
 - Use site: operator for authoritative sources: "site:engineering.fb.com"
-- Search GitHub with qualifiers: "authentication stars:>5000 language:go"
+- Search GitHub with qualifiers: "authentication stars:>5000 language:php"
 - Check multiple sources before recommending a practice

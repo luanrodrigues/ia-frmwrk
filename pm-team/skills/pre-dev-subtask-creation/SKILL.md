@@ -81,32 +81,29 @@ Placeholders: "...", "TODO", "implement here"; vague instructions: "update the s
 
 <cannot_skip>
 
-### ⛔ HARD GATE: lib-commons in Go Code Examples
+### ⛔ HARD GATE: Laravel Conventions in PHP Code Examples
 
-MUST: For Go projects, code examples use lib-commons instead of custom utilities.
+MUST: For PHP projects, code examples use Laravel conventions instead of custom utilities.
 
 See **[shared-patterns/code-example-standards.md](../shared-patterns/code-example-standards.md)** for:
-- Complete list of what lib-commons provides
+- Complete list of what Laravel provides
 - Forbidden patterns (custom loggers, config loaders, HTTP helpers)
-- Correct import patterns with `lib` prefix aliases
+- Correct usage patterns with Laravel facades and helpers
 - Anti-rationalization table
 
 **Quick Reference - DO NOT Create Custom:**
 
-| Category | Use lib-commons |
-|----------|-----------------|
-| Logging | `libLog "github.com/LerianStudio/lib-commons/v2/commons/log"` |
-| Config | `libCommons.SetConfigFromEnvVars()` |
-| HTTP | `libHTTP "github.com/LerianStudio/lib-commons/v2/commons/net/http"` |
-| Telemetry | `libOpentelemetry "github.com/LerianStudio/lib-commons/v2/commons/opentelemetry"` |
-| PostgreSQL | `libPostgres "github.com/LerianStudio/lib-commons/v2/commons/postgres"` |
+| Category | Use Laravel |
+|----------|-------------|
+| Logging | `Log::info()`, `Log::error()` facades |
+| Config | `config('app.key')`, `env('KEY', default)` helpers |
+| HTTP Client | `Http::get()`, `Http::post()` facades |
+| Validation | Form Request classes with `rules()` method |
+| Database | Eloquent ORM, Query Builder |
 
-MUST NOT: Create custom logger, config loader, or HTTP helper in subtasks—use lib-commons.
+MUST NOT: Create custom logger wrapper, manual config loader, or raw curl helpers—use Laravel.
 
-### ⛔ HARD GATE: Laravel Conventions in PHP Code Examples
-
-MUST: For PHP projects, code examples use Laravel conventions and dependency injection.
-
+**Additional Requirements:**
 - Use constructor injection, not `new SomeClass()` directly
 - Use Eloquent ORM, not raw SQL queries
 - Use Laravel's built-in helpers (config(), env(), etc.)
@@ -146,10 +143,10 @@ If you catch yourself writing any of these in a subtask, **STOP and rewrite**:
 - Steps longer than 5 minutes
 - Context dependencies: "you need to understand X"
 - No TDD cycle in implementation steps
-- Use `libZap.NewLogger()` instead of custom `func NewLogger()` (Go)
-- Use `libCommons.SetConfigFromEnvVars()` instead of scattered `os.Getenv()` (Go)
-- Use `libHTTP` utilities instead of custom `func JSONResponse()` (Go)
-- Check lib-commons first before creating files in `utils/`, `helpers/`, `pkg/common/` (Go)
+- Use `Log::info()` instead of custom `function logInfo()` (PHP)
+- Use `config()` / `env()` helpers instead of scattered `$_ENV['KEY']` (PHP)
+- Use Laravel Http facades instead of custom `function jsonResponse()` (PHP)
+- Check Laravel conventions first before creating files in `utils/`, `helpers/` (PHP)
 
 **When you catch yourself**: Expand the subtask until it's completely self-contained.
 
@@ -210,11 +207,11 @@ If they can't complete it with zero questions while following RED-GREEN-REFACTOR
 
 ## Standards Loading (MANDATORY)
 
-This skill creates implementation subtasks. While it does NOT require direct WebFetch of standards, subtasks MUST reference lib-commons patterns for Go projects.
+This skill creates implementation subtasks. While it does NOT require direct WebFetch of standards, subtasks MUST reference Laravel conventions for PHP projects.
 
-**For Go projects:** All code examples in subtasks MUST use lib-commons imports. See [shared-patterns/code-example-standards.md](../shared-patterns/code-example-standards.md) for required patterns.
+**For PHP projects:** All code examples in subtasks MUST use Laravel conventions and dependency injection. See [shared-patterns/code-example-standards.md](../shared-patterns/code-example-standards.md) for required patterns.
 
-**HARD GATE:** Subtasks with custom logger, config loader, or HTTP helper implementations are INVALID. Use lib-commons.
+**HARD GATE:** Subtasks with raw `$_ENV`, custom logger wrappers, or direct `new Service()` instantiation are INVALID. Use Laravel conventions.
 
 ---
 
@@ -227,7 +224,7 @@ This skill creates implementation subtasks. While it does NOT require direct Web
 | Subtask requires context not provided | STOP and add missing context to subtask | HIGH |
 | Step exceeds 5 minutes | STOP and break into smaller steps | MEDIUM |
 | Missing TDD cycle (no RED phase) | STOP and add failing test first | HIGH |
-| Go subtask uses custom logger instead of lib-commons | STOP and replace with lib-commons | HIGH |
+| PHP subtask uses custom logger instead of Laravel Log facade | STOP and replace with Laravel conventions | HIGH |
 
 ---
 
@@ -242,7 +239,7 @@ These requirements are NON-NEGOTIABLE:
 - MUST follow TDD cycle: RED (failing test) → GREEN (implementation) → REFACTOR
 - MUST include verification commands with expected output
 - MUST include rollback procedures
-- MUST use lib-commons for Go code examples (no custom utilities)
+- MUST use Laravel conventions for PHP code examples (no custom utility wrappers)
 
 ---
 

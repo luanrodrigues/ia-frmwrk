@@ -76,7 +76,7 @@ AI Agent via bee:dev-cycle has minimal but real overhead:
 
 **Process:**
 1. Tech stack detection from TRD
-2. Dispatch specialized agent (Go/TypeScript/React)
+2. Dispatch specialized agent (PHP/TypeScript/React)
 3. Agent analyzes scope and estimates per component
 4. Output: AI-agent-hours with confidence level
 

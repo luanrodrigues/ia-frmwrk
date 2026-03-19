@@ -201,7 +201,6 @@ Use when you need expert depth in specific domains:
 | --------------------------------------- | ---------------------------- | -------------------------------------------------- |
 | `bee:backend-engineer-typescript`      | TypeScript/Node.js backend   | Express, NestJS, Prisma, TypeORM, GraphQL          |
 | `bee:database-engineer`                | Database engineering         | PostgreSQL, MySQL, MongoDB, Redis, schema design, indexing, migration safety |
-| `bee:devops-engineer`                  | Infrastructure & CI/CD       | Docker, Kubernetes, Terraform, GitHub Actions      |
 | `bee:frontend-bff-engineer-typescript` | BFF & React/Next.js frontend | Next.js API Routes, Clean Architecture, DDD, React |
 | `bee:frontend-designer`                | Visual design & aesthetics   | Typography, motion, CSS, distinctive UI            |
 | `bee:frontend-engineer`                | General frontend development | React, TypeScript, CSS, component architecture     |
@@ -233,7 +232,7 @@ Use when you need expert depth in specific domains:
 
 | Category | Current     | Expected        | Status | Location      |
 | -------- | ----------- | --------------- | ------ | ------------- |
-| Logging  | fmt.Println | lib-commons/zap | ⚠️     | service/\*.go |
+| Logging  | echo/error_log | Log::info()    | ⚠️     | app/Services/\*.php |
 ```
 
 **Cross-references:** CLAUDE.md (Standards Compliance section), `dev-team/skills/dev-refactor/SKILL.md`
@@ -355,7 +354,6 @@ These enforce quality standards:
 | Deep codebase analysis            | `bee:codebase-explorer`                    |
 | TypeScript/Node.js backend        | `bee:backend-engineer-typescript`          |
 | Database design & optimization    | `bee:database-engineer`                    |
-| Infrastructure/DevOps             | `bee:devops-engineer`                      |
 | React/Next.js frontend & BFF      | `bee:frontend-bff-engineer-typescript`     |
 | General frontend development      | `bee:frontend-engineer`                    |
 | Visual design & aesthetics        | `bee:frontend-designer`                    |

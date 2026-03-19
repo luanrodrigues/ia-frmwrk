@@ -32,7 +32,7 @@ Guide completion of development work by presenting clear options and handling ch
 
 ### Step 1: Verify Tests
 
-Run `npm test / cargo test / pytest / go test ./...` **If tests fail:** Show failures, stop. Cannot proceed until tests pass.
+Run `npm test / cargo test / pytest / php artisan test` **If tests fail:** Show failures, stop. Cannot proceed until tests pass.
 
 ### Step 2: Determine Base Branch
 

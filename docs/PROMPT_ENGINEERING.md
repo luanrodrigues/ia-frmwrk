@@ -413,7 +413,7 @@ If any condition is true, STOP immediately and report blocker.
 ---
 
 <forbidden>
-- fmt.Println() in Go code
+- echo/print/var_dump() in PHP code (use Log facade)
 - console.log() in TypeScript
 - Direct source code editing by orchestrator
 </forbidden>
@@ -430,7 +430,7 @@ MUST use Task tool with specified agent and model.
 
 ---
 
-<parallel_dispatch agents="bee:backend-engineer-typescript, bee:qa-analyst, bee:devops-engineer, bee:sre">
+<parallel_dispatch agents="bee:backend-engineer-typescript, bee:qa-analyst, bee:sre">
 Analyze codebase against Bee standards. All agents receive same context:
 - Codebase Report: docs/bee:dev-refactor/{timestamp}/codebase-report.md
 - Project Rules: docs/PROJECT_RULES.md

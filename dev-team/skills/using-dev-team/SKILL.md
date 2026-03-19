@@ -1,12 +1,11 @@
 ---
 name: bee:using-dev-team
 description: |
-  16 specialist developer agents for backend (PHP), database, DevOps, frontend (React + Vue.js + React Native/Expo),
+  16 specialist developer agents for backend (PHP), database, frontend (React + Vue.js + React Native/Expo),
   design, UI implementation, QA (backend + frontend), and SRE. Dispatch when you need deep technology expertise.
 
 trigger: |
   - Need deep expertise for specific technology (PHP)
-  - Building infrastructure/CI-CD → bee:devops-engineer
   - Frontend with design focus → bee:frontend-designer
   - Frontend from product-designer specs → bee:ui-engineer
   - Frontend from product-designer specs (Vue.js) → bee:ui-engineer-vuejs
@@ -154,7 +153,6 @@ Use Task tool to dispatch appropriate specialist based on technology need.
 | ------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
 | **`bee:backend-engineer-php`**          | PHP Services, MySQL/MongoDB, Kafka/RabbitMQ, OAuth2/JWT, gRPC, concurrency                  | PHP services, ORM patterns, auth/authz, concurrency issues                              |
 | **`bee:database-engineer`**            | Schema design, indexing, query optimization, migration safety, replication, sharding, tuning | DB schema design, index strategy, migration planning, query optimization, scaling       |
-| **`bee:devops-engineer`**                  | Docker/Compose, Terraform/Helm, cloud infra, secrets management                                      | Containerization, local dev setup, IaC provisioning, Helm charts                      |
 | **`bee:frontend-bff-engineer-typescript`** | Next.js API Routes BFF, Clean/Hexagonal Architecture, DDD patterns, Inversify DI, repository pattern | BFF layer, Clean Architecture, DDD domains, API orchestration                         |
 | **`bee:frontend-designer`**                | Bold typography, color systems, animations, unexpected layouts, textures/gradients                   | Landing pages, portfolios, distinctive dashboards, design systems                     |
 | **`bee:ui-engineer`**                      | Wireframe-to-code, Design System compliance, UX criteria satisfaction, UI states implementation      | Implementing from product-designer specs (ux-criteria.md, user-flows.md, wireframes/) |
@@ -214,18 +212,18 @@ Use `bee:ui-engineer` (React), `bee:ui-engineer-vuejs` (Vue.js/Nuxt 3), or `bee:
 
 ## Dispatching Multiple Specialists
 
-If you need multiple specialists (e.g., backend engineer + DevOps engineer), dispatch in **parallel** (single message, multiple Task calls):
+If you need multiple specialists (e.g., backend engineer + SRE), dispatch in **parallel** (single message, multiple Task calls):
 
 ```
 ✅ CORRECT:
 Task #1: bee:backend-engineer-php
-Task #2: bee:devops-engineer
+Task #2: bee:sre
 (Both run in parallel)
 
 ❌ WRONG:
 Task #1: bee:backend-engineer-php
 (Wait for response)
-Task #2: bee:devops-engineer
+Task #2: bee:sre
 (Sequential = 2x slower)
 ```
 
@@ -279,7 +277,6 @@ All workflows converge to the 8-gate development cycle:
 | Gate                  | Focus                            | Agent(s)                                                                               |
 | --------------------- | -------------------------------- | -------------------------------------------------------------------------------------- |
 | **0: Implementation** | TDD: RED→GREEN→REFACTOR          | `bee:backend-engineer-*`, `bee:frontend-bff-engineer-typescript`, `bee:ui-engineer`, `bee:ui-engineer-vuejs`, `bee:ui-engineer-react-native` |
-| **0 (pre): DevOps**   | Dockerfile, docker-compose, .env | `bee:devops-engineer`                                                                 |
 | **1: Unit Testing**   | Unit tests, coverage ≥85%        | `bee:qa-analyst`                                                                      |
 | **2: Fuzz Testing**   | Input mutation, edge cases       | `bee:qa-analyst`                                                                      |
 | **3: Property Testing** | Invariant testing              | `bee:qa-analyst`                                                                      |
@@ -306,8 +303,7 @@ All workflows converge to the 8-gate development cycle:
 | Gate                      | Focus                                | Agent(s)                        |
 | ------------------------- | ------------------------------------ | ------------------------------- |
 | **0: Implementation**     | TDD: RED→GREEN→REFACTOR              | `bee:frontend-engineer`, `bee:ui-engineer`, `bee:frontend-bff-engineer-typescript` |
-| **1: DevOps**             | Dockerfile, docker-compose, .env     | `bee:devops-engineer`          |
-| **2: Accessibility**      | WCAG 2.1 AA, axe-core, keyboard nav | `bee:qa-analyst-frontend`      |
+| **1: Accessibility**      | WCAG 2.1 AA, axe-core, keyboard nav | `bee:qa-analyst-frontend`      |
 | **3: Unit Testing**       | Vitest + Testing Library, ≥85%       | `bee:qa-analyst-frontend`      |
 | **4: Visual Testing**     | Snapshots, states, responsive        | `bee:qa-analyst-frontend`      |
 | **5: E2E Testing**        | Playwright, cross-browser, user flows| `bee:qa-analyst-frontend`      |
@@ -322,8 +318,7 @@ All workflows converge to the 8-gate development cycle:
 | Gate                      | Focus                                | Agent(s)                        |
 | ------------------------- | ------------------------------------ | ------------------------------- |
 | **0: Implementation**     | TDD: RED→GREEN→REFACTOR              | `bee:frontend-engineer-vuejs`, `bee:ui-engineer-vuejs`, `bee:frontend-bff-engineer-typescript` |
-| **1: DevOps**             | Dockerfile, docker-compose, .env     | `bee:devops-engineer`          |
-| **2: Accessibility**      | WCAG 2.1 AA, axe-core, keyboard nav | `bee:qa-analyst-frontend-vuejs` |
+| **1: Accessibility**      | WCAG 2.1 AA, axe-core, keyboard nav | `bee:qa-analyst-frontend-vuejs` |
 | **3: Unit Testing**       | Vitest + Vue Testing Library, ≥85%   | `bee:qa-analyst-frontend-vuejs` |
 | **4: Visual Testing**     | Snapshots, states, responsive        | `bee:qa-analyst-frontend-vuejs` |
 | **5: E2E Testing**        | Playwright, cross-browser, user flows| `bee:qa-analyst-frontend-vuejs` |
@@ -338,8 +333,7 @@ All workflows converge to the 8-gate development cycle:
 | Gate                      | Focus                                | Agent(s)                        |
 | ------------------------- | ------------------------------------ | ------------------------------- |
 | **0: Implementation**     | TDD: RED→GREEN→REFACTOR              | `bee:frontend-engineer-react-native`, `bee:ui-engineer-react-native` |
-| **1: DevOps**             | Dockerfile, docker-compose, .env     | `bee:devops-engineer`          |
-| **2: Accessibility**      | WCAG 2.1 AA, accessible labels, focus | `bee:qa-analyst-frontend-react-native` |
+| **1: Accessibility**      | WCAG 2.1 AA, accessible labels, focus | `bee:qa-analyst-frontend-react-native` |
 | **3: Unit Testing**       | Jest + React Native Testing Library, ≥85% | `bee:qa-analyst-frontend-react-native` |
 | **4: Visual Testing**     | Snapshots, states, responsive        | `bee:qa-analyst-frontend-react-native` |
 | **5: E2E Testing**        | Detox/Maestro, device coverage, user flows | `bee:qa-analyst-frontend-react-native` |

@@ -262,35 +262,35 @@ Analyzed 24 resources across 4 teams for Q1 2025 allocation. Current aggregate u
 
 | Conflict | Projects | Resource | Impact |
 |----------|----------|----------|--------|
-| C-001 | Alpha, Beta | Senior Go Dev | Both need 80% = 160% |
+| C-001 | Alpha, Beta | Senior PHP Dev | Both need 80% = 160% |
 | C-002 | Gamma, Delta | DBA Expert | Sequential dependency blocked |
 
 ### Skills Gaps
 
 | Skill | Demand | Supply | Gap |
 |-------|--------|--------|-----|
-| Go Senior | 3 FTE | 2 FTE | 1 FTE |
+| PHP Senior | 3 FTE | 2 FTE | 1 FTE |
 | Kubernetes | 1.5 FTE | 0.5 FTE | 1 FTE |
 
 ## Recommendations
 
 1. **Immediate**: Reduce Backend Senior Dev allocation to Project Beta to 40%, extend Beta timeline
-2. **Short-term**: Hire Go contractor for 3 months to fill gap
+2. **Short-term**: Hire PHP contractor for 3 months to fill gap
 3. **Medium-term**: Cross-train 2 Frontend devs on Kubernetes basics
 
 ### Allocation Plan
 
 | Resource | Project | Current | Proposed | Change |
 |----------|---------|---------|----------|--------|
-| Senior Go Dev | Alpha | 80% | 60% | -20% |
-| Senior Go Dev | Beta | 80% | 40% | -40% |
-| Go Contractor (new) | Beta | 0% | 80% | +80% |
+| Senior PHP Dev | Alpha | 80% | 60% | -20% |
+| Senior PHP Dev | Beta | 80% | 40% | -40% |
+| PHP Contractor (new) | Beta | 0% | 80% | +80% |
 
 ## Decisions Required
 
 | Decision | Options | Recommendation | Deadline |
 |----------|---------|----------------|----------|
-| Go contractor hire | Hire/Delay Beta/Reduce scope | Hire contractor | Dec 15 |
+| PHP contractor hire | Hire/Delay Beta/Reduce scope | Hire contractor | Dec 15 |
 | DBA conflict | Prioritize Gamma/Prioritize Delta | Prioritize Gamma (critical path) | Dec 12 |
 ```
 

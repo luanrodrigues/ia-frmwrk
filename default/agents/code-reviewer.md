@@ -120,10 +120,10 @@ This reviewer focuses on:
 
 | Pattern | Language | Example |
 |---------|----------|---------|
-| **No-op assignment** | Go | `_ = ctx` - remove or use the variable |
-| **Unused mock** | Go | `type mockDB struct{}` defined but never instantiated |
-| **Dead import** | Go/TS | Import statement with no usage |
-| **Unreachable code** | Any | Code after `return`, `panic()`, or `throw` |
+| **No-op assignment** | PHP/TS | `$_` unused variable - remove or use it |
+| **Unused mock** | PHP | `class MockDB {}` defined but never instantiated |
+| **Dead import** | PHP/TS | Import/use statement with no usage |
+| **Unreachable code** | Any | Code after `return`, `throw`, or `exit` |
 
 ### 4. Architecture & Design
 - [ ] SOLID principles followed
@@ -140,7 +140,7 @@ This reviewer focuses on:
 
 | Duplication Type | Detection | Action |
 |-----------------|-----------|--------|
-| **Test helper** | Same function in multiple `*_test.go` files | Extract to `testutil/` or `internal/testing/` |
+| **Test helper** | Same function in multiple `*Test.php` files | Extract to `tests/Support/` or `tests/Helpers/` |
 | **Validation** | Same regex/rules in multiple packages | Extract to `pkg/validation/` |
 | **Formatting** | Same string formatting in multiple places | Extract to shared utility |
 
@@ -238,7 +238,7 @@ MUST: Review is minimal only when all these conditions are met:
 |-----------|-------------|
 | Documentation-only changes | No code files modified |
 | Pure formatting/whitespace | No logic modifications via git diff |
-| Generated files only | Package-lock, go.sum, etc. |
+| Generated files only | Package-lock, composer.lock, etc. |
 
 **STILL REQUIRED (full review):**
 

@@ -1045,7 +1045,7 @@ Extended patterns for code-level diff views with line numbers, added/removed ind
 ```
 
 ```html
-<div class="diff-hunk-header">@@ internal/handler/user.go:45-62 @@</div>
+<div class="diff-hunk-header">@@ app/Http/Controllers/UserController.php:45-62 @@</div>
 ```
 
 **Severity badges:**
@@ -1124,9 +1124,9 @@ Extended patterns for code-level diff views with line numbers, added/removed ind
     <span class="finding-id">FINDING-001</span>
     <span class="severity-badge severity-badge--critical">Critical</span>
     <span class="finding-category">Error Handling</span>
-    <span class="finding-file">internal/handler/user.go:45-62</span>
+    <span class="finding-file">app/Http/Controllers/UserController.php:45-62</span>
   </div>
-  <div class="diff-hunk-header">@@ internal/handler/user.go:45-62 @@</div>
+  <div class="diff-hunk-header">@@ app/Http/Controllers/UserController.php:45-62 @@</div>
   <div class="diff-panels">
     <div class="diff-panel__header diff-panel__header--before">Before</div>
     <div class="diff-panel__header diff-panel__header--after">After</div>

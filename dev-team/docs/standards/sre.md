@@ -16,7 +16,7 @@ This file defines the specific standards for Site Reliability Engineering and ob
 | 1 | [Observability](#observability) | Logs, traces, APM tools |
 | 2 | [Logging](#logging) | Structured JSON format, log levels |
 | 3 | [Tracing](#tracing) | OpenTelemetry configuration |
-| 4 | [OpenTelemetry with lib-commons](#opentelemetry-with-lib-commons-mandatory-for-go) | Go service integration |
+| 4 | [OpenTelemetry with Laravel](#opentelemetry-with-laravel-mandatory-for-php) | PHP service integration |
 | 5 | [Structured Logging with lib-common-js](#structured-logging-with-lib-common-js-mandatory-for-typescript) | TypeScript service integration |
 | 6 | [Structured Logging with Monolog](#structured-logging-with-monolog-mandatory-for-php) | PHP service integration |
 | 7 | [Health Checks](#health-checks) | Liveness and readiness probes |
@@ -241,175 +241,111 @@ ctx := otel.GetTextMapPropagator().Extract(
 
 ---
 
-## OpenTelemetry with lib-commons (MANDATORY for Go)
+## OpenTelemetry with Laravel (MANDATORY for PHP)
 
-All Go services **MUST** integrate OpenTelemetry using `lib-commons/v2`. This ensures consistent observability patterns across all Lerian Studio services.
+All PHP/Laravel services **MUST** integrate OpenTelemetry for distributed tracing. This ensures consistent observability patterns across all Lerian Studio services.
 
-> **Reference**: See the lib-commons v2 documentation for complete integration patterns.
+> **Reference**: See the opentelemetry-php and open-telemetry/opentelemetry-auto-laravel documentation for complete integration patterns.
 
-### Required Imports
+### Required Packages
 
-```go
-import (
-    libCommons "github.com/LerianStudio/lib-commons/v2/commons"
-    libZap "github.com/LerianStudio/lib-commons/v2/commons/zap"           // Logger initialization (bootstrap only)
-    libLog "github.com/LerianStudio/lib-commons/v2/commons/log"           // Logger interface (services, routes, consumers)
-    libOpentelemetry "github.com/LerianStudio/lib-commons/v2/commons/opentelemetry"
-    libHTTP "github.com/LerianStudio/lib-commons/v2/commons/net/http"
-    libServer "github.com/LerianStudio/lib-commons/v2/commons/server"
-)
+```bash
+composer require open-telemetry/opentelemetry-auto-laravel
+composer require open-telemetry/exporter-otlp
+composer require open-telemetry/transport-grpc
 ```
 
 ### Telemetry Flow (MANDATORY)
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│ 1. BOOTSTRAP (config.go)                                        │
-│    telemetry := libOpentelemetry.InitializeTelemetry(&config)   │
+│ 1. BOOTSTRAP (bootstrap/app.php or AppServiceProvider)          │
+│    SDK initialized via env vars (auto-instrumentation)          │
 │    → Creates OpenTelemetry provider once at startup             │
 └──────────────────────────┬──────────────────────────────────────┘
                            │
                            ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│ 2. ROUTER (routes.go)                                           │
-│    tlMid := libHTTP.NewTelemetryMiddleware(tl)                  │
-│    f.Use(tlMid.WithTelemetry(tl))      ← Injects into context   │
-│    ...routes...                                                  │
-│    f.Use(tlMid.EndTracingSpans)        ← Closes root spans      │
+│ 2. MIDDLEWARE (app/Http/Kernel.php)                              │
+│    OpenTelemetry auto-instrumentation injects trace context     │
+│    into incoming requests automatically                         │
 └──────────────────────────┬──────────────────────────────────────┘
                            │
                            ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│ 3. any layer (handlers, services, repositories)                 │
-│    logger, tracer, _, _ := libCommons.NewTrackingFromContext(ctx)│
-│    ctx, span := tracer.Start(ctx, "operation_name")             │
-│    defer span.End()                                              │
-│    logger.Infof("Processing...")   ← Logger from same context   │
+│ 3. any layer (controllers, services, repositories)              │
+│    $tracer = \OpenTelemetry\API\Globals::tracerProvider()       │
+│              ->getTracer('service-name');                       │
+│    $span = $tracer->spanBuilder('operation')->startSpan();      │
+│    $scope = $span->activate();                                  │
+│    Log::info("Processing...");  ← Laravel Log with trace ctx   │
 └──────────────────────────┬──────────────────────────────────────┘
                            │
                            ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│ 4. SERVER LIFECYCLE (fiber.server.go)                           │
-│    libServer.NewServerManager(nil, &s.telemetry, s.logger)      │
-│        .WithHTTPServer(s.app, s.serverAddress)                  │
-│        .StartWithGracefulShutdown()                             │
-│    → Handles signal trapping + telemetry flush + clean shutdown │
+│ 4. SERVER LIFECYCLE (managed by PHP-FPM / Octane / Horizon)     │
+│    Laravel Telescope / Horizon for queue telemetry              │
+│    → Handles graceful shutdown via PHP signal handling          │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
 ### 1. Bootstrap Initialization (MANDATORY)
 
-```go
-// bootstrap/config.go
-func InitServers() *Service {
-    cfg := &Config{}
-    if err := libCommons.SetConfigFromEnvVars(cfg); err != nil {
-        panic(err)
+```php
+// config/opentelemetry.php or .env configuration
+// Auto-instrumentation is configured via environment variables:
+// OTEL_PHP_AUTOLOAD_ENABLED=true
+// OTEL_SERVICE_NAME=service-name
+// OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
+```
+
+### 2. Service/Controller Instrumentation (MANDATORY)
+
+```php
+// app/Services/OrderService.php
+use OpenTelemetry\API\Globals;
+
+class OrderService
+{
+    public function processOrder(string $orderId): Order
+    {
+        $tracer = Globals::tracerProvider()->getTracer('order-service');
+        $span = $tracer->spanBuilder('order.process')->startSpan();
+        $scope = $span->activate();
+
+        try {
+            Log::info('Processing order', ['order_id' => $orderId]);
+            return $this->repository->findAndProcess($orderId);
+        } catch (\Throwable $e) {
+            $span->recordException($e);
+            $span->setStatus(\OpenTelemetry\API\Trace\StatusCode::STATUS_ERROR, $e->getMessage());
+            throw $e;
+        } finally {
+            $scope->detach();
+            $span->end();
+        }
     }
-
-    // Initialize logger FIRST (zap package for initialization in bootstrap)
-    logger := libZap.InitializeLogger()
-
-    // Initialize telemetry with config
-    telemetry := libOpentelemetry.InitializeTelemetry(&libOpentelemetry.TelemetryConfig{
-        LibraryName:               cfg.OtelLibraryName,
-        ServiceName:               cfg.OtelServiceName,
-        ServiceVersion:            cfg.OtelServiceVersion,
-        DeploymentEnv:             cfg.OtelDeploymentEnv,
-        CollectorExporterEndpoint: cfg.OtelColExporterEndpoint,
-        EnableTelemetry:           cfg.EnableTelemetry,
-        Logger:                    logger,
-    })
-
-    // Pass telemetry to router...
 }
 ```
 
-### 2. Router Middleware Setup (MANDATORY)
+### 3. Error Handling with Spans (MANDATORY)
 
-```go
-// adapters/http/in/routes.go
-func NewRouter(lg libLog.Logger, tl *libOpentelemetry.Telemetry, ...) *fiber.App {
-    f := fiber.New(fiber.Config{
-        DisableStartupMessage: true,
-        ErrorHandler: func(ctx *fiber.Ctx, err error) error {
-            return libHTTP.HandleFiberError(ctx, err)
-        },
-    })
-
-    // Create telemetry middleware
-    tlMid := libHTTP.NewTelemetryMiddleware(tl)
-
-    // MUST be first middleware - injects tracer+logger into context
-    f.Use(tlMid.WithTelemetry(tl))
-    f.Use(libHTTP.WithHTTPLogging(libHTTP.WithCustomLogger(lg)))
-
-    // ... define routes ...
-
-    // Version endpoint
-    f.Get("/version", libHTTP.Version)
-
-    // MUST be last middleware - closes root spans
-    f.Use(tlMid.EndTracingSpans)
-
-    return f
-}
-```
-
-### 3. Recovering Logger & Tracer (MANDATORY)
-
-```go
-// any file in any layer (handler, service, repository)
-func (s *Service) ProcessEntity(ctx context.Context, id string) error {
-    // Single call recovers BOTH logger and tracer from context
-    logger, tracer, _, _ := libCommons.NewTrackingFromContext(ctx)
-
-    // Create child span for this operation
-    ctx, span := tracer.Start(ctx, "service.process_entity")
-    defer span.End()
-
-    // Logger is automatically correlated with trace
-    logger.Infof("Processing entity: %s", id)
-
-    // Pass ctx to downstream calls - trace propagates automatically
-    return s.repo.Update(ctx, id)
-}
-```
-
-### 4. Error Handling with Spans (MANDATORY)
-
-```go
+```php
 // For technical errors (unexpected failures)
-if err != nil {
-    libOpentelemetry.HandleSpanError(&span, "Failed to connect database", err)
-    logger.Errorf("Database error: %v", err)
-    return nil, err
+try {
+    $result = $this->db->query($sql);
+} catch (\Exception $e) {
+    $span->recordException($e);
+    $span->setStatus(\OpenTelemetry\API\Trace\StatusCode::STATUS_ERROR, 'Database error');
+    Log::error('Database error', ['exception' => $e->getMessage()]);
+    throw $e;
 }
 
 // For business errors (expected validation failures)
-if err != nil {
-    libOpentelemetry.HandleSpanBusinessErrorEvent(&span, "Validation failed", err)
-    logger.Warnf("Validation error: %v", err)
-    return nil, err
-}
-```
-
-### 5. Server Lifecycle with Graceful Shutdown (MANDATORY)
-
-```go
-// bootstrap/fiber.server.go
-type Server struct {
-    app           *fiber.App
-    serverAddress string
-    logger        libLog.Logger
-    telemetry     libOpentelemetry.Telemetry
-}
-
-func (s *Server) Run(l *libCommons.Launcher) error {
-    libServer.NewServerManager(nil, &s.telemetry, s.logger).
-        WithHTTPServer(s.app, s.serverAddress).
-        StartWithGracefulShutdown()  // Handles: SIGINT/SIGTERM, telemetry flush, connections close
-    return nil
+if (!$this->validator->isValid($data)) {
+    $span->addEvent('validation.failed', ['reason' => 'Invalid input']);
+    Log::warning('Validation error', ['data' => $data]);
+    throw new ValidationException('Invalid input');
 }
 ```
 
@@ -417,58 +353,58 @@ func (s *Server) Run(l *libCommons.Launcher) error {
 
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `OTEL_RESOURCE_SERVICE_NAME` | Service name in traces | `service-name` |
-| `OTEL_LIBRARY_NAME` | Library identifier | `service-name` |
-| `OTEL_RESOURCE_SERVICE_VERSION` | Service version | `1.0.0` |
-| `OTEL_RESOURCE_DEPLOYMENT_ENVIRONMENT` | Environment | `production` |
+| `OTEL_SERVICE_NAME` | Service name in traces | `service-name` |
+| `OTEL_SERVICE_VERSION` | Service version | `1.0.0` |
+| `OTEL_DEPLOYMENT_ENVIRONMENT` | Environment | `production` |
 | `OTEL_EXPORTER_OTLP_ENDPOINT` | Collector endpoint | `http://otel-collector:4317` |
-| `ENABLE_TELEMETRY` | Enable/disable | `true` |
+| `OTEL_PHP_AUTOLOAD_ENABLED` | Enable auto-instrumentation | `true` |
 
-### lib-commons Telemetry Checklist
+### Laravel OpenTelemetry Checklist
 
 | Check | What to Verify | Status |
 |-------|----------------|--------|
-| Bootstrap Init | `libOpentelemetry.InitializeTelemetry()` called in bootstrap | Required |
-| Middleware Order | `WithTelemetry()` is FIRST, `EndTracingSpans` is LAST | Required |
-| Context Recovery | All layers use `libCommons.NewTrackingFromContext(ctx)` | Required |
-| Span Creation | Operations create spans via `tracer.Start(ctx, "name")` | Required |
-| Error Handling | Uses `HandleSpanError` or `HandleSpanBusinessErrorEvent` | Required |
-| Graceful Shutdown | `libServer.NewServerManager().StartWithGracefulShutdown()` | Required |
+| Package Installed | `open-telemetry/opentelemetry-auto-laravel` in composer.json | Required |
 | Env Variables | All OTEL_* variables configured | Required |
+| Span Creation | Operations create spans for significant work | Required |
+| Error Recording | Exceptions recorded on spans | Required |
+| Scope Detachment | `$scope->detach()` in finally block | Required |
+| Span End | `$span->end()` in finally block | Required |
 
 ### What not to Do
 
-```go
-// FORBIDDEN: Manual OpenTelemetry setup without lib-commons
-import "go.opentelemetry.io/otel"
-tp := trace.NewTracerProvider(...)  // DON'T do this manually
+```php
+// FORBIDDEN: Manual tracing without proper scope management
+$span = $tracer->spanBuilder('op')->startSpan();
+// Missing $scope = $span->activate() and $scope->detach()
 
-// FORBIDDEN: Creating loggers without context
-logger := zap.NewLogger()  // DON'T do this in services
+// FORBIDDEN: Not ending spans
+$span = $tracer->spanBuilder('op')->startSpan();
+$result = doWork();
+return $result;  // Span never ends - memory leak
 
-// FORBIDDEN: Not passing context to downstream calls
-s.repo.Update(id)  // DON'T forget context
-
-// CORRECT: Always use lib-commons patterns
-telemetry := libOpentelemetry.InitializeTelemetry(&config)
-logger, tracer, _, _ := libCommons.NewTrackingFromContext(ctx)
-s.repo.Update(ctx, id)  // Context propagates trace
+// CORRECT: Always use try/finally for span lifecycle
+$span = $tracer->spanBuilder('op')->startSpan();
+$scope = $span->activate();
+try {
+    return doWork();
+} finally {
+    $scope->detach();
+    $span->end();
+}
 ```
 
 ### Standards Compliance Categories
 
-When evaluating a codebase for lib-commons telemetry compliance, check these categories:
+When evaluating a codebase for Laravel telemetry compliance, check these categories:
 
 | Category | Expected Pattern | Evidence Location |
 |----------|------------------|-------------------|
-| Telemetry Init | `libOpentelemetry.InitializeTelemetry()` | `internal/bootstrap/config.go` |
-| Logger Init | `libZap.InitializeLogger()` (bootstrap only) | `internal/bootstrap/config.go` |
-| Middleware Setup | `NewTelemetryMiddleware()` + `WithTelemetry()` | `internal/adapters/http/in/routes.go` |
-| Middleware Order | `WithTelemetry` first, `EndTracingSpans` last | `internal/adapters/http/in/routes.go` |
-| Context Recovery | `libCommons.NewTrackingFromContext(ctx)` | All handlers, services, repositories |
-| Span Creation | `tracer.Start(ctx, "operation")` | All significant operations |
-| Error Spans | `HandleSpanError` / `HandleSpanBusinessErrorEvent` | Error handling paths |
-| Graceful Shutdown | `libServer.NewServerManager().StartWithGracefulShutdown()` | `internal/bootstrap/fiber.server.go` |
+| Package Installed | `open-telemetry/opentelemetry-auto-laravel` | `composer.json` |
+| Env Config | `OTEL_*` variables present | `.env.example` |
+| Span Creation | `spanBuilder()->startSpan()` | Services, repositories |
+| Scope Management | `$span->activate()` with `$scope->detach()` | All span usages |
+| Error Recording | `$span->recordException($e)` | Exception catch blocks |
+| Span Termination | `$span->end()` in finally | All span usages |
 
 ---
 

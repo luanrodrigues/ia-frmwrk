@@ -336,7 +336,6 @@ cat README.md | head -50
 |----------------|--------------|---------|
 | **Backend TypeScript/Node** | `bee:backend-engineer-typescript` | Analyze TS/Node code, API changes |
 | **Frontend React/Next** | `bee:frontend-engineer` | Analyze UI/UX changes, component architecture |
-| **Infrastructure** | `bee:devops-engineer` | Analyze deployment, config, infrastructure changes |
 | **Tests** | `bee:qa-analyst` | Analyze test coverage, quality improvements |
 | **Documentation** | `bee:functional-writer` | Analyze docs quality, completeness |
 | **Unknown/Mixed** | `bee:codebase-explorer` | Deep exploration of codebase structure |
@@ -347,7 +346,7 @@ cat README.md | head -50
 For each significant PR (>100 lines changed):
 
 1. **Identify repository technology stack**
-   - Read package.json, go.mod, requirements.txt
+   - Read package.json, composer.json, requirements.txt
    - Determine primary language and frameworks
 
 2. **Dispatch appropriate specialized agent**

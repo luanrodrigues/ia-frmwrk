@@ -61,7 +61,7 @@ Brainstorming Progress:
 
 ### Prep: Autonomous Recon
 
-**MANDATORY evidence (paste ALL):** `ls -la`, `git log --oneline -10`, `head -50 README.md`, `find . -name "*test*" | wc -l`, check package.json/requirements.txt/go.mod.
+**MANDATORY evidence (paste ALL):** `ls -la`, `git log --oneline -10`, `head -50 README.md`, `find . -name "*test*" | wc -l`, check package.json/composer.json/requirements.txt.
 
 **Only after ALL evidence pasted:** Form your model and share findings. **Skip any = not following skill.**
 

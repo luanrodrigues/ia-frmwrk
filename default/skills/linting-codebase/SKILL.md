@@ -124,7 +124,6 @@ After all agents complete, run `<lint_command> 2>&1`.
 | Issue Type | Agent Type |
 |------------|------------|
 | TypeScript/JavaScript | `general-purpose` |
-| Go | `general-purpose` |
 | PHP | `general-purpose` or `bee:backend-engineer-php` |
 | Security lints | `bee:security-reviewer` for analysis first |
 | Style/formatting | `general-purpose` |
