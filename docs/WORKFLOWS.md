@@ -144,16 +144,6 @@ Each plugin auto-loads a `using-{plugin}` skill via SessionStart hook to introdu
   - bee:docs-reviewer (quality review)
 - Commands: write-guide, write-api, review-docs
 
-### Bee FinOps Team Plugin
-
-- `using-finops-team` → 3 FinOps agents for Brazilian compliance and cost estimation
-- Auto-loads when bee-finops-team plugin is enabled
-- Located: `finops-team/skills/using-finops-team/SKILL.md`
-- Agents (invoke as `{agent-name}`):
-  - finops-analyzer (compliance analysis)
-  - infrastructure-cost-estimator (cost estimation)
-  - finops-automation (template generation)
-
 ### Hook Configuration
 
 - Each plugin has: `{plugin}/hooks/hooks.json` + `{plugin}/hooks/session-start.sh`

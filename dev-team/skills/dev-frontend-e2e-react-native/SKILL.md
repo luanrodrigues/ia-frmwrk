@@ -184,6 +184,8 @@ if deep_link_schemes provided:
 
 ## Step 2: Dispatch React Native Frontend QA Analyst Agent (E2E Mode)
 
+**⛔ Agent Name Resolution:** MUST resolve `bee:` names to runtime-qualified names before dispatch. See [shared-patterns/shared-orchestrator-principle.md](../shared-patterns/shared-orchestrator-principle.md) → "Agent Runtime Resolution".
+
 ```text
 Task tool:
   subagent_type: "bee:qa-analyst-frontend-react-native"

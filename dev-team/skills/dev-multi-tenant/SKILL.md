@@ -84,6 +84,9 @@ examples:
 **CANNOT change scope:** the skill defines WHAT to implement. The agent implements HOW.
 
 **FORBIDDEN: Orchestrator MUST NOT use Edit, Write, or Bash tools to modify source code files.**
+
+**⛔ Agent Name Resolution:** MUST resolve `bee:` names to runtime-qualified names before dispatch. See [shared-patterns/shared-orchestrator-principle.md](../shared-patterns/shared-orchestrator-principle.md) → "Agent Runtime Resolution".
+
 All code changes MUST go through `Task(subagent_type="bee:backend-engineer-php")`.
 The orchestrator only verifies outputs (grep, composer, php artisan test) — MUST NOT write implementation code.
 

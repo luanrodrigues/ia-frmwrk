@@ -24,6 +24,8 @@ related:
 
 Creating visual executive presentations that showcase squad deliveries and business value.
 
+**⛔ Agent Name Resolution:** `bee:` names in this skill MUST be resolved to runtime-qualified names for Agent/Task tool dispatch. See [shared-patterns/shared-orchestrator-principle.md](../../dev-team/skills/shared-patterns/shared-orchestrator-principle.md) → "Agent Runtime Resolution" for the full mapping table.
+
 ## ⚠️ CRITICAL: Quality Over Speed
 
 **This skill prioritizes depth over velocity.**

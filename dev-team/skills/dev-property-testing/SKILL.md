@@ -165,6 +165,8 @@ if any REQUIRED input is missing:
 
 ## Step 2: Dispatch QA Analyst Agent (Property Mode)
 
+**⛔ Agent Name Resolution:** MUST resolve `bee:` names to runtime-qualified names before dispatch. See [shared-patterns/shared-orchestrator-principle.md](../shared-patterns/shared-orchestrator-principle.md) → "Agent Runtime Resolution".
+
 ```text
 Task tool:
   subagent_type: "bee:qa-analyst"

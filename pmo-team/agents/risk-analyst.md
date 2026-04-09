@@ -327,4 +327,3 @@ Analyzed 18 risks across portfolio. Portfolio risk exposure: MEDIUM-HIGH. 2 crit
 - Resource allocation (use `resource-planner`)
 - Governance process (use `governance-specialist`)
 - Executive reporting format (use `executive-reporter`)
-- Financial risk deep dive (use `finops-analyzer`)

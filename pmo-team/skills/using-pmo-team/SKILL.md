@@ -314,10 +314,8 @@ Remember:
 - **bee-default** - ORCHESTRATOR principle for ALL agents
 - **bee-pm-team** - Single feature planning (PMO → PM handoff)
 - **bee-dev-team** - Development execution (PM → Dev handoff)
-- **bee-finops-team** - Financial/regulatory compliance
 
 Dispatch based on your need:
 - Portfolio oversight → bee-pmo-team
 - Feature planning → bee-pm-team
 - Code development → bee-dev-team
-- Financial compliance → bee-finops-team

@@ -12,7 +12,6 @@ trigger: |
 
 skip_when: |
   - Single project staffing → use bee-pm-team
-  - Cost analysis → use bee-finops-team
   - Project status → use project-health-check
 
 related:

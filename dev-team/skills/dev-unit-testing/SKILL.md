@@ -199,6 +199,8 @@ testing_state = {
 Write unit tests for all acceptance criteria with 85%+ coverage.
 </dispatch_required>
 
+**⛔ Agent Name Resolution:** MUST resolve `bee:` names to runtime-qualified names before dispatch. See [shared-patterns/shared-orchestrator-principle.md](../shared-patterns/shared-orchestrator-principle.md) → "Agent Runtime Resolution".
+
 ```yaml
 Task:
   subagent_type: "bee:qa-analyst"

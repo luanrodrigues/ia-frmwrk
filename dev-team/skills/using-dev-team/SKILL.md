@@ -357,11 +357,9 @@ When backend dev cycle completes, it produces a handoff with endpoints, types, a
 
 - **bee:using-bee** (default) – ORCHESTRATOR principle for all agents
 - **bee:using-pm-team** – Pre-dev workflow agents
-- **bee:using-finops-team** – Financial/regulatory agents
 
 Dispatch based on your need:
 
 - General code review → default plugin agents
 - Specific domain expertise → bee-dev-team agents
 - Feature planning → bee-pm-team agents
-- Regulatory compliance → bee-finops-team agents

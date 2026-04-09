@@ -184,6 +184,8 @@ Dispatch all six reviewer subagents in **parallel** for fast, comprehensive feed
 
 **Core principle:** All 6 reviewers run simultaneously in a single message with 6 Task tool calls.
 
+**⛔ Agent Name Resolution:** `bee:` names in this skill MUST be resolved to runtime-qualified names for Agent/Task tool dispatch. See [shared-patterns/shared-orchestrator-principle.md](../../dev-team/skills/shared-patterns/shared-orchestrator-principle.md) → "Agent Runtime Resolution" for the full mapping table.
+
 ## CRITICAL: Role Clarification
 
 **This skill ORCHESTRATES. Reviewer Agents REVIEW.**

@@ -36,12 +36,22 @@ When creating or modifying any agent in `*/agents/*.md`:
 
 ### 4. Unified Bee Namespace (MANDATORY)
 
-All Bee components use the unified `bee:` prefix. Plugin differentiation is handled internally.
+All Bee components use the unified `bee:` prefix in documentation, skills, and user-facing references.
 
-- ✅ `bee:code-reviewer`
-- ✅ `bee:backend-engineer-typescript`
+- ✅ `bee:code-reviewer` (in docs, skills, user-facing)
+- ✅ `bee:backend-engineer-php` (in docs, skills, user-facing)
 - ❌ `<missing bee prefix>` (FORBIDDEN: omitting the `bee:` prefix)
-- ❌ `bee-default:bee:code-reviewer` (deprecated plugin-specific prefix)
+
+**⛔ Agent/Task Tool Dispatch Exception:**
+
+The Claude Code Agent/Task tool requires the **full plugin-qualified name**. When dispatching agents programmatically, MUST resolve the unified name to its runtime name:
+
+| Context | Format | Example |
+|---------|--------|---------|
+| Documentation, skills, user-facing | `bee:{name}` | `bee:backend-engineer-php` |
+| Agent/Task tool `subagent_type` | `{plugin}:bee:{name}` | `bee-dev-team:bee:backend-engineer-php` |
+
+**Resolution:** See `dev-team/skills/shared-patterns/shared-orchestrator-principle.md` → "Agent Runtime Resolution" for the full mapping table.
 
 ### 5. Standards-Agent Synchronization (MUST CHECK)
 
@@ -414,7 +424,7 @@ If any checkbox is no → Agent is INCOMPLETE. Add missing sections.
 
 ## Repository Overview
 
-Bee is a comprehensive skills library and workflow system for AI agents that enforces proven software engineering practices through mandatory workflows, parallel code review, and systematic pre-development planning. Currently implemented as a Claude Code plugin marketplace with **6 active plugins**, the skills are agent-agnostic and reusable across different AI systems.
+Bee is a comprehensive skills library and workflow system for AI agents that enforces proven software engineering practices through mandatory workflows, parallel code review, and systematic pre-development planning. Currently implemented as a Claude Code plugin marketplace with **5 active plugins**, the skills are agent-agnostic and reusable across different AI systems.
 
 **Active Plugins:**
 
@@ -422,14 +432,13 @@ Bee is a comprehensive skills library and workflow system for AI agents that enf
 - **bee-dev-team**: 21 development skills, 7 slash commands, 17 developer agents (Backend PHP, Database Engineer, Backend TypeScript, DevOps, Frontend Designer, Frontend Engineer, Frontend Engineer Vue.js, Frontend Engineer React Native, Frontend BFF TypeScript, QA Backend, QA Frontend, QA Frontend Vue.js, QA Frontend React Native, SRE, UI Engineer, UI Engineer Vue.js, UI Engineer React Native)
 - **bee-pm-team**: 13 product management skills, 4 research agents, 3 slash commands (includes delivery planning + status tracking + Product Designer)
 - **bee-pmo-team**: 9 PMO skills, 4 slash commands, 6 PMO agents (Portfolio Manager, Resource Planner, Risk Analyst, Governance Specialist, Executive Reporter, Delivery Reporter)
-- **bee-finops-team**: 7 regulatory skills, 3 FinOps agents (Analyzer, Automation, Infrastructure Cost Estimator)
 - **bee-tw-team**: 7 technical writing skills, 3 slash commands, 3 documentation agents (Functional Writer, API Writer, Docs Reviewer)
 
-**Note:** Plugin versions are managed in `.claude-plugin/marketplace.json` (current marketplace version: `2.1.0`)
+**Note:** Plugin versions are managed in `.claude-plugin/marketplace.json` (current marketplace version: `2.3.0`)
 
-**Total: 84 skills (27 + 21 + 13 + 9 + 7 + 7) across 6 plugins**
-**Total: 41 agents (8 + 17 + 4 + 6 + 3 + 3) across 6 plugins**
-**Total: 30 commands (13 + 7 + 3 + 4 + 0 + 3) across 6 plugins**
+**Total: 77 skills (27 + 21 + 13 + 9 + 7) across 5 plugins**
+**Total: 38 agents (8 + 17 + 4 + 6 + 3) across 5 plugins**
+**Total: 30 commands (13 + 7 + 3 + 4 + 3) across 5 plugins**
 
 The architecture uses markdown-based skill definitions with YAML frontmatter, auto-discovered at session start via hooks, and executed through Claude Code's native Skill/Task tools.
 
@@ -445,7 +454,7 @@ See [README.md](README.md#installation) for detailed installation instructions.
 
 ## Architecture
 
-**Monorepo Structure** - 6 plugin collections:
+**Monorepo Structure** - 5 plugin collections:
 
 | Plugin           | Path           | Contents                         |
 | ---------------- | -------------- | -------------------------------- |
@@ -453,7 +462,6 @@ See [README.md](README.md#installation) for detailed installation instructions.
 | bee-dev-team    | `dev-team/`    | 21 skills, 17 agents, 7 commands |
 | bee-pm-team     | `pm-team/`     | 13 skills, 4 agents, 3 commands  |
 | bee-pmo-team    | `pmo-team/`    | 9 skills, 6 agents, 4 commands   |
-| bee-finops-team | `finops-team/` | 7 skills, 3 agents               |
 | bee-tw-team     | `tw-team/`     | 7 skills, 3 agents, 3 commands   |
 
 Each plugin contains: `skills/`, `agents/`, `commands/`, `hooks/`
@@ -587,13 +595,12 @@ The system loads at SessionStart (from `default/` plugin):
 **Monorepo Context:**
 
 - Repository: Monorepo marketplace with multiple plugin collections
-- Active plugins: 6 (`bee-default`, `bee-dev-team`, `bee-pm-team`, `bee-pmo-team`, `bee-finops-team`, `bee-tw-team`)
+- Active plugins: 5 (`bee-default`, `bee-dev-team`, `bee-pm-team`, `bee-pmo-team`, `bee-tw-team`)
 - Plugin versions: See `.claude-plugin/marketplace.json`
 - Core plugin: `default/` (27 skills, 8 agents, 13 commands)
 - Developer agents: `dev-team/` (21 skills, 17 agents, 7 commands)
 - Product planning: `pm-team/` (13 skills, 4 agents, 3 commands)
 - PMO specialists: `pmo-team/` (9 skills, 6 agents, 4 commands)
-- FinOps regulatory: `finops-team/` (7 skills, 3 agents)
 - Technical writing: `tw-team/` (7 skills, 3 agents, 3 commands)
 - Current git branch: `main`
 - Remote: `github.com/luanrodrigues/ia-frmwrk`
@@ -621,7 +628,6 @@ Plugin Hooks (inject context at session start):
 ├── dev-team/hooks/session-start.sh       # Developer agents
 ├── pm-team/hooks/session-start.sh        # Pre-dev skills
 ├── pmo-team/hooks/session-start.sh       # PMO specialist agents
-├── finops-team/hooks/session-start.sh    # FinOps regulatory agents
 └── tw-team/hooks/session-start.sh        # Technical writing agents
 
 Using-* Skills (plugin introductions):
@@ -629,7 +635,6 @@ Using-* Skills (plugin introductions):
 ├── dev-team/skills/using-dev-team/SKILL.md        # Developer agents guide
 ├── pm-team/skills/using-pm-team/SKILL.md          # Pre-dev workflow
 ├── pmo-team/skills/using-pmo-team/SKILL.md        # PMO portfolio guide
-├── finops-team/skills/using-finops-team/SKILL.md  # FinOps regulatory guide
 └── tw-team/skills/using-tw-team/SKILL.md          # Technical writing guide
 ```
 

@@ -283,6 +283,8 @@ integration_state = {
 Write integration tests for all scenarios using Docker Compose + RefreshDatabase.
 </dispatch_required>
 
+**⛔ Agent Name Resolution:** MUST resolve `bee:` names to runtime-qualified names before dispatch. See [shared-patterns/shared-orchestrator-principle.md](../shared-patterns/shared-orchestrator-principle.md) → "Agent Runtime Resolution".
+
 ```yaml
 Task:
   subagent_type: "bee:qa-analyst"

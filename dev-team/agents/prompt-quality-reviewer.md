@@ -374,7 +374,6 @@ For each agent, read their definition file and extract:
 Agent definition files can be in any of these locations:
 - \`default/agents/{agent}.md\`
 - \`dev-team/agents/{agent}.md\`
-- \`finops-team/agents/{agent}.md\`
 - \`pm-team/agents/{agent}.md\`
 - \`tw-team/agents/{agent}.md\`
 

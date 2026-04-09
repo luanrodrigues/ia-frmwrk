@@ -183,7 +183,6 @@ docs/pre-dev/{feature}/
 | ------------------------- | ------------------------------------------- |
 | bee:using-bee (default) | ORCHESTRATOR principle for ALL tasks        |
 | bee:using-dev-team       | Developer specialists for reviewing designs |
-| bee:using-finops-team    | Regulatory compliance planning              |
 | bee:using-tw-team        | Documentation for features                  |
 
 **Combined with:**

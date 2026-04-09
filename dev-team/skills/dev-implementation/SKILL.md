@@ -217,13 +217,16 @@ If condition is true, STOP and return error to orchestrator.
 
 2. Select implementation agent based on language:
    
-   | Language | Service Type | Agent |
-   |----------|--------------|-------|
-   | php | api, worker, batch, cli | bee:backend-engineer-php |
-   | any | database | bee:database-engineer |
-   | typescript | frontend, bff | frontend-bff-engineer-typescript |
+   | Language | Service Type | Agent (unified) | Runtime subagent_type |
+   |----------|--------------|-----------------|----------------------|
+   | php | api, worker, batch, cli | bee:backend-engineer-php | bee-dev-team:bee:backend-engineer-php |
+   | any | database | bee:database-engineer | bee-dev-team:bee:database-engineer |
+   | typescript | frontend, bff | frontend-bff-engineer-typescript | bee-dev-team:bee:frontend-bff-engineer-typescript |
    
-   Store: selected_agent = [agent name]
+   Store: selected_agent = [runtime subagent_type]
+   
+   ⛔ MUST use runtime-qualified name in Agent/Task tool dispatch.
+   See [shared-patterns/shared-orchestrator-principle.md](../shared-patterns/shared-orchestrator-principle.md) → "Agent Runtime Resolution".
 ```
 
 ## Step 3: Initialize Implementation State

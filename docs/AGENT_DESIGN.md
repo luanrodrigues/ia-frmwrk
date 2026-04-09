@@ -33,7 +33,7 @@ output_schema:
       required: true
 ```
 
-**Used by:** `bee:backend-engineer-typescript`, `frontend-bff-engineer-typescript`, `bee:qa-analyst`, `bee:sre`, `finops-automation`
+**Used by:** `bee:backend-engineer-typescript`, `frontend-bff-engineer-typescript`, `bee:qa-analyst`, `bee:sre`
 
 ---
 
@@ -59,7 +59,7 @@ output_schema:
       required: true
 ```
 
-**Used by:** `bee:frontend-designer`, `finops-analyzer`
+**Used by:** `bee:frontend-designer`
 
 ---
 

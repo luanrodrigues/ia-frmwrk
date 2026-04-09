@@ -12,7 +12,6 @@ trigger: |
 
 skip_when: |
   - Single project risk → handle in project scope
-  - Financial risk only → use bee-finops-team
   - Technical risk in code → use bee:qa-analyst
 
 related:

@@ -1,6 +1,6 @@
 # Bee Marketplace Manual
 
-Quick reference guide for the Bee skills library and workflow system. This monorepo provides 6 plugins with 84 skills, 41 agents, and 30 slash commands for enforcing proven software engineering practices across the entire software delivery value chain.
+Quick reference guide for the Bee skills library and workflow system. This monorepo provides 5 plugins with 77 skills, 38 agents, and 30 slash commands for enforcing proven software engineering practices across the entire software delivery value chain.
 
 ---
 
@@ -8,15 +8,15 @@ Quick reference guide for the Bee skills library and workflow system. This monor
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────┐
-│                              MARKETPLACE (6 PLUGINS)                               │
+│                              MARKETPLACE (5 PLUGINS)                               │
 │                     (monorepo: .claude-plugin/marketplace.json)                    │
 │                                                                                    │
-│  ┌───────────────┐  ┌───────────────┐  ┌───────────────┐  ┌───────────────┐      │
-│  │ bee-default  │  │ bee-dev-team │  │ bee-pm-team  │  │bee-finops-   │      │
-│  │  Skills(26)   │  │  Skills(21)   │  │  Skills(13)   │  │  team         │      │
-│  │  Agents(8)    │  │  Agents(17)   │  │  Agents(4)    │  │  Skills(7)    │      │
-│  │  Cmds(13)     │  │  Cmds(7)      │  │  Cmds(3)      │  │  Agents(3)    │      │
-│  └───────────────┘  └───────────────┘  └───────────────┘  └───────────────┘      │
+│  ┌───────────────┐  ┌───────────────┐  ┌───────────────┐                         │
+│  │ bee-default  │  │ bee-dev-team │  │ bee-pm-team  │                         │
+│  │  Skills(26)   │  │  Skills(21)   │  │  Skills(13)   │                         │
+│  │  Agents(8)    │  │  Agents(17)   │  │  Agents(4)    │                         │
+│  │  Cmds(13)     │  │  Cmds(7)      │  │  Cmds(3)      │                         │
+│  └───────────────┘  └───────────────┘  └───────────────┘                         │
 │  ┌───────────────┐  ┌───────────────┐                                            │
 │  │ bee-tw-team  │  │ bee-pmo-team │                                            │
 │  │  Skills(7)    │  │  Skills(9)    │                                            │
@@ -142,7 +142,7 @@ Commands are invoked directly: `/command-name`.
 
 ## 💡 About Skills
 
-Skills (83) are workflows that Claude Code invokes automatically when it detects they're applicable. They handle testing, debugging, verification, planning, and code review enforcement. You don't call them directly - Claude Code uses them internally to enforce best practices.
+Skills (76) are workflows that Claude Code invokes automatically when it detects they're applicable. They handle testing, debugging, verification, planning, and code review enforcement. You don't call them directly - Claude Code uses them internally to enforce best practices.
 
 Examples: bee:test-driven-development, bee:systematic-debugging, bee:requesting-code-review, bee:verification-before-completion, bee:production-readiness-audit (44-dimension audit, up to 10 explorers per batch, incremental report 0-430, max 440 with multi-tenant; see [default/skills/production-readiness-audit/SKILL.md](default/skills/production-readiness-audit/SKILL.md)), etc.
 
@@ -258,16 +258,6 @@ For documentation creation and review:
 | `bee:api-writer`        | API reference documentation  | Endpoints, schemas, examples         |
 | `bee:docs-reviewer`     | Documentation quality review | Voice, tone, structure, completeness |
 
-### Regulatory & FinOps (bee-finops-team)
-
-For Brazilian financial compliance workflows and cost analysis:
-
-| Agent                                | Purpose                        | Use For                                         |
-| ------------------------------------ | ------------------------------ | ----------------------------------------------- |
-| `bee:finops-analyzer`               | Regulatory compliance analysis | Field mapping, BACEN/RFB validation (Gates 1-2) |
-| `bee:finops-automation`             | Template generation            | Create .tpl files (Gate 3)                      |
-| `bee:infrastructure-cost-estimator` | Cost estimation and analysis   | Infrastructure cost planning and optimization   |
-
 ### PMO Specialists (bee-pmo-team)
 
 For portfolio-level project management and oversight:
@@ -369,9 +359,6 @@ These enforce quality standards:
 | Functional documentation (guides) | `bee:functional-writer`                    |
 | API reference documentation       | `bee:api-writer`                           |
 | Documentation quality review      | `bee:docs-reviewer`                        |
-| Regulatory compliance analysis    | `bee:finops-analyzer`                      |
-| Regulatory template generation    | `bee:finops-automation`                    |
-| Infrastructure cost estimation    | `bee:infrastructure-cost-estimator`        |
 | Portfolio-level planning          | `bee:portfolio-manager`                    |
 | Resource capacity planning        | `bee:resource-planner`                     |
 | Portfolio risk assessment         | `bee:risk-analyst`                         |
@@ -386,7 +373,7 @@ These enforce quality standards:
 ### Session Startup
 
 1. SessionStart hook runs automatically
-2. All 83 skills are auto-discovered and available
+2. All 76 skills are auto-discovered and available
 3. `bee:using-bee` workflow is activated (skill checking is now mandatory)
 
 ### Agent Dispatching

@@ -13,7 +13,7 @@
 
 ## Overview
 
-Bee is a **Claude Code plugin marketplace** that provides a comprehensive skills library and workflow system with **6 active plugins**. It extends Claude Code's capabilities through structured, reusable patterns that enforce proven software engineering practices across the software delivery value chain: Product Planning → Development → Documentation.
+Bee is a **Claude Code plugin marketplace** that provides a comprehensive skills library and workflow system with **5 active plugins**. It extends Claude Code's capabilities through structured, reusable patterns that enforce proven software engineering practices across the software delivery value chain: Product Planning → Development → Documentation.
 
 ### Architecture Philosophy
 
@@ -41,11 +41,11 @@ Bee operates on three core principles:
 │  │  │ Skills(13) Agents(4) │  │ Skills(7) Agents(3)  │                       │  │
 │  │  │ Cmds(3)              │  │ Cmds(3)              │                       │  │
 │  │  └──────────────────────┘  └──────────────────────┘                       │  │
-│  │  ┌──────────────────────┐  ┌──────────────────────┐                       │  │
-│  │  │ bee-finops-team     │  │ bee-pmo-team        │                       │  │
-│  │  │ Skills(7) Agents(3)  │  │ Skills(9) Agents(6)  │                       │  │
-│  │  └──────────────────────┘  │ Cmds(4)              │                       │  │
-│  │                            └──────────────────────┘                       │  │
+│  │  ┌──────────────────────┐                                                │  │
+│  │  │ bee-pmo-team        │                                                │  │
+│  │  │ Skills(9) Agents(6)  │                                                │  │
+│  │  │ Cmds(4)              │                                                │  │
+│  │  └──────────────────────┘                                                │  │
 │  └───────────────────────────────────────────────────────────────────────────┘  │
 │                                                                                  │
 │  Native Tools: Skill, Task, TodoWrite, SlashCommand                             │
@@ -59,10 +59,9 @@ Bee is organized as a monorepo marketplace with multiple plugin collections:
 ```
 ring/                                  # Monorepo root
 ├── .claude-plugin/
-│   └── marketplace.json              # Multi-plugin registry (6 active plugins)
+│   └── marketplace.json              # Multi-plugin registry (5 active plugins)
 ├── default/                          # Core plugin: bee-default
 ├── dev-team/                         # Developer agents: bee-dev-team
-├── finops-team/                      # FinOps & regulatory: bee-finops-team
 ├── pm-team/                          # Product planning: bee-pm-team
 ├── pmo-team/                         # PMO specialists: bee-pmo-team
 └── tw-team/                          # Technical writing: bee-tw-team
@@ -76,7 +75,6 @@ _Versions managed in `.claude-plugin/marketplace.json`_
 | -------------------- | ------------------------------------ | -------------------------------- |
 | **bee-default**     | Core skills library                  | 26 skills, 8 agents, 13 commands |
 | **bee-dev-team**    | Developer agents                     | 21 skills, 10 agents, 7 commands |
-| **bee-finops-team** | FinOps regulatory compliance         | 7 skills, 3 agents               |
 | **bee-pm-team**     | Product planning workflows           | 13 skills, 4 agents, 3 commands  |
 | **bee-pmo-team**    | PMO portfolio management specialists | 9 skills, 6 agents, 4 commands   |
 | **bee-tw-team**     | Technical writing specialists        | 7 skills, 3 agents, 3 commands   |
@@ -324,7 +322,6 @@ default/hooks/
 └── marketplace.json    # Multi-plugin registry
     ├── bee-default     # Core skills library
     ├── bee-dev-team    # Developer agents
-    ├── bee-finops-team # FinOps regulatory
     ├── bee-pm-team     # Product planning
     ├── bee-pmo-team    # PMO specialists
     └── bee-tw-team     # Technical writing
@@ -349,12 +346,6 @@ default/hooks/
       "version": "...",
       "source": "./dev-team",
       "keywords": ["developer", "agents"]
-    },
-    {
-      "name": "bee-finops-team",
-      "version": "...",
-      "source": "./finops-team",
-      "keywords": ["finops", "regulatory", "compliance"]
     },
     {
       "name": "bee-pm-team",
@@ -791,21 +782,19 @@ _Component counts reflect current state; plugin versions managed in `.claude-plu
 
 | Component                 | Count      | Location               |
 | ------------------------- | ---------- | ---------------------- |
-| Active Plugins            | 6          | All plugin directories |
+| Active Plugins            | 5          | All plugin directories |
 | Skills (bee-default)     | 26         | `default/skills/`      |
 | Skills (bee-dev-team)    | 21         | `dev-team/skills/`     |
-| Skills (bee-finops-team) | 7          | `finops-team/skills/`  |
 | Skills (bee-pm-team)     | 13         | `pm-team/skills/`      |
 | Skills (bee-pmo-team)    | 9          | `pmo-team/skills/`     |
 | Skills (bee-tw-team)     | 7          | `tw-team/skills/`      |
-| **Total Skills**          | **83**     | **All plugins**        |
+| **Total Skills**          | **76**     | **All plugins**        |
 | Agents (bee-default)     | 8          | `default/agents/`      |
 | Agents (bee-dev-team)    | 10         | `dev-team/agents/`     |
-| Agents (bee-finops-team) | 3          | `finops-team/agents/`  |
 | Agents (bee-pm-team)     | 4          | `pm-team/agents/`      |
 | Agents (bee-pmo-team)    | 6          | `pmo-team/agents/`     |
 | Agents (bee-tw-team)     | 3          | `tw-team/agents/`      |
-| **Total Agents**          | **34**     | **All plugins**        |
+| **Total Agents**          | **31**     | **All plugins**        |
 | Commands (bee-default)   | 13         | `default/commands/`    |
 | Commands (bee-dev-team)  | 7          | `dev-team/commands/`   |
 | Commands (bee-pm-team)   | 3          | `pm-team/commands/`    |

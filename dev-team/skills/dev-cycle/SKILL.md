@@ -195,11 +195,13 @@ This is not negotiable:
 
 Between "WebFetch standards" and "Task(agent)" there MUST be "Skill(sub-skill)".
 
+**⛔ Agent Name Resolution:** When dispatching agents, MUST resolve unified `bee:` names to runtime-qualified names. See [shared-patterns/shared-orchestrator-principle.md](../shared-patterns/shared-orchestrator-principle.md) → "Agent Runtime Resolution" for the full mapping (e.g., `bee:backend-engineer-php` → `bee-dev-team:bee:backend-engineer-php`).
+
 **The workflow for each gate is:**
 ```text
 1. Skill("[sub-skill-name]")     ← Load sub-skill instructions
 2. Follow sub-skill instructions  ← Sub-skill tells you HOW to dispatch
-3. Task(subagent_type=...)       ← Dispatch agent as sub-skill instructs
+3. Task(subagent_type=...)       ← Dispatch agent (use runtime-qualified name)
 4. Validate agent output          ← Per sub-skill validation rules
 5. Update state                   ← Record results
 ```

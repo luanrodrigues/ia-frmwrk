@@ -13,7 +13,6 @@ trigger: |
 skip_when: |
   - Detailed project analysis → use project-health-check
   - Technical documentation → use bee-tw-team
-  - Financial deep dive → use bee-finops-team
 
 related:
   complementary: [portfolio-planning, project-health-check]

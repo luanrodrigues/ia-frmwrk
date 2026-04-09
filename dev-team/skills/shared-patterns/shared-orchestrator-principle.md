@@ -4,6 +4,64 @@
 
 This principle is NON-NEGOTIABLE for all dev-team skills.
 
+## Agent Runtime Resolution (MANDATORY)
+
+**⛔ HARD GATE: The Claude Code Agent tool requires fully-qualified agent names with the plugin prefix.**
+
+Skills use the unified `bee:` namespace for readability, but dispatches MUST use the runtime-qualified name.
+
+**Resolution Table:**
+
+| Unified Name (in docs) | Runtime subagent_type (for Agent/Task tool) |
+|-------------------------|---------------------------------------------|
+| `bee:backend-engineer-php` | `bee-dev-team:bee:backend-engineer-php` |
+| `bee:frontend-engineer` | `bee-dev-team:bee:frontend-engineer` |
+| `bee:frontend-engineer-vuejs` | `bee-dev-team:bee:frontend-engineer-vuejs` |
+| `bee:frontend-engineer-react-native` | `bee-dev-team:bee:frontend-engineer-react-native` |
+| `bee:frontend-bff-engineer-typescript` | `bee-dev-team:bee:frontend-bff-engineer-typescript` |
+| `bee:frontend-designer` | `bee-dev-team:bee:frontend-designer` |
+| `bee:ui-engineer` | `bee-dev-team:bee:ui-engineer` |
+| `bee:ui-engineer-vuejs` | `bee-dev-team:bee:ui-engineer-vuejs` |
+| `bee:ui-engineer-react-native` | `bee-dev-team:bee:ui-engineer-react-native` |
+| `bee:devops-engineer` | `bee-dev-team:bee:devops-engineer` |
+| `bee:sre` | `bee-dev-team:bee:sre` |
+| `bee:database-engineer` | `bee-dev-team:bee:database-engineer` |
+| `bee:qa-analyst` | `bee-dev-team:bee:qa-analyst` |
+| `bee:qa-analyst-frontend` | `bee-dev-team:bee:qa-analyst-frontend` |
+| `bee:qa-analyst-frontend-vuejs` | `bee-dev-team:bee:qa-analyst-frontend-vuejs` |
+| `bee:qa-analyst-frontend-react-native` | `bee-dev-team:bee:qa-analyst-frontend-react-native` |
+| `bee:prompt-quality-reviewer` | `bee-dev-team:bee:prompt-quality-reviewer` |
+| `bee:codebase-explorer` | `bee-default:bee:codebase-explorer` |
+| `bee:code-reviewer` | `bee-default:bee:code-reviewer` |
+| `bee:business-logic-reviewer` | `bee-default:bee:business-logic-reviewer` |
+| `bee:security-reviewer` | `bee-default:bee:security-reviewer` |
+| `bee:test-reviewer` | `bee-default:bee:test-reviewer` |
+| `bee:nil-safety-reviewer` | `bee-default:bee:nil-safety-reviewer` |
+| `bee:consequences-reviewer` | `bee-default:bee:consequences-reviewer` |
+| `bee:write-plan` | `bee-default:bee:write-plan` |
+| `bee:product-designer` | `bee-pm-team:bee:product-designer` |
+| `bee:framework-docs-researcher` | `bee-pm-team:bee:framework-docs-researcher` |
+| `bee:best-practices-researcher` | `bee-pm-team:bee:best-practices-researcher` |
+| `bee:repo-research-analyst` | `bee-pm-team:bee:repo-research-analyst` |
+| `bee:portfolio-manager` | `bee-pmo-team:bee:portfolio-manager` |
+| `bee:resource-planner` | `bee-pmo-team:bee:resource-planner` |
+| `bee:risk-analyst` | `bee-pmo-team:bee:risk-analyst` |
+| `bee:governance-specialist` | `bee-pmo-team:bee:governance-specialist` |
+| `bee:executive-reporter` | `bee-pmo-team:bee:executive-reporter` |
+| `bee:delivery-reporter` | `bee-pmo-team:bee:delivery-reporter` |
+| `bee:functional-writer` | `bee-tw-team:bee:functional-writer` |
+| `bee:api-writer` | `bee-tw-team:bee:api-writer` |
+| `bee:docs-reviewer` | `bee-tw-team:bee:docs-reviewer` |
+
+**Rule:** When a skill says `subagent_type: "bee:xxx"`, resolve to the runtime name above before dispatching.
+
+**Anti-Rationalization:**
+
+| Rationalization | Why It's WRONG | Required Action |
+|-----------------|----------------|-----------------|
+| "bee:backend-engineer-php works" | Runtime needs full prefix or dispatch fails | **RESOLVE to bee-dev-team:bee:backend-engineer-php** |
+| "The runtime handles resolution" | No resolution layer exists; dispatch fails silently | **ALWAYS use full qualified name in Agent/Task tool** |
+
 ## Role Separation
 
 | Your Role (Orchestrator) | Agent Role (Executor) |
@@ -49,53 +107,50 @@ This principle is NON-NEGOTIABLE for all dev-team skills.
 
 ## REQUIRED Actions (Orchestrator)
 
+**⛔ All examples below use runtime-qualified names. See "Agent Runtime Resolution" table above.**
+
 ### bee-dev-team Agents (Implementation)
 
 ```
-✅ Task(subagent_type="bee:backend-engineer-php", ...)
-✅ Task(subagent_type="bee:frontend-engineer", ...)
-✅ Task(subagent_type="bee:frontend-designer", ...)
-✅ Task(subagent_type="bee:frontend-bff-engineer-typescript", ...)
-✅ Task(subagent_type="bee:devops-engineer", ...)
-✅ Task(subagent_type="bee:sre", ...)
-✅ Task(subagent_type="bee:qa-analyst", ...)
-✅ Task(subagent_type="bee:prompt-quality-reviewer", ...)
+✅ Task(subagent_type="bee-dev-team:bee:backend-engineer-php", ...)
+✅ Task(subagent_type="bee-dev-team:bee:frontend-engineer", ...)
+✅ Task(subagent_type="bee-dev-team:bee:frontend-designer", ...)
+✅ Task(subagent_type="bee-dev-team:bee:frontend-bff-engineer-typescript", ...)
+✅ Task(subagent_type="bee-dev-team:bee:devops-engineer", ...)
+✅ Task(subagent_type="bee-dev-team:bee:sre", ...)
+✅ Task(subagent_type="bee-dev-team:bee:qa-analyst", ...)
+✅ Task(subagent_type="bee-dev-team:bee:prompt-quality-reviewer", ...)
 ```
 
 ### bee-default Agents (Core)
 
 ```
-✅ Task(subagent_type="bee:codebase-explorer", ...)
-✅ Task(subagent_type="bee:code-reviewer", ...)
-✅ Task(subagent_type="bee:business-logic-reviewer", ...)
-✅ Task(subagent_type="bee:security-reviewer", ...)
-✅ Task(subagent_type="bee:write-plan", ...)
+✅ Task(subagent_type="bee-default:bee:codebase-explorer", ...)
+✅ Task(subagent_type="bee-default:bee:code-reviewer", ...)
+✅ Task(subagent_type="bee-default:bee:business-logic-reviewer", ...)
+✅ Task(subagent_type="bee-default:bee:security-reviewer", ...)
+✅ Task(subagent_type="bee-default:bee:write-plan", ...)
 ```
 
 ### bee-pm-team Agents (Research)
 
 ```
-✅ Task(subagent_type="bee:framework-docs-researcher", ...)
-✅ Task(subagent_type="bee:best-practices-researcher", ...)
-✅ Task(subagent_type="bee:repo-research-analyst", ...)
+✅ Task(subagent_type="bee-pm-team:bee:framework-docs-researcher", ...)
+✅ Task(subagent_type="bee-pm-team:bee:best-practices-researcher", ...)
+✅ Task(subagent_type="bee-pm-team:bee:repo-research-analyst", ...)
 ```
 
 ### bee-tw-team Agents (Technical Writing)
 
 ```
-✅ Task(subagent_type="bee:functional-writer", ...)
-✅ Task(subagent_type="bee:api-writer", ...)
-✅ Task(subagent_type="bee:docs-reviewer", ...)
-```
-
-### bee-finops-team Agents (Regulatory Compliance)
-
-```
-✅ Task(subagent_type="bee:finops-analyzer", ...)
-✅ Task(subagent_type="bee:finops-automation", ...)
+✅ Task(subagent_type="bee-tw-team:bee:functional-writer", ...)
+✅ Task(subagent_type="bee-tw-team:bee:api-writer", ...)
+✅ Task(subagent_type="bee-tw-team:bee:docs-reviewer", ...)
 ```
 
 ## Gate/Step → Agent Mapping
+
+**Note:** Tables below use unified `bee:` names for readability. MUST resolve to runtime-qualified names (see "Agent Runtime Resolution" above) when dispatching.
 
 ### bee:dev-cycle Gates
 
